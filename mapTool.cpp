@@ -7,8 +7,6 @@ MAPTOOL::MAPTOOL():
 	_nTileCountY(0),
 	_nMapWidth(0),
 	_nMapHeight(0),
-	_nPalletSellCount(0),
-	_arFrameNum{},
 	_nCurrentTileX(0),
 	_nCurrentTileY(0),
 	_pImgMap(nullptr)
@@ -50,7 +48,6 @@ void MAPTOOL::setResizeNodeIndex()
 
 void MAPTOOL::init(int nTileCountX, int nTileCountY, int nTileSize)
 {
-	initFrameBit();
 
 	_nTileCountX = nTileCountX;
 	_nTileCountY = nTileCountY;
@@ -62,7 +59,7 @@ void MAPTOOL::init(int nTileCountX, int nTileCountY, int nTileSize)
 	_nCurrentTileX = 28;
 	_nCurrentTileY = 0;
 	_bIsWall = false;
-	_object = TILE::OBJECT::NONE;
+	_object = TILE::E_OBJECT::E_NONE;
 
 	_pImgMap = IMAGEMANAGER->addFrameImage("map", "image/mapFrame.bmp", 928, 32, 29, 1, true, RGB(255, 0, 255));
 	_pObjectImg = IMAGEMANAGER->findImage("mapTiles");
@@ -168,38 +165,7 @@ void MAPTOOL::update()
 	}
 }
 
-void MAPTOOL::initFrameBit()
-{
-	_arFrameNum[0]		= 0;
-	_arFrameNum[19]		= 1;
-	_arFrameNum[76]		= 2;
-	_arFrameNum[44]		= 3;
-	_arFrameNum[131]	= 4;
-	_arFrameNum[35]		= 5;
-	_arFrameNum[28]		= 6;
-	_arFrameNum[140]	= 7;
-	_arFrameNum[67]		= 8;
-	_arFrameNum[16]		= 9;
-	_arFrameNum[64]		= 10;
-	_arFrameNum[32]		= 11;
-	_arFrameNum[12]		= 12;
-	_arFrameNum[11]		= 13;
-	_arFrameNum[14]		= 14;
-	_arFrameNum[7]		= 15;
-	_arFrameNum[13]		= 16;
-	_arFrameNum[15]		= 17;
-	_arFrameNum[10]		= 18;
-	_arFrameNum[6]		= 19;
-	_arFrameNum[9]		= 20;
-	_arFrameNum[5]		= 21;
-	_arFrameNum[8]		= 22;
-	_arFrameNum[2]		= 23;
-	_arFrameNum[4]		= 24;
-	_arFrameNum[1]		= 25;
-	_arFrameNum[3]		= 26;
-	_arFrameNum[12]		= 27;
-	_arFrameNum[139]	= 28;
-}
+
 
 string MAPTOOL::setSaveMapTool()
 {
@@ -399,7 +365,7 @@ void MAPTOOL::readjustMap()
 				//	}
 				//}
 				
-				_vvMap[j][i]->readjustWall((int)nFrame, _arFrameNum[(int)nFrame], 0);
+				_vvMap[j][i]->readjustWall((int)nFrame, (int)nFrame, 0);
 			}
 		}
 	}
@@ -493,7 +459,7 @@ void MAPTOOL::load()
 			tokenMap = strtok_s(NULL, separator, &tmp);
 			_vvMap[j][i]->setFrameY(atoi(tokenMap));
 			tokenMap = strtok_s(NULL, separator, &tmp);
-			_vvMap[j][i]->setObject(static_cast<TILE::OBJECT>(atoi(tokenMap)));
+			_vvMap[j][i]->setObject(static_cast<TILE::E_OBJECT>(atoi(tokenMap)));
 			_vvMap[j][i]->setttingObject();
 			tokenMap = strtok_s(NULL, separator, &tmp);
 		}
@@ -511,7 +477,7 @@ void MAPTOOL::deleteObject()
 	{
 		for (int i = 0; i < _nTileCountX; i++)
 		{
-			_vvMap[j][i]->setObject(TILE::OBJECT::NONE);
+			_vvMap[j][i]->setObject(TILE::E_OBJECT::E_NONE);
 		}
 	}
 }

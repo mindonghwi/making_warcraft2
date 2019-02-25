@@ -17,7 +17,7 @@ void MAP::createMap()
 	_nMapHeight = _nTileCountY * _nTileSize;
 
 	_bIsWall = false;
-	_object = TILE::OBJECT::NONE;
+	_object = TILE::E_OBJECT::E_NONE;
 
 	_pImgMap = IMAGEMANAGER->addFrameImage("map", "image/mapFrame.bmp", 928, 32, 29, 1, true, RGB(255, 0, 255));
 	_pObjectImg = IMAGEMANAGER->findImage("mapTiles");
@@ -110,7 +110,7 @@ void MAP::load()
 			tokenMap = strtok_s(NULL, separator, &tmp);
 			_vvMap[j][i]->setFrameY(atoi(tokenMap));
 			tokenMap = strtok_s(NULL, separator, &tmp);
-			_vvMap[j][i]->setObject(static_cast<TILE::OBJECT>(atoi(tokenMap)));
+			_vvMap[j][i]->setObject(static_cast<TILE::E_OBJECT>(atoi(tokenMap)));
 			_vvMap[j][i]->setttingObject();
 			tokenMap = strtok_s(NULL, separator, &tmp);
 		}
@@ -159,7 +159,7 @@ void MAP::update()
 
 
 
-bool MAP::getObjectPos(vector<vector<int>>& _vvTileIndex, TILE::OBJECT object)
+bool MAP::getObjectPos(vector<vector<int>>& _vvTileIndex, TILE::E_OBJECT object)
 {
 	for (int j = 0; j < _nTileCountY; j++)
 	{
@@ -172,7 +172,7 @@ bool MAP::getObjectPos(vector<vector<int>>& _vvTileIndex, TILE::OBJECT object)
 				vPos[0] = _vvMap[j][i]->getRectTile().left + (_vvMap[j][i]->getRectTile().right - _vvMap[j][i]->getRectTile().left) / 2;
 				vPos[1] = _vvMap[j][i]->getRectTile().top + (_vvMap[j][i]->getRectTile().bottom - _vvMap[j][i]->getRectTile().top) / 2;
 				_vvTileIndex.push_back(vPos);
-				_vvMap[j][i]->setObject(TILE::OBJECT::NONE);
+				_vvMap[j][i]->setObject(TILE::E_OBJECT::E_NONE);
 				return true;
 			}
 		}
@@ -188,7 +188,7 @@ void MAP::deleteObject()
 	{
 		for (int i = 0; i < _nTileCountX; i++)
 		{
-			_vvMap[j][i]->setObject(TILE::OBJECT::NONE);
+			_vvMap[j][i]->setObject(TILE::E_OBJECT::E_NONE);
 		}
 	}
 }

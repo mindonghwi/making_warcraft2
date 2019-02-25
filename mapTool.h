@@ -10,14 +10,11 @@ class  MAPTOOL{
 public:
 	enum E_MAPTILEPOS
 	{
+		E_NONE			=	0x00,
 		E_TOP			=	0x01,
 		E_BOTTOM		=	0x02,
-		E_LEFT			=0x04	,
-		E_RIGHT			=0x08	,
-		E_LEFT_TOP		=0x10	,
-		E_RIGHT_TOP		=0x20	,
-		E_LEFT_BOTTOM=	0x40	,
-		E_RIGHT_BOTTOM=0x80
+		E_LEFT			=	0x04,
+		E_RIGHT			=	0x08
 	};
 
 
@@ -36,10 +33,7 @@ private:
 	int		_nMapWidth;
 	int		_nMapHeight;
 
-	//타일셋 범위(타일을 찍어올 팔레트 같은 역할)
-	int		_nPalletSellCount = 2;
 
-	int		_arFrameNum[141];//프레임 탐색 배열
 
 	int		_nCurrentTileX;	//현재 선택되어있는 타일x
 	int		_nCurrentTileY;	//현재 선택되어있는 타일y
@@ -54,12 +48,15 @@ private:
 	int		_nVertical;
 	int		_nHorizontal;
 	bool	_bIsWall;
-	TILE::OBJECT	_object;
+	TILE::E_OBJECT	_object;
+
+
+	int		_nBrushSize;		//실제 찍히는 브러시 사이즈
+
 
 private:
 	void	createMap();
 	void	setResizeNodeIndex();
-	void	initFrameBit();
 
 	string	setSaveMapTool();
 	string	makeSaveMap();
@@ -86,7 +83,7 @@ public:
 	inline	void	setCurrentX(int nCurrentX) {_nCurrentTileX = nCurrentX;}
 	inline	void	setCurrentY(int nCurrentY){ _nCurrentTileY = nCurrentY; }
 	inline	void	setisWall(bool bIsWall) { _bIsWall = bIsWall; }
-	inline	void	setObject(TILE::OBJECT object) { _object = object; }
+	inline	void	setObject(TILE::E_OBJECT object) { _object = object; }
 
 	inline	TILE*	getTile(int nX, int nY) { return _vvMap[nY][nX]; }
 	

@@ -247,7 +247,7 @@ void ASTAR::pathFinder()
 
 
 
-void ASTAR::setObject(TILE::OBJECT obj)
+void ASTAR::setObject(TILE::E_OBJECT obj)
 {
 }
 

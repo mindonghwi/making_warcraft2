@@ -13,13 +13,13 @@ void TILE::setttingObject()
 {
 	string strTmp = "";
 
-	switch (_object)
+	switch (_eObject)
 	{
-	case TILE::OBJECT::NONE:
+	case TILE::E_OBJECT::E_NONE:
 		
 		break;
 
-	case TILE::OBJECT::MAX:
+	case TILE::E_OBJECT::E_MAX:
 		break;
 	}
 
@@ -39,7 +39,7 @@ void TILE::init(int nTileLeft, int nTileTop, int nTileSize, image* pImg, int nNo
 	setRectTile(nTileLeft, nTileTop, nTileSize, nTileSize);
 	setImg(pImg);
 	setNodeIndex(nNodeIndex);
-	_object = OBJECT::NONE;
+	_eObject = E_OBJECT::E_NONE;
 	setLimitRect(RectMake(0, 0, WINSIZEX, WINSIZEY));
 }
 
@@ -52,7 +52,7 @@ void TILE::render(HDC hdc)
 		)
 	{
 		_pImage->frameRender(hdc, _rcTile.left, _rcTile.top, _nFrameX, _nFrameY);
-		if (_object != OBJECT::NONE)
+		if (_eObject != E_OBJECT::E_NONE)
 		{
 			_pObjectImage->frameRender(hdc, _rcTile.left, _rcTile.top, 0, 0);
 		}
@@ -65,7 +65,7 @@ void TILE::release()
 	_pImage = nullptr;
 }
 
-void TILE::settingTile(int nFrameX, int nFrameY, bool bIsWall, OBJECT object)
+void TILE::settingTile(int nFrameX, int nFrameY, bool bIsWall, E_OBJECT object)
 {
 	setFrameX(nFrameX);
 	setFrameY(nFrameY);
@@ -79,7 +79,7 @@ void TILE::settingTile(int nFrameX, int nFrameY, bool bIsWall, OBJECT object)
 	}
 	else
 	{
-		_object = OBJECT::NONE;
+		_eObject = E_OBJECT::E_NONE;
 	}
 	setttingObject();
 }
@@ -105,26 +105,67 @@ string TILE::makeSaveString()
 	strTmp.append("/");
 	strTmp.append(to_string(_nFrameY));
 	strTmp.append("/");
-	strTmp.append(to_string(static_cast<int>(_object)));
+	strTmp.append(to_string(static_cast<int>(_eObject)));
 	strTmp.append("/");
 
 	return strTmp;
 }
 
-bool TILE::setObject(OBJECT object)
+bool TILE::setObject(TILE::E_OBJECT eObject)
 {
-	if (!_bIsWall)
+	switch (eObject)
 	{
-		_object = object;
-		return true;
+	case TILE::E_OBJECT::E_WALL: case TILE::E_OBJECT::E_ROCK: case TILE::E_OBJECT::E_TREE:
+		_eObject = eObject;
+		_eTerrian = TILE::TERRIAN::GROUND;
+		break;
+
+	case TILE::E_OBJECT::E_GOLDMINE:
+		if (_eTerrian == TILE::TERRIAN::GROUND)
+		{
+			_eObject = eObject;
+		}
+		else
+		{
+			return false;
+		}
+		break;
+	case TILE::E_OBJECT::E_OILPATCH:
+		if (_eTerrian == TILE::TERRIAN::WATER)
+		{
+			_eObject = eObject;
+		}
+		else
+		{
+			return false;
+		}
+		break;
+	case TILE::E_OBJECT::E_BUILDING:
+		if (_eTerrian == TILE::TERRIAN::GROUND)
+		{
+			_eObject = eObject;
+		}
+		else
+		{
+			return false;
+		}
+		break;
+	case TILE::E_OBJECT::E_UNIT:
+		
+		break;
+	case TILE::E_OBJECT::E_MAX:
+		
+		break;
+	default:
+		break;
 	}
 
-	return false;
+	return true;
 }
 
-TILE::OBJECT TILE::getObject()
+TILE::E_OBJECT TILE::getObject()
 {
-	return _object;
+	return _eObject;
 }
 
 void TILE::move(int vertical, int horizontal)

@@ -32,7 +32,7 @@ private:
 	int		_nVertical;
 	int		_nHorizontal;
 	bool	_bIsWall;
-	TILE::OBJECT	_object;
+	TILE::E_OBJECT	_object;
 
 	string	_strMapName;
 
@@ -53,7 +53,7 @@ public:
 
 	
 	//오브젝트의 타일 좌표를 얻는데 
-	bool	getObjectPos(vector<vector<int>>& _vvTileIndex, TILE::OBJECT object);
+	bool	getObjectPos(vector<vector<int>>& _vvTileIndex, TILE::E_OBJECT object);
 
 	void	deleteObject();
 
