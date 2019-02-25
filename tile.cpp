@@ -65,12 +65,13 @@ void TILE::release()
 	_pImage = nullptr;
 }
 
-void TILE::settingTile(int nFrameX, int nFrameY, bool bIsWall, E_OBJECT object)
+void TILE::settingTile(int nFrameX, int nFrameY, bool bIsWall, TILE::TERRIAN eTerrian, E_OBJECT object)
 {
 	setFrameX(nFrameX);
 	setFrameY(nFrameY);
 	setIsWall(bIsWall);
 	setObject(object);
+	setTerrian(eTerrian);
 	if (!_bIsWall)
 	{
 		//지우는 경우
@@ -115,13 +116,13 @@ bool TILE::setObject(TILE::E_OBJECT eObject)
 {
 	switch (eObject)
 	{
-	case TILE::E_OBJECT::E_WALL: case TILE::E_OBJECT::E_ROCK: case TILE::E_OBJECT::E_TREE:
+	case TILE::E_OBJECT::E_TREE:
 		_eObject = eObject;
 		_eTerrian = TILE::TERRIAN::GROUND;
 		break;
 
 	case TILE::E_OBJECT::E_GOLDMINE:
-		if (_eTerrian == TILE::TERRIAN::GROUND)
+		if (_eTerrian == TILE::TERRIAN::GROUND && _eObject == TILE::E_OBJECT::E_NONE)
 		{
 			_eObject = eObject;
 		}
@@ -131,7 +132,7 @@ bool TILE::setObject(TILE::E_OBJECT eObject)
 		}
 		break;
 	case TILE::E_OBJECT::E_OILPATCH:
-		if (_eTerrian == TILE::TERRIAN::WATER)
+		if (_eTerrian == TILE::TERRIAN::WATER && _eObject == TILE::E_OBJECT::E_NONE)
 		{
 			_eObject = eObject;
 		}

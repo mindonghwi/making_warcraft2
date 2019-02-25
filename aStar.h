@@ -43,7 +43,6 @@ private:
 	int				_nEndIndexX;
 	int				_nEndIndexY;
 
-	TILE::E_OBJECT	_obj;
 	int				_nSearchLength;//4³ª 8
 	MAP*			_pMap;
 public:
@@ -55,7 +54,6 @@ public:
 	void	pathFinder();	
 
 	
-	void	setObject(TILE::E_OBJECT obj);
 	void	release();
 
 

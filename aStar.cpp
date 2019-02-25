@@ -246,11 +246,6 @@ void ASTAR::pathFinder()
 }
 
 
-
-void ASTAR::setObject(TILE::E_OBJECT obj)
-{
-}
-
 void ASTAR::release()
 {
 	while (!_listOpendNode.empty())

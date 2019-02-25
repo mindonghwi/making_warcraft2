@@ -154,7 +154,8 @@ void MAPTOOL::update()
 				
 				if (PtInRect(&(pTile->getRectTile()),_ptMouse))
 				{
-					pTile->settingTile(_nCurrentTileX, _nCurrentTileY, _bIsWall,_object);
+					//¶«»§
+					pTile->settingTile(_nCurrentTileX, _nCurrentTileY, _bIsWall,TILE::TERRIAN::GROUND,_object);
 				}
 			}
 		}

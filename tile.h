@@ -9,14 +9,15 @@ enum {PASS = 139};
 class TILE 
 {
 public:
-
-
 	enum class TERRIAN
 	{
 		NONE = 0,
 		GROUND,
 		WATER,
 		DIRT,
+		WALL,
+		ROCK,
+		TREE,
 		MAX
 	};
 
@@ -39,8 +40,6 @@ public:
 	enum class E_OBJECT
 	{
 		E_NONE = 0,
-		E_WALL,
-		E_ROCK,
 		E_TREE,
 		E_GOLDMINE,
 		E_OILPATCH,
@@ -95,7 +94,7 @@ public:
 	void	release();
 
 	//타일 세팅
-	void	settingTile(int nFrameX, int nFrameY, bool bIsWall, E_OBJECT object);
+	void	settingTile(int nFrameX, int nFrameY, bool bIsWall,TILE::TERRIAN eTerrian ,E_OBJECT object);
 	
 	//타일 세팅이 끝나면 재조정한 것을 받아온다 클릭을 멈추는 순간에 업데이트를 한번에 해서 받아온다.
 	void	readjustWall(int nAroundWall, int nFrameX, int nFrameY);
