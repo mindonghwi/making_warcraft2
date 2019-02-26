@@ -6,7 +6,7 @@
 
 enum {PASS = 139};
 
-class TILE 
+class TILE
 {
 public:
 	enum class TERRIAN

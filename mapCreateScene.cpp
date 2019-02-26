@@ -16,16 +16,8 @@ HRESULT SCENEMAPTOOL::init()
 
 	_pMapTool->setCamera(_pCamera);
 
-
-
-	_pMapTool->init(30, 30, 32);
-	_pCamera->init(WINSIZEX/2,WINSIZEY/2, WINSIZEX,WINSIZEY,256*32,256*32);
-
-
-
-
-
-	
+	_pMapTool->init(128, 128, 32);
+	_pCamera->init(WINSIZEX/2,WINSIZEY/2, WINSIZEX-100,WINSIZEY, 128 * 32, 128 * 32);
 
 
 	return S_OK;

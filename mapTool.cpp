@@ -113,16 +113,6 @@ void MAPTOOL::render(HDC hdc)
 void MAPTOOL::update()
 {
 
-
-
-
-	for (int j = 0; j < _nTileCountY; j++)
-	{
-		for (int i = 0; i < _nTileCountX; i++)
-		{
-			_vvMap[j][i]->move(_nVertical, _nHorizontal);
-		}
-	}
 	POINT ptCameraMouse;
 	ptCameraMouse.x = _ptMouse.x + _pCamera->getLeft();
 	ptCameraMouse.y = _ptMouse.y + _pCamera->getTop();
@@ -145,6 +135,18 @@ void MAPTOOL::update()
 	{
 		readjustMap();
 	}
+
+	
+	for (int j = 0; j < _nTileCountY; j++)
+	{
+		for (int i = 0; i < _nTileCountX; i++)
+		{
+			TILE* pTile = _vvMap[j][i];
+			pTile->setLimitRect(_pCamera->getLimitRect());
+		}
+	}
+
+
 }
 
 

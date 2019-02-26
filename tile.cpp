@@ -45,11 +45,16 @@ void TILE::init(int nTileLeft, int nTileTop, int nTileSize, image* pImg, int nNo
 
 void TILE::render(HDC hdc)
 {
-
 	//지형만 출력한다.
 	//오브젝트 출력은 따로 관리하고 타일에만 저장
-	_pImage->frameRender(hdc, _rcTile.left, _rcTile.top, _nFrameX, _nFrameY);
-	
+
+	if (_rcCameraLimit.left <= _rcTile.right && 
+		_rcCameraLimit.right >= _rcTile.left &&
+		_rcCameraLimit.top <= _rcTile.bottom &&
+		_rcCameraLimit.bottom >= _rcTile.top )
+	{
+		_pImage->frameRender(hdc, _rcTile.left, _rcTile.top, _nFrameX, _nFrameY);
+	}
 
 }
 
