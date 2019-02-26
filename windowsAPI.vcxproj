@@ -163,6 +163,7 @@
     <ClInclude Include="keyAniManager.h" />
     <ClInclude Include="keyManager.h" />
     <ClInclude Include="map.h" />
+    <ClInclude Include="mapCreateScene.h" />
     <ClInclude Include="mapTool.h" />
     <ClInclude Include="object.h" />
     <ClInclude Include="playGround.h" />
@@ -194,6 +195,7 @@
     <ClCompile Include="keyAniManager.cpp" />
     <ClCompile Include="keyManager.cpp" />
     <ClCompile Include="map.cpp" />
+    <ClCompile Include="mapCreateScene.cpp" />
     <ClCompile Include="mapTool.cpp" />
     <ClCompile Include="object.cpp" />
     <ClCompile Include="playGround.cpp" />

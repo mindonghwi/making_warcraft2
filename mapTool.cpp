@@ -1,5 +1,6 @@
 #include "stdafx.h"
 #include "mapTool.h"
+#include "camera.h"
 
 MAPTOOL::MAPTOOL():
 	_nTileSize(0),
@@ -61,7 +62,7 @@ void MAPTOOL::init(int nTileCountX, int nTileCountY, int nTileSize)
 	_bIsWall = false;
 	_object = TILE::E_OBJECT::E_NONE;
 
-	_pImgMap = IMAGEMANAGER->addFrameImage("map", "image/mapFrame.bmp", 928, 32, 29, 1, true, RGB(255, 0, 255));
+	_pImgMap = IMAGEMANAGER->addFrameImage("map", "resource/wall.bmp", 512, 32, 16, 1, true, RGB(255, 0, 255));
 	_pObjectImg = IMAGEMANAGER->findImage("mapTiles");
 	
 	createMap();
@@ -111,30 +112,8 @@ void MAPTOOL::render(HDC hdc)
 
 void MAPTOOL::update()
 {
-	_nVertical = 0;
-	_nHorizontal = 0;
 
-	if (KEYMANAGER->isStayKeyDown(VK_UP))	
-	{
-		//_pCamera->moveUp(10);
-		_nVertical += 10;
-	}
-	if (KEYMANAGER->isStayKeyDown(VK_DOWN))	
-	{
-		//_pCamera->moveDown(10);
-		_nVertical -= 10;
-	}
-	if (KEYMANAGER->isStayKeyDown(VK_LEFT))	
-	{
-		//_pCamera->moveLeft(10);
-		_nHorizontal += 10;
 
-	}
-	if (KEYMANAGER->isStayKeyDown(VK_RIGHT))
-	{
-		//_pCamera->moveRight(10);
-		_nHorizontal -= 10;
-	}
 
 
 	for (int j = 0; j < _nTileCountY; j++)
@@ -144,15 +123,17 @@ void MAPTOOL::update()
 			_vvMap[j][i]->move(_nVertical, _nHorizontal);
 		}
 	}
-
-	if (KEYMANAGER->isStayKeyDown(VK_LBUTTON) && _ptMouse.x < 900) {
+	POINT ptCameraMouse;
+	ptCameraMouse.x = _ptMouse.x + _pCamera->getLeft();
+	ptCameraMouse.y = _ptMouse.y + _pCamera->getTop();
+	if (KEYMANAGER->isStayKeyDown(VK_LBUTTON)) {
 		for (int j = 0; j < _nTileCountY; j++)
 		{
 			for (int i = 0; i < _nTileCountX; i++)
 			{
 				TILE* pTile = _vvMap[j][i];
 				
-				if (PtInRect(&(pTile->getRectTile()),_ptMouse))
+				if (PtInRect(&(pTile->getRectTile()), ptCameraMouse))
 				{
 					//¶«»§
 					pTile->settingTile(_nCurrentTileX, _nCurrentTileY, _bIsWall,TILE::TERRIAN::GROUND,_object);

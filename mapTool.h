@@ -2,9 +2,8 @@
 
 #include "stdafx.h"
 #include "tile.h"
-#include "camera.h"
 
-
+class CAMERA;
 
 class  MAPTOOL{
 public:
@@ -53,7 +52,7 @@ private:
 
 	int		_nBrushSize;		//실제 찍히는 브러시 사이즈
 
-
+	CAMERA*		_pCamera;
 private:
 	void	createMap();
 	void	setResizeNodeIndex();
@@ -87,4 +86,6 @@ public:
 
 	inline	TILE*	getTile(int nX, int nY) { return _vvMap[nY][nX]; }
 	
+
+	inline	void	setCamera(CAMERA* pCamera) { _pCamera = pCamera; }
 };

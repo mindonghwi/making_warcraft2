@@ -52,6 +52,9 @@
     <Filter Include="2DFramework\effect">
       <UniqueIdentifier>{1497c339-d08f-4b64-9e19-b16152087cca}</UniqueIdentifier>
     </Filter>
+    <Filter Include="scene">
+      <UniqueIdentifier>{f1eebd98-396b-486d-9c71-6a208d49a38d}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="stdafx.h">
@@ -144,6 +147,9 @@
     <ClInclude Include="FrameWork.h">
       <Filter>헤더 파일</Filter>
     </ClInclude>
+    <ClInclude Include="mapCreateScene.h">
+      <Filter>scene</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="stdafx.cpp">
@@ -220,6 +226,9 @@
     </ClCompile>
     <ClCompile Include="effectManager.cpp">
       <Filter>2DFramework\Manager</Filter>
+    </ClCompile>
+    <ClCompile Include="mapCreateScene.cpp">
+      <Filter>scene</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

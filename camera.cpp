@@ -33,7 +33,30 @@ void CAMERA::update()
 {
 	_listRenderObject.clear();
 
-	_rcCameraLimit = RectMake( _left,_top, _width, _height);
+
+	if (KEYMANAGER->isStayKeyDown(VK_UP))	
+	{
+		moveUp(10);
+	}
+	if (KEYMANAGER->isStayKeyDown(VK_DOWN))	
+	{
+		moveDown(10);
+	}
+	if (KEYMANAGER->isStayKeyDown(VK_LEFT))	
+	{
+		moveLeft(10);
+
+	}
+	if (KEYMANAGER->isStayKeyDown(VK_RIGHT))
+	{
+		moveRight(10);
+	}
+
+
+
+
+
+	//_rcCameraLimit = RectMake( _left,_top, _width, _height);
 }
 
 void CAMERA::render(HDC hdc)

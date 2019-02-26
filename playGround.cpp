@@ -16,6 +16,11 @@ HRESULT playGround::init()
 {
 	gameNode::init(true);
 
+	_pMapCreate = new SCENEMAPTOOL();
+
+	SCENEMANAGER->addScene("mapTool", _pMapCreate);
+	SCENEMANAGER->changeScene("mapTool");
+
 
 	return S_OK;
 }
@@ -25,7 +30,7 @@ void playGround::release()
 {
 	gameNode::release();
 
-
+	_pMapCreate = nullptr;
 }
 
 

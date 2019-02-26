@@ -33,7 +33,7 @@ void TILE::init(int nTileLeft, int nTileTop, int nTileSize, image* pImg, int nNo
 	setIsWall(false);
 	setTerrian(TILE::TERRIAN::NONE);
 	setImg(nullptr);
-	setFrameX(28);
+	setFrameX(0);
 	//setFrameX(0);
 	setFrameY(0);
 	setRectTile(nTileLeft, nTileTop, nTileSize, nTileSize);
@@ -45,18 +45,11 @@ void TILE::init(int nTileLeft, int nTileTop, int nTileSize, image* pImg, int nNo
 
 void TILE::render(HDC hdc)
 {
-	if (_rcTile.right > _rcCameraLimit.left
-		&& _rcTile.left < _rcCameraLimit.right
-		&&_rcTile.bottom > _rcCameraLimit.top
-		&& _rcTile.top < _rcCameraLimit.bottom
-		)
-	{
-		_pImage->frameRender(hdc, _rcTile.left, _rcTile.top, _nFrameX, _nFrameY);
-		if (_eObject != E_OBJECT::E_NONE)
-		{
-			_pObjectImage->frameRender(hdc, _rcTile.left, _rcTile.top, 0, 0);
-		}
-	}
+
+	//지형만 출력한다.
+	//오브젝트 출력은 따로 관리하고 타일에만 저장
+	_pImage->frameRender(hdc, _rcTile.left, _rcTile.top, _nFrameX, _nFrameY);
+	
 
 }
 
@@ -112,62 +105,6 @@ string TILE::makeSaveString()
 	return strTmp;
 }
 
-bool TILE::setObject(TILE::E_OBJECT eObject)
-{
-	switch (eObject)
-	{
-	case TILE::E_OBJECT::E_TREE:
-		_eObject = eObject;
-		_eTerrian = TILE::TERRIAN::GROUND;
-		break;
-
-	case TILE::E_OBJECT::E_GOLDMINE:
-		if (_eTerrian == TILE::TERRIAN::GROUND && _eObject == TILE::E_OBJECT::E_NONE)
-		{
-			_eObject = eObject;
-		}
-		else
-		{
-			return false;
-		}
-		break;
-	case TILE::E_OBJECT::E_OILPATCH:
-		if (_eTerrian == TILE::TERRIAN::WATER && _eObject == TILE::E_OBJECT::E_NONE)
-		{
-			_eObject = eObject;
-		}
-		else
-		{
-			return false;
-		}
-		break;
-	case TILE::E_OBJECT::E_BUILDING:
-		if (_eTerrian == TILE::TERRIAN::GROUND)
-		{
-			_eObject = eObject;
-		}
-		else
-		{
-			return false;
-		}
-		break;
-	case TILE::E_OBJECT::E_UNIT:
-		
-		break;
-	case TILE::E_OBJECT::E_MAX:
-		
-		break;
-	default:
-		break;
-	}
-
-	return true;
-}
-
-TILE::E_OBJECT TILE::getObject()
-{
-	return _eObject;
-}
 
 void TILE::move(int vertical, int horizontal)
 {
