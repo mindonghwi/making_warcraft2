@@ -67,7 +67,7 @@ private:
 	//						  상		  하			좌		우		좌상      우상     좌하    우하
 	int	_arInterval[8][2]{ { 0,-1 },{ 0,1 },{ -1,0 },{ 1,0 },{ -1,-1 },{ 1,-1 },{ -1,1 },{ 1,1 } };
 
-
+	int	_arReadjustMap[6];
 
 private:
 	void	createMap();
@@ -88,7 +88,7 @@ public:
 	void	update();
 	//추가분
 	void	mapResize(int nTileCountX,int nTileCountY);
-	void	readjustMap();
+	bool	readjustMap();
 
 	void	save();
 	void	load();

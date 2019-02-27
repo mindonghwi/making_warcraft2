@@ -66,6 +66,12 @@ void MAPTOOL::init(int nTileCountX, int nTileCountY, int nTileSize)
 	setObject(TILE::E_OBJECT::E_NONE);
 	setTerrian(TILE::E_TERRIAN::GROUND);
 
+	_arReadjustMap[0] = 1;
+	_arReadjustMap[1] = 2;
+	_arReadjustMap[2] = 3;
+	_arReadjustMap[3] = 4;
+	_arReadjustMap[4] = 8;
+	_arReadjustMap[5] = 12;
 
 
 	_pImgMap = IMAGEMANAGER->findImage("mapSprites");
@@ -145,7 +151,10 @@ void MAPTOOL::update()
 
 	if (KEYMANAGER->isOnceKeyUp(VK_LBUTTON))
 	{
-		readjustMap();
+		while (!readjustMap()) {
+
+		}
+		
 	}
 
 	
@@ -322,7 +331,7 @@ void MAPTOOL::mapResize(int nTileCountX, int nTileCountY)
 	setResizeNodeIndex();
 }
 
-void MAPTOOL::readjustMap()
+bool MAPTOOL::readjustMap()
 {
 	for (int j = 0; j < _nTileCountY; j++)
 	{
@@ -395,6 +404,36 @@ void MAPTOOL::readjustMap()
 							eTmp = _vvMap[j][i + 1]->getTerrian();
 						}
 					}
+
+					if (eTmp != TILE::E_TERRIAN::DIRT)
+					{
+						for (int i = 0; i < 6; i++)
+						{
+							if (nFrameX == _arReadjustMap[i])
+							{
+								_vvMap[j][i]->settingTile(0, 0, _bIsWall, eTmp, TILE::E_OBJECT::E_NONE);
+								return false;
+							}
+						}
+						//if (nFrameX == 3 )
+						//{
+						//	_vvMap[j][i]->settingTile(0, 0, _bIsWall, eTmp, TILE::E_OBJECT::E_NONE);
+						//	return false;
+						//}
+						//else if (nFrameX == 12)
+						//{
+						//	_vvMap[j][i]->settingTile(0, 0, _bIsWall, eTmp, TILE::E_OBJECT::E_NONE);
+						//	return false;
+						//}
+						//else if (nFrameX == 1 || nFrameX == 2 || nFrameX == 4|| nFrameX == 8)
+						//{
+						//	_vvMap[j][i]->settingTile(0, 0, _bIsWall, eTmp, TILE::E_OBJECT::E_NONE);
+						//	return false;
+						//}
+					}
+
+	
+
 
 					//찾아야한다 주변에 풀인지 바다인지
 					if (nFrameX > 0 && nFrameX < 15)
@@ -474,6 +513,8 @@ void MAPTOOL::readjustMap()
 			}
 		}
 	}
+
+	return true;
 }
 
 void MAPTOOL::save()
