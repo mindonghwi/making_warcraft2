@@ -32,6 +32,8 @@ HRESULT SCENEMAPTOOL::init()
 	_pGoldMineIcon = IMAGEMANAGER->findImage("goldMineIcon");
 	_rcGoldMine = RectMake(WINSIZEX - 32, 96, 32, 32);
 
+	_pTree = IMAGEMANAGER->findImage("treeIcon");
+	_rcTree = RectMake(WINSIZEX - 32, 128, 32, 32);
 
 	return S_OK;
 }
@@ -77,6 +79,12 @@ void SCENEMAPTOOL::update()
 			_pMapTool->setTerrian(TILE::E_TERRIAN::GROUND);
 			_pMapTool->setObject(TILE::E_OBJECT::E_GOLDMINE);
 		}
+		else if (PtInRect(&_rcTree, _ptMouse))
+		{
+			_pMapTool->setTerrian(TILE::E_TERRIAN::GROUND);
+			_pMapTool->setObject(TILE::E_OBJECT::E_TREE);
+		}
+
 	}
 
 }
@@ -93,5 +101,6 @@ void SCENEMAPTOOL::render()
 	_pDirt->render(getMemDC(), _rcDirt.left, _rcDirt.top);
 	_pWater->render(getMemDC(), _rcWater.left, _rcWater.top);
 	_pGoldMineIcon->render(getMemDC(), _rcGoldMine.left, _rcGoldMine.top);
+	_pTree->render(getMemDC(), _rcTree.left, _rcTree.top);
 
 }

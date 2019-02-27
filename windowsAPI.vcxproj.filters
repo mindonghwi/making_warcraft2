@@ -156,6 +156,9 @@
     <ClInclude Include="goldMine.h">
       <Filter>PlayGround\resource</Filter>
     </ClInclude>
+    <ClInclude Include="tree.h">
+      <Filter>PlayGround\resource</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="stdafx.cpp">
@@ -237,6 +240,9 @@
       <Filter>scene</Filter>
     </ClCompile>
     <ClCompile Include="goldMine.cpp">
+      <Filter>PlayGround\resource</Filter>
+    </ClCompile>
+    <ClCompile Include="tree.cpp">
       <Filter>PlayGround\resource</Filter>
     </ClCompile>
   </ItemGroup>

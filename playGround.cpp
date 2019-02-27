@@ -19,6 +19,9 @@ void playGround::loadImage()
 	IMAGEMANAGER->addFrameImage("water", "resource/water.bmp", TILESIZE, TILESIZE, 1, 1, true, RGB(255, 0, 255));
 	IMAGEMANAGER->addFrameImage("goldMineIcon", "resource/goldMineIcon.bmp", TILESIZE, TILESIZE, 1, 1, true, RGB(255, 0, 255));
 	IMAGEMANAGER->addFrameImage("goldMine", "resource/goldMine.bmp", 96, 96, 1, 1, true, RGB(255, 0, 255));
+
+	IMAGEMANAGER->addFrameImage("treeIcon", "resource/treeIcon.bmp", TILESIZE, TILESIZE, 1, 1, true, RGB(255, 0, 255));
+	IMAGEMANAGER->addFrameImage("tree", "resource/tree.bmp", 96, 96, 1, 1, true, RGB(255, 0, 255));
 }
 
 

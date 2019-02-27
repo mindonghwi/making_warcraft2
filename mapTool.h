@@ -3,7 +3,7 @@
 #include "stdafx.h"
 #include "tile.h"
 #include "goldMine.h"
-
+#include "tree.h"
 
 class CAMERA;
 
@@ -73,6 +73,7 @@ private:
 
 
 	list<GOLDMINE*> _listGoldMine;
+	list<TREE*>		_listTree;
 private:
 	void	createMap();
 	void	setResizeNodeIndex();
@@ -113,4 +114,12 @@ public:
 	
 
 	inline	void	setCamera(CAMERA* pCamera) { _pCamera = pCamera; }
+
+
+
+private:
+	void	drawGoldMine(int nIndexX, int nIndexY);
+	void	drawTree(int nIndexX, int nIndexY);
+	void	readjustGoldMine();
+	void	reAdjustTree();
 };

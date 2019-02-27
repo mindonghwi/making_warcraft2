@@ -22,6 +22,9 @@ private:
 	image*		_pGoldMineIcon;
 	RECT		_rcGoldMine;
 
+	image*		_pTree;
+	RECT		_rcTree;
+
 public:
 	SCENEMAPTOOL();
 	~SCENEMAPTOOL();

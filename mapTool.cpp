@@ -184,6 +184,14 @@ void MAPTOOL::update()
 		iter++;
 	}
 
+	list<TREE*>::iterator iterTree = _listTree.begin();
+	list<TREE*>::iterator endTree = _listTree.end();
+	while (iterTree != endTree)
+	{
+		(*iterTree)->update();
+		iterTree++;
+	}
+	
 }
 
 
@@ -262,56 +270,20 @@ void MAPTOOL::drawMap(int nIndexX, int nIndexY)
 
 void MAPTOOL::drawObject(int nIndexX, int nIndexY)
 {
-	bool bIsDraw = true;
-	for (int i = 0; i < 3; i++)
+	switch (_eObject)
 	{
-		for (int j = 0; j < 3; j++)
-		{
-			int nTmpIndexX = nIndexX + i;
-			int nTmpIndexY = nIndexY + j;
-
-			if (nTmpIndexX < 0 ||
-				nTmpIndexX >= _nTileCountX ||
-				nTmpIndexY < 0 ||
-				nTmpIndexY >= _nTileCountY)
-			{
-				bIsDraw = false;
-				break;
-			}
-
-			if (_vvMap[nTmpIndexY][nTmpIndexX]->getTerrian() != TILE::E_TERRIAN::GROUND)
-			{
-				bIsDraw = false;
-				break;
-			}
-
-			if (_vvMap[nTmpIndexY][nTmpIndexX]->getObject() != TILE::E_OBJECT::E_NONE)
-			{
-				bIsDraw = false;
-				break;
-			}
-		}
-	}
-
-
-	if (bIsDraw)
-	{
-		for (int i = 0; i < 3; i++)
-		{
-			for (int j = 0; j < 3; j++)
-			{
-				int nTmpIndexX = nIndexX + i;
-				int nTmpIndexY = nIndexY + j;
-
-				_vvMap[nTmpIndexY][nTmpIndexX]->settingTile(_nCurrentTileX, _nCurrentTileY, _bIsWall, _eTerrian, _eObject);
-			}
-		}
-
-
-		_listGoldMine.push_back(new GOLDMINE);
-		_listGoldMine.back()->linkCamera(_pCamera);
-		_listGoldMine.back()->init(nIndexX*32, nIndexY*32);
-		
+	case TILE::E_OBJECT::E_TREE:
+		drawTree(nIndexX, nIndexY);
+		break;
+	case TILE::E_OBJECT::E_GOLDMINE:
+		drawGoldMine(nIndexX, nIndexY);
+		break;
+	case TILE::E_OBJECT::E_OILPATCH:
+		break;
+	case TILE::E_OBJECT::E_BUILDING:
+		break;
+	case TILE::E_OBJECT::E_UNIT:
+		break;
 
 	}
 }
@@ -588,64 +560,9 @@ bool MAPTOOL::readjustMap()
 
 bool MAPTOOL::readjustObject()
 {
-	list<GOLDMINE*>::iterator iter = _listGoldMine.begin();
-	list<GOLDMINE*>::iterator end = _listGoldMine.end();
-	while (iter != end)
-	{
-		GOLDMINE*	pGoldMine = *iter;
-
-		int nIndexX(0);
-		int nIndexY(0);
-		bool bIsDestroy = false;
-
-		nIndexX = static_cast<int>(pGoldMine->getPosX()) / TILESIZE;
-		nIndexY = static_cast<int>(pGoldMine->getPosY()) / TILESIZE;
-		
-		for (int i = -1; i < 2; i++)
-		{
-			for (int j = -1; j < 2; j++)
-			{
-				int nTmpX = 0;
-				int nTmpY = 0;
-				nTmpX = nIndexX + i;
-				nTmpY = nIndexY + j;
-
-				if (_vvMap[nTmpY][nTmpX]->getTerrian() != TILE::E_TERRIAN::GROUND)
-				{
-					bIsDestroy = true;
-					break;
-				}
-			}			
-			if (bIsDestroy)
-			{
-				break;
-			}
-		}
-
-
-		if (bIsDestroy)
-		{
-			for (int i = -1; i < 2; i++)
-			{
-				for (int j = -1; j < 2; j++)
-				{
-					int nTmpX = 0;
-					int nTmpY = 0;
-					nTmpX = nIndexX + i;
-					nTmpY = nIndexY + j;
-					_vvMap[nTmpY][nTmpX]->setObject(TILE::E_OBJECT::E_NONE);
-				}
-			}
-
-			iter = _listGoldMine.erase(iter);
-		}
-		else
-		{
-			iter++;
-		}
-
-	}
-
+	readjustGoldMine();
+	reAdjustTree();
+	
 
 
 	return false;
@@ -759,5 +676,236 @@ void MAPTOOL::deleteObject()
 		{
 			_vvMap[j][i]->setObject(TILE::E_OBJECT::E_NONE);
 		}
+	}
+}
+
+void MAPTOOL::drawGoldMine(int nIndexX, int nIndexY)
+{
+	bool bIsDraw = true;
+	for (int i = 0; i < 3; i++)
+	{
+		for (int j = 0; j < 3; j++)
+		{
+			int nTmpIndexX = nIndexX + i;
+			int nTmpIndexY = nIndexY + j;
+
+			if (nTmpIndexX < 0 ||
+				nTmpIndexX >= _nTileCountX ||
+				nTmpIndexY < 0 ||
+				nTmpIndexY >= _nTileCountY)
+			{
+				bIsDraw = false;
+				break;
+			}
+
+			if (_vvMap[nTmpIndexY][nTmpIndexX]->getTerrian() != TILE::E_TERRIAN::GROUND)
+			{
+				bIsDraw = false;
+				break;
+			}
+
+			if (_vvMap[nTmpIndexY][nTmpIndexX]->getObject() != TILE::E_OBJECT::E_NONE)
+			{
+				bIsDraw = false;
+				break;
+			}
+		}
+	}
+
+
+	if (bIsDraw)
+	{
+		for (int i = 0; i < 3; i++)
+		{
+			for (int j = 0; j < 3; j++)
+			{
+				int nTmpIndexX = nIndexX + i;
+				int nTmpIndexY = nIndexY + j;
+
+				_vvMap[nTmpIndexY][nTmpIndexX]->settingTile(_nCurrentTileX, _nCurrentTileY, _bIsWall, _eTerrian, _eObject);
+			}
+		}
+
+
+		_listGoldMine.push_back(new GOLDMINE);
+		_listGoldMine.back()->linkCamera(_pCamera);
+		_listGoldMine.back()->init(nIndexX * 32, nIndexY * 32);
+	}
+}
+
+void MAPTOOL::drawTree(int nIndexX, int nIndexY)
+{
+	bool bIsDraw = true;
+	for (int i = 0; i < 3; i++)
+	{
+		for (int j = 0; j < 3; j++)
+		{
+			int nTmpIndexX = nIndexX + i;
+			int nTmpIndexY = nIndexY + j;
+
+			if (nTmpIndexX < 0 ||
+				nTmpIndexX >= _nTileCountX ||
+				nTmpIndexY < 0 ||
+				nTmpIndexY >= _nTileCountY)
+			{
+				bIsDraw = false;
+				break;
+			}
+
+			if (_vvMap[nTmpIndexY][nTmpIndexX]->getTerrian() != TILE::E_TERRIAN::GROUND)
+			{
+				bIsDraw = false;
+				break;
+			}
+
+			if (_vvMap[nTmpIndexY][nTmpIndexX]->getObject() != TILE::E_OBJECT::E_NONE)
+			{
+				bIsDraw = false;
+				break;
+			}
+		}
+	}
+
+
+	if (bIsDraw)
+	{
+		for (int i = 0; i < 3; i++)
+		{
+			for (int j = 0; j < 3; j++)
+			{
+				int nTmpIndexX = nIndexX + i;
+				int nTmpIndexY = nIndexY + j;
+
+				_vvMap[nTmpIndexY][nTmpIndexX]->settingTile(_nCurrentTileX, _nCurrentTileY, _bIsWall, _eTerrian, _eObject);
+			}
+		}
+
+
+		_listTree.push_back(new TREE);
+		_listTree.back()->linkCamera(_pCamera);
+		_listTree.back()->init(nIndexX * 32, nIndexY * 32);
+	}
+}
+
+void MAPTOOL::readjustGoldMine()
+{
+	list<GOLDMINE*>::iterator iter = _listGoldMine.begin();
+	list<GOLDMINE*>::iterator end = _listGoldMine.end();
+	while (iter != end)
+	{
+		GOLDMINE*	pGoldMine = *iter;
+
+		int nIndexX(0);
+		int nIndexY(0);
+		bool bIsDestroy = false;
+
+		nIndexX = static_cast<int>(pGoldMine->getPosX()) / TILESIZE;
+		nIndexY = static_cast<int>(pGoldMine->getPosY()) / TILESIZE;
+
+		for (int i = -1; i < 2; i++)
+		{
+			for (int j = -1; j < 2; j++)
+			{
+				int nTmpX = 0;
+				int nTmpY = 0;
+				nTmpX = nIndexX + i;
+				nTmpY = nIndexY + j;
+
+				if (_vvMap[nTmpY][nTmpX]->getTerrian() != TILE::E_TERRIAN::GROUND)
+				{
+					bIsDestroy = true;
+					break;
+				}
+			}
+			if (bIsDestroy)
+			{
+				break;
+			}
+		}
+
+
+		if (bIsDestroy)
+		{
+			for (int i = -1; i < 2; i++)
+			{
+				for (int j = -1; j < 2; j++)
+				{
+					int nTmpX = 0;
+					int nTmpY = 0;
+					nTmpX = nIndexX + i;
+					nTmpY = nIndexY + j;
+					_vvMap[nTmpY][nTmpX]->setObject(TILE::E_OBJECT::E_NONE);
+				}
+			}
+
+			iter = _listGoldMine.erase(iter);
+		}
+		else
+		{
+			iter++;
+		}
+
+	}
+
+}
+
+void MAPTOOL::reAdjustTree()
+{
+	list<TREE*>::iterator iter = _listTree.begin();
+	list<TREE*>::iterator end = _listTree.end();
+	while (iter != end)
+	{
+		TREE*	pGoldMine = *iter;
+
+		int nIndexX(0);
+		int nIndexY(0);
+		bool bIsDestroy = false;
+
+		nIndexX = static_cast<int>(pGoldMine->getPosX()) / TILESIZE;
+		nIndexY = static_cast<int>(pGoldMine->getPosY()) / TILESIZE;
+
+		for (int i = -1; i < 2; i++)
+		{
+			for (int j = -1; j < 2; j++)
+			{
+				int nTmpX = 0;
+				int nTmpY = 0;
+				nTmpX = nIndexX + i;
+				nTmpY = nIndexY + j;
+
+				if (_vvMap[nTmpY][nTmpX]->getTerrian() != TILE::E_TERRIAN::GROUND)
+				{
+					bIsDestroy = true;
+					break;
+				}
+			}
+			if (bIsDestroy)
+			{
+				break;
+			}
+		}
+
+
+		if (bIsDestroy)
+		{
+			for (int i = -1; i < 2; i++)
+			{
+				for (int j = -1; j < 2; j++)
+				{
+					int nTmpX = 0;
+					int nTmpY = 0;
+					nTmpX = nIndexX + i;
+					nTmpY = nIndexY + j;
+					_vvMap[nTmpY][nTmpX]->setObject(TILE::E_OBJECT::E_NONE);
+				}
+			}
+
+			iter = _listTree.erase(iter);
+		}
+		else
+		{
+			iter++;
+		}
+
 	}
 }
