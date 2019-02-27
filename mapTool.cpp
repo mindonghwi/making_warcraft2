@@ -407,29 +407,29 @@ bool MAPTOOL::readjustMap()
 
 					if (eTmp != TILE::E_TERRIAN::DIRT)
 					{
-						for (int i = 0; i < 6; i++)
+						//for (int i = 0; i < 6; i++)
+						//{
+						//	if (nFrameX == _arReadjustMap[i])
+						//	{
+						//		_vvMap[j][i]->settingTile(0, 0, _bIsWall, eTmp, TILE::E_OBJECT::E_NONE);
+						//		return false;
+						//	}
+						//}
+						if (nFrameX == 3 )
 						{
-							if (nFrameX == _arReadjustMap[i])
-							{
-								_vvMap[j][i]->settingTile(0, 0, _bIsWall, eTmp, TILE::E_OBJECT::E_NONE);
-								return false;
-							}
+							_vvMap[j][i]->settingTile(0, 0, _bIsWall, eTmp, TILE::E_OBJECT::E_NONE);
+							return false;
 						}
-						//if (nFrameX == 3 )
-						//{
-						//	_vvMap[j][i]->settingTile(0, 0, _bIsWall, eTmp, TILE::E_OBJECT::E_NONE);
-						//	return false;
-						//}
-						//else if (nFrameX == 12)
-						//{
-						//	_vvMap[j][i]->settingTile(0, 0, _bIsWall, eTmp, TILE::E_OBJECT::E_NONE);
-						//	return false;
-						//}
-						//else if (nFrameX == 1 || nFrameX == 2 || nFrameX == 4|| nFrameX == 8)
-						//{
-						//	_vvMap[j][i]->settingTile(0, 0, _bIsWall, eTmp, TILE::E_OBJECT::E_NONE);
-						//	return false;
-						//}
+						else if (nFrameX == 12)
+						{
+							_vvMap[j][i]->settingTile(0, 0, _bIsWall, eTmp, TILE::E_OBJECT::E_NONE);
+							return false;
+						}
+						else if (nFrameX == 1 || nFrameX == 2 || nFrameX == 4|| nFrameX == 8)
+						{
+							_vvMap[j][i]->settingTile(0, 0, _bIsWall, eTmp, TILE::E_OBJECT::E_NONE);
+							return false;
+						}
 					}
 
 	
