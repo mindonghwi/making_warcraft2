@@ -116,10 +116,10 @@ void CAMERA::setLeftTop()
 void CAMERA::moveRight(float offset)
 {
 	_posX += offset;
-	//if (_posX + _width / 2 >= _rcCameraLimit.right)
-	//{
-	//	_posX = static_cast<float>(_rcCameraLimit.right - _width / 2);
-	//}
+	if (_posX + _width / 2 >= _nMapWidth)
+	{
+		_posX = static_cast<float>(_nMapWidth - _width / 2);
+	}
 	setLeftTop();
 
 }
@@ -127,10 +127,10 @@ void CAMERA::moveRight(float offset)
 void CAMERA::moveLeft(float offset)
 {
 	_posX -= offset;
-	//if (_posX - _width / 2 <= 0)
-	//{
-	//	_posX = static_cast<float>(_width / 2);
-	//}
+	if (_posX - _width / 2 <= 0)
+	{
+		_posX = static_cast<float>(_width / 2);
+	}
 	setLeftTop();
 
 }
@@ -138,10 +138,10 @@ void CAMERA::moveLeft(float offset)
 void CAMERA::moveUp(float offset)
 {
 	_posY -= offset;
-	//if (_posY - _height / 2 <= 0)
-	//{
-	//	_posY = static_cast<float>(_height / 2);
-	//}
+	if (_posY - _height / 2 <= 0)
+	{
+		_posY = static_cast<float>(_height / 2);
+	}
 	setLeftTop();
 
 }
@@ -150,10 +150,10 @@ void CAMERA::moveDown(float offset)
 {
 	_posY += offset;
 
-	//if (_posY + _height / 2 >= _rcCameraLimit.bottom)
-	//{
-	//	_posY = static_cast<float>(_rcCameraLimit.bottom - _height / 2);
-	//}
+	if (_posY + _height / 2 >= _nMapHeight)
+	{
+		_posY = static_cast<float>(_nMapHeight - _height / 2);
+	}
 	setLeftTop();
 }
 

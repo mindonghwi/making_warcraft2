@@ -10,11 +10,22 @@ playGround::~playGround()
 {
 }
 
+void playGround::loadImage()
+{
+	IMAGEMANAGER->addFrameImage("wall", "resource/wall.bmp", TILESIZE*16, TILESIZE, 16, 1, true, RGB(255, 0, 255));
+	IMAGEMANAGER->addFrameImage("mapSprites", "resource/mapSprites.bmp", 640, 160, 20, 5, true, RGB(255, 0, 255));
+	IMAGEMANAGER->addFrameImage("ground", "resource/ground.bmp", TILESIZE, TILESIZE, 1, 1, true, RGB(255, 0, 255));
+	IMAGEMANAGER->addFrameImage("dirt", "resource/dirt.bmp", TILESIZE, TILESIZE, 1, 1, true, RGB(255, 0, 255));
+	IMAGEMANAGER->addFrameImage("water", "resource/water.bmp", TILESIZE, TILESIZE, 1, 1, true, RGB(255, 0, 255));
+}
+
 
 
 HRESULT playGround::init()
 {
 	gameNode::init(true);
+	loadImage();
+
 
 	_pMapCreate = new SCENEMAPTOOL();
 

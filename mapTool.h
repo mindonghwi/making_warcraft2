@@ -16,6 +16,14 @@ public:
 		E_RIGHT			=	0x08
 	};
 
+	enum class E_DIAGONAL
+	{
+		E_NONE = 0,
+		E_NORTH_WEST = 1,
+		E_NORTH_EAST = 2,
+		E_SOUTH_WEST = 3,
+		E_SOUTH_EAST = 4
+	};
 
 public:
 	MAPTOOL();
@@ -47,18 +55,31 @@ private:
 	int		_nVertical;
 	int		_nHorizontal;
 	bool	_bIsWall;
-	TILE::E_OBJECT	_object;
 
 
 	int		_nBrushSize;		//실제 찍히는 브러시 사이즈
 
 	CAMERA*		_pCamera;
+
+	TILE::E_TERRIAN	_eTerrian;
+	TILE::E_OBJECT	_eObject;
+	
+	//						  상		  하			좌		우		좌상      우상     좌하    우하
+	int	_arInterval[8][2]{ { 0,-1 },{ 0,1 },{ -1,0 },{ 1,0 },{ -1,-1 },{ 1,-1 },{ -1,1 },{ 1,1 } };
+
+
+
 private:
 	void	createMap();
 	void	setResizeNodeIndex();
 
 	string	setSaveMapTool();
 	string	makeSaveMap();
+
+
+	void	drawMap(int nIndexX,int nIndexY);
+
+
 public:
 	//기본 셋
 	void	init(int nTileCountX,int nTileCountY,int nTileSize);
@@ -82,8 +103,8 @@ public:
 	inline	void	setCurrentX(int nCurrentX) {_nCurrentTileX = nCurrentX;}
 	inline	void	setCurrentY(int nCurrentY){ _nCurrentTileY = nCurrentY; }
 	inline	void	setisWall(bool bIsWall) { _bIsWall = bIsWall; }
-	inline	void	setObject(TILE::E_OBJECT object) { _object = object; }
-
+	inline	void	setObject(TILE::E_OBJECT object) { _eObject = object; }
+	inline	void	setTerrian(TILE::E_TERRIAN eTerrian) { _eTerrian = eTerrian; }
 	inline	TILE*	getTile(int nX, int nY) { return _vvMap[nY][nX]; }
 	
 

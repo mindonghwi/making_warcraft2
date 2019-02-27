@@ -27,14 +27,50 @@ void TILE::setttingObject()
 	_pObjectImage = IMAGEMANAGER->findImage(strTmp);
 }
 
+void TILE::settingTerrian()
+{
+	string strTmp = "";
+
+	switch (_eTerrian)
+	{
+	case TILE::E_TERRIAN::GROUND:
+		strTmp = "ground";
+		setFrameY(0);
+
+		break;
+	case TILE::E_TERRIAN::WATER:
+		strTmp = "water";
+		setFrameY(1);
+
+		break;
+	case TILE::E_TERRIAN::DIRT:
+		strTmp = "dirt";
+		setFrameY(2);
+
+		break;
+	case TILE::E_TERRIAN::WALL:
+		break;
+	case TILE::E_TERRIAN::ROCK:
+		break;
+	case TILE::E_TERRIAN::TREE:
+		break;
+	case TILE::E_TERRIAN::MAX:
+		break;
+	default:
+		break;
+	}
+
+
+	//_pImage = IMAGEMANAGER->findImage(strTmp);
+}
+
 void TILE::init(int nTileLeft, int nTileTop, int nTileSize, image* pImg, int nNodeIndex)
 {
 	setAroundWall(PASS);
 	setIsWall(false);
-	setTerrian(TILE::TERRIAN::NONE);
+	setTerrian(TILE::E_TERRIAN::NONE);
 	setImg(nullptr);
 	setFrameX(0);
-	//setFrameX(0);
 	setFrameY(0);
 	setRectTile(nTileLeft, nTileTop, nTileSize, nTileSize);
 	setImg(pImg);
@@ -63,24 +99,15 @@ void TILE::release()
 	_pImage = nullptr;
 }
 
-void TILE::settingTile(int nFrameX, int nFrameY, bool bIsWall, TILE::TERRIAN eTerrian, E_OBJECT object)
+void TILE::settingTile(int nFrameX, int nFrameY, bool bIsWall, TILE::E_TERRIAN eTerrian, E_OBJECT object)
 {
 	setFrameX(nFrameX);
 	setFrameY(nFrameY);
 	setIsWall(bIsWall);
 	setObject(object);
 	setTerrian(eTerrian);
-	if (!_bIsWall)
-	{
-		//지우는 경우
-		//패스를 까는 경우
-		setAroundWall(PASS);
-	}
-	else
-	{
-		_eObject = E_OBJECT::E_NONE;
-	}
-	setttingObject();
+
+	settingTerrian();
 }
 
 void TILE::readjustWall(int nAroundWall, int nFrameX, int nFrameY)
@@ -88,6 +115,11 @@ void TILE::readjustWall(int nAroundWall, int nFrameX, int nFrameY)
 	setAroundWall(nAroundWall);
 	setFrameX(nFrameX);
 	setFrameY(nFrameY);
+
+	if (nFrameX > 0 && nFrameX < 15)
+	{
+		
+	}
 }
 
 string TILE::makeSaveString()

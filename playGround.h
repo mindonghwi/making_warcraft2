@@ -19,5 +19,6 @@ public:
 	~playGround();
 
 private:
+	void	loadImage();
 };
 
