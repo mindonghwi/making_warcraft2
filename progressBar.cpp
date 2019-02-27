@@ -18,8 +18,8 @@ HRESULT progressBar::init(float x, float y, int width, int height)
 
 	_rcProgress = RectMake(x, y, width, height);
 
-	_progressBarTop = IMAGEMANAGER->addImage("frontBar", "hpBarTop.bmp", x, y, width, height, true, RGB(255, 0, 255));
-	_progressBarBottom = IMAGEMANAGER->addImage("backBar", "hpBarBottom.bmp", x, y, width, height, true, RGB(255, 0, 255));
+	_progressBarTop = IMAGEMANAGER->addImage("frontBar", "hpBarTop.bmp", x, y, width, height, true, Mins::getMazenta());
+	_progressBarBottom = IMAGEMANAGER->addImage("backBar", "hpBarBottom.bmp", x, y, width, height, true, Mins::getMazenta());
 
 	//프로그레스 바 이미지의 크기가 가로크기가 된다.
 	_width = static_cast<float>(_progressBarBottom->GetWidth());

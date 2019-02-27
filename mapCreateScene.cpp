@@ -16,8 +16,8 @@ HRESULT SCENEMAPTOOL::init()
 
 	_pMapTool->setCamera(_pCamera);
 
-	_pMapTool->init(128, 128, 32);
-	_pCamera->init(WINSIZEX/2,WINSIZEY/2, WINSIZEX-100,WINSIZEY, 128 * 32, 128 * 32);
+	_pMapTool->init(TILECOUNTX, TILECOUNTY, TILESIZE);
+	_pCamera->init(WINSIZEX/2,WINSIZEY/2, WINSIZEX-100,WINSIZEY, TILECOUNTX * TILESIZE, TILECOUNTY * TILESIZE);
 
 
 	//ÆÄ·¹Æ®
@@ -25,15 +25,18 @@ HRESULT SCENEMAPTOOL::init()
 	_pDirt = IMAGEMANAGER->findImage("dirt");
 	_pWater = IMAGEMANAGER->findImage("water");
 
-	_rcGround = RectMake(WINSIZEX - 32, 0, 32, 32);
-	_rcDirt = RectMake(WINSIZEX - 32, 32, 32, 32);
-	_rcWater = RectMake(WINSIZEX - 32, 64, 32, 32);
+	_rcGround = RectMake(WINSIZEX - TILESIZE, TILESIZE *0, TILESIZE, TILESIZE);
+	_rcDirt = RectMake(WINSIZEX - TILESIZE, TILESIZE * 1, TILESIZE, TILESIZE);
+	_rcWater = RectMake(WINSIZEX - TILESIZE, TILESIZE * 2, TILESIZE, TILESIZE);
 
 	_pGoldMineIcon = IMAGEMANAGER->findImage("goldMineIcon");
-	_rcGoldMine = RectMake(WINSIZEX - 32, 96, 32, 32);
+	_rcGoldMine = RectMake(WINSIZEX - TILESIZE, TILESIZE * 3, TILESIZE, TILESIZE);
 
 	_pTree = IMAGEMANAGER->findImage("treeIcon");
-	_rcTree = RectMake(WINSIZEX - 32, 128, 32, 32);
+	_rcTree = RectMake(WINSIZEX - TILESIZE, TILESIZE * 4, TILESIZE, TILESIZE);
+
+	_pOilPatch = IMAGEMANAGER->findImage("oilIcon");
+	_rcOilPatch = RectMake(WINSIZEX - TILESIZE, TILESIZE * 5, TILESIZE, TILESIZE);
 
 	return S_OK;
 }
@@ -84,7 +87,11 @@ void SCENEMAPTOOL::update()
 			_pMapTool->setTerrian(TILE::E_TERRIAN::GROUND);
 			_pMapTool->setObject(TILE::E_OBJECT::E_TREE);
 		}
-
+		else if (PtInRect(&_rcOilPatch, _ptMouse))
+		{
+			_pMapTool->setTerrian(TILE::E_TERRIAN::WATER);
+			_pMapTool->setObject(TILE::E_OBJECT::E_OILPATCH);
+		}
 	}
 
 }
@@ -102,5 +109,6 @@ void SCENEMAPTOOL::render()
 	_pWater->render(getMemDC(), _rcWater.left, _rcWater.top);
 	_pGoldMineIcon->render(getMemDC(), _rcGoldMine.left, _rcGoldMine.top);
 	_pTree->render(getMemDC(), _rcTree.left, _rcTree.top);
+	_pOilPatch->render(getMemDC(), _rcOilPatch.left, _rcOilPatch.top);
 
 }

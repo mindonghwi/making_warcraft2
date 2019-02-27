@@ -25,6 +25,9 @@ private:
 	image*		_pTree;
 	RECT		_rcTree;
 
+	image*		_pOilPatch;
+	RECT		_rcOilPatch;
+
 public:
 	SCENEMAPTOOL();
 	~SCENEMAPTOOL();

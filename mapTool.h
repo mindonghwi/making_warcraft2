@@ -4,6 +4,7 @@
 #include "tile.h"
 #include "goldMine.h"
 #include "tree.h"
+#include "oliPatch.h"
 
 class CAMERA;
 
@@ -74,6 +75,7 @@ private:
 
 	list<GOLDMINE*> _listGoldMine;
 	list<TREE*>		_listTree;
+	list<OILPATCH*>	_listOilPatch;
 private:
 	void	createMap();
 	void	setResizeNodeIndex();
@@ -122,4 +124,6 @@ private:
 	void	drawTree(int nIndexX, int nIndexY);
 	void	readjustGoldMine();
 	void	reAdjustTree();
+	void	drawOilPatch(int nIndexX, int nIndexY);
+	void	readjustOilPatch();
 };

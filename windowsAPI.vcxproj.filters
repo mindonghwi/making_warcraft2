@@ -159,6 +159,9 @@
     <ClInclude Include="tree.h">
       <Filter>PlayGround\resource</Filter>
     </ClInclude>
+    <ClInclude Include="oliPatch.h">
+      <Filter>PlayGround\resource</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="stdafx.cpp">
@@ -243,6 +246,9 @@
       <Filter>PlayGround\resource</Filter>
     </ClCompile>
     <ClCompile Include="tree.cpp">
+      <Filter>PlayGround\resource</Filter>
+    </ClCompile>
+    <ClCompile Include="oliPatch.cpp">
       <Filter>PlayGround\resource</Filter>
     </ClCompile>
   </ItemGroup>

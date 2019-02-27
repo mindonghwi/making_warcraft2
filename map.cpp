@@ -19,7 +19,7 @@ void MAP::createMap()
 	_bIsWall = false;
 	_object = TILE::E_OBJECT::E_NONE;
 
-	_pImgMap = IMAGEMANAGER->addFrameImage("map", "image/mapFrame.bmp", 928, 32, 29, 1, true, RGB(255, 0, 255));
+	_pImgMap = IMAGEMANAGER->addFrameImage("map", "image/mapFrame.bmp", 928, 32, 29, 1, true, Mins::getMazenta());
 	_pObjectImg = IMAGEMANAGER->findImage("mapTiles");
 
 	int nNodeIndex(0);

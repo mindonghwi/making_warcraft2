@@ -27,6 +27,8 @@ void CAMERA::init(int posX, int posY, int windowWidth, int windowHeight, int map
 	_pBackGroundBuffer = IMAGEMANAGER->addImage("backGroundBuffer", _nMapWidth, _nMapHeight);
 
 	_listRenderObject.clear();
+
+	_posY += TILESIZE;
 }
 
 void CAMERA::update()
@@ -116,9 +118,9 @@ void CAMERA::setLeftTop()
 void CAMERA::moveRight(float offset)
 {
 	_posX += offset;
-	if (_posX + _width / 2 >= _nMapWidth)
+	if (_posX + _width / 2 >= _nMapWidth - TILESIZE)
 	{
-		_posX = static_cast<float>(_nMapWidth - _width / 2);
+		_posX = static_cast<float>(_nMapWidth - _width / 2) - TILESIZE;
 	}
 	setLeftTop();
 
@@ -127,9 +129,10 @@ void CAMERA::moveRight(float offset)
 void CAMERA::moveLeft(float offset)
 {
 	_posX -= offset;
-	if (_posX - _width / 2 <= 0)
+	//사방향 한칸씩 여유공간으로 막기
+	if (_posX - _width / 2 <= TILESIZE)
 	{
-		_posX = static_cast<float>(_width / 2);
+		_posX = static_cast<float>(_width / 2) + TILESIZE;
 	}
 	setLeftTop();
 
@@ -138,9 +141,9 @@ void CAMERA::moveLeft(float offset)
 void CAMERA::moveUp(float offset)
 {
 	_posY -= offset;
-	if (_posY - _height / 2 <= 0)
+	if (_posY - _height / 2 <= TILESIZE)
 	{
-		_posY = static_cast<float>(_height / 2);
+		_posY = static_cast<float>(_height / 2) + TILESIZE;
 	}
 	setLeftTop();
 
@@ -150,9 +153,9 @@ void CAMERA::moveDown(float offset)
 {
 	_posY += offset;
 
-	if (_posY + _height / 2 >= _nMapHeight)
+	if (_posY + _height / 2 >= _nMapHeight - TILESIZE)
 	{
-		_posY = static_cast<float>(_nMapHeight - _height / 2);
+		_posY = static_cast<float>(_nMapHeight - _height / 2) - TILESIZE;
 	}
 	setLeftTop();
 }

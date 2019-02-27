@@ -123,8 +123,19 @@ void MAPTOOL::render(HDC hdc)
 	ptCameraMouse.x = _ptMouse.x + _pCamera->getLeft();
 	ptCameraMouse.y = _ptMouse.y + _pCamera->getTop();
 	
-	
-	RectangleMake(hdc, _vvMap[ptCameraMouse.y / 32][ptCameraMouse.x / 32]->getRectTile().left, _vvMap[ptCameraMouse.y / 32][ptCameraMouse.x / 32]->getRectTile().top,32,32);
+	int nIndexX = 0;
+	int nIndexY = 0;
+	nIndexX = ptCameraMouse.x / TILESIZE;
+	nIndexY = ptCameraMouse.y / TILESIZE;
+	if (nIndexX >= TILECOUNTX)
+	{
+		nIndexX = TILECOUNTX - 1;
+	}
+	if (nIndexY >= TILECOUNTY)
+	{
+		nIndexY = TILECOUNTY - 1;
+	}
+	RectangleMake(hdc, _vvMap[nIndexY][nIndexX]->getRectTile().left, _vvMap[nIndexY][nIndexX]->getRectTile().top,32,32);
 }
 
 void MAPTOOL::update()
@@ -133,7 +144,7 @@ void MAPTOOL::update()
 	POINT ptCameraMouse;
 	ptCameraMouse.x = _ptMouse.x + _pCamera->getLeft();
 	ptCameraMouse.y = _ptMouse.y + _pCamera->getTop();
-	if (KEYMANAGER->isStayKeyDown(VK_LBUTTON) && _ptMouse.x < WINSIZEX - 200) {
+	if (KEYMANAGER->isStayKeyDown(VK_LBUTTON) && _ptMouse.x < WINSIZEX - 100) {
 		for (int j = 0; j < _nTileCountY; j++)
 		{
 			for (int i = 0; i < _nTileCountX; i++)
@@ -183,7 +194,7 @@ void MAPTOOL::update()
 		(*iter)->update();
 		iter++;
 	}
-
+	
 	list<TREE*>::iterator iterTree = _listTree.begin();
 	list<TREE*>::iterator endTree = _listTree.end();
 	while (iterTree != endTree)
@@ -192,6 +203,13 @@ void MAPTOOL::update()
 		iterTree++;
 	}
 	
+	list<OILPATCH*>::iterator iterOil = _listOilPatch.begin();
+	list<OILPATCH*>::iterator endOil = _listOilPatch.end();
+	while (iterOil != endOil)
+	{
+		(*iterOil)->update();
+		iterOil++;
+	}
 }
 
 
@@ -279,6 +297,7 @@ void MAPTOOL::drawObject(int nIndexX, int nIndexY)
 		drawGoldMine(nIndexX, nIndexY);
 		break;
 	case TILE::E_OBJECT::E_OILPATCH:
+		drawOilPatch(nIndexX, nIndexY);
 		break;
 	case TILE::E_OBJECT::E_BUILDING:
 		break;
@@ -562,7 +581,7 @@ bool MAPTOOL::readjustObject()
 {
 	readjustGoldMine();
 	reAdjustTree();
-	
+	readjustOilPatch();
 
 
 	return false;
@@ -901,6 +920,121 @@ void MAPTOOL::reAdjustTree()
 			}
 
 			iter = _listTree.erase(iter);
+		}
+		else
+		{
+			iter++;
+		}
+
+	}
+}
+
+void MAPTOOL::drawOilPatch(int nIndexX, int nIndexY)
+{
+	bool bIsDraw = true;
+	for (int i = 0; i < 3; i++)
+	{
+		for (int j = 0; j < 3; j++)
+		{
+			int nTmpIndexX = nIndexX + i;
+			int nTmpIndexY = nIndexY + j;
+
+			if (nTmpIndexX < 0 ||
+				nTmpIndexX >= _nTileCountX ||
+				nTmpIndexY < 0 ||
+				nTmpIndexY >= _nTileCountY)
+			{
+				bIsDraw = false;
+				break;
+			}
+
+			if (_vvMap[nTmpIndexY][nTmpIndexX]->getTerrian() != TILE::E_TERRIAN::WATER)
+			{
+				bIsDraw = false;
+				break;
+			}
+
+			if (_vvMap[nTmpIndexY][nTmpIndexX]->getObject() != TILE::E_OBJECT::E_NONE)
+			{
+				bIsDraw = false;
+				break;
+			}
+		}
+	}
+
+
+	if (bIsDraw)
+	{
+		for (int i = 0; i < 3; i++)
+		{
+			for (int j = 0; j < 3; j++)
+			{
+				int nTmpIndexX = nIndexX + i;
+				int nTmpIndexY = nIndexY + j;
+
+				_vvMap[nTmpIndexY][nTmpIndexX]->settingTile(_nCurrentTileX, _nCurrentTileY, _bIsWall, _eTerrian, _eObject);
+			}
+		}
+
+
+		_listOilPatch.push_back(new OILPATCH);
+		_listOilPatch.back()->linkCamera(_pCamera);
+		_listOilPatch.back()->init(nIndexX * 32, nIndexY * 32);
+	}
+}
+
+void MAPTOOL::readjustOilPatch()
+{
+	list<OILPATCH*>::iterator iter = _listOilPatch.begin();
+	list<OILPATCH*>::iterator end = _listOilPatch.end();
+	while (iter != end)
+	{
+		OILPATCH*	pGoldMine = *iter;
+
+		int nIndexX(0);
+		int nIndexY(0);
+		bool bIsDestroy = false;
+
+		nIndexX = static_cast<int>(pGoldMine->getPosX()) / TILESIZE;
+		nIndexY = static_cast<int>(pGoldMine->getPosY()) / TILESIZE;
+
+		for (int i = -1; i < 2; i++)
+		{
+			for (int j = -1; j < 2; j++)
+			{
+				int nTmpX = 0;
+				int nTmpY = 0;
+				nTmpX = nIndexX + i;
+				nTmpY = nIndexY + j;
+
+				if (_vvMap[nTmpY][nTmpX]->getTerrian() != TILE::E_TERRIAN::WATER)
+				{
+					bIsDestroy = true;
+					break;
+				}
+			}
+			if (bIsDestroy)
+			{
+				break;
+			}
+		}
+
+
+		if (bIsDestroy)
+		{
+			for (int i = -1; i < 2; i++)
+			{
+				for (int j = -1; j < 2; j++)
+				{
+					int nTmpX = 0;
+					int nTmpY = 0;
+					nTmpX = nIndexX + i;
+					nTmpY = nIndexY + j;
+					_vvMap[nTmpY][nTmpX]->setObject(TILE::E_OBJECT::E_NONE);
+				}
+			}
+
+			iter = _listOilPatch.erase(iter);
 		}
 		else
 		{

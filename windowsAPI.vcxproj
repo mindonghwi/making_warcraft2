@@ -167,6 +167,7 @@
     <ClInclude Include="mapCreateScene.h" />
     <ClInclude Include="mapTool.h" />
     <ClInclude Include="object.h" />
+    <ClInclude Include="oliPatch.h" />
     <ClInclude Include="playGround.h" />
     <ClInclude Include="progressBar.h" />
     <ClInclude Include="randomFunction.h" />
@@ -201,6 +202,7 @@
     <ClCompile Include="mapCreateScene.cpp" />
     <ClCompile Include="mapTool.cpp" />
     <ClCompile Include="object.cpp" />
+    <ClCompile Include="oliPatch.cpp" />
     <ClCompile Include="playGround.cpp" />
     <ClCompile Include="progressBar.cpp" />
     <ClCompile Include="sceneManager.cpp" />
