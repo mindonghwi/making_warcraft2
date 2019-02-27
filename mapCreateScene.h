@@ -19,6 +19,8 @@ private:
 	RECT		_rcDirt;
 	RECT		_rcWater;
 
+	image*		_pGoldMineIcon;
+	RECT		_rcGoldMine;
 
 public:
 	SCENEMAPTOOL();

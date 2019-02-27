@@ -29,6 +29,10 @@ HRESULT SCENEMAPTOOL::init()
 	_rcDirt = RectMake(WINSIZEX - 32, 32, 32, 32);
 	_rcWater = RectMake(WINSIZEX - 32, 64, 32, 32);
 
+	_pGoldMineIcon = IMAGEMANAGER->findImage("goldMineIcon");
+	_rcGoldMine = RectMake(WINSIZEX - 32, 96, 32, 32);
+
+
 	return S_OK;
 }
 
@@ -45,9 +49,9 @@ void SCENEMAPTOOL::release()
 
 void SCENEMAPTOOL::update()
 {
-	_pMapTool->update();
 	_pCamera->update();
 
+	_pMapTool->update();
 
 
 	//파레트 클릭
@@ -56,14 +60,22 @@ void SCENEMAPTOOL::update()
 		if (PtInRect(&_rcGround,_ptMouse))
 		{
 			_pMapTool->setTerrian(TILE::E_TERRIAN::GROUND);
+			_pMapTool->setObject(TILE::E_OBJECT::E_NONE);
 		}
 		else if (PtInRect(&_rcDirt, _ptMouse))
 		{
 			_pMapTool->setTerrian(TILE::E_TERRIAN::DIRT);
+			_pMapTool->setObject(TILE::E_OBJECT::E_NONE);
 		}
 		else if (PtInRect(&_rcWater, _ptMouse))
 		{
 			_pMapTool->setTerrian(TILE::E_TERRIAN::WATER);
+			_pMapTool->setObject(TILE::E_OBJECT::E_NONE);
+		}
+		else if (PtInRect(&_rcGoldMine,_ptMouse))
+		{
+			_pMapTool->setTerrian(TILE::E_TERRIAN::GROUND);
+			_pMapTool->setObject(TILE::E_OBJECT::E_GOLDMINE);
 		}
 	}
 
@@ -73,11 +85,13 @@ void SCENEMAPTOOL::render()
 {
 	_pCamera->renderinit();
 	_pMapTool->render(_pCamera->getMemDC());
+
 	_pCamera->render(getMemDC());
 
 
 	_pGround->render(getMemDC(), _rcGround.left, _rcGround.top);
 	_pDirt->render(getMemDC(), _rcDirt.left, _rcDirt.top);
 	_pWater->render(getMemDC(), _rcWater.left, _rcWater.top);
+	_pGoldMineIcon->render(getMemDC(), _rcGoldMine.left, _rcGoldMine.top);
 
 }

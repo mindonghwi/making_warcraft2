@@ -55,6 +55,9 @@
     <Filter Include="scene">
       <UniqueIdentifier>{f1eebd98-396b-486d-9c71-6a208d49a38d}</UniqueIdentifier>
     </Filter>
+    <Filter Include="PlayGround\resource">
+      <UniqueIdentifier>{b78b4e34-efad-4802-abb7-e0c94e197be9}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="stdafx.h">
@@ -150,6 +153,9 @@
     <ClInclude Include="mapCreateScene.h">
       <Filter>scene</Filter>
     </ClInclude>
+    <ClInclude Include="goldMine.h">
+      <Filter>PlayGround\resource</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="stdafx.cpp">
@@ -229,6 +235,9 @@
     </ClCompile>
     <ClCompile Include="mapCreateScene.cpp">
       <Filter>scene</Filter>
+    </ClCompile>
+    <ClCompile Include="goldMine.cpp">
+      <Filter>PlayGround\resource</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

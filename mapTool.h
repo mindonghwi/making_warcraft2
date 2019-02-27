@@ -2,6 +2,8 @@
 
 #include "stdafx.h"
 #include "tile.h"
+#include "goldMine.h"
+
 
 class CAMERA;
 
@@ -69,6 +71,8 @@ private:
 
 	int	_arReadjustMap[6];
 
+
+	list<GOLDMINE*> _listGoldMine;
 private:
 	void	createMap();
 	void	setResizeNodeIndex();
@@ -79,7 +83,7 @@ private:
 
 	void	drawMap(int nIndexX,int nIndexY);
 
-
+	void	drawObject(int nIndexX, int nIndexY);
 public:
 	//기본 셋
 	void	init(int nTileCountX,int nTileCountY,int nTileSize);
@@ -89,7 +93,7 @@ public:
 	//추가분
 	void	mapResize(int nTileCountX,int nTileCountY);
 	bool	readjustMap();
-
+	bool	readjustObject();
 	void	save();
 	void	load();
 	

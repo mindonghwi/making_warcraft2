@@ -116,9 +116,9 @@ void TILE::readjustWall(int nAroundWall, int nFrameX, int nFrameY)
 	setFrameX(nFrameX);
 	setFrameY(nFrameY);
 
-	if (nFrameX > 0 && nFrameX < 15)
+	if (getObject() != TILE::E_OBJECT::E_NONE)
 	{
-		
+		setObject(TILE::E_OBJECT::E_NONE);
 	}
 }
 
