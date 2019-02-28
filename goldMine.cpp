@@ -16,6 +16,7 @@ void GOLDMINE::init(int nLeft, int nTop)
 	OBJECT::setPosY(static_cast<float>(nTop + 32 + 16));
 	OBJECT::setWidth(96);
 	OBJECT::setHeight(96);
+	OBJECT::settingRect();
 	OBJECT::setImage(IMAGEMANAGER->findImage("goldMine"));
 }
 

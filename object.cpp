@@ -26,3 +26,8 @@ int OBJECT::getTop()
 	return static_cast<int>(_posY) - _height / 2;
 }
 
+void OBJECT::settingRect()
+{
+	_rc = RectMakeCenter(static_cast<int>(_posX), static_cast<int>(_posY), _width, _height);
+}
+

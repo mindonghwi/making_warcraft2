@@ -120,10 +120,14 @@ public:
 
 
 private:
+	//object - resource
 	void	drawGoldMine(int nIndexX, int nIndexY);
 	void	drawTree(int nIndexX, int nIndexY);
 	void	readjustGoldMine();
 	void	reAdjustTree();
 	void	drawOilPatch(int nIndexX, int nIndexY);
 	void	readjustOilPatch();
+
+	//tile - terrian
+	void	readjustRock();
 };

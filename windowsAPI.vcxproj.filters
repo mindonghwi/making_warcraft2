@@ -58,6 +58,15 @@
     <Filter Include="PlayGround\resource">
       <UniqueIdentifier>{b78b4e34-efad-4802-abb7-e0c94e197be9}</UniqueIdentifier>
     </Filter>
+    <Filter Include="PlayGround\tribute">
+      <UniqueIdentifier>{7865f11f-7963-4556-b28f-c3438ced4910}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="PlayGround\unit">
+      <UniqueIdentifier>{702e7b4b-6700-444f-bced-bccd24258aaa}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="PlayGround\unit\workMan">
+      <UniqueIdentifier>{c15af705-dc79-44df-a5b0-b1cb337f3c82}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="stdafx.h">
@@ -162,6 +171,15 @@
     <ClInclude Include="oliPatch.h">
       <Filter>PlayGround\resource</Filter>
     </ClInclude>
+    <ClInclude Include="triBute.h">
+      <Filter>PlayGround\tribute</Filter>
+    </ClInclude>
+    <ClInclude Include="unit.h">
+      <Filter>PlayGround\unit</Filter>
+    </ClInclude>
+    <ClInclude Include="workMan.h">
+      <Filter>PlayGround\unit\workMan</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="stdafx.cpp">
@@ -250,6 +268,12 @@
     </ClCompile>
     <ClCompile Include="oliPatch.cpp">
       <Filter>PlayGround\resource</Filter>
+    </ClCompile>
+    <ClCompile Include="unit.cpp">
+      <Filter>PlayGround\unit</Filter>
+    </ClCompile>
+    <ClCompile Include="workMan.cpp">
+      <Filter>PlayGround\unit\workMan</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

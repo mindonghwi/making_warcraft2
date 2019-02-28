@@ -182,7 +182,10 @@
     <ClInclude Include="timeManager.h" />
     <ClInclude Include="timer.h" />
     <ClInclude Include="tree.h" />
+    <ClInclude Include="triBute.h" />
+    <ClInclude Include="unit.h" />
     <ClInclude Include="utils.h" />
+    <ClInclude Include="workMan.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="action.cpp" />
@@ -217,8 +220,10 @@
     <ClCompile Include="timeManager.cpp" />
     <ClCompile Include="timer.cpp" />
     <ClCompile Include="tree.cpp" />
+    <ClCompile Include="unit.cpp" />
     <ClCompile Include="utils.cpp" />
     <ClCompile Include="windowsAPI.cpp" />
+    <ClCompile Include="workMan.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="windowsAPI.rc" />

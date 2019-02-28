@@ -28,6 +28,9 @@ private:
 	image*		_pOilPatch;
 	RECT		_rcOilPatch;
 
+	image*		_pRock;
+	RECT		_rcRock;
+
 public:
 	SCENEMAPTOOL();
 	~SCENEMAPTOOL();

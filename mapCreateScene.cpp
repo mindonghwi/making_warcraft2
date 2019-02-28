@@ -38,6 +38,10 @@ HRESULT SCENEMAPTOOL::init()
 	_pOilPatch = IMAGEMANAGER->findImage("oilIcon");
 	_rcOilPatch = RectMake(WINSIZEX - TILESIZE, TILESIZE * 5, TILESIZE, TILESIZE);
 
+	_pRock = IMAGEMANAGER->findImage("rockIcon");
+	_rcRock = RectMake(WINSIZEX - TILESIZE, TILESIZE * 6, TILESIZE, TILESIZE);
+
+
 	return S_OK;
 }
 
@@ -92,6 +96,11 @@ void SCENEMAPTOOL::update()
 			_pMapTool->setTerrian(TILE::E_TERRIAN::WATER);
 			_pMapTool->setObject(TILE::E_OBJECT::E_OILPATCH);
 		}
+		else if (PtInRect(&_rcRock, _ptMouse))
+		{
+			_pMapTool->setTerrian(TILE::E_TERRIAN::ROCK);
+			_pMapTool->setObject(TILE::E_OBJECT::E_NONE);
+		}
 	}
 
 }
@@ -110,5 +119,6 @@ void SCENEMAPTOOL::render()
 	_pGoldMineIcon->render(getMemDC(), _rcGoldMine.left, _rcGoldMine.top);
 	_pTree->render(getMemDC(), _rcTree.left, _rcTree.top);
 	_pOilPatch->render(getMemDC(), _rcOilPatch.left, _rcOilPatch.top);
+	_pRock->render(getMemDC(), _rcRock.left, _rcRock.top);
 
 }

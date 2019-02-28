@@ -30,6 +30,8 @@ public:
 	int getLeft();
 	int getTop();
 
+	void settingRect();
+
 public:
 	//get set inline¸ðÀ½
 	inline float getPosX() { return _posX; }
@@ -45,5 +47,6 @@ public:
 	inline void setHeight(int height) { _height = height; }
 	inline void	setPosZ(int posZ) { _posZ = posZ; }
 
+	
 };
 

@@ -34,23 +34,25 @@ void TILE::settingTerrian()
 	switch (_eTerrian)
 	{
 	case TILE::E_TERRIAN::GROUND:
-		strTmp = "ground";
+		strTmp = "mapSprites";
 		setFrameY(0);
 
 		break;
 	case TILE::E_TERRIAN::WATER:
-		strTmp = "water";
+		strTmp = "mapSprites";
 		setFrameY(1);
 
 		break;
 	case TILE::E_TERRIAN::DIRT:
-		strTmp = "dirt";
+		strTmp = "mapSprites";
 		setFrameY(2);
 
 		break;
 	case TILE::E_TERRIAN::WALL:
 		break;
 	case TILE::E_TERRIAN::ROCK:
+		strTmp = "rock";
+		setFrameY(0);
 		break;
 	case TILE::E_TERRIAN::TREE:
 		break;
@@ -61,7 +63,7 @@ void TILE::settingTerrian()
 	}
 
 
-	//_pImage = IMAGEMANAGER->findImage(strTmp);
+	_pImage = IMAGEMANAGER->findImage(strTmp);
 }
 
 void TILE::init(int nTileLeft, int nTileTop, int nTileSize, image* pImg, int nNodeIndex)
@@ -124,7 +126,7 @@ void TILE::readjustWall(int nAroundWall, int nFrameX, int nFrameY)
 
 string TILE::makeSaveString()
 {
-	//노드인덱스/주변값/벽/프레임x/프레임y
+	//노드인덱스/주변값/벽/프레임x/프레임y/object/terrian
 	string strTmp = "";
 	strTmp.append(to_string(_nNodeIndex));
 	strTmp.append("/");
@@ -137,6 +139,8 @@ string TILE::makeSaveString()
 	strTmp.append(to_string(_nFrameY));
 	strTmp.append("/");
 	strTmp.append(to_string(static_cast<int>(_eObject)));
+	strTmp.append("/");
+	strTmp.append(to_string(static_cast<int>(_eTerrian)));
 	strTmp.append("/");
 
 	return strTmp;

@@ -10,9 +10,10 @@ playGround::~playGround()
 {
 }
 
+//이미지 로드용
 void playGround::loadImage()
 {
-	IMAGEMANAGER->addFrameImage("wall", "resource/wall.bmp", TILESIZE*16, TILESIZE, 16, 1, true, Mins::getMazenta());
+	IMAGEMANAGER->addFrameImage("wall", "resource/wall.bmp", TILESIZE * 16, TILESIZE, 16, 1, true, Mins::getMazenta());
 	IMAGEMANAGER->addFrameImage("mapSprites", "resource/mapSprites.bmp", 640, 160, 20, 5, true, Mins::getMazenta());
 	IMAGEMANAGER->addFrameImage("ground", "resource/ground.bmp", TILESIZE, TILESIZE, 1, 1, true, Mins::getMazenta());
 	IMAGEMANAGER->addFrameImage("dirt", "resource/dirt.bmp", TILESIZE, TILESIZE, 1, 1, true, Mins::getMazenta());
@@ -25,6 +26,10 @@ void playGround::loadImage()
 
 	IMAGEMANAGER->addFrameImage("oilIcon", "resource/oilIcon.bmp", TILESIZE, TILESIZE, 1, 1, true, Mins::getMazenta());
 	IMAGEMANAGER->addFrameImage("oil", "resource/oil.bmp", 96, 96, 1, 1, true, Mins::getMazenta());
+
+	IMAGEMANAGER->addFrameImage("rockIcon", "resource/rockIcon.bmp", TILESIZE, TILESIZE, 1, 1, true, Mins::getMazenta());
+	IMAGEMANAGER->addFrameImage("rock", "resource/rock.bmp", TILESIZE * 16, TILESIZE, 16, 1, true, Mins::getMazenta());
+
 }
 
 
