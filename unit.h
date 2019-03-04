@@ -18,15 +18,15 @@ public:
 	UNIT();
 	~UNIT();
 
+	//그냥 초기화
 	virtual void init(int nPosX, int nPosY, int nWidth, int nHeight);
 
+	//만들때 사용
 	virtual void create(int nPosX,int nPosY,int nHp, float nSpeed, int nAttack, int nDefence, float fSearchRange, float fAttackRange, float fAttackSpeedps);
 	
 	virtual void update()			abstract;
 	virtual void release()			abstract;
 	virtual void render(HDC hdc)	abstract;
-
-
 
 
 public:
