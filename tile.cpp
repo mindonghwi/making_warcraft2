@@ -79,6 +79,7 @@ void TILE::init(int nTileLeft, int nTileTop, int nTileSize, image* pImg, int nNo
 	setNodeIndex(nNodeIndex);
 	_eObject = E_OBJECT::E_NONE;
 	setLimitRect(RectMake(0, 0, WINSIZEX, WINSIZEY));
+	setIsObjectLoadCheck(false);
 }
 
 void TILE::render(HDC hdc)

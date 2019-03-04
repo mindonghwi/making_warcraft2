@@ -77,6 +77,7 @@ void MAPTOOL::init(int nTileCountX, int nTileCountY, int nTileSize)
 	_pImgMap = IMAGEMANAGER->findImage("mapSprites");
 	_pObjectImg = IMAGEMANAGER->findImage("mapTiles");
 	
+	releaseObject();
 	createMap();
 }
 
@@ -127,13 +128,13 @@ void MAPTOOL::render(HDC hdc)
 	int nIndexY = 0;
 	nIndexX = ptCameraMouse.x / TILESIZE;
 	nIndexY = ptCameraMouse.y / TILESIZE;
-	if (nIndexX >= TILECOUNTX)
+	if (nIndexX >= _nTileCountX)
 	{
-		nIndexX = TILECOUNTX - 1;
+		nIndexX = _nTileCountX - 1;
 	}
-	if (nIndexY >= TILECOUNTY)
+	if (nIndexY >= _nTileCountY)
 	{
-		nIndexY = TILECOUNTY - 1;
+		nIndexY = _nTileCountY - 1;
 	}
 	RectangleMake(hdc, _vvMap[nIndexY][nIndexX]->getRectTile().left, _vvMap[nIndexY][nIndexX]->getRectTile().top,32,32);
 }
@@ -347,8 +348,57 @@ void MAPTOOL::drawObject(int nIndexX, int nIndexY)
 	}
 }
 
+void MAPTOOL::releaseObject()
+{
+	//resource release
+	list<GOLDMINE*>::iterator iter = _listGoldMine.begin();
+	list<GOLDMINE*>::iterator end = _listGoldMine.end();
+	while (iter != end)
+	{
+		GOLDMINE* pGoldMine = *iter;
+		pGoldMine->release();
+		
+		iter = _listGoldMine.erase(iter);
+		delete pGoldMine;
+		pGoldMine = nullptr;
+	}
+
+	list<TREE*>::iterator iterTree = _listTree.begin();
+	list<TREE*>::iterator endTree = _listTree.end();
+	while (iterTree != endTree)
+	{
+		TREE* pTree = *iterTree;
+		pTree->release();
+
+		iterTree = _listTree.erase(iterTree);
+		delete pTree;
+		pTree = nullptr;
+	}
+
+	list<OILPATCH*>::iterator iterOil = _listOilPatch.begin();
+	list<OILPATCH*>::iterator endOil = _listOilPatch.end();
+	while (iterOil != endOil)
+	{
+		OILPATCH* pOilPatch = *iterOil;
+		pOilPatch->release();
+
+		iterOil = _listOilPatch.erase(iterOil);
+		delete pOilPatch;
+		pOilPatch = nullptr;
+	}
+
+	_listGoldMine.clear();
+	_listTree.clear();
+	_listOilPatch.clear();
+}
+
 void MAPTOOL::mapResize(int nTileCountX, int nTileCountY)
 {
+	if (nTileCountX == 0 || nTileCountY == 0)
+	{
+		return;
+	}
+	
 	if (_nTileCountX <= nTileCountX)
 	{
 		//추가하면 된다!!
@@ -365,6 +415,7 @@ void MAPTOOL::mapResize(int nTileCountX, int nTileCountY)
 				_vvMap[j].push_back(new TILE());
 				TILE* pTile = _vvMap[j].back();
 				pTile->init((i+1)*nLeft, nTop, _nTileSize, _pImgMap, 0);
+				pTile->setTerrian(_eTerrian);
 				pTile = nullptr;
 			}
 		}
@@ -406,6 +457,7 @@ void MAPTOOL::mapResize(int nTileCountX, int nTileCountY)
 				vMapLine.push_back(new TILE());
 				TILE* pTile = vMapLine.back();
 				pTile->init((i )*_nTileSize + nLeft,(j+1)* nTop, _nTileSize, _pImgMap, 0);
+				pTile->setTerrian(_eTerrian);
 				pTile = nullptr;
 			}
 			_vvMap.push_back(vMapLine);
@@ -650,7 +702,7 @@ void MAPTOOL::save()
 	//타일들에 있는 데이터로 구분해서 저장한다.
 	//맵툴에는 타일 사이즈/ 타일 가로 갯수/ 타일 세로 갯수 / 파레트 셀 갯수
 	//타일에는 주변벽값/ 벽인지 아닌지/ 이미지 키값/ 프레임 x/ 프레임 y/ 사격형/ 노드 인덱스
-
+	//노드인덱스/주변값/벽/프레임x/프레임y/object/terrian
 	HANDLE file;
 	DWORD write;
 	
@@ -702,10 +754,12 @@ void MAPTOOL::load()
 	int nData = _nTileCountX * _nTileCountY * 20;
 	char* strs = new char[nData];
 	
+
+
 	file = CreateFile("map01.map", GENERIC_READ, NULL, NULL,
 		OPEN_EXISTING, FILE_ATTRIBUTE_NORMAL, NULL);
 
-	ReadFile(file, strs, 20000, &read, NULL);
+	ReadFile(file, strs, nData, &read, NULL);
 	//ReadFile(file, strTmp, 100, &read, NULL);
 	CloseHandle(file);
 
@@ -715,12 +769,13 @@ void MAPTOOL::load()
 
 	tokenMap = strtok_s(strs, separator, &tmp);
 
+
+	//노드인덱스/주변값/벽/프레임x/프레임y/object/terrian
 	for (int j = 0; j < _nTileCountY; j++)
 	{
 		for (int i = 0; i < _nTileCountX; i++)
 		{
-			
-			//노드인덱스/주변값/벽/프레임x/프레임y			
+			//노드인덱스/주변값/벽/프레임x/프레임y/object/terrian
 			_vvMap[j][i]->setNodeIndex(atoi(tokenMap));
 			tokenMap = strtok_s(NULL, separator, &tmp);
 			_vvMap[j][i]->setAroundWall(atoi(tokenMap));
@@ -734,11 +789,15 @@ void MAPTOOL::load()
 			_vvMap[j][i]->setObject(static_cast<TILE::E_OBJECT>(atoi(tokenMap)));
 			_vvMap[j][i]->setttingObject();
 			tokenMap = strtok_s(NULL, separator, &tmp);
+			_vvMap[j][i]->setTerrian(static_cast<TILE::E_TERRIAN>(atoi(tokenMap)));
+			_vvMap[j][i]->settingTerrian();
+			tokenMap = strtok_s(NULL, separator, &tmp);
 		}
 	}
 
 	delete[] strs;
 	strs = nullptr;
+	loadObject();
 }
 
 
@@ -1097,6 +1156,124 @@ void MAPTOOL::readjustOilPatch()
 			iter++;
 		}
 
+	}
+}
+
+void MAPTOOL::loadObject()
+{
+	//resource release
+	bool bIsResource = false;
+
+	for (int j = 0; j < _nTileCountY; j++)
+	{
+		for (int i = 0; i < _nTileCountX; i++)
+		{
+			if (!_vvMap[j][i]->getIsObjectLoadCheck())
+			{
+				switch (_vvMap[j][i]->getObject())
+				{
+				case TILE::E_OBJECT::E_GOLDMINE:
+					bIsResource = true;
+					for (int k = 0; k < 3; k++)
+					{
+						for (int h = 0; h < 3; h++)
+						{
+
+							if (_vvMap[j + k][i + h]->getObject() != TILE::E_OBJECT::E_GOLDMINE)
+							{
+								bIsResource = false;
+								break;
+							}
+							else
+							{
+								_vvMap[j + k][i + h]->setIsObjectLoadCheck(true);
+							}
+						}
+						if (!bIsResource)
+						{
+							break;
+						}
+					}
+
+					if (bIsResource)
+					{
+						GOLDMINE* pGoldMine = new GOLDMINE();
+						pGoldMine->init(_vvMap[j][i]->getRectTile().left, _vvMap[j][i]->getRectTile().top);
+						pGoldMine->linkCamera(_pCamera);
+						_listGoldMine.push_back(pGoldMine);
+						
+					}
+					break;
+
+				case TILE::E_OBJECT::E_TREE:
+					bIsResource = true;
+
+					for (int k = 0; k < 3; k++)
+					{
+						for (int h = 0; h < 3; h++)
+						{
+							if (_vvMap[j + k][i + h]->getObject() != TILE::E_OBJECT::E_TREE)
+							{
+								bIsResource = false;
+								break;
+							}
+							else
+							{
+								_vvMap[j + k][i + h]->setIsObjectLoadCheck(true);
+							}
+						}
+						if (!bIsResource)
+						{
+							break;
+						}
+					}
+
+					if (bIsResource)
+					{
+						TREE* pTree = new TREE();
+						pTree->init(_vvMap[j][i]->getRectTile().left, _vvMap[j][i]->getRectTile().top);
+						pTree->linkCamera(_pCamera);
+						_listTree.push_back(pTree);
+
+					}
+					break;
+
+				case TILE::E_OBJECT::E_OILPATCH:
+					bIsResource = true;
+
+					for (int k = 0; k < 3; k++)
+					{
+						for (int h = 0; h < 3; h++)
+						{
+							if (_vvMap[j + k][i + h]->getObject() != TILE::E_OBJECT::E_OILPATCH)
+							{
+								bIsResource = false;
+								break;
+							}
+							else
+							{
+								_vvMap[j + k][i + h]->setIsObjectLoadCheck(true);
+							}
+						}
+						if (!bIsResource)
+						{
+							break;
+						}
+					}
+
+					if (bIsResource)
+					{
+						OILPATCH* pOilPatch = new OILPATCH();
+						pOilPatch->init(_vvMap[j][i]->getRectTile().left, _vvMap[j][i]->getRectTile().top);
+						pOilPatch->linkCamera(_pCamera);
+						_listOilPatch.push_back(pOilPatch);
+
+					}
+					break;
+				}
+			}
+
+		}
 	}
 }
 

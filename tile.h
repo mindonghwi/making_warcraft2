@@ -24,13 +24,6 @@ public:
 	};
 	//물을 찍으면 더 더 물 더 더
 	//더티일때는 주변을 본다 상하좌우 풀이나 물을 탐색
-	enum class BRIGHTNESS
-	{
-		NONE = 0,
-		LIGHT,
-		DARK,
-		MAX
-	};
 
 	enum class E_TRIBUTE
 	{
@@ -84,6 +77,8 @@ private:
 
 	RECT			_rcCameraLimit;	//클러핑용
 
+	bool			_bIsObjectLoadCheck;	//로드시 오브젝트생성을 체크했는지 
+
 public:
 	void	setttingObject();
 	void	settingTerrian();
@@ -121,7 +116,7 @@ public:
 	inline	void	setTerrian(TILE::E_TERRIAN eTerrian)	{ _eTerrian = eTerrian; }
 	inline	void	setObject(TILE::E_OBJECT eObject)	{ _eObject = eObject; }
 	inline	void	setRectTile(int nLeft, int nTop, int nWidth, int nHeight) { _rcTile = RectMake(nLeft, nTop, nWidth, nHeight); }
-
+	inline	void	setIsObjectLoadCheck(bool bIsCheck) { _bIsObjectLoadCheck = bIsCheck; }
 
 	//getter
 	inline	int				getAroundWall() { return _nAroundWall; }
@@ -133,6 +128,6 @@ public:
 	inline	int				getNodeIndex()	{ return _nNodeIndex; }
 	inline	TILE::E_TERRIAN	getTerrian()	{return _eTerrian; }
 	inline	TILE::E_OBJECT	getObject()		{ return _eObject; }
-
+	inline	bool			getIsObjectLoadCheck() {return _bIsObjectLoadCheck; }
 
 };

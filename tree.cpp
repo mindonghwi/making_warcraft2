@@ -27,6 +27,7 @@ void TREE::update()
 
 void TREE::release()
 {
+	OBJECT::setImage(nullptr);
 }
 
 void TREE::render(HDC hdc)

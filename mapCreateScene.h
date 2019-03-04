@@ -31,6 +31,19 @@ private:
 	image*		_pRock;
 	RECT		_rcRock;
 
+	button*		_btnSave;
+	button*		_btnLoad;
+
+	image*		_pWidth;
+	button*		_btnWidthAdd;
+	button*		_btnWidthSub;
+
+	image*		_pHeight;
+	button*		_btnHeightAdd;
+	button*		_btnHeightSub;
+
+
+
 public:
 	SCENEMAPTOOL();
 	~SCENEMAPTOOL();
@@ -39,4 +52,13 @@ public:
 	virtual void release();
 	virtual void update();
 	virtual void render();
+
+
+public:
+	void save();
+	void load();
+	void addWidth();
+	void subWidth();
+	void addHeight();
+	void subHeight();
 };

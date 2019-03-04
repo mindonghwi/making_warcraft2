@@ -27,6 +27,7 @@ void GOLDMINE::update()
 
 void GOLDMINE::release()
 {
+	OBJECT::setImage(nullptr);
 }
 
 void GOLDMINE::render(HDC hdc)

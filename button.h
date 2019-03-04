@@ -22,6 +22,9 @@ private:
 	POINT _btnUpFramePoint;
 
 	function<void(void)> _callbackFunction;
+
+
+
 public:
 	button();
 	~button();
@@ -29,6 +32,10 @@ public:
 	HRESULT init(const char* imageName, int x, int y,
 		POINT btnDownFramePoint, POINT btnUpFramePoint,
 		function<void(void)> cbFunction);
+
+	HRESULT init(const char* imageName, int x, int y,
+		function<void(void)> cbFunction);
+
 
 
 	void release();

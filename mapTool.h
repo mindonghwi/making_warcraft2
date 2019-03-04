@@ -87,6 +87,8 @@ private:
 	void	drawMap(int nIndexX,int nIndexY);
 
 	void	drawObject(int nIndexX, int nIndexY);
+
+	void	releaseObject();
 public:
 	//±âº» ¼Â
 	void	init(int nTileCountX,int nTileCountY,int nTileSize);
@@ -127,6 +129,9 @@ private:
 	void	reAdjustTree();
 	void	drawOilPatch(int nIndexX, int nIndexY);
 	void	readjustOilPatch();
+
+	void	loadObject();
+
 
 	//tile - terrian
 	void	readjustRock();

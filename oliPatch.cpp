@@ -27,6 +27,7 @@ void OILPATCH::update()
 
 void OILPATCH::release()
 {
+	OBJECT::setImage(nullptr);
 }
 
 void OILPATCH::render(HDC hdc)

@@ -30,6 +30,15 @@ void playGround::loadImage()
 	IMAGEMANAGER->addFrameImage("rockIcon", "resource/rockIcon.bmp", TILESIZE, TILESIZE, 1, 1, true, Mins::getMazenta());
 	IMAGEMANAGER->addFrameImage("rock", "resource/rock.bmp", TILESIZE * 16, TILESIZE, 16, 1, true, Mins::getMazenta());
 
+
+	IMAGEMANAGER->addFrameImage("btnAdd", "resource/icon/btnAdd.bmp", TILESIZE, TILESIZE, 1, 1, true, Mins::getMazenta());
+	IMAGEMANAGER->addFrameImage("btnSub", "resource/icon/btnSub.bmp", TILESIZE, TILESIZE, 1, 1, true, Mins::getMazenta());
+	IMAGEMANAGER->addFrameImage("btnSave", "resource/icon/btnSave.bmp", TILESIZE, TILESIZE, 1, 1, true, Mins::getMazenta());
+	IMAGEMANAGER->addFrameImage("btnLoad", "resource/icon/btnLoad.bmp", TILESIZE, TILESIZE, 1, 1, true, Mins::getMazenta());
+	IMAGEMANAGER->addFrameImage("iconHeight", "resource/icon/iconHeight.bmp", TILESIZE, TILESIZE, 1, 1, true, Mins::getMazenta());
+	IMAGEMANAGER->addFrameImage("iconWidth", "resource/icon/iconWidth.bmp", TILESIZE, TILESIZE, 1, 1, true, Mins::getMazenta());
+
+
 }
 
 
