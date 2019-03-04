@@ -590,6 +590,11 @@ bool MAPTOOL::readjustMap()
 						_vvMap[j][i]->settingTile(0, 0, _bIsWall, eTmp, TILE::E_OBJECT::E_NONE);
 						return false;
 					}
+					else if (nFrameX == 0)
+					{
+						_vvMap[j][i]->settingTile(0, 0, _bIsWall, eTmp, TILE::E_OBJECT::E_NONE);
+						return false;
+					}
 				}
 
 

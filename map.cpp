@@ -50,11 +50,11 @@ void MAP::load()
 	DWORD read;
 
 	char strTmp[100]{};
-	string strNameTmp = _strMapName;
-	strNameTmp.append("Full01.map");
-	file = CreateFile(strNameTmp.c_str(), GENERIC_READ, NULL, NULL,
+
+	file = CreateFile("mapFull01.map", GENERIC_READ, NULL, NULL,
 		OPEN_EXISTING, FILE_ATTRIBUTE_NORMAL, NULL);
 
+	//ReadFile(file, str, 5000, &read, NULL);
 	ReadFile(file, strTmp, 100, &read, NULL);
 	CloseHandle(file);
 
@@ -72,34 +72,32 @@ void MAP::load()
 	token = strtok_s(NULL, separator, &temp);
 	_nTileCountY = atoi(token);
 
-
-	//맵만들기
 	createMap();
 
 	int nData = _nTileCountX * _nTileCountY * 20;
-	char *str = new char[nData];
+	char* strs = new char[nData];
 
-	strNameTmp = _strMapName;
-	strNameTmp.append("01.map");
 
-	file = CreateFile(strNameTmp.c_str(), GENERIC_READ, NULL, NULL,
+	file = CreateFile("map01.map", GENERIC_READ, NULL, NULL,
 		OPEN_EXISTING, FILE_ATTRIBUTE_NORMAL, NULL);
 
-	ReadFile(file, str, nData, &read, NULL);
+	ReadFile(file, strs, nData, &read, NULL);
+	//ReadFile(file, strTmp, 100, &read, NULL);
 	CloseHandle(file);
 
 
 	char* tmp;
 	char* tokenMap;
 
-	tokenMap = strtok_s(str, separator, &tmp);
+	tokenMap = strtok_s(strs, separator, &tmp);
 
+
+	//노드인덱스/주변값/벽/프레임x/프레임y/object/terrian
 	for (int j = 0; j < _nTileCountY; j++)
 	{
 		for (int i = 0; i < _nTileCountX; i++)
 		{
-
-			//노드인덱스/주변값/벽/프레임x/프레임y			
+			//노드인덱스/주변값/벽/프레임x/프레임y/object/terrian
 			_vvMap[j][i]->setNodeIndex(atoi(tokenMap));
 			tokenMap = strtok_s(NULL, separator, &tmp);
 			_vvMap[j][i]->setAroundWall(atoi(tokenMap));
@@ -113,11 +111,133 @@ void MAP::load()
 			_vvMap[j][i]->setObject(static_cast<TILE::E_OBJECT>(atoi(tokenMap)));
 			_vvMap[j][i]->setttingObject();
 			tokenMap = strtok_s(NULL, separator, &tmp);
+			_vvMap[j][i]->setTerrian(static_cast<TILE::E_TERRIAN>(atoi(tokenMap)));
+			_vvMap[j][i]->settingTerrian();
+			tokenMap = strtok_s(NULL, separator, &tmp);
 		}
 	}
 
-	delete[] str;
-	str = nullptr;
+	delete[] strs;
+	strs = nullptr;
+	loadObject();
+}
+
+void MAP::loadObject()
+{
+	//resource release
+	bool bIsResource = false;
+
+	for (int j = 0; j < _nTileCountY; j++)
+	{
+		for (int i = 0; i < _nTileCountX; i++)
+		{
+			if (!_vvMap[j][i]->getIsObjectLoadCheck())
+			{
+				switch (_vvMap[j][i]->getObject())
+				{
+				case TILE::E_OBJECT::E_GOLDMINE:
+					bIsResource = true;
+					for (int k = 0; k < 3; k++)
+					{
+						for (int h = 0; h < 3; h++)
+						{
+
+							if (_vvMap[j + k][i + h]->getObject() != TILE::E_OBJECT::E_GOLDMINE)
+							{
+								bIsResource = false;
+								break;
+							}
+							else
+							{
+								_vvMap[j + k][i + h]->setIsObjectLoadCheck(true);
+							}
+						}
+						if (!bIsResource)
+						{
+							break;
+						}
+					}
+
+					if (bIsResource)
+					{
+						GOLDMINE* pGoldMine = new GOLDMINE();
+						pGoldMine->init(_vvMap[j][i]->getRectTile().left, _vvMap[j][i]->getRectTile().top);
+						pGoldMine->linkCamera(_pCamera);
+						_listGoldMine.push_back(pGoldMine);
+
+					}
+					break;
+
+				case TILE::E_OBJECT::E_TREE:
+					bIsResource = true;
+
+					for (int k = 0; k < 3; k++)
+					{
+						for (int h = 0; h < 3; h++)
+						{
+							if (_vvMap[j + k][i + h]->getObject() != TILE::E_OBJECT::E_TREE)
+							{
+								bIsResource = false;
+								break;
+							}
+							else
+							{
+								_vvMap[j + k][i + h]->setIsObjectLoadCheck(true);
+							}
+						}
+						if (!bIsResource)
+						{
+							break;
+						}
+					}
+
+					if (bIsResource)
+					{
+						TREE* pTree = new TREE();
+						pTree->init(_vvMap[j][i]->getRectTile().left, _vvMap[j][i]->getRectTile().top);
+						pTree->linkCamera(_pCamera);
+						_listTree.push_back(pTree);
+
+					}
+					break;
+
+				case TILE::E_OBJECT::E_OILPATCH:
+					bIsResource = true;
+
+					for (int k = 0; k < 3; k++)
+					{
+						for (int h = 0; h < 3; h++)
+						{
+							if (_vvMap[j + k][i + h]->getObject() != TILE::E_OBJECT::E_OILPATCH)
+							{
+								bIsResource = false;
+								break;
+							}
+							else
+							{
+								_vvMap[j + k][i + h]->setIsObjectLoadCheck(true);
+							}
+						}
+						if (!bIsResource)
+						{
+							break;
+						}
+					}
+
+					if (bIsResource)
+					{
+						OILPATCH* pOilPatch = new OILPATCH();
+						pOilPatch->init(_vvMap[j][i]->getRectTile().left, _vvMap[j][i]->getRectTile().top);
+						pOilPatch->linkCamera(_pCamera);
+						_listOilPatch.push_back(pOilPatch);
+
+					}
+					break;
+				}
+			}
+
+		}
+	}
 }
 
 

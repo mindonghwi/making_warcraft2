@@ -60,11 +60,12 @@ HRESULT SCENEMAPTOOL::init()
 	_rcRock = RectMake(WINSIZEX - TILESIZE, TILESIZE * 6, TILESIZE, TILESIZE);
 
 
-	
 	_pWidth = IMAGEMANAGER->findImage("iconWidth");
-	
 	_pHeight = IMAGEMANAGER->findImage("iconHeight");
 	
+
+	//카메로 초기 위치 오차범위 수정
+	_pCamera->outOfRange();
 
 	return S_OK;
 }

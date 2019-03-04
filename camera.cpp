@@ -162,23 +162,25 @@ void CAMERA::moveDown(float offset)
 
 void CAMERA::outOfRange()
 {
-	if (_posX + _width / 2 >= _rcCameraLimit.right)
+	if (_posX + _width / 2 >= _nMapWidth - TILESIZE)
 	{
-		_posX = static_cast<float>(_rcCameraLimit.right - _width / 2);
+		_posX = static_cast<float>(_nMapWidth - _width / 2) - TILESIZE;
 	}
-	else if (_posX - _width / 2 <= 0)
+	else if (_posX - _width / 2 <= TILESIZE)
 	{
-		_posX = static_cast<float>(_width / 2);
+		_posX = static_cast<float>(_width / 2) + TILESIZE;
+	}
+	if (_posY - _height / 2 <= TILESIZE)
+	{
+		_posY = static_cast<float>(_height / 2) + TILESIZE;
+	}
+	else if (_posY + _height / 2 >= _nMapHeight - TILESIZE)
+	{
+		_posY = static_cast<float>(_nMapHeight - _height / 2) - TILESIZE;
 	}
 
-	if (_posY - _height / 2 <= 0)
-	{
-		_posY = static_cast<float>(_height / 2);
-	}
-	else if (_posY + _height / 2 >= _rcCameraLimit.bottom)
-	{
-		_posY = static_cast<float>(_rcCameraLimit.bottom - _height / 2);
-	}
+	setLeftTop();
+
 }
 
 void CAMERA::setCameraBuffer(image * pImg)

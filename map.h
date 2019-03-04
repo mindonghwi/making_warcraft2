@@ -1,7 +1,9 @@
 #pragma once
 #include "tile.h"
 #include "camera.h"
-
+#include "goldMine.h"
+#include "tree.h"
+#include "oliPatch.h"
 
 class MAP
 {
@@ -36,6 +38,11 @@ private:
 
 	string	_strMapName;
 
+	CAMERA*		_pCamera;
+
+	list<GOLDMINE*> _listGoldMine;
+	list<TREE*>		_listTree;
+	list<OILPATCH*>	_listOilPatch;
 
 private:
 	void	createMap();
@@ -46,11 +53,11 @@ public:
 	void	release();
 	void	render(HDC hdc);
 	void	update();
+	
+	
 	//추가분
-
 	void	load();
-
-
+	void	loadObject();
 	
 	//오브젝트의 타일 좌표를 얻는데 
 	bool	getObjectPos(vector<vector<int>>& _vvTileIndex, TILE::E_OBJECT object);
@@ -63,5 +70,7 @@ public:
 	inline	void	setisWall(bool bIsWall) { _bIsWall = bIsWall; }
 
 	inline	TILE*	getTile(int nX, int nY) { return _vvMap[nY][nX]; }
+
+	inline	void	setLinkCamera(CAMERA* pCamera) { _pCamera = pCamera; }
 
 };
