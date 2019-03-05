@@ -180,6 +180,15 @@
     <ClInclude Include="workMan.h">
       <Filter>PlayGround\unit\workMan</Filter>
     </ClInclude>
+    <ClInclude Include="coverScene.h">
+      <Filter>scene</Filter>
+    </ClInclude>
+    <ClInclude Include="mainMenuScene.h">
+      <Filter>scene</Filter>
+    </ClInclude>
+    <ClInclude Include="scrollButton.h">
+      <Filter>2DFramework\button</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="stdafx.cpp">
@@ -274,6 +283,15 @@
     </ClCompile>
     <ClCompile Include="workMan.cpp">
       <Filter>PlayGround\unit\workMan</Filter>
+    </ClCompile>
+    <ClCompile Include="coverScene.cpp">
+      <Filter>scene</Filter>
+    </ClCompile>
+    <ClCompile Include="mainMenuScene.cpp">
+      <Filter>scene</Filter>
+    </ClCompile>
+    <ClCompile Include="scrollButton.cpp">
+      <Filter>2DFramework\button</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

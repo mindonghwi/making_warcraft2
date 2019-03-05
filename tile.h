@@ -103,6 +103,8 @@ public:
 
 	void	move(int vertical,int horizontal);
 
+	void	extendLimitRect(int nOffset);
+
 public:
 	//setter
 	inline	void	setAroundWall(int nAroundWall)		{ _nAroundWall = nAroundWall; }

@@ -87,8 +87,8 @@ void TILE::render(HDC hdc)
 	//지형만 출력한다.
 	//오브젝트 출력은 따로 관리하고 타일에만 저장
 
-	if (_rcCameraLimit.left <= _rcTile.right && 
-		_rcCameraLimit.right >= _rcTile.left &&
+	if (_rcCameraLimit.left<= _rcTile.right && 
+		_rcCameraLimit.right  >= _rcTile.left &&
 		_rcCameraLimit.top <= _rcTile.bottom &&
 		_rcCameraLimit.bottom >= _rcTile.top )
 	{
@@ -155,4 +155,12 @@ void TILE::move(int vertical, int horizontal)
 
 	_rcTile.top += vertical;
 	_rcTile.bottom += vertical;
+}
+
+void TILE::extendLimitRect(int nOffset)
+{
+	_rcCameraLimit.left -= nOffset;
+	_rcCameraLimit.top -= nOffset;
+	_rcCameraLimit.right += nOffset;
+	_rcCameraLimit.bottom += nOffset;
 }

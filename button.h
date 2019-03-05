@@ -23,7 +23,7 @@ private:
 
 	function<void(void)> _callbackFunction;
 
-
+	bool	_bIsSelected;
 
 public:
 	button();
@@ -41,5 +41,19 @@ public:
 	void release();
 	void update();
 	void render(HDC hdc);
+
+	void reSettingRect();
+public:
+	inline void setX(float fX) { _x = fX; }
+	inline void setY(float fY) { _y = fY; }
+
+	inline float getX() {return _x; }
+	inline float getY() {return _y; }
+
+	inline bool getIsSelected() {return _bIsSelected;}
+	inline void setIsSelected(bool bIsSelected) { _bIsSelected = bIsSelected; }
+
+	inline void setDirection(BUTTONDIRECTION eBtnDirection) { _direction = eBtnDirection; }
+
 };
 

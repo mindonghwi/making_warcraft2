@@ -182,6 +182,7 @@ void MAPTOOL::update()
 		{
 			TILE* pTile = _vvMap[j][i];
 			pTile->setLimitRect(_pCamera->getLimitRect());
+			pTile->extendLimitRect(32);
 		}
 	}
 

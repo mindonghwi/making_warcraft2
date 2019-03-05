@@ -154,6 +154,7 @@
     <ClInclude Include="aStar.h" />
     <ClInclude Include="button.h" />
     <ClInclude Include="camera.h" />
+    <ClInclude Include="coverScene.h" />
     <ClInclude Include="effect.h" />
     <ClInclude Include="effectManager.h" />
     <ClInclude Include="FrameWork.h" />
@@ -163,6 +164,7 @@
     <ClInclude Include="imageManager.h" />
     <ClInclude Include="keyAniManager.h" />
     <ClInclude Include="keyManager.h" />
+    <ClInclude Include="mainMenuScene.h" />
     <ClInclude Include="map.h" />
     <ClInclude Include="mapCreateScene.h" />
     <ClInclude Include="mapTool.h" />
@@ -173,6 +175,7 @@
     <ClInclude Include="randomFunction.h" />
     <ClInclude Include="Resource.h" />
     <ClInclude Include="sceneManager.h" />
+    <ClInclude Include="scrollButton.h" />
     <ClInclude Include="singletonBase.h" />
     <ClInclude Include="soundManager.h" />
     <ClInclude Include="stdafx.h" />
@@ -193,6 +196,7 @@
     <ClCompile Include="aStar.cpp" />
     <ClCompile Include="button.cpp" />
     <ClCompile Include="camera.cpp" />
+    <ClCompile Include="coverScene.cpp" />
     <ClCompile Include="effect.cpp" />
     <ClCompile Include="effectManager.cpp" />
     <ClCompile Include="gameNode.cpp" />
@@ -201,6 +205,7 @@
     <ClCompile Include="imageManager.cpp" />
     <ClCompile Include="keyAniManager.cpp" />
     <ClCompile Include="keyManager.cpp" />
+    <ClCompile Include="mainMenuScene.cpp" />
     <ClCompile Include="map.cpp" />
     <ClCompile Include="mapCreateScene.cpp" />
     <ClCompile Include="mapTool.cpp" />
@@ -209,6 +214,7 @@
     <ClCompile Include="playGround.cpp" />
     <ClCompile Include="progressBar.cpp" />
     <ClCompile Include="sceneManager.cpp" />
+    <ClCompile Include="scrollButton.cpp" />
     <ClCompile Include="soundManager.cpp" />
     <ClCompile Include="stdafx.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Create</PrecompiledHeader>

@@ -27,6 +27,7 @@ HRESULT button::init(const char * imageName, int x, int y, POINT btnDownFramePoi
 
 	_rc = RectMakeCenter(x, y, _image->getFrameWidth(), _image->getFrameHeight());
 
+	setIsSelected(false);
 
 	return S_OK;
 }
@@ -47,7 +48,7 @@ HRESULT button::init(const char * imageName, int x, int y, function<void(void)> 
 
 	_rc = RectMake(_x, _y, _image->getFrameWidth(), _image->getFrameHeight());
 
-
+	setIsSelected(false);
 	return S_OK;
 }
 
@@ -63,7 +64,7 @@ void button::update()
 {
 	if (PtInRect(&_rc, _ptMouse))
 	{
-		if (KEYMANAGER->isOnceKeyDown(VK_LBUTTON))
+		if (KEYMANAGER->isKeyDown(VK_LBUTTON))
 		{
 			_direction = BUTTONDIRECTION_DOWN;
 		}
@@ -72,7 +73,7 @@ void button::update()
 			_direction = BUTTONDIRECTION_UP;
 
 			_callbackFunction();
-
+			setIsSelected(true);
 		}
 	}
 	else _direction = BUTTONDIRECTION_NULL;
@@ -94,4 +95,10 @@ void button::render(HDC hdc)
 		break;
 	
 	}
+}
+
+void button::reSettingRect()
+{
+	_rc = RectMake(_x, _y, _image->getFrameWidth(), _image->getFrameHeight());
+
 }

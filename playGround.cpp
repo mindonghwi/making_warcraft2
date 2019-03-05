@@ -38,6 +38,14 @@ void playGround::loadImage()
 	IMAGEMANAGER->addFrameImage("iconHeight", "resource/icon/iconHeight.bmp", TILESIZE, TILESIZE, 1, 1, true, Mins::getMazenta());
 	IMAGEMANAGER->addFrameImage("iconWidth", "resource/icon/iconWidth.bmp", TILESIZE, TILESIZE, 1, 1, true, Mins::getMazenta());
 
+	IMAGEMANAGER->addImage("warcraftMainView", "resource/wallpaper/warcraftMainView.bmp", WINSIZEX, WINSIZEY, true, Mins::getMazenta());
+	IMAGEMANAGER->addImage("main", "resource/wallpaper/main.bmp", WINSIZEX, WINSIZEY, true, Mins::getMazenta());
+
+
+	IMAGEMANAGER->addFrameImage("btnSingleGame", "resource/wallpaper/btnSingleGame.bmp", 228, 24, 1, 1, true, Mins::getMazenta());
+	IMAGEMANAGER->addFrameImage("btnExit", "resource/wallpaper/btnExit.bmp", 228, 24, 1, 1, true, Mins::getMazenta());
+	IMAGEMANAGER->addFrameImage("btnMapTool", "resource/wallpaper/btnMapTool.bmp", 228, 24, 1, 1, true, Mins::getMazenta());
+
 
 }
 
@@ -50,9 +58,15 @@ HRESULT playGround::init()
 
 
 	_pMapCreate = new SCENEMAPTOOL();
+	_pCoverScene = new SCENECOVER();
+	_pMainMenuScene = new SCENEMAINMENU();
+
 
 	SCENEMANAGER->addScene("mapTool", _pMapCreate);
-	SCENEMANAGER->changeScene("mapTool");
+	SCENEMANAGER->addScene("menuScene", _pMainMenuScene);
+	SCENEMANAGER->addScene("coverScene", _pCoverScene);
+
+	SCENEMANAGER->changeScene("coverScene");
 
 
 	return S_OK;
