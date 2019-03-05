@@ -59,6 +59,8 @@ void CAMERA::update()
 
 
 	_rcCameraLimit = RectMake( _left,_top, _width, _height);
+
+	outOfRange();
 }
 
 void CAMERA::render(HDC hdc)
@@ -118,9 +120,9 @@ void CAMERA::setLeftTop()
 void CAMERA::moveRight(float offset)
 {
 	_posX += offset;
-	if (_posX + _width / 2 >= _nMapWidth - TILESIZE)
+	if (_posX + _width / 2 >= _nCameraLimitRight - TILESIZE)
 	{
-		_posX = static_cast<float>(_nMapWidth - _width / 2) - TILESIZE;
+		_posX = static_cast<float>(_nCameraLimitRight - _width / 2) - TILESIZE;
 	}
 	setLeftTop();
 
@@ -153,18 +155,18 @@ void CAMERA::moveDown(float offset)
 {
 	_posY += offset;
 
-	if (_posY + _height / 2 >= _nMapHeight - TILESIZE)
+	if (_posY + _height / 2 >= _nCameraLimitBottom - TILESIZE)
 	{
-		_posY = static_cast<float>(_nMapHeight - _height / 2) - TILESIZE;
+		_posY = static_cast<float>(_nCameraLimitBottom - _height / 2) - TILESIZE;
 	}
 	setLeftTop();
 }
 
 void CAMERA::outOfRange()
 {
-	if (_posX + _width / 2 >= _nMapWidth - TILESIZE)
+	if (_posX + _width / 2 >= _nCameraLimitRight - TILESIZE)
 	{
-		_posX = static_cast<float>(_nMapWidth - _width / 2) - TILESIZE;
+		_posX = static_cast<float>(_nCameraLimitRight - _width / 2) - TILESIZE;
 	}
 	else if (_posX - _width / 2 <= TILESIZE)
 	{
@@ -174,9 +176,9 @@ void CAMERA::outOfRange()
 	{
 		_posY = static_cast<float>(_height / 2) + TILESIZE;
 	}
-	else if (_posY + _height / 2 >= _nMapHeight - TILESIZE)
+	else if (_posY + _height / 2 >= _nCameraLimitBottom - TILESIZE)
 	{
-		_posY = static_cast<float>(_nMapHeight - _height / 2) - TILESIZE;
+		_posY = static_cast<float>(_nCameraLimitBottom - _height / 2) - TILESIZE;
 	}
 
 	setLeftTop();
@@ -220,4 +222,10 @@ void CAMERA::pushRenderObject(OBJECT * pObject)
 		_listRenderObject.push_back(pObject);
 	}
 
+}
+
+void CAMERA::setLimitToTile(int nTileCountX, int nTileCountY)
+{
+	_nCameraLimitRight = nTileCountX * TILESIZE;
+	_nCameraLimitBottom = nTileCountY * TILESIZE;
 }

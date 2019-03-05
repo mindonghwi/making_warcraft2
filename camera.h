@@ -35,6 +35,9 @@ private:
 
 	image*	_pBackGroundBuffer;
 
+	int		_nCameraLimitRight;
+	int		_nCameraLimitBottom;
+
 public:
 	CAMERA();
 	~CAMERA();
@@ -79,4 +82,6 @@ public:
 
 
 	HDC	getBackGoroundBuffer() { return _pBackGroundBuffer->getMemDC(); }
+
+	void	setLimitToTile(int nTileCountX,int nTileCountY);
 };

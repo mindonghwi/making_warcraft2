@@ -42,11 +42,19 @@ void playGround::loadImage()
 	IMAGEMANAGER->addImage("main", "resource/wallpaper/main.bmp", WINSIZEX, WINSIZEY, true, Mins::getMazenta());
 
 
-	IMAGEMANAGER->addFrameImage("btnSingleGame", "resource/wallpaper/btnSingleGame.bmp", 228, 24, 1, 1, true, Mins::getMazenta());
-	IMAGEMANAGER->addFrameImage("btnExit", "resource/wallpaper/btnExit.bmp", 228, 24, 1, 1, true, Mins::getMazenta());
-	IMAGEMANAGER->addFrameImage("btnMapTool", "resource/wallpaper/btnMapTool.bmp", 228, 24, 1, 1, true, Mins::getMazenta());
+	IMAGEMANAGER->addFrameImage("btnSingleGame", "resource/wallpaper/btnSingleGame.bmp", 224, 28, 1, 1, true, Mins::getMazenta());
+	IMAGEMANAGER->addFrameImage("btnExit", "resource/wallpaper/btnExit.bmp", 224, 28, 1, 1, true, Mins::getMazenta());
+	IMAGEMANAGER->addFrameImage("btnMapTool", "resource/wallpaper/btnMapTool.bmp", 224, 28, 1, 1, true, Mins::getMazenta());
+
+	IMAGEMANAGER->addFrameImage("sbtnHuge", "resource/wallpaper/sbtnHuge.bmp", 112, 28, 1, 1, true, Mins::getMazenta());
+	IMAGEMANAGER->addFrameImage("sbtnHuman", "resource/wallpaper/sbtnHuman.bmp", 112, 28, 1, 1, true, Mins::getMazenta());
+	IMAGEMANAGER->addFrameImage("sbtnNormal", "resource/wallpaper/sbtnNormal.bmp", 112, 28, 1, 1, true, Mins::getMazenta());
+	IMAGEMANAGER->addFrameImage("sbtnOrc", "resource/wallpaper/sbtnOrc.bmp", 112, 28, 1, 1, true, Mins::getMazenta());
+	IMAGEMANAGER->addFrameImage("sbtnThin", "resource/wallpaper/sbtnThin.bmp", 112, 28, 1, 1, true, Mins::getMazenta());
 
 
+	IMAGEMANAGER->addFrameImage("btnBack", "resource/wallpaper/btnBack.bmp", 224, 28, 1, 1, true, Mins::getMazenta());
+	IMAGEMANAGER->addFrameImage("btnStartGame", "resource/wallpaper/btnStartGame.bmp", 224, 28, 1, 1, true, Mins::getMazenta());
 }
 
 
@@ -54,6 +62,12 @@ void playGround::loadImage()
 HRESULT playGround::init()
 {
 	gameNode::init(true);
+
+	AddFontResource("fonts/BMJUA_ttf.ttf");
+	_hFont = CreateFont(18, 0, 0, 0, FW_BOLD, 0, 0, 0,
+		DEFAULT_CHARSET, OUT_STRING_PRECIS, CLIP_DEFAULT_PRECIS,
+		PROOF_QUALITY, DEFAULT_PITCH | FF_SWISS, TEXT("fonts/BMJUA_ttf.ttf"));
+
 	loadImage();
 
 
@@ -96,9 +110,13 @@ void playGround::update()
 void playGround::render()
 {
 	PatBlt(getMemDC(), 0, 0, WINSIZEX, WINSIZEY, WHITENESS);
+	HFONT hOldFont = (HFONT)SelectObject(getMemDC(), _hFont);
 	SCENEMANAGER->render();
 
 	TIMEMANAGER->render(getMemDC());
+	SelectObject(getMemDC(), hOldFont);
+	DeleteObject(hOldFont);
+
 	//===========================================================
 	this->getBackBuffer()->render(getHDC(), 0, 0);
 }

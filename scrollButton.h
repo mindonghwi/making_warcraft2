@@ -47,5 +47,9 @@ public:
 
 	void initSelected();
 	void readyStateBtn();
+
+
+	inline int getTopBtnIndex() { return _nTopBtnIndex; }
+	
 };
 

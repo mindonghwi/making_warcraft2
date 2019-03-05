@@ -24,6 +24,7 @@ private:
 	function<void(void)> _callbackFunction;
 
 	bool	_bIsSelected;
+	int		_nScrollNum;
 
 public:
 	button();
@@ -55,5 +56,7 @@ public:
 
 	inline void setDirection(BUTTONDIRECTION eBtnDirection) { _direction = eBtnDirection; }
 
+	inline void setScrollNum(int nNum) { _nScrollNum = 0; }
+	inline int	getScrollNum() { return _nScrollNum; }
 };
 

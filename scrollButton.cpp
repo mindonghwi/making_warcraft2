@@ -27,6 +27,8 @@ HRESULT SCROLLBUTTON::init(int nLeft, int nTop, int nWidth, int nHeight, int nRe
 
 	_direction = SCROLLBUTTONDIRECTION::DISABLE;
 
+	_nTopBtnIndex = 0;
+
 	return E_NOTIMPL;
 }
 
@@ -34,6 +36,7 @@ HRESULT SCROLLBUTTON::addBtn(const char * imageName, POINT btnDownFramePoint, PO
 {
 	_vButtons.push_back(new button);
 	_vButtons.back()->init(imageName, _nLeft, _nTop + _nHeight - _nBtnHeight, btnDownFramePoint, btnUpFramePoint, cbFunction);
+	_vButtons.back()->setScrollNum(static_cast<int>(_vButtons.size())-1);
 
 	_nHeight += _nBtnHeight;
 	_rcScrollBox = RectMake(_nLeft, _nTop, _nWidth, _nHeight);
@@ -89,7 +92,9 @@ void SCROLLBUTTON::update()
 				if (_vButtons[i]->getIsSelected())
 				{
 					_direction = SCROLLBUTTONDIRECTION::DISABLE;
+					_nTopBtnIndex = _vButtons[i]->getScrollNum();
 					changeVectorTop(i);
+					
 				}
 			}
 		}

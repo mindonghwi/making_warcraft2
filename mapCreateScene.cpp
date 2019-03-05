@@ -29,7 +29,9 @@ HRESULT SCENEMAPTOOL::init()
 	//ÃÊ±âÈ­
 	_pMapTool->init(TILECOUNTX, TILECOUNTY, TILESIZE);
 	_pCamera->init(WINSIZEX/2,WINSIZEY/2, WINSIZEX-100,WINSIZEY, TILECOUNTX * TILESIZE*2, TILECOUNTY * TILESIZE * 2);
-	
+	_pCamera->setLimitToTile(TILECOUNTX, TILECOUNTY);
+
+
 	_btnSave->init("btnSave", WINSIZEX - TILESIZE, TILESIZE * 8,bind(&SCENEMAPTOOL::save,this));
 	_btnLoad->init("btnLoad", WINSIZEX - TILESIZE, TILESIZE * 9, bind(&SCENEMAPTOOL::load, this));
 	_btnWidthAdd->init("btnAdd", WINSIZEX - (TILESIZE*2), TILESIZE * 10, bind(&SCENEMAPTOOL::addWidth, this));
@@ -192,9 +194,6 @@ void SCENEMAPTOOL::render()
 	_btnHeightAdd->render(getMemDC());
 	_btnHeightSub->render(getMemDC());
 
-
-
-
 }
 
 void SCENEMAPTOOL::save()
@@ -210,20 +209,23 @@ void SCENEMAPTOOL::load()
 void SCENEMAPTOOL::addWidth()
 {
 	_pMapTool->mapResize(_pMapTool->getMapCountX() + 1, _pMapTool->getMapCountY());
+	_pCamera->setLimitToTile(_pMapTool->getMapCountX(),_pMapTool->getMapCountY());
 }
 
 void SCENEMAPTOOL::subWidth()
 {
 	_pMapTool->mapResize(_pMapTool->getMapCountX() - 1, _pMapTool->getMapCountY());
+	_pCamera->setLimitToTile(_pMapTool->getMapCountX(), _pMapTool->getMapCountY());
 }
 
 void SCENEMAPTOOL::addHeight()
 {
 	_pMapTool->mapResize(_pMapTool->getMapCountX(), _pMapTool->getMapCountY() + 1);
+	_pCamera->setLimitToTile(_pMapTool->getMapCountX(), _pMapTool->getMapCountY());
 }
 
 void SCENEMAPTOOL::subHeight()
 {
 	_pMapTool->mapResize(_pMapTool->getMapCountX(), _pMapTool->getMapCountY() - 1);
-
+	_pCamera->setLimitToTile(_pMapTool->getMapCountX(), _pMapTool->getMapCountY());
 }

@@ -10,6 +10,9 @@ private:
 	gameNode*	_pMapCreate;
 	gameNode*	_pCoverScene;
 	gameNode*	_pMainMenuScene;
+
+
+	HFONT		_hFont;
 public:
 	virtual HRESULT init();
 	virtual void release();
