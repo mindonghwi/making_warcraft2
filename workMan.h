@@ -6,9 +6,10 @@
 class WORKMAN : public UNIT
 {
 private:
-
 	float	_fHarvestTime;		//자원 채집하는 시간
-	float	_fHarvestCount;		//한번의 자원 채집량
+	int		_nHarvestCount;		//현제 가지고 있는 자원량
+
+
 public:
 	WORKMAN();
 	~WORKMAN();
@@ -18,4 +19,6 @@ public:
 	virtual void update()			abstract;
 	virtual void release()			abstract;
 	virtual void render(HDC hdc)	abstract;
+
+	
 };
