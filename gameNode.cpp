@@ -76,6 +76,12 @@ void gameNode::update()
 	SOUNDMANAGER->update();
 	KEYMANAGER->update();
 	EFFECTMGR->update();
+
+
+	if (KEYMANAGER->isKeyDown(VK_ESCAPE))
+	{
+		SendMessage(_hWnd, WM_DESTROY, 1, 0);
+	}
 }
 
 void gameNode::render()
