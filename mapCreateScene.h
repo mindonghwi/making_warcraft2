@@ -42,6 +42,9 @@ private:
 	button*		_btnHeightAdd;
 	button*		_btnHeightSub;
 
+	RECT		_rcClient;
+	POINT		_ptLeftTop;
+	POINT		_ptRightBottom;
 
 
 public:

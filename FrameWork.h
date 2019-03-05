@@ -606,6 +606,24 @@ namespace Mins {
 		}
 	}
 
+	inline void settingClientRect(RECT& rcClient, POINT& ptLeftTop, POINT& ptRightBottom,HWND hWnd) 
+	{
+		GetClientRect(hWnd, &rcClient);
+		ptLeftTop.x = rcClient.left;
+		ptLeftTop.y = rcClient.top;
+		ptRightBottom.x = rcClient.right;
+		ptRightBottom.y = rcClient.bottom;
+	}
 
+	inline void clipCurser(RECT& rcClient, POINT& ptLeftTop, POINT& ptRightBottom, HWND hWnd)
+	{
+		ClientToScreen(hWnd, &ptLeftTop);
+		ClientToScreen(hWnd, &ptRightBottom);
+		rcClient.left = ptLeftTop.x;
+		rcClient.top = ptLeftTop.y;
+		rcClient.right = ptRightBottom.x;
+		rcClient.bottom = ptRightBottom.y;
+		ClipCursor(&rcClient);
+	}
 }
 

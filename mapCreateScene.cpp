@@ -67,6 +67,9 @@ HRESULT SCENEMAPTOOL::init()
 	//카메로 초기 위치 오차범위 수정
 	_pCamera->outOfRange();
 
+
+	Mins::settingClientRect(_rcClient, _ptLeftTop, _ptRightBottom,_hWnd);
+
 	return S_OK;
 }
 
@@ -83,6 +86,9 @@ void SCENEMAPTOOL::release()
 
 void SCENEMAPTOOL::update()
 {
+	Mins::settingClientRect(_rcClient, _ptLeftTop, _ptRightBottom, _hWnd);
+
+
 	_pCamera->update();
 
 	_pMapTool->update();
@@ -135,6 +141,27 @@ void SCENEMAPTOOL::update()
 	_btnWidthSub->update();
 	_btnHeightAdd->update();
 	_btnHeightSub->update();
+
+
+	if (_ptMouse.x <= _rcClient.left)
+	{
+		_pCamera->moveLeft(10.0f);
+	}
+	if (_ptMouse.x >= _rcClient.right - 1)
+	{
+		_pCamera->moveRight(10.0f);
+	}
+	if (_ptMouse.y <= _rcClient.top)
+	{
+		_pCamera->moveUp(10.0f);
+	}
+	if (_ptMouse.y >= _rcClient.bottom - 1)
+	{
+		_pCamera->moveDown(10.0f);
+	}
+
+	
+	Mins::clipCurser(_rcClient, _ptLeftTop, _ptRightBottom, _hWnd);
 }
 
 void SCENEMAPTOOL::render()
@@ -164,6 +191,10 @@ void SCENEMAPTOOL::render()
 	_btnWidthSub->render(getMemDC());
 	_btnHeightAdd->render(getMemDC());
 	_btnHeightSub->render(getMemDC());
+
+
+
+
 }
 
 void SCENEMAPTOOL::save()
