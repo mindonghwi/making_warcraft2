@@ -55,7 +55,7 @@ void CAMERA::update()
 	}
 
 
-
+	
 
 
 	_rcCameraLimit = RectMake( _left,_top, _width, _height);
