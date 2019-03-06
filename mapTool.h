@@ -10,23 +10,6 @@ class CAMERA;
 
 class  MAPTOOL{
 public:
-	enum E_MAPTILEPOS
-	{
-		E_NONE			=	0x00,
-		E_TOP			=	0x01,
-		E_BOTTOM		=	0x02,
-		E_LEFT			=	0x04,
-		E_RIGHT			=	0x08
-	};
-
-	enum class E_DIAGONAL
-	{
-		E_NONE = 0,
-		E_NORTH_WEST = 1,
-		E_NORTH_EAST = 2,
-		E_SOUTH_WEST = 3,
-		E_SOUTH_EAST = 4
-	};
 
 public:
 	MAPTOOL();

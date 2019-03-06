@@ -1,7 +1,14 @@
 #include "stdafx.h"
 #include "unit.h"
-
-UNIT::UNIT()
+UNIT::UNIT():
+	_nHp(0),
+	_nAttack(0),
+	_nDefence(0),
+	_fSpeed(0.0f),
+	_fSearchRange(0.0f),
+	_fAttackRange(0.0f),
+	_fAttackSpeedps(0.0f),
+	_arState{}
 {
 }
 

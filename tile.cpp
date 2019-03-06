@@ -97,6 +97,11 @@ void TILE::render(HDC hdc)
 
 }
 
+void TILE::renderBackGround(HDC hdc)
+{
+	_pImage->frameRender(hdc, _rcTile.left, _rcTile.top, _nFrameX, _nFrameY);
+}
+
 void TILE::release()
 {
 	_pImage = nullptr;

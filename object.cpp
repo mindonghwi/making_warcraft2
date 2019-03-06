@@ -1,6 +1,14 @@
 #include "stdafx.h"
 #include "object.h"
 
+OBJECT::OBJECT()
+{
+}
+
+OBJECT::~OBJECT()
+{
+}
+
 void OBJECT::init(float posX, float posY, int width, int height)
 {
 	_posX = posX;

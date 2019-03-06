@@ -154,6 +154,8 @@ void SCENEMAINMENU::nullCallbackFunction()
 
 void SCENEMAINMENU::changeGameScene()
 {
+	SCENEMANAGER->changeScene("gameScene");
+
 }
 
 void SCENEMAINMENU::changeMainmenuLayer()

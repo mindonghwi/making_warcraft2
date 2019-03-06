@@ -89,6 +89,7 @@ public:
 	
 	//그려주는 함수
 	void	render(HDC hdc);
+	void	renderBackGround(HDC hdc);
 
 	//메모리 해제
 	void	release();

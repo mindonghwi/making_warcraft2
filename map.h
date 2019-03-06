@@ -7,6 +7,7 @@
 
 class MAP
 {
+
 public:
 	MAP();
 	~MAP();
@@ -53,7 +54,9 @@ public:
 	void	release();
 	void	render(HDC hdc);
 	void	update();
-	
+
+	void	drawMap(HDC hdc);
+
 	
 	//Ãß°¡ºÐ
 	void	load();
@@ -73,4 +76,7 @@ public:
 
 	inline	void	setLinkCamera(CAMERA* pCamera) { _pCamera = pCamera; }
 
+
+
+	void	readjust();
 };

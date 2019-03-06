@@ -1,9 +1,35 @@
 #pragma once
 #include "stdafx.h"
 #include "object.h"
+#include "state.h"
+#include "behavier.h"
+
 
 class UNIT : public OBJECT {
-private:
+public:
+	enum class E_STATENUM
+	{
+		E_IDLE = 0,
+		E_MOVE,
+		E_PATROL,
+		E_ATTACK,
+		E_ATTACK_MOVE,
+		E_HOLD,
+		E_SPECIAL_01,		//스페셜의 늘어날수 있기에 방지 코드 ex) 채집도 하고 터지기도 하고 하면
+		E_MAX
+	};
+
+	enum class E_BEHAVIERNUM
+	{
+		E_NONE = 0,		//대기
+		E_ATTACK,		
+		E_MOVE,			
+		E_HARVEST,		
+		E_MAGIC,		//마법사-> 마법, 드워프->자폭, 기사-> 마법
+		E_MAX
+	};
+
+protected:
 	int		_nHp;
 	int		_nAttack;
 	int		_nDefence;
@@ -13,10 +39,16 @@ private:
 	float	_fAttackRange;		//
 	float	_fAttackSpeedps;	//초당 몇번 공격하는지
 
+	//상태들이 불러온다. 상태 패턴
+	STATE*			_arState[static_cast<const int>(UNIT::E_STATENUM::E_MAX)];
+	//행동들을 불러온다. 스트래티지 패턴
+	BEHAVIER*		_arBeHavier[static_cast<const int>(UNIT::E_BEHAVIERNUM::E_MAX)];
 
+	STATE*			_pCurrentState;
+	BEHAVIER*		_pCurrentBeHavier;
 public:
 	UNIT();
-	~UNIT();
+	virtual ~UNIT();
 
 	//그냥 초기화
 	virtual void init(int nPosX, int nPosY, int nWidth, int nHeight);
@@ -38,6 +70,10 @@ public:
 	inline	void	setSearchRange(float fAmount)	{ _fSearchRange = fAmount; }
 	inline	void	setAttackRange(float fAmount)	{ _fAttackRange = fAmount; }
 	inline	void	setAttackSpeedps(float fAmount) { _fAttackSpeedps = fAmount; }
+	inline	void	setCurrentState(UNIT::E_STATENUM eStateNum) { _pCurrentState = _arState[static_cast<int>(eStateNum)]; }
+	inline	void	setCurrentBehavir(UNIT::E_BEHAVIERNUM eBehavier) { _pCurrentBeHavier = _arBeHavier[static_cast<int>(eBehavier)]; }
+
+
 
 	//getter
 	inline	int		getHp()				{ return _nHp; }
@@ -48,6 +84,9 @@ public:
 	inline	float	getAttackRange()	{ return _fAttackRange; }
 	inline	float	getAttackSpeedps()	{ return _fAttackSpeedps; }
 
+	inline	void	getCurrentState() { _pCurrentState; }
+	inline	void	getCurrentBehavir() { _pCurrentBeHavier; }
+	
 public:
 
 	//커맨더 쓸수 있는거 정리해본것

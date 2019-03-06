@@ -74,13 +74,18 @@ HRESULT playGround::init()
 	_pMapCreate = new SCENEMAPTOOL();
 	_pCoverScene = new SCENECOVER();
 	_pMainMenuScene = new SCENEMAINMENU();
-
+	_pGameScene = new SCENEGAME();
 
 	SCENEMANAGER->addScene("mapTool", _pMapCreate);
 	SCENEMANAGER->addScene("menuScene", _pMainMenuScene);
 	SCENEMANAGER->addScene("coverScene", _pCoverScene);
+	SCENEMANAGER->addScene("gameScene", _pGameScene);
 
 	SCENEMANAGER->changeScene("coverScene");
+
+
+	SCENEMANAGER->changeScene("gameScene");
+	//SCENEMANAGER->changeScene("mapTool");
 
 
 	return S_OK;

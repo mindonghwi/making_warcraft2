@@ -16,9 +16,11 @@ public:
 
 
 	virtual void init(int nPosX, int nPosY, int nWidth, int nHeight);
-	virtual void update()			abstract;
-	virtual void release()			abstract;
-	virtual void render(HDC hdc)	abstract;
+	virtual void update()			override;
+	virtual void release()			override;
+	virtual void render(HDC hdc)	override;
 
-	
+private:
+	void	allocateState();
+	void	allocateBehavier();
 };

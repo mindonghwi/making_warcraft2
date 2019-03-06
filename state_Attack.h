@@ -2,10 +2,11 @@
 #include "stdafx.h"
 #include "state.h"
 
+
+
 class STATE_ATTACK : public STATE
 {
 private:
-
 
 public:
 	STATE_ATTACK();

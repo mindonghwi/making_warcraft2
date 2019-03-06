@@ -620,7 +620,7 @@ bool MAPTOOL::readjustMap()
 							&& _vvMap[j - 1][i - 1]->getTerrian() != TILE::E_TERRIAN::DIRT_WATER
 							&& _vvMap[j - 1][i - 1]->getTerrian() != TILE::E_TERRIAN::DIRT_GROUND)
 						{
-							nFrameX += static_cast<unsigned int>(MAPTOOL::E_DIAGONAL::E_NORTH_WEST);
+							nFrameX += static_cast<unsigned int>(E_DIAGONAL::E_NORTH_WEST);
 							if (_vvMap[j - 1][i - 1]->getTerrian() == TILE::E_TERRIAN::GROUND)
 							{
 								nFrameY = 3;
@@ -635,7 +635,7 @@ bool MAPTOOL::readjustMap()
 							&& _vvMap[j - 1][i + 1]->getTerrian() != TILE::E_TERRIAN::ROCK
 							&& _vvMap[j - 1][i + 1]->getTerrian() != TILE::E_TERRIAN::DIRT_WATER
 							&& _vvMap[j - 1][i + 1]->getTerrian() != TILE::E_TERRIAN::DIRT_GROUND) {
-							nFrameX += static_cast<unsigned int>(MAPTOOL::E_DIAGONAL::E_NORTH_EAST);
+							nFrameX += static_cast<unsigned int>(E_DIAGONAL::E_NORTH_EAST);
 							if (_vvMap[j - 1][i + 1]->getTerrian() == TILE::E_TERRIAN::GROUND)
 							{
 								nFrameY = 3;
@@ -649,7 +649,7 @@ bool MAPTOOL::readjustMap()
 							&& _vvMap[j + 1][i - 1]->getTerrian() != TILE::E_TERRIAN::ROCK
 							&& _vvMap[j + 1][i - 1]->getTerrian() != TILE::E_TERRIAN::DIRT_WATER
 							&& _vvMap[j + 1][i - 1]->getTerrian() != TILE::E_TERRIAN::DIRT_GROUND) {
-							nFrameX += static_cast<unsigned int>(MAPTOOL::E_DIAGONAL::E_SOUTH_WEST);
+							nFrameX += static_cast<unsigned int>(E_DIAGONAL::E_SOUTH_WEST);
 							if (_vvMap[j + 1][i - 1]->getTerrian() == TILE::E_TERRIAN::GROUND)
 							{
 								nFrameY = 3;
@@ -663,7 +663,7 @@ bool MAPTOOL::readjustMap()
 							&& _vvMap[j + 1][i + 1]->getTerrian() != TILE::E_TERRIAN::ROCK
 							&& _vvMap[j + 1][i + 1]->getTerrian() != TILE::E_TERRIAN::DIRT_WATER
 							&& _vvMap[j + 1][i + 1]->getTerrian() != TILE::E_TERRIAN::DIRT_GROUND) {
-							nFrameX += static_cast<unsigned int>(MAPTOOL::E_DIAGONAL::E_SOUTH_EAST);
+							nFrameX += static_cast<unsigned int>(E_DIAGONAL::E_SOUTH_EAST);
 							if (_vvMap[j + 1][i + 1]->getTerrian() == TILE::E_TERRIAN::GROUND)
 							{
 								nFrameY = 3;

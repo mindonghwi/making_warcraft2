@@ -42,6 +42,7 @@ void MAP::init(const char * mapName)
 	_strMapName = mapName;
 
 	load();
+	readjust();
 }
 
 void MAP::load()
@@ -277,6 +278,17 @@ void MAP::update()
 
 }
 
+void MAP::drawMap(HDC hdc)
+{
+	for (int j = 0; j < _nTileCountY; j++)
+	{
+		for (int i = 0; i < _nTileCountX; i++)
+		{
+			_vvMap[j][i]->renderBackGround(hdc);
+		}
+	}
+}
+
 
 
 bool MAP::getObjectPos(vector<vector<int>>& _vvTileIndex, TILE::E_OBJECT object)
@@ -309,6 +321,266 @@ void MAP::deleteObject()
 		for (int i = 0; i < _nTileCountX; i++)
 		{
 			_vvMap[j][i]->setObject(TILE::E_OBJECT::E_NONE);
+		}
+	}
+}
+
+void MAP::readjust()
+{
+	for (int j = 0; j < _nTileCountY; j++)
+	{
+		for (int i = 0; i < _nTileCountX; i++)
+		{
+			//벽이면 검사
+
+			TILE::E_TERRIAN eTerrian = _vvMap[j][i]->getTerrian();
+			TILE::E_TERRIAN eTmp = eTerrian;	//자기 속성을 가질것이다.
+
+			if (eTerrian == TILE::E_TERRIAN::DIRT_GROUND ||
+				eTerrian == TILE::E_TERRIAN::DIRT_WATER ||
+				eTerrian == TILE::E_TERRIAN::ROCK)
+			{
+				eTerrian = TILE::E_TERRIAN::DIRT;
+			}
+
+			if (eTerrian == TILE::E_TERRIAN::DIRT)
+			{
+				unsigned int nFrameX(0);
+				int nFrameY(0);
+				if (j > 0)
+				{
+					//위쪽 탐색 가능
+					if (_vvMap[j - 1][i]->getTerrian() == TILE::E_TERRIAN::DIRT ||
+						_vvMap[j - 1][i]->getTerrian() == TILE::E_TERRIAN::ROCK)
+					{
+						nFrameX |= E_MAPTILEPOS::E_TOP;
+					}
+					else
+					{
+						eTmp = _vvMap[j - 1][i]->getTerrian();
+					}
+				}
+
+				if (j < _nTileCountY - 1)
+				{
+					//아래 탐색 가능
+					if (_vvMap[j + 1][i]->getTerrian() == TILE::E_TERRIAN::DIRT ||
+						_vvMap[j + 1][i]->getTerrian() == TILE::E_TERRIAN::ROCK)
+					{
+						nFrameX |= E_MAPTILEPOS::E_BOTTOM;
+					}
+					else
+					{
+						eTmp = _vvMap[j + 1][i]->getTerrian();
+					}
+				}
+
+				if (i > 0)
+				{
+					//좌측 탐색 가능
+					if (_vvMap[j][i - 1]->getTerrian() == TILE::E_TERRIAN::DIRT ||
+						_vvMap[j][i - 1]->getTerrian() == TILE::E_TERRIAN::ROCK)
+					{
+						nFrameX |= E_MAPTILEPOS::E_LEFT;
+					}
+					else
+					{
+						eTmp = _vvMap[j][i - 1]->getTerrian();
+					}
+				}
+
+				if (i < _nTileCountX - 1)
+				{
+					//우측 탐색 가능
+
+					if (_vvMap[j][i + 1]->getTerrian() == TILE::E_TERRIAN::DIRT ||
+						_vvMap[j][i + 1]->getTerrian() == TILE::E_TERRIAN::ROCK)
+					{
+						nFrameX |= E_MAPTILEPOS::E_RIGHT;
+					}
+					else
+					{
+						eTmp = _vvMap[j][i + 1]->getTerrian();
+					}
+				}
+
+				if (eTmp != TILE::E_TERRIAN::DIRT)
+				{
+					//for (int i = 0; i < 6; i++)
+					//{
+					//	if (nFrameX == _arReadjustMap[i])
+					//	{
+					//		_vvMap[j][i]->settingTile(0, 0, _bIsWall, eTmp, TILE::E_OBJECT::E_NONE);
+					//		return false;
+					//	}
+					//}
+					if (nFrameX == 3)
+					{
+						_vvMap[j][i]->settingTile(0, 0, _bIsWall, eTmp, TILE::E_OBJECT::E_NONE);
+					}
+					else if (nFrameX == 12)
+					{
+						_vvMap[j][i]->settingTile(0, 0, _bIsWall, eTmp, TILE::E_OBJECT::E_NONE);
+					}
+					else if (nFrameX == 1 || nFrameX == 2 || nFrameX == 4 || nFrameX == 8)
+					{
+						_vvMap[j][i]->settingTile(0, 0, _bIsWall, eTmp, TILE::E_OBJECT::E_NONE);
+					}
+					else if (nFrameX == 0)
+					{
+						_vvMap[j][i]->settingTile(0, 0, _bIsWall, eTmp, TILE::E_OBJECT::E_NONE);
+					}
+				}
+
+
+				//찾아야한다 주변에 풀인지 바다인지
+				if (nFrameX > 0 && nFrameX < 15)
+				{
+					if (eTmp == TILE::E_TERRIAN::GROUND)
+					{
+						nFrameY = 3;
+					}
+					else if (eTmp == TILE::E_TERRIAN::WATER)
+					{
+						nFrameY = 4;
+					}
+				}
+				else
+				{
+					if (nFrameX == 15)
+					{
+						if (_vvMap[j - 1][i - 1]->getTerrian() != TILE::E_TERRIAN::DIRT
+							&& _vvMap[j - 1][i - 1]->getTerrian() != TILE::E_TERRIAN::ROCK
+							&& _vvMap[j - 1][i - 1]->getTerrian() != TILE::E_TERRIAN::DIRT_WATER
+							&& _vvMap[j - 1][i - 1]->getTerrian() != TILE::E_TERRIAN::DIRT_GROUND)
+						{
+							nFrameX += static_cast<unsigned int>(E_DIAGONAL::E_NORTH_WEST);
+							if (_vvMap[j - 1][i - 1]->getTerrian() == TILE::E_TERRIAN::GROUND)
+							{
+								nFrameY = 3;
+							}
+							else if (_vvMap[j - 1][i - 1]->getTerrian() == TILE::E_TERRIAN::WATER)
+							{
+								nFrameY = 4;
+							}
+
+						}
+						else if (_vvMap[j - 1][i + 1]->getTerrian() != TILE::E_TERRIAN::DIRT
+							&& _vvMap[j - 1][i + 1]->getTerrian() != TILE::E_TERRIAN::ROCK
+							&& _vvMap[j - 1][i + 1]->getTerrian() != TILE::E_TERRIAN::DIRT_WATER
+							&& _vvMap[j - 1][i + 1]->getTerrian() != TILE::E_TERRIAN::DIRT_GROUND) {
+							nFrameX += static_cast<unsigned int>(E_DIAGONAL::E_NORTH_EAST);
+							if (_vvMap[j - 1][i + 1]->getTerrian() == TILE::E_TERRIAN::GROUND)
+							{
+								nFrameY = 3;
+							}
+							else if (_vvMap[j - 1][i + 1]->getTerrian() == TILE::E_TERRIAN::WATER)
+							{
+								nFrameY = 4;
+							}
+						}
+						else if (_vvMap[j + 1][i - 1]->getTerrian() != TILE::E_TERRIAN::DIRT
+							&& _vvMap[j + 1][i - 1]->getTerrian() != TILE::E_TERRIAN::ROCK
+							&& _vvMap[j + 1][i - 1]->getTerrian() != TILE::E_TERRIAN::DIRT_WATER
+							&& _vvMap[j + 1][i - 1]->getTerrian() != TILE::E_TERRIAN::DIRT_GROUND) {
+							nFrameX += static_cast<unsigned int>(E_DIAGONAL::E_SOUTH_WEST);
+							if (_vvMap[j + 1][i - 1]->getTerrian() == TILE::E_TERRIAN::GROUND)
+							{
+								nFrameY = 3;
+							}
+							else if (_vvMap[j + 1][i - 1]->getTerrian() == TILE::E_TERRIAN::WATER)
+							{
+								nFrameY = 4;
+							}
+						}
+						else if (_vvMap[j + 1][i + 1]->getTerrian() != TILE::E_TERRIAN::DIRT
+							&& _vvMap[j + 1][i + 1]->getTerrian() != TILE::E_TERRIAN::ROCK
+							&& _vvMap[j + 1][i + 1]->getTerrian() != TILE::E_TERRIAN::DIRT_WATER
+							&& _vvMap[j + 1][i + 1]->getTerrian() != TILE::E_TERRIAN::DIRT_GROUND) {
+							nFrameX += static_cast<unsigned int>(E_DIAGONAL::E_SOUTH_EAST);
+							if (_vvMap[j + 1][i + 1]->getTerrian() == TILE::E_TERRIAN::GROUND)
+							{
+								nFrameY = 3;
+							}
+							else if (_vvMap[j + 1][i + 1]->getTerrian() == TILE::E_TERRIAN::WATER)
+							{
+								nFrameY = 4;
+							}
+						}
+						else
+						{
+							nFrameY = 2;
+						}
+					}
+
+				}
+
+				_vvMap[j][i]->readjustWall((int)nFrameX, (int)nFrameX, nFrameY);
+			}
+
+
+		}
+	}
+
+
+	for (int j = 0; j < _nTileCountY; j++)
+	{
+		for (int i = 0; i < _nTileCountX; i++)
+		{
+			if (_vvMap[j][i]->getTerrian() == TILE::E_TERRIAN::ROCK)
+			{
+				unsigned int nFrameX(0);
+				if (j > 0)
+				{
+					//위쪽 탐색 가능
+					if (_vvMap[j - 1][i]->getTerrian() == TILE::E_TERRIAN::ROCK)
+					{
+						nFrameX |= E_MAPTILEPOS::E_TOP;
+					}
+				}
+
+				if (j < _nTileCountY - 1)
+				{
+					//아래 탐색 가능
+					if (_vvMap[j + 1][i]->getTerrian() == TILE::E_TERRIAN::ROCK)
+					{
+						nFrameX |= E_MAPTILEPOS::E_BOTTOM;
+					}
+
+				}
+
+				if (i > 0)
+				{
+					//좌측 탐색 가능
+					if (_vvMap[j][i - 1]->getTerrian() == TILE::E_TERRIAN::ROCK)
+					{
+						nFrameX |= E_MAPTILEPOS::E_LEFT;
+					}
+
+				}
+
+				if (i < _nTileCountX - 1)
+				{
+					//우측 탐색 가능
+
+					if (_vvMap[j][i + 1]->getTerrian() == TILE::E_TERRIAN::ROCK)
+					{
+						nFrameX |= E_MAPTILEPOS::E_RIGHT;
+					}
+
+				}
+
+
+				if (nFrameX < 5 || nFrameX == 12 || nFrameX == 8)
+				{
+					_vvMap[j][i]->settingTile(0, 0, _bIsWall, TILE::E_TERRIAN::DIRT, TILE::E_OBJECT::E_NONE);
+				}
+				else
+				{
+					_vvMap[j][i]->readjustWall((int)nFrameX, (int)nFrameX, 0);
+				}
+
+			}
 		}
 	}
 }

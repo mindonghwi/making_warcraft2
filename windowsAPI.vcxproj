@@ -152,6 +152,16 @@
     <ClInclude Include="action.h" />
     <ClInclude Include="animation.h" />
     <ClInclude Include="aStar.h" />
+    <ClInclude Include="behavier.h" />
+    <ClInclude Include="behavier_Attack_Standard.h" />
+    <ClInclude Include="behavier_Harvest.h" />
+    <ClInclude Include="behavier_Harvest_Ship.h" />
+    <ClInclude Include="behavier_Harvest_WorkMan.h" />
+    <ClInclude Include="behavier_magic.h" />
+    <ClInclude Include="behavier_Move.h" />
+    <ClInclude Include="behavier_Move_Fly.h" />
+    <ClInclude Include="behavier_Move_Walk.h" />
+    <ClInclude Include="behavier_None.h" />
     <ClInclude Include="button.h" />
     <ClInclude Include="camera.h" />
     <ClInclude Include="command.h" />
@@ -160,6 +170,7 @@
     <ClInclude Include="effectManager.h" />
     <ClInclude Include="FrameWork.h" />
     <ClInclude Include="gameNode.h" />
+    <ClInclude Include="gameScene.h" />
     <ClInclude Include="goldMine.h" />
     <ClInclude Include="image.h" />
     <ClInclude Include="imageManager.h" />
@@ -188,6 +199,7 @@
     <ClInclude Include="state_idle.h" />
     <ClInclude Include="state_move.h" />
     <ClInclude Include="state_Patrol.h" />
+    <ClInclude Include="state_special.h" />
     <ClInclude Include="stdafx.h" />
     <ClInclude Include="stopCommand.h" />
     <ClInclude Include="targetver.h" />
@@ -205,12 +217,19 @@
     <ClCompile Include="action.cpp" />
     <ClCompile Include="animation.cpp" />
     <ClCompile Include="aStar.cpp" />
+    <ClCompile Include="behavier_Attack_Standard.cpp" />
+    <ClCompile Include="behavier_Harvest_Ship.cpp" />
+    <ClCompile Include="behavier_Harvest_WorkMan.cpp" />
+    <ClCompile Include="behavier_Move_Fly.cpp" />
+    <ClCompile Include="behavier_Move_Walk.cpp" />
+    <ClCompile Include="behavier_None.cpp" />
     <ClCompile Include="button.cpp" />
     <ClCompile Include="camera.cpp" />
     <ClCompile Include="coverScene.cpp" />
     <ClCompile Include="effect.cpp" />
     <ClCompile Include="effectManager.cpp" />
     <ClCompile Include="gameNode.cpp" />
+    <ClCompile Include="gameScene.cpp" />
     <ClCompile Include="goldMine.cpp" />
     <ClCompile Include="image.cpp" />
     <ClCompile Include="imageManager.cpp" />
@@ -228,12 +247,14 @@
     <ClCompile Include="sceneManager.cpp" />
     <ClCompile Include="scrollButton.cpp" />
     <ClCompile Include="soundManager.cpp" />
+    <ClCompile Include="state.cpp" />
     <ClCompile Include="state_Attack.cpp" />
     <ClCompile Include="state_AttackMove.cpp" />
     <ClCompile Include="state_hold.cpp" />
     <ClCompile Include="state_idle.cpp" />
     <ClCompile Include="state_move.cpp" />
     <ClCompile Include="state_Patrol.cpp" />
+    <ClCompile Include="state_special.cpp" />
     <ClCompile Include="stdafx.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Create</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Create</PrecompiledHeader>

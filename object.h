@@ -18,6 +18,9 @@ protected:
 	int			_posZ;		//zoder용
 
 public:
+	OBJECT();
+	virtual ~OBJECT();
+
 	//x,y가로길이 세로길이 초기화
 	virtual void init(float posX, float posY, int width, int height);
 

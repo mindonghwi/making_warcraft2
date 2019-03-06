@@ -12,3 +12,4 @@ STATE_ATTACK::~STATE_ATTACK()
 void STATE_ATTACK::update()
 {
 }
+

@@ -60,7 +60,7 @@ void CAMERA::update()
 
 	_rcCameraLimit = RectMake( _left,_top, _width, _height);
 
-	outOfRange();
+	//outOfRange();
 }
 
 void CAMERA::render(HDC hdc)
@@ -93,7 +93,7 @@ void CAMERA::release()
 void CAMERA::renderinit()
 {
 	//PatBlt(_pCameraBuffer->getMemDC(), 0, 0, _nMapWidth, _nMapHeight, BLACKNESS);
-	BitBlt(_pCameraBuffer->getMemDC(), _left, _top, _width, _height, _pBackGroundBuffer->getMemDC(), _left, _top, SRCCOPY);
+	BitBlt(_pCameraBuffer->getMemDC(), _left, _top, _nMapWidth, _nMapWidth, _pBackGroundBuffer->getMemDC(), _left, _top, SRCCOPY);
 }
 
 void CAMERA::setting(int nPosX, int nPosY)

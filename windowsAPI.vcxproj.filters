@@ -82,6 +82,21 @@
     <Filter Include="PlayGround\unit\state\stateCpp">
       <UniqueIdentifier>{52b58105-5605-4812-9466-f1288d479212}</UniqueIdentifier>
     </Filter>
+    <Filter Include="PlayGround\unit\behavier">
+      <UniqueIdentifier>{496d2e4c-51b7-4691-9207-75f76f927883}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="PlayGround\unit\behavier\attack">
+      <UniqueIdentifier>{efe87dd4-5365-434b-83b6-92909d21986f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="PlayGround\unit\behavier\magic">
+      <UniqueIdentifier>{1fe5357b-0028-40cb-bf35-edb7f618ce74}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="PlayGround\unit\behavier\move">
+      <UniqueIdentifier>{ebf2e840-6543-4b92-b2b1-b5a7cb79c837}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="PlayGround\unit\behavier\harvest">
+      <UniqueIdentifier>{d1394ecb-3046-424e-a27e-70d299a91a3a}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="stdafx.h">
@@ -219,9 +234,6 @@
     <ClInclude Include="state.h">
       <Filter>PlayGround\unit\state\stateHeader</Filter>
     </ClInclude>
-    <ClInclude Include="state_Attack.h">
-      <Filter>PlayGround\unit\state\stateHeader</Filter>
-    </ClInclude>
     <ClInclude Include="state_AttackMove.h">
       <Filter>PlayGround\unit\state\stateHeader</Filter>
     </ClInclude>
@@ -231,11 +243,50 @@
     <ClInclude Include="state_idle.h">
       <Filter>PlayGround\unit\state\stateHeader</Filter>
     </ClInclude>
+    <ClInclude Include="state_Patrol.h">
+      <Filter>PlayGround\unit\state\stateHeader</Filter>
+    </ClInclude>
+    <ClInclude Include="state_special.h">
+      <Filter>PlayGround\unit\state\stateHeader</Filter>
+    </ClInclude>
+    <ClInclude Include="state_Attack.h">
+      <Filter>PlayGround\unit\state\stateHeader</Filter>
+    </ClInclude>
     <ClInclude Include="state_move.h">
       <Filter>PlayGround\unit\state\stateHeader</Filter>
     </ClInclude>
-    <ClInclude Include="state_Patrol.h">
-      <Filter>PlayGround\unit\state\stateHeader</Filter>
+    <ClInclude Include="behavier_Attack_Standard.h">
+      <Filter>PlayGround\unit\behavier\attack</Filter>
+    </ClInclude>
+    <ClInclude Include="behavier.h">
+      <Filter>PlayGround\unit\behavier</Filter>
+    </ClInclude>
+    <ClInclude Include="behavier_Move_Fly.h">
+      <Filter>PlayGround\unit\behavier\move</Filter>
+    </ClInclude>
+    <ClInclude Include="behavier_Move.h">
+      <Filter>PlayGround\unit\behavier\move</Filter>
+    </ClInclude>
+    <ClInclude Include="behavier_Move_Walk.h">
+      <Filter>PlayGround\unit\behavier\move</Filter>
+    </ClInclude>
+    <ClInclude Include="behavier_None.h">
+      <Filter>PlayGround\unit\behavier</Filter>
+    </ClInclude>
+    <ClInclude Include="behavier_Harvest.h">
+      <Filter>PlayGround\unit\behavier\harvest</Filter>
+    </ClInclude>
+    <ClInclude Include="behavier_Harvest_Ship.h">
+      <Filter>PlayGround\unit\behavier\harvest</Filter>
+    </ClInclude>
+    <ClInclude Include="behavier_Harvest_WorkMan.h">
+      <Filter>PlayGround\unit\behavier\harvest</Filter>
+    </ClInclude>
+    <ClInclude Include="behavier_magic.h">
+      <Filter>PlayGround\unit\behavier\magic</Filter>
+    </ClInclude>
+    <ClInclude Include="gameScene.h">
+      <Filter>scene</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -344,9 +395,6 @@
     <ClCompile Include="state_Patrol.cpp">
       <Filter>PlayGround\unit\state\stateCpp</Filter>
     </ClCompile>
-    <ClCompile Include="state_Attack.cpp">
-      <Filter>PlayGround\unit\state\stateCpp</Filter>
-    </ClCompile>
     <ClCompile Include="state_AttackMove.cpp">
       <Filter>PlayGround\unit\state\stateCpp</Filter>
     </ClCompile>
@@ -361,6 +409,36 @@
     </ClCompile>
     <ClCompile Include="resources.cpp">
       <Filter>PlayGround\resource</Filter>
+    </ClCompile>
+    <ClCompile Include="state_special.cpp">
+      <Filter>PlayGround\unit\state\stateCpp</Filter>
+    </ClCompile>
+    <ClCompile Include="state_Attack.cpp">
+      <Filter>PlayGround\unit\state\stateCpp</Filter>
+    </ClCompile>
+    <ClCompile Include="state.cpp">
+      <Filter>PlayGround\unit\state\stateCpp</Filter>
+    </ClCompile>
+    <ClCompile Include="behavier_Attack_Standard.cpp">
+      <Filter>PlayGround\unit\behavier\attack</Filter>
+    </ClCompile>
+    <ClCompile Include="behavier_Move_Fly.cpp">
+      <Filter>PlayGround\unit\behavier\move</Filter>
+    </ClCompile>
+    <ClCompile Include="behavier_Move_Walk.cpp">
+      <Filter>PlayGround\unit\behavier\move</Filter>
+    </ClCompile>
+    <ClCompile Include="behavier_None.cpp">
+      <Filter>PlayGround\unit\behavier</Filter>
+    </ClCompile>
+    <ClCompile Include="behavier_Harvest_WorkMan.cpp">
+      <Filter>PlayGround\unit\behavier\harvest</Filter>
+    </ClCompile>
+    <ClCompile Include="behavier_Harvest_Ship.cpp">
+      <Filter>PlayGround\unit\behavier\harvest</Filter>
+    </ClCompile>
+    <ClCompile Include="gameScene.cpp">
+      <Filter>scene</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

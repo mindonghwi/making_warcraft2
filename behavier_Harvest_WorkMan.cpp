@@ -1,0 +1,14 @@
+#include "stdafx.h"
+#include "behavier_Harvest_WorkMan.h"
+
+BEHAVIER_HARVEST_WORKMAN::BEHAVIER_HARVEST_WORKMAN()
+{
+}
+
+BEHAVIER_HARVEST_WORKMAN::~BEHAVIER_HARVEST_WORKMAN()
+{
+}
+
+void BEHAVIER_HARVEST_WORKMAN::update(UNIT * pUnit)
+{
+}
