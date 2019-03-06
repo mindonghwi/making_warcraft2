@@ -11,6 +11,7 @@ public:
 	STATE_IDLE();
 	~STATE_IDLE();
 
+	virtual void start()	override;
 	virtual void update()	override;
 
 };

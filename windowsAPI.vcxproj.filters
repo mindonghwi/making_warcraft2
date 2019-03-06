@@ -288,6 +288,9 @@
     <ClInclude Include="gameScene.h">
       <Filter>scene</Filter>
     </ClInclude>
+    <ClInclude Include="resourceMgr.h">
+      <Filter>PlayGround\resource</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="stdafx.cpp">
@@ -439,6 +442,12 @@
     </ClCompile>
     <ClCompile Include="gameScene.cpp">
       <Filter>scene</Filter>
+    </ClCompile>
+    <ClCompile Include="resourceMgr.cpp">
+      <Filter>PlayGround\resource</Filter>
+    </ClCompile>
+    <ClCompile Include="player.cpp">
+      <Filter>PlayGround\player</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

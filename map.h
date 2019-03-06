@@ -4,6 +4,8 @@
 #include "goldMine.h"
 #include "tree.h"
 #include "oliPatch.h"
+#include "resourceMgr.h"
+
 
 class MAP
 {
@@ -45,6 +47,8 @@ private:
 	list<TREE*>		_listTree;
 	list<OILPATCH*>	_listOilPatch;
 
+	RESOURCEMGR*		_pResourceMgr;
+
 private:
 	void	createMap();
 	
@@ -75,8 +79,11 @@ public:
 	inline	TILE*	getTile(int nX, int nY) { return _vvMap[nY][nX]; }
 
 	inline	void	setLinkCamera(CAMERA* pCamera) { _pCamera = pCamera; }
+	inline	void	setLinkResourceMgr(RESOURCEMGR* pResourceMgr) { _pResourceMgr = pResourceMgr; }
 
 
 
 	void	readjust();
+
+
 };

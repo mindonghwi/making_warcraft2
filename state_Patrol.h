@@ -11,6 +11,7 @@ public:
 	STATE_PATROL();
 	~STATE_PATROL();
 
+	virtual void start()	override;
 	virtual void update()	override;
 
 };

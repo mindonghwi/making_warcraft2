@@ -613,6 +613,39 @@ void image::frameRenderCenter(HDC hdc, int dstX, int dstY, int currentFrameX, in
 
 }
 
+void image::frameRenderCenter(HDC hdc, float dstX, float dstY, int currentFrameX, int currentFrameY)
+{
+	_imageInfo->currentFrameX = currentFrameX;
+	_imageInfo->currentFrameY = currentFrameY;
+
+	if (_trans)
+	{
+		//특정칼라를 제외하고 DC -> DC 사이로 고속복사 해주는 함수
+		GdiTransparentBlt(
+			hdc,					//복사될 DC
+			static_cast<int>(dstX) - _imageInfo->frameWidth / 2,					//이미지 그려줄 시작X좌표(left)
+			static_cast<int>(dstY) - _imageInfo->frameHeight / 2,					//이미지 그려줄 시작Y좌표(top)
+			_imageInfo->frameWidth,				//복사될 가로크기
+			_imageInfo->frameHeight,				//복사될 세로크기
+			_imageInfo->hMemDC,
+			_imageInfo->currentFrameX * _imageInfo->frameWidth,
+			_imageInfo->currentFrameY * _imageInfo->frameHeight,			//복사시작할 XY좌표
+			_imageInfo->frameWidth,				//복사할 가로/세로크기
+			_imageInfo->frameHeight,
+			_transColor				//복사때 제외할 칼라(뺄 칼라)
+		);
+	}
+	else
+	{
+		BitBlt(hdc, static_cast<int>(dstX) - _imageInfo->frameWidth / 2, static_cast<int>(dstY) - _imageInfo->frameHeight / 2,
+			_imageInfo->frameWidth, _imageInfo->frameHeight,
+			_imageInfo->hMemDC,
+			_imageInfo->currentFrameX * _imageInfo->frameWidth,
+			_imageInfo->currentFrameY * _imageInfo->frameHeight, SRCCOPY);
+	}
+
+}
+
 void image::loopRender(HDC hdc, const LPRECT drawArea, int offSetX, int offSetY)
 {
 	if (offSetX < 0) offSetX = _imageInfo->width + (offSetX % _imageInfo->width);

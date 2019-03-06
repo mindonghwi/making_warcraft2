@@ -9,6 +9,10 @@ STATE_SPECIAL::~STATE_SPECIAL()
 {
 }
 
+void STATE_SPECIAL::start()
+{
+}
+
 void STATE_SPECIAL::update()
 {
 }

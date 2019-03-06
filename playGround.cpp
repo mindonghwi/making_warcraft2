@@ -55,6 +55,19 @@ void playGround::loadImage()
 
 	IMAGEMANAGER->addFrameImage("btnBack", "resource/wallpaper/btnBack.bmp", 224, 28, 1, 1, true, Mins::getMazenta());
 	IMAGEMANAGER->addFrameImage("btnStartGame", "resource/wallpaper/btnStartGame.bmp", 224, 28, 1, 1, true, Mins::getMazenta());
+
+
+
+	//РЏДж
+	IMAGEMANAGER->addFrameImage("peasantSprite", "resource/human/peasantSprite.bmp", 1280, 576, 20, 9, true, Mins::getMazenta());
+
+
+
+
+
+
+
+
 }
 
 

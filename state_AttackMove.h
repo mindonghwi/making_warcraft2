@@ -11,6 +11,7 @@ public:
 	STATE_ATTACKMOVE();
 	~STATE_ATTACKMOVE();
 
+	virtual void start()	override;
 	virtual void update()	override;
 
 };

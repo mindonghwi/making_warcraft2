@@ -11,6 +11,7 @@ public:
 	STATE_HOLD();
 	~STATE_HOLD();
 
+	virtual void start()	override;
 	virtual void update()	override;
 
 };

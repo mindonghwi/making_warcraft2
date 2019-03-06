@@ -2,21 +2,21 @@
 #include "gameNode.h"
 #include "map.h"
 #include "camera.h"
-#include "goldMine.h"
-#include "tree.h"
-#include "oliPatch.h"
 
+#include "resourceMgr.h"
+
+//test
+#include "workMan.h"
 
 class SCENEGAME : public gameNode
 {
 private:
-	MAP*		_pMap;
-	CAMERA*		_pCamera;
+	MAP*			_pMap;
+	CAMERA*			_pCamera;
+	RESOURCEMGR*	_pResourceMgr;
+	ASTAR*			_pAstar;
 
-
-	list<GOLDMINE*> _listGoldMine;
-	list<TREE*>		_listTree;
-	list<OILPATCH*>	_listOilPatch;
+	WORKMAN*		_pWorkMan;
 
 public:
 	SCENEGAME();

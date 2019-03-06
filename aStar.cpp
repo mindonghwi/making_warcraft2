@@ -76,7 +76,7 @@ void ASTAR::init(int nSearchLength, MAP * pMap)
 
 
 
-void ASTAR::startFinder(int nStartIndexX, int nStartIndexY, int nEndIndexX, int nEndIndexY)
+void ASTAR::startFinder(int nStartIndexX, int nStartIndexY, int nEndIndexX, int nEndIndexY, MOVEHEIGHT eMoveHeight)
 {
 	//시작점을 만든다.
 	//부모노드는 없다
@@ -86,6 +86,8 @@ void ASTAR::startFinder(int nStartIndexX, int nStartIndexY, int nEndIndexX, int 
 	_nStartIndexY = nStartIndexY;
 	_nEndIndexX = nEndIndexX;
 	_nEndIndexY = nEndIndexY;
+
+	_eMoveHeight = eMoveHeight;
 
 	_listOpendNode.clear();
 	_listClosedyPath.clear();
@@ -124,13 +126,20 @@ void ASTAR::pathFinder()
 		int nIntervalPosX = pNode->nIndexX + _arInterval[i][static_cast<int>(POS::POSX)];
 		int nIntervalPosY = pNode->nIndexY + _arInterval[i][static_cast<int>(POS::POSY)];
 
-		if (nIntervalPosX < 0) continue;
-		if (nIntervalPosY < 0) continue;
-		if (nIntervalPosX >= _nTileSizeX) continue;
-		if (nIntervalPosY >= _nTileSizeY) continue;
+		if (nIntervalPosX < 1) continue;
+		if (nIntervalPosY < 1) continue;
+		if (nIntervalPosX >= _nTileSizeX - 1) continue;
+		if (nIntervalPosY >= _nTileSizeY - 1) continue;
 		//나중가서는 터리안이나 오브젝트로 처리
-		if (_pMap->getTile(nIntervalPosX, nIntervalPosY)->getIsWall()) continue;
+		//if (_pMap->getTile(nIntervalPosX, nIntervalPosY)->getIsWall()) continue;
+		if (_eMoveHeight == MOVEHEIGHT::GROUND && _pMap->getTile(nIntervalPosX, nIntervalPosY)->getTerrian() != TILE::E_TERRIAN::GROUND) continue;
+		if (_eMoveHeight == MOVEHEIGHT::WATER && _pMap->getTile(nIntervalPosX, nIntervalPosY)->getTerrian() != TILE::E_TERRIAN::WATER) continue;
+		if (_eMoveHeight != MOVEHEIGHT::FLY && _pMap->getTile(nIntervalPosX, nIntervalPosY)->getObject() != TILE::E_OBJECT::E_NONE) continue;
 
+		//유닛들이 통과하면 안된다.
+		//유닛이 만들어지면 플레이어의 유닛과 COM의 유닛들과 통과를 막는다.
+		
+		
 		bool bIsSearch = false;
 		list<TILENODE*>::iterator iter = _listOpendNode.begin();
 		list<TILENODE*>::iterator end = _listOpendNode.end();

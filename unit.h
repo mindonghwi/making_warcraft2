@@ -3,7 +3,8 @@
 #include "object.h"
 #include "state.h"
 #include "behavier.h"
-
+#include "camera.h"
+#include "aStar.h"
 
 class UNIT : public OBJECT {
 public:
@@ -22,10 +23,61 @@ public:
 	enum class E_BEHAVIERNUM
 	{
 		E_NONE = 0,		//대기
-		E_ATTACK,		
-		E_MOVE,			
-		E_HARVEST,		
+		E_ATTACK,
+		E_MOVE,
+		E_HARVEST,
 		E_MAGIC,		//마법사-> 마법, 드워프->자폭, 기사-> 마법
+		E_MAX
+	};
+
+
+	enum class E_DIRECTION
+	{
+		E_RIGHT,
+		E_RIGHT_TOP,
+		E_TOP,
+		E_LEFT_TOP,
+		E_LEFT,
+		E_LEFT_BOTTOM,
+		E_BOTTOM,
+		E_RIGHT_BOTTOM,
+		E_DEATH,				//죽음은 방향성이 없으니
+		E_MAX
+	};
+
+	enum class E_STATE
+	{
+		E_IDLE = 0,
+		E_MOVE,
+		E_ATTACK,
+		E_DEATH,
+		E_MAX
+	};
+
+	enum class E_UNIT
+	{
+		E_WORKMAN = 0,
+		E_FOOTMAN,
+		E_ARCHER,
+		E_BALLISTA,
+		E_KNIGHT,
+		E_MAGICIAN,
+		E_BOMBER,
+		E_RECONNAISSANCE,	//정찰병
+		E_OILTANKER,
+		E_GALLEYS,			//작은 공격배
+		E_TRANSPORT,
+		E_BATTLESHIP,
+		E_FLYER,
+		E_MAX
+	};
+
+	enum class E_HARVEST
+	{
+		E_NONE = 0,
+		E_GOLD,
+		E_TREE,
+		E_OIL,
 		E_MAX
 	};
 
@@ -46,6 +98,20 @@ protected:
 
 	STATE*			_pCurrentState;
 	BEHAVIER*		_pCurrentBeHavier;
+
+	int				_arStateStartIndex[static_cast<const int>(UNIT::E_STATE::E_MAX)];	//상태의 시작 인덱스
+	int				_arStateEndIndex[static_cast<const int>(UNIT::E_STATE::E_MAX)];		//상태의 끝나는 인덱스
+	E_DIRECTION		_eDirection;
+	float			_arFramePerSeconds[static_cast<const int>(UNIT::E_STATE::E_MAX)];
+	E_UNIT			_eUnit;
+
+	int				_nFrameX;
+	E_HARVEST		_eHarvest;
+
+	CAMERA*			_pCamera;
+
+	ASTAR*			_pAstar;
+
 public:
 	UNIT();
 	virtual ~UNIT();
@@ -54,8 +120,8 @@ public:
 	virtual void init(int nPosX, int nPosY, int nWidth, int nHeight);
 
 	//만들때 사용
-	virtual void create(int nPosX,int nPosY,int nHp, float nSpeed, int nAttack, int nDefence, float fSearchRange, float fAttackRange, float fAttackSpeedps);
-	
+	virtual void create(int nPosX, int nPosY, int nHp, float nSpeed, int nAttack, int nDefence, float fSearchRange, float fAttackRange, float fAttackSpeedps);
+
 	virtual void update()			abstract;
 	virtual void release()			abstract;
 	virtual void render(HDC hdc)	abstract;
@@ -63,47 +129,60 @@ public:
 
 public:
 	//setter
-	inline	void	setHp(int nAmount)				{ _nHp = nAmount; }
-	inline	void	setAttack(int nAmount)			{ _nAttack = nAmount; }
-	inline	void	setDefence(int nAmount)			{ _nDefence = nAmount; }
-	inline	void	setSpeed(float fAmount)			{ _fSpeed = fAmount; }
-	inline	void	setSearchRange(float fAmount)	{ _fSearchRange = fAmount; }
-	inline	void	setAttackRange(float fAmount)	{ _fAttackRange = fAmount; }
+	inline	void	setHp(int nAmount) { _nHp = nAmount; }
+	inline	void	setAttack(int nAmount) { _nAttack = nAmount; }
+	inline	void	setDefence(int nAmount) { _nDefence = nAmount; }
+	inline	void	setSpeed(float fAmount) { _fSpeed = fAmount; }
+	inline	void	setSearchRange(float fAmount) { _fSearchRange = fAmount; }
+	inline	void	setAttackRange(float fAmount) { _fAttackRange = fAmount; }
 	inline	void	setAttackSpeedps(float fAmount) { _fAttackSpeedps = fAmount; }
+
+	//상태와 행동 패턴
 	inline	void	setCurrentState(UNIT::E_STATENUM eStateNum) { _pCurrentState = _arState[static_cast<int>(eStateNum)]; }
 	inline	void	setCurrentBehavir(UNIT::E_BEHAVIERNUM eBehavier) { _pCurrentBeHavier = _arBeHavier[static_cast<int>(eBehavier)]; }
 
+	//무슨유닛인지 알아야하니깐
+	inline	void	setUnit(UNIT::E_UNIT eUnit) { _eUnit = eUnit; }
 
+	//애니메이션용
+	inline	void	setFPS(UNIT::E_STATE eState, float fFps) { _arFramePerSeconds[static_cast<int>(eState)] = fFps; }
+	inline	void	setStartIndex(UNIT::E_STATE eState, int nIndex) { _arStateStartIndex[static_cast<int>(eState)] = nIndex; }
+	inline	void	setEndIndex(UNIT::E_STATE eState, int nIndex) { _arStateEndIndex[static_cast<int>(eState)] = nIndex; }
+	inline	void	setFrameX(int nFrameX) { _nFrameX = nFrameX; }
+
+	//들고있는 자원
+	inline	void	setHarvest(UNIT::E_HARVEST eHarvest) { _eHarvest = eHarvest; }
+
+	inline	void	setLinkCamera(CAMERA* pCamera) { _pCamera = pCamera; }
+	inline	void	setLinkAStar(ASTAR*	pAstar) { _pAstar = pAstar; }
 
 	//getter
-	inline	int		getHp()				{ return _nHp; }
-	inline	int		getAttack()			{ return _nAttack; }
-	inline	int		getDefence()		{ return _nDefence; }
-	inline	float	getSpeed()			{ return _fSpeed; }
-	inline	float	getSearchRange()	{ return _fSearchRange; }
-	inline	float	getAttackRange()	{ return _fAttackRange; }
-	inline	float	getAttackSpeedps()	{ return _fAttackSpeedps; }
+	inline	int		getHp() { return _nHp; }
+	inline	int		getAttack() { return _nAttack; }
+	inline	int		getDefence() { return _nDefence; }
+	inline	float	getSpeed() { return _fSpeed; }
+	inline	float	getSearchRange() { return _fSearchRange; }
+	inline	float	getAttackRange() { return _fAttackRange; }
+	inline	float	getAttackSpeedps() { return _fAttackSpeedps; }
 
-	inline	void	getCurrentState() { _pCurrentState; }
-	inline	void	getCurrentBehavir() { _pCurrentBeHavier; }
-	
+	//애니메이션용
+	inline	float	getFPS(UNIT::E_STATE eState) { return _arFramePerSeconds[static_cast<int>(eState)]; }
+	inline	int		getStartIndex(UNIT::E_STATE eState) { return _arStateStartIndex[static_cast<int>(eState)]; }
+	inline	int		getEndIndex(UNIT::E_STATE eState) { return _arStateEndIndex[static_cast<int>(eState)]; }
+	inline	int		getFrameX() { return _nFrameX; }
+	//상태와 행동 패턴
+	inline	STATE*		getCurrentState() { return _pCurrentState; }
+	inline	BEHAVIER*	getCurrentBehavir() { return _pCurrentBeHavier; }
+
+	//무슨유닛인지 알아야하니깐
+	inline	UNIT::E_UNIT	getUnit() { return _eUnit; }
+
+	//들고있는 자원
+	inline	UNIT::E_HARVEST	getHarvest() { return _eHarvest; }
+
+
+
 public:
-
-	//커맨더 쓸수 있는거 정리해본것
-	//virtual void Idle();
-	//virtual void Attack();
-	//virtual void move();
-	//virtual void patrol();
-	//virtual void hold();
-	//virtual void harvestGold();
-	//virtual void harvestTree();
-	//virtual void harvestOil();
-	//virtual void moveAttack();
-	//virtual void special();
-	//virtual void magic(); 기사는 3개 드워프가1개 마법사가 5개
-	
-
-
 	//상태를 정리해보자
 	//정지 -> 정지
 	//이동 -> 걷는다. 난다
@@ -114,5 +193,7 @@ public:
 	//오일자원 채집중
 	//공격 -> 마법공격, 일반공격(사거리기준)
 	//나무자원 채집중
+
+	void	addFrameX(UNIT::E_STATE eState);
 
 };

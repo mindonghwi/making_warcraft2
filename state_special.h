@@ -14,6 +14,7 @@ public:
 	STATE_SPECIAL();
 	~STATE_SPECIAL();
 
+	virtual void start()	override;
 	virtual void update()	override;
 
 };

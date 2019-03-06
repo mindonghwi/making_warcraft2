@@ -43,14 +43,13 @@ void UNIT::create(int nPosX, int nPosY, int nHp, float fSpeed, int nAttack, int 
 	setAttackSpeedps(fAttackSpeedps);
 }
 
-void UNIT::update()
-{
-}
 
-void UNIT::release()
+void UNIT::addFrameX(UNIT::E_STATE eState)
 {
-}
+	_nFrameX++;
 
-void UNIT::render(HDC hdc)
-{
+	if (_nFrameX > getEndIndex(eState))
+	{
+		_nFrameX = getStartIndex(eState);
+	}
 }

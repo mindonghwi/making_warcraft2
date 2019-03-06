@@ -187,6 +187,7 @@
     <ClInclude Include="progressBar.h" />
     <ClInclude Include="randomFunction.h" />
     <ClInclude Include="Resource.h" />
+    <ClInclude Include="resourceMgr.h" />
     <ClInclude Include="resources.h" />
     <ClInclude Include="sceneManager.h" />
     <ClInclude Include="scrollButton.h" />
@@ -241,8 +242,10 @@
     <ClCompile Include="mapTool.cpp" />
     <ClCompile Include="object.cpp" />
     <ClCompile Include="oliPatch.cpp" />
+    <ClCompile Include="player.cpp" />
     <ClCompile Include="playGround.cpp" />
     <ClCompile Include="progressBar.cpp" />
+    <ClCompile Include="resourceMgr.cpp" />
     <ClCompile Include="resources.cpp" />
     <ClCompile Include="sceneManager.cpp" />
     <ClCompile Include="scrollButton.cpp" />

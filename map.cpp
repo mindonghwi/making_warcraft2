@@ -161,11 +161,7 @@ void MAP::loadObject()
 
 					if (bIsResource)
 					{
-						GOLDMINE* pGoldMine = new GOLDMINE();
-						pGoldMine->init(_vvMap[j][i]->getRectTile().left, _vvMap[j][i]->getRectTile().top);
-						pGoldMine->linkCamera(_pCamera);
-						_listGoldMine.push_back(pGoldMine);
-
+						_pResourceMgr->addGoldMine(_vvMap[j][i]->getRectTile().left, _vvMap[j][i]->getRectTile().top);
 					}
 					break;
 
@@ -194,10 +190,7 @@ void MAP::loadObject()
 
 					if (bIsResource)
 					{
-						TREE* pTree = new TREE();
-						pTree->init(_vvMap[j][i]->getRectTile().left, _vvMap[j][i]->getRectTile().top);
-						pTree->linkCamera(_pCamera);
-						_listTree.push_back(pTree);
+						_pResourceMgr->addTree(_vvMap[j][i]->getRectTile().left, _vvMap[j][i]->getRectTile().top);
 
 					}
 					break;
@@ -227,10 +220,8 @@ void MAP::loadObject()
 
 					if (bIsResource)
 					{
-						OILPATCH* pOilPatch = new OILPATCH();
-						pOilPatch->init(_vvMap[j][i]->getRectTile().left, _vvMap[j][i]->getRectTile().top);
-						pOilPatch->linkCamera(_pCamera);
-						_listOilPatch.push_back(pOilPatch);
+						_pResourceMgr->addOilPatch(_vvMap[j][i]->getRectTile().left, _vvMap[j][i]->getRectTile().top);
+
 
 					}
 					break;
@@ -584,3 +575,4 @@ void MAP::readjust()
 		}
 	}
 }
+

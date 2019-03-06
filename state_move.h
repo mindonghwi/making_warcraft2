@@ -11,6 +11,7 @@ public:
 	STATE_MOVE();
 	~STATE_MOVE();
 
+	virtual void start()	override;
 	virtual void update()	override;
 
 };

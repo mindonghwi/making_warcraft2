@@ -23,6 +23,12 @@ public:
 		MAX
 	};
 
+	enum MOVEHEIGHT
+	{
+		GROUND = 0,
+		WATER,
+		FLY
+	};
 	
 
 private:
@@ -45,12 +51,15 @@ private:
 
 	int				_nSearchLength;//4나 8
 	MAP*			_pMap;
+
+	MOVEHEIGHT		_eMoveHeight;
+
 public:
 	ASTAR();
 	~ASTAR();
 	void	init(int nSearchLength,MAP* pMap);
 	//어느 타일에 있는지 주는 함수
-	void	startFinder(int nStartIndexX, int nStartIndexY, int nEndIndexX, int nEndIndexY);
+	void	startFinder(int nStartIndexX, int nStartIndexY, int nEndIndexX, int nEndIndexY, MOVEHEIGHT eMoveHeight);
 	void	pathFinder();	
 
 	

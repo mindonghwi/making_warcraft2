@@ -12,6 +12,7 @@ public:
 	STATE_ATTACK();
 	~STATE_ATTACK();
 
+	virtual void start()	override;
 	virtual void update()	override;
 
 };

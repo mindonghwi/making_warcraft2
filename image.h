@@ -116,6 +116,7 @@ public:
 	//이미지 프레임 렌더 중심x,y를 기준으로 그려준다
 	void frameRenderCenter(HDC hdc, int dstX, int dstY);
 	void frameRenderCenter(HDC hdc, int dstX, int dstY, int currentFrameX, int currentFrameY);
+	void frameRenderCenter(HDC hdc, float dstX, float dstY, int currentFrameX, int currentFrameY);
 
 	//이미지 한 장으로 루프렌더링하기(뿌려줄DC, 뿌려줄영역(렉트), 루프방향X, 루프방향Y)
 	void loopRender(HDC hdc, const LPRECT drawArea, int offSetX, int offSetY);

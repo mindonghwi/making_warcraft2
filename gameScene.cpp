@@ -13,12 +13,21 @@ HRESULT SCENEGAME::init()
 {
 	_pMap = new MAP();
 	_pCamera = new CAMERA();
+	_pResourceMgr = new RESOURCEMGR();
+
+	//tset
+	_pWorkMan = new WORKMAN();
+	_pWorkMan->setLinkCamera(_pCamera);
+	_pWorkMan->init(WINSIZEX/2, WINSIZEY/2, 64, 64);
 
 
+	_pResourceMgr->setLinkCamera(_pCamera);
+	_pResourceMgr->setLinkMap(_pMap);
+	_pMap->setLinkCamera(_pCamera);
+	_pMap->setLinkResourceMgr(_pResourceMgr);
 	
 	_pMap->init("map");
 	_pCamera->init(WINSIZEX/2, WINSIZEY / 2,WINSIZEX,WINSIZEY,_pMap->getMapCountX() * TILESIZE, _pMap->getMapCountY() * TILESIZE);
-	_pMap->setLinkCamera(_pCamera);
 
 	_pCamera->setLimitToTile(_pMap->getMapCountX() , _pMap->getMapCountY() );
 	_pCamera->outOfRange();
@@ -43,6 +52,8 @@ void SCENEGAME::release()
 void SCENEGAME::update()
 {
 	_pCamera->update();
+	_pResourceMgr->update();
+	_pWorkMan->update();
 }
 
 void SCENEGAME::render()
