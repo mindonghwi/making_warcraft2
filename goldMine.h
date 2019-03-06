@@ -3,9 +3,9 @@
 #include "object.h"
 #include "tile.h"
 #include "camera.h"
+#include "resources.h"
 
-
-class GOLDMINE : public OBJECT
+class GOLDMINE : public RESOURCES
 {
 private:
 	int	_nResourceCount;
@@ -15,7 +15,7 @@ public:
 	GOLDMINE();
 	~GOLDMINE();
 
-	void	init(int nLeft,int nTop);
+	virtual void init(int nLeft,int nTop) override;
 	virtual void update()			override;
 	virtual void release()			override;
 	virtual void render(HDC hdc)	override;

@@ -12,12 +12,13 @@ GOLDMINE::~GOLDMINE()
 
 void GOLDMINE::init(int nLeft, int nTop)
 {
-	OBJECT::setPosX(static_cast<float>(nLeft + 32 + 16));
-	OBJECT::setPosY(static_cast<float>(nTop + 32 + 16));
-	OBJECT::setWidth(96);
-	OBJECT::setHeight(96);
-	OBJECT::settingRect();
-	OBJECT::setImage(IMAGEMANAGER->findImage("goldMine"));
+	
+	RESOURCES::OBJECT::setPosX(static_cast<float>(nLeft + 32 + 16));
+	RESOURCES::OBJECT::setPosY(static_cast<float>(nTop + 32 + 16));
+	RESOURCES::OBJECT::setWidth(96);
+	RESOURCES::OBJECT::setHeight(96);
+	RESOURCES::OBJECT::settingRect();
+	RESOURCES::OBJECT::setImage(IMAGEMANAGER->findImage("goldMine"));
 }
 
 void GOLDMINE::update()
@@ -27,10 +28,10 @@ void GOLDMINE::update()
 
 void GOLDMINE::release()
 {
-	OBJECT::setImage(nullptr);
+	RESOURCES::OBJECT::setImage(nullptr);
 }
 
 void GOLDMINE::render(HDC hdc)
 {
-	OBJECT::getImage()->renderCenter(hdc, static_cast<int>(OBJECT::getPosX()), static_cast<int>(OBJECT::getPosY()));
+	RESOURCES::OBJECT::getImage()->renderCenter(hdc, static_cast<int>(OBJECT::getPosX()), static_cast<int>(OBJECT::getPosY()));
 }

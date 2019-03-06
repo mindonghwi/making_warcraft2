@@ -1,25 +1,22 @@
 #pragma once
-#include "stdafx.h"
 #include "object.h"
-#include "tile.h"
-#include "camera.h"
-#include "resources.h"
+#include "stdafx.h"
 
-
-class OILPATCH : public RESOURCES
+class RESOURCES : public OBJECT
 {
-private:
+protected:
+
 	int	_nResourceCount;
 	CAMERA*		_pCamera;
 
 public:
-	OILPATCH();
-	~OILPATCH();
+	RESOURCES();
+	virtual ~RESOURCES();
 
-	void	init(int nLeft, int nTop);
-	virtual void update()			override;
-	virtual void release()			override;
-	virtual void render(HDC hdc)	override;
+	virtual void init(int nLeft, int nTop)	abstract;
+	virtual void update()					abstract;
+	virtual void release()					abstract;
+	virtual void render(HDC hdc)			abstract;
 
 	void	linkCamera(CAMERA* pCamera) { _pCamera = pCamera; }
 

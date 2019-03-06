@@ -3,9 +3,10 @@
 #include "object.h"
 #include "tile.h"
 #include "camera.h"
+#include "resources.h"
 
 
-class TREE : public OBJECT
+class TREE : public RESOURCES
 {
 private:
 	int	_nResourceCount;

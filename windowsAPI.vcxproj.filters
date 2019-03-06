@@ -67,6 +67,21 @@
     <Filter Include="PlayGround\unit\workMan">
       <UniqueIdentifier>{c15af705-dc79-44df-a5b0-b1cb337f3c82}</UniqueIdentifier>
     </Filter>
+    <Filter Include="PlayGround\unit\state">
+      <UniqueIdentifier>{b910661f-b059-4049-91a1-a8f69c2fc825}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="PlayGround\player">
+      <UniqueIdentifier>{7bb18302-3df9-4496-8d68-08e1886e1024}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="PlayGround\player\command">
+      <UniqueIdentifier>{91290147-8f5d-43d8-b2bb-91ee79302651}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="PlayGround\unit\state\stateHeader">
+      <UniqueIdentifier>{8bfdb5e3-627b-4632-b96b-6ccf09c16f80}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="PlayGround\unit\state\stateCpp">
+      <UniqueIdentifier>{52b58105-5605-4812-9466-f1288d479212}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="stdafx.h">
@@ -189,6 +204,39 @@
     <ClInclude Include="scrollButton.h">
       <Filter>2DFramework\button</Filter>
     </ClInclude>
+    <ClInclude Include="command.h">
+      <Filter>PlayGround\player\command</Filter>
+    </ClInclude>
+    <ClInclude Include="stopCommand.h">
+      <Filter>PlayGround\player\command</Filter>
+    </ClInclude>
+    <ClInclude Include="player.h">
+      <Filter>PlayGround\player</Filter>
+    </ClInclude>
+    <ClInclude Include="resources.h">
+      <Filter>PlayGround\resource</Filter>
+    </ClInclude>
+    <ClInclude Include="state.h">
+      <Filter>PlayGround\unit\state\stateHeader</Filter>
+    </ClInclude>
+    <ClInclude Include="state_Attack.h">
+      <Filter>PlayGround\unit\state\stateHeader</Filter>
+    </ClInclude>
+    <ClInclude Include="state_AttackMove.h">
+      <Filter>PlayGround\unit\state\stateHeader</Filter>
+    </ClInclude>
+    <ClInclude Include="state_hold.h">
+      <Filter>PlayGround\unit\state\stateHeader</Filter>
+    </ClInclude>
+    <ClInclude Include="state_idle.h">
+      <Filter>PlayGround\unit\state\stateHeader</Filter>
+    </ClInclude>
+    <ClInclude Include="state_move.h">
+      <Filter>PlayGround\unit\state\stateHeader</Filter>
+    </ClInclude>
+    <ClInclude Include="state_Patrol.h">
+      <Filter>PlayGround\unit\state\stateHeader</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="stdafx.cpp">
@@ -292,6 +340,27 @@
     </ClCompile>
     <ClCompile Include="scrollButton.cpp">
       <Filter>2DFramework\button</Filter>
+    </ClCompile>
+    <ClCompile Include="state_Patrol.cpp">
+      <Filter>PlayGround\unit\state\stateCpp</Filter>
+    </ClCompile>
+    <ClCompile Include="state_Attack.cpp">
+      <Filter>PlayGround\unit\state\stateCpp</Filter>
+    </ClCompile>
+    <ClCompile Include="state_AttackMove.cpp">
+      <Filter>PlayGround\unit\state\stateCpp</Filter>
+    </ClCompile>
+    <ClCompile Include="state_hold.cpp">
+      <Filter>PlayGround\unit\state\stateCpp</Filter>
+    </ClCompile>
+    <ClCompile Include="state_move.cpp">
+      <Filter>PlayGround\unit\state\stateCpp</Filter>
+    </ClCompile>
+    <ClCompile Include="state_idle.cpp">
+      <Filter>PlayGround\unit\state\stateCpp</Filter>
+    </ClCompile>
+    <ClCompile Include="resources.cpp">
+      <Filter>PlayGround\resource</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

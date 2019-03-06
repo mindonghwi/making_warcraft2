@@ -154,6 +154,7 @@
     <ClInclude Include="aStar.h" />
     <ClInclude Include="button.h" />
     <ClInclude Include="camera.h" />
+    <ClInclude Include="command.h" />
     <ClInclude Include="coverScene.h" />
     <ClInclude Include="effect.h" />
     <ClInclude Include="effectManager.h" />
@@ -170,15 +171,25 @@
     <ClInclude Include="mapTool.h" />
     <ClInclude Include="object.h" />
     <ClInclude Include="oliPatch.h" />
+    <ClInclude Include="player.h" />
     <ClInclude Include="playGround.h" />
     <ClInclude Include="progressBar.h" />
     <ClInclude Include="randomFunction.h" />
     <ClInclude Include="Resource.h" />
+    <ClInclude Include="resources.h" />
     <ClInclude Include="sceneManager.h" />
     <ClInclude Include="scrollButton.h" />
     <ClInclude Include="singletonBase.h" />
     <ClInclude Include="soundManager.h" />
+    <ClInclude Include="state.h" />
+    <ClInclude Include="state_Attack.h" />
+    <ClInclude Include="state_AttackMove.h" />
+    <ClInclude Include="state_hold.h" />
+    <ClInclude Include="state_idle.h" />
+    <ClInclude Include="state_move.h" />
+    <ClInclude Include="state_Patrol.h" />
     <ClInclude Include="stdafx.h" />
+    <ClInclude Include="stopCommand.h" />
     <ClInclude Include="targetver.h" />
     <ClInclude Include="commonMacroFunction.h" />
     <ClInclude Include="tile.h" />
@@ -213,9 +224,16 @@
     <ClCompile Include="oliPatch.cpp" />
     <ClCompile Include="playGround.cpp" />
     <ClCompile Include="progressBar.cpp" />
+    <ClCompile Include="resources.cpp" />
     <ClCompile Include="sceneManager.cpp" />
     <ClCompile Include="scrollButton.cpp" />
     <ClCompile Include="soundManager.cpp" />
+    <ClCompile Include="state_Attack.cpp" />
+    <ClCompile Include="state_AttackMove.cpp" />
+    <ClCompile Include="state_hold.cpp" />
+    <ClCompile Include="state_idle.cpp" />
+    <ClCompile Include="state_move.cpp" />
+    <ClCompile Include="state_Patrol.cpp" />
     <ClCompile Include="stdafx.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Create</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Create</PrecompiledHeader>
