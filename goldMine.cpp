@@ -15,6 +15,7 @@ void GOLDMINE::init(int nLeft, int nTop)
 	
 	RESOURCES::OBJECT::setPosX(static_cast<float>(nLeft + 32 + 16));
 	RESOURCES::OBJECT::setPosY(static_cast<float>(nTop + 32 + 16));
+	RESOURCES::OBJECT::setPosZ(0);
 	RESOURCES::OBJECT::setWidth(96);
 	RESOURCES::OBJECT::setHeight(96);
 	RESOURCES::OBJECT::settingRect();

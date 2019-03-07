@@ -24,7 +24,7 @@ WORKMAN::~WORKMAN()
 void WORKMAN::init(int nPosX, int nPosY, int nWidth, int nHeight)
 {
 	UNIT::init(nPosX, nPosY, nWidth, nHeight);
-
+	UNIT::OBJECT::setPosZ(200);
 	allocateAnimation();
 	allocateState();
 	allocateBehavier();

@@ -13,6 +13,7 @@ void TREE::init(int nLeft, int nTop)
 {
 	OBJECT::setPosX(static_cast<float>(nLeft + 32 + 16));
 	OBJECT::setPosY(static_cast<float>(nTop + 32 + 16));
+	RESOURCES::OBJECT::setPosZ(0);
 	OBJECT::setWidth(96);
 	OBJECT::setHeight(96);
 	OBJECT::settingRect();

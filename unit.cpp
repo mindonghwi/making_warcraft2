@@ -94,8 +94,22 @@ bool UNIT::moveTo()
 	//각도도 구해준다
 	_fDirAngle = getAngle(OBJECT::getPosX(), OBJECT::getPosY() , _vvMovePoint[_nMoveVectorIndex][0], _vvMovePoint[_nMoveVectorIndex][1]);
 
+	if (_fDirAngle >= PI2)
+	{
+		_fDirAngle -= PI2;
+	}
+	else if(_fDirAngle < 0){
+
+		_fDirAngle = PI2 - _fDirAngle;
+
+	}
 	float fAngle = (_fDirAngle + PI8) / (PI/4.0f);
 	//fAngle -= 1.0f;
+
+	if (fAngle >= static_cast<float>(E_DIRECTION::E_DEATH))
+	{
+		fAngle = 7;
+	}
 
 	UNIT::_eDirection = static_cast<E_DIRECTION>(static_cast<int>(fAngle));
 

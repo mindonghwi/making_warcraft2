@@ -195,7 +195,7 @@ void CAMERA::setCameraBuffer(image * pImg)
 void CAMERA::pushRenderObject(OBJECT * pObject)
 {
 	//정렬도 되야한다
-	float fZorder = pObject->getPosY();// +static_cast<float>(pObject->getPosZ());
+	float fZorder = pObject->getPosY() +static_cast<float>(pObject->getPosZ());
 
 	list<OBJECT*>::iterator	iter = _listRenderObject.begin();
 	list<OBJECT*>::iterator	end = _listRenderObject.end();
@@ -204,7 +204,7 @@ void CAMERA::pushRenderObject(OBJECT * pObject)
 
 	while (iter != end)
 	{
-		float fTmp = (*iter)->getPosY();// +static_cast<float>((*iter)->getPosZ());
+		float fTmp = (*iter)->getPosY() +static_cast<float>((*iter)->getPosZ());
 		if (fTmp > fZorder)
 		{
 			_listRenderObject.insert(iter, pObject);
