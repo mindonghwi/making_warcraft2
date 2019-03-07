@@ -5,6 +5,7 @@ class UNIT;
 
 class BEHAVIER_MOVE :public BEHAVIER
 {
+
 public:
 	virtual	void	update(UNIT* pUnit)		abstract;
 };

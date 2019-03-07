@@ -122,6 +122,11 @@ protected:
 
 	vector<vector<int>>	_vvMovePoint;	//x,y좌표를 가지고 있는 리스트
 	int					_nMoveVectorIndex;//움직이는 포인트 인덱스
+
+	bool				_bIsMoving;//이동중인지
+
+	float				_fDirAngle;
+	float				_travelRange;
 public:
 	UNIT();
 	virtual ~UNIT();
@@ -142,7 +147,9 @@ public:
 
 	virtual void setMovePoints(float fEndPosX,float fEndPosY) abstract;
 
-	void	Move();
+	virtual void Move();
+
+	bool moveTo();
 
 public:
 	//setter
@@ -153,7 +160,7 @@ public:
 	inline	void	setSearchRange(float fAmount) { _fSearchRange = fAmount; }
 	inline	void	setAttackRange(float fAmount) { _fAttackRange = fAmount; }
 	inline	void	setAttackSpeedps(float fAmount) { _fAttackSpeedps = fAmount; }
-
+	inline	void	setDirAngle(float fAngle) { _fDirAngle = fAngle; }
 	//상태와 행동 패턴
 	inline	void	setCurrentState(UNIT::E_STATENUM eStateNum) { _pCurrentState = _arState[static_cast<int>(eStateNum)]; }
 	inline	void	setCurrentBehavir(UNIT::E_BEHAVIERNUM eBehavier) { _pCurrentBeHavier = _arBeHavier[static_cast<int>(eBehavier)]; }
@@ -217,6 +224,8 @@ public:
 	inline	bool	getSelected() { return _bIsSelected; }
 
 	inline	int		getMoveIndex() { return _nMoveVectorIndex; }
+
+	inline	float	getDirAngle() {return _fDirAngle; }
 
 public:
 	//상태를 정리해보자

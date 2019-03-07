@@ -93,6 +93,11 @@ void TILE::render(HDC hdc)
 		_rcCameraLimit.bottom >= _rcTile.top )
 	{
 		_pImage->frameRender(hdc, _rcTile.left, _rcTile.top, _nFrameX, _nFrameY);
+
+		char str[128];
+		sprintf_s(str, "%d,%d", int(_eObject), int(_eTerrian));
+		TextOut(hdc, _rcTile.left, _rcTile.top , str, strlen(str));
+
 	}
 
 }

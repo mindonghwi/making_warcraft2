@@ -1,6 +1,6 @@
 #include "stdafx.h"
 #include "unit.h"
-UNIT::UNIT():
+UNIT::UNIT() :
 	_nHp(0),
 	_nAttack(0),
 	_nDefence(0),
@@ -35,6 +35,9 @@ void UNIT::create(int nPosX, int nPosY, int nHp, float fSpeed, int nAttack, int 
 {
 	OBJECT::setPosX(static_cast<float>(nPosX));
 	OBJECT::setPosY(static_cast<float>(nPosY));
+	OBJECT::settingRect();
+	UNIT::setCollisionRect(UNIT::getPosX(), UNIT::getPosY(), 32, 32);
+
 	setHp(nHp);
 	setAttack(nAttack);
 	setDefence(nDefence);
@@ -58,4 +61,37 @@ void UNIT::addFrameX(UNIT::E_STATE eState)
 void UNIT::Move()
 {
 	//와서하자 벡터와 인덱스는 준비가 되어있다.
+	//8가지로 나눈다.
+	//디렉션을 구한다.
+	//그방향으로 선형보간?
+	float elapsedTime = TIMEMANAGER->getElapsedTime();
+
+	//요곳이 핵심입뉘다!!! 요로분!!!
+	float moveSpeed = (elapsedTime / getSpeed()) * _travelRange;
+
+
+	OBJECT::setPosX(OBJECT::getPosX() + Mins::presentPowerX(_fDirAngle, moveSpeed));
+	OBJECT::setPosY(OBJECT::getPosY() + Mins::presentPowerY(_fDirAngle, moveSpeed));
+	UNIT::setCollisionRect(UNIT::getPosX(), UNIT::getPosY(), 32, 32);
+
+}
+
+bool UNIT::moveTo()
+{
+	_nMoveVectorIndex++;
+	if (_nMoveVectorIndex >= static_cast<int>(_vvMovePoint.size()))
+	{
+		OBJECT::setPosX(_vvMovePoint[_nMoveVectorIndex-1][0] );
+		OBJECT::setPosY(_vvMovePoint[_nMoveVectorIndex-1][1] );
+
+		return false;
+	}
+
+	_travelRange = getDistance(OBJECT::getPosX() , OBJECT::getPosY(),_vvMovePoint[_nMoveVectorIndex][0], _vvMovePoint[_nMoveVectorIndex][1]);
+
+	//각도도 구해준다
+	_fDirAngle = getAngle(OBJECT::getPosX(), OBJECT::getPosY() , _vvMovePoint[_nMoveVectorIndex][0], _vvMovePoint[_nMoveVectorIndex][1]);
+
+
+	return true;
 }

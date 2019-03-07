@@ -16,6 +16,7 @@ void PLAYER::init()
 	_listUnit.back()->setLinkCamera(_pCamera);
 	_listUnit.back()->setLinkAStar(_pAstar);
 	_listUnit.back()->init(WINSIZEX / 2, WINSIZEY / 2, 64, 64);
+	_listUnit.back()->create(TILESIZE*19+16, TILESIZE * 11 + 16, 100, 1.0f, 10, 0, 100.0f, 50.0f, 1.0f);
 
 	allocateUnitResource();
 	allocateUnitPopulation();

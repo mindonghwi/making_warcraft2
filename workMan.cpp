@@ -41,7 +41,7 @@ void WORKMAN::init(int nPosX, int nPosY, int nWidth, int nHeight)
 void WORKMAN::update()
 {
 	UNIT::getCurrentState()->update();
-	
+	UNIT::getCurrentBehavir()->update(this);
 
 
 	_pCamera->pushRenderObject(this);
@@ -70,6 +70,7 @@ void WORKMAN::command()
 		UNIT::setCurrentBehavir(UNIT::E_BEHAVIERNUM::E_MOVE);
 		UNIT::getCurrentState()->start();
 		setMovePoints(static_cast<float>(_ptMouse.x + _pCamera->getLeft()), static_cast<float>(_ptMouse.y + _pCamera->getTop()));
+		UNIT::moveTo();
 	}
 
 }
@@ -85,10 +86,11 @@ void WORKMAN::setMovePoints(float fEndPosX, float fEndPosY)
 	for (int i = 0; i < _pAstar->getListSize(); i++)
 	{
 		vector<int> vPos;
-		vPos.push_back(_pAstar->getNode(i)->nIndexX * TILESIZE);
-		vPos.push_back(_pAstar->getNode(i)->nIndexY * TILESIZE);
+		vPos.push_back(_pAstar->getNode(i)->nIndexX * TILESIZE + 16);
+		vPos.push_back(_pAstar->getNode(i)->nIndexY * TILESIZE + 16);
 		UNIT::_vvMovePoint.push_back(vPos);
 	}
+	UNIT::setMoveIndex(0);
 
 
 }

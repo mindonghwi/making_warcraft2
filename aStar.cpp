@@ -113,10 +113,10 @@ void ASTAR::startFinder(float fStartPosX, float fStartPosY, float fEndPosX, floa
 	//부모노드는 없다
 	//시작 중심점을 잡는다.
 	//코스트를 계산한다.
-	_nStartIndexX = fStartPosX/ TILESIZE;
-	_nStartIndexY = fStartPosY / TILESIZE;
-	_nEndIndexX = fEndPosX / TILESIZE;
-	_nEndIndexY = fEndPosY / TILESIZE;
+	_nStartIndexX = static_cast<int>(fStartPosX)/ TILESIZE;
+	_nStartIndexY = static_cast<int>(fStartPosY) / TILESIZE;
+	_nEndIndexX = static_cast<int>(fEndPosX) / TILESIZE;
+	_nEndIndexY = static_cast<int>(fEndPosY) / TILESIZE;
 
 	_eMoveHeight = eMoveHeight;
 
@@ -146,6 +146,35 @@ void ASTAR::pathFinder()
 	//열린좌표에 같은 값이 있으면 코스트를 비교하여 작은 애한테 부모와 코스트를 바꾸어서 대입
 	//앤드면 이제 부모들을 쭉 불러와서 길을 만든다.. 이건 메이크 패스
 	//앤드가 아니면 다시 재귀적으로 돌린다.
+	if (_listOpendNode.empty())
+	{
+		list<TILENODE*>::iterator iter = _listClosedyPath.begin();
+		list<TILENODE*>::iterator end = _listClosedyPath.end();
+		TILENODE* pNode;
+		pNode = *iter;
+		//가장 가까운 노드를 탐색한다.
+		while (iter != end)
+		{
+			int nDst = abs(pNode->nIndexX - _nEndIndexX) + abs(pNode->nIndexY - _nEndIndexY);
+			int nSrc = abs((*iter)->nIndexX - _nEndIndexX) + abs((*iter)->nIndexY - _nEndIndexY);
+			if (nDst > nSrc)
+			{
+				pNode = *iter;
+			}
+			iter++;
+		}
+
+
+		//가장 가까운 노드에서 길을 만든다
+		while (pNode != nullptr) {
+			_listMaximumPath.push_front(pNode);
+
+			pNode = pNode->parrentNode;
+		}
+
+		return;
+	}
+
 	TILENODE* pNode = _listOpendNode.front();
 	_listClosedyPath.push_back(pNode);
 	_listOpendNode.pop_front();
@@ -162,7 +191,8 @@ void ASTAR::pathFinder()
 		if (nIntervalPosY >= _nTileSizeY - 1) continue;
 		//나중가서는 터리안이나 오브젝트로 처리
 		//if (_pMap->getTile(nIntervalPosX, nIntervalPosY)->getIsWall()) continue;
-		if (_eMoveHeight == MOVEHEIGHT::GROUND && _pMap->getTile(nIntervalPosX, nIntervalPosY)->getTerrian() != TILE::E_TERRIAN::GROUND) continue;
+		if (_eMoveHeight == MOVEHEIGHT::GROUND && _pMap->getTile(nIntervalPosX, nIntervalPosY)->getTerrian() != TILE::E_TERRIAN::GROUND
+			&& _pMap->getTile(nIntervalPosX, nIntervalPosY)->getTerrian() != TILE::E_TERRIAN::DIRT) continue;
 		if (_eMoveHeight == MOVEHEIGHT::WATER && _pMap->getTile(nIntervalPosX, nIntervalPosY)->getTerrian() != TILE::E_TERRIAN::WATER) continue;
 		if (_eMoveHeight != MOVEHEIGHT::FLY && _pMap->getTile(nIntervalPosX, nIntervalPosY)->getObject() != TILE::E_OBJECT::E_NONE) continue;
 
@@ -185,7 +215,7 @@ void ASTAR::pathFinder()
 					_vvTile[nIntervalPosY][nIntervalPosX]->nIndexY = nIntervalPosY;
 					_vvTile[nIntervalPosY][nIntervalPosX]->nPathStartToCurrent = pNode->nPathStartToCurrent + _arHuristic[i];
 					_vvTile[nIntervalPosY][nIntervalPosX]->nPathCurrentToEnd = abs(nIntervalPosX - _nEndIndexX) + abs(nIntervalPosY - _nEndIndexY);
-					_vvTile[nIntervalPosY][nIntervalPosX]->nPathCurrentToEnd *= 10;
+					_vvTile[nIntervalPosY][nIntervalPosX]->nPathCurrentToEnd *= _arHuristic[i];
 					_vvTile[nIntervalPosY][nIntervalPosX]->nPathToatalCost = _vvTile[nIntervalPosY][nIntervalPosX]->nPathStartToCurrent + _vvTile[nIntervalPosY][nIntervalPosX]->nPathCurrentToEnd;
 					_vvTile[nIntervalPosY][nIntervalPosX]->parrentNode = pNode;
 
@@ -225,7 +255,7 @@ void ASTAR::pathFinder()
 		_vvTile[nIntervalPosY][nIntervalPosX]->nIndexY = nIntervalPosY;
 		_vvTile[nIntervalPosY][nIntervalPosX]->nPathStartToCurrent = pNode->nPathStartToCurrent + _arHuristic[i];
 		_vvTile[nIntervalPosY][nIntervalPosX]->nPathCurrentToEnd = abs(nIntervalPosX - _nEndIndexX) + abs(nIntervalPosY - _nEndIndexY);
-		_vvTile[nIntervalPosY][nIntervalPosX]->nPathCurrentToEnd *= 10;
+		_vvTile[nIntervalPosY][nIntervalPosX]->nPathCurrentToEnd *= _arHuristic[i];
 		_vvTile[nIntervalPosY][nIntervalPosX]->nPathToatalCost = _vvTile[nIntervalPosY][nIntervalPosX]->nPathStartToCurrent + _vvTile[nIntervalPosY][nIntervalPosX]->nPathCurrentToEnd;
 		_vvTile[nIntervalPosY][nIntervalPosX]->parrentNode = pNode;
 
@@ -254,22 +284,26 @@ void ASTAR::pathFinder()
 
 	}
 
-	if (_listClosedyPath.size() > 300)
+	if (_listClosedyPath.size() > 50)
 	{
 
-		list<TILENODE*>::iterator iter = _listOpendNode.begin();
-		list<TILENODE*>::iterator end = _listOpendNode.end();
+		list<TILENODE*>::iterator iter = _listClosedyPath.begin();
+		list<TILENODE*>::iterator end = _listClosedyPath.end();
 		TILENODE* pNode;
 		pNode = *iter;
 		//가장 가까운 노드를 탐색한다.
 		while (iter != end)
 		{
-			if (pNode->nPathCurrentToEnd > (*iter)->nPathCurrentToEnd)
+			int nDst = abs(pNode->nIndexX - _nEndIndexX) + abs(pNode->nIndexY - _nEndIndexY);
+			int nSrc = abs((*iter)->nIndexX - _nEndIndexX) + abs((*iter)->nIndexY - _nEndIndexY);
+			if (nDst > nSrc)
 			{
 				pNode = *iter;
 			}
 			iter++;
 		}
+
+
 		//가장 가까운 노드에서 길을 만든다
 		while (pNode != nullptr) {
 			_listMaximumPath.push_front(pNode);

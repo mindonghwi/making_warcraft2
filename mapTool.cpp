@@ -956,6 +956,11 @@ void MAPTOOL::readjustGoldMine()
 					bIsDestroy = true;
 					break;
 				}
+				if (_vvMap[nTmpY][nTmpX]->getObject() == TILE::E_OBJECT::E_NONE)
+				{
+					bIsDestroy = true;
+					break;
+				}
 			}
 			if (bIsDestroy)
 			{
@@ -1014,6 +1019,11 @@ void MAPTOOL::reAdjustTree()
 				nTmpY = nIndexY + j;
 
 				if (_vvMap[nTmpY][nTmpX]->getTerrian() != TILE::E_TERRIAN::GROUND)
+				{
+					bIsDestroy = true;
+					break;
+				}
+				if (_vvMap[nTmpY][nTmpX]->getObject() == TILE::E_OBJECT::E_NONE)
 				{
 					bIsDestroy = true;
 					break;
@@ -1129,6 +1139,11 @@ void MAPTOOL::readjustOilPatch()
 				nTmpY = nIndexY + j;
 
 				if (_vvMap[nTmpY][nTmpX]->getTerrian() != TILE::E_TERRIAN::WATER)
+				{
+					bIsDestroy = true;
+					break;
+				}
+				if (_vvMap[nTmpY][nTmpX]->getObject() == TILE::E_OBJECT::E_NONE)
 				{
 					bIsDestroy = true;
 					break;
