@@ -60,6 +60,7 @@ public:
 	void	init(int nSearchLength,MAP* pMap);
 	//어느 타일에 있는지 주는 함수
 	void	startFinder(int nStartIndexX, int nStartIndexY, int nEndIndexX, int nEndIndexY, MOVEHEIGHT eMoveHeight);
+	void	startFinder(float fStartPosX, float fStartPosY, float fEndPosX, float fEndPosY, MOVEHEIGHT eMoveHeight);
 	void	pathFinder();	
 
 	
@@ -70,6 +71,8 @@ public:
 	int		getListSize() { return static_cast<int>(_listMaximumPath.size()); }
 	TILENODE*	getNode(int nIndex);
 	bool	bIsEmety() { return _listMaximumPath.empty(); }
+
+
 
 private:
 	void	initMap();

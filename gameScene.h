@@ -5,8 +5,8 @@
 
 #include "resourceMgr.h"
 
-//test
-#include "workMan.h"
+#include "player.h"
+
 
 class SCENEGAME : public gameNode
 {
@@ -16,8 +16,7 @@ private:
 	RESOURCEMGR*	_pResourceMgr;
 	ASTAR*			_pAstar;
 
-	WORKMAN*		_pWorkMan;
-
+	PLAYER*			_pPlayer;
 public:
 	SCENEGAME();
 	~SCENEGAME();

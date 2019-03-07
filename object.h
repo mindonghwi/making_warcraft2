@@ -43,6 +43,8 @@ public:
 	inline int getHeight() { return _height; }
 	inline image* getImage() { return _pImg; }
 	inline int getPosZ() { return _posZ; }
+	inline LPRECT	getRect() { return &_rc; }
+
 
 	inline void setPosX(float posX) { _posX = posX; }
 	inline void setPosY(float posY) { _posY = posY; }

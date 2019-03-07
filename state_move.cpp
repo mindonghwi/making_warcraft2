@@ -19,9 +19,9 @@ void STATE_MOVE::update()
 {
 	_fTimer += TIMEMANAGER->getElapsedTime();
 
-	if (_fTimer >= _pUnit->getFPS(UNIT::E_STATE::E_IDLE))
+	if (_fTimer >= _pUnit->getFPS(UNIT::E_STATE::E_MOVE))
 	{
 		_fTimer = 0.0f;
-		_pUnit->addFrameX(UNIT::E_STATE::E_IDLE);
+		_pUnit->addFrameX(UNIT::E_STATE::E_MOVE);
 	}
 }

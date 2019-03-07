@@ -22,6 +22,11 @@ public:
 	virtual void update()			override;
 	virtual void release()			override;
 	virtual void render(HDC hdc)	override;
+	virtual	void renderSelected(HDC hdc) override;
+	virtual void command()	override;
+	virtual void setMovePoints(float fEndPosX, float fEndPosY) override;
+
+
 
 private:
 	void	allocateState();

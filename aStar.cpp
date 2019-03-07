@@ -107,6 +107,36 @@ void ASTAR::startFinder(int nStartIndexX, int nStartIndexY, int nEndIndexX, int 
 
 }
 
+void ASTAR::startFinder(float fStartPosX, float fStartPosY, float fEndPosX, float fEndPosY, MOVEHEIGHT eMoveHeight)
+{
+	//시작점을 만든다.
+	//부모노드는 없다
+	//시작 중심점을 잡는다.
+	//코스트를 계산한다.
+	_nStartIndexX = fStartPosX/ TILESIZE;
+	_nStartIndexY = fStartPosY / TILESIZE;
+	_nEndIndexX = fEndPosX / TILESIZE;
+	_nEndIndexY = fEndPosY / TILESIZE;
+
+	_eMoveHeight = eMoveHeight;
+
+	_listOpendNode.clear();
+	_listClosedyPath.clear();
+	_listMaximumPath.clear();
+	initMap();
+	//시작 노드 만들기
+	//TILENODE* pNode = new TILENODE();
+	//pNode->nIndexX = _nStartIndexX;
+	//pNode->nIndexY = _nStartIndexY;
+	//pNode->nPathCurrentToEnd = 0;
+	//pNode->nPathStartToCurrent = 0;
+	//pNode->nPathToatalCost = 0;
+	//pNode->parrentNode = nullptr;
+
+	//열린 좌표에 넣는데 우선순위를 주자
+	_listOpendNode.push_back(_vvTile[_nStartIndexY][_nStartIndexX]);
+}
+
 void ASTAR::pathFinder()
 {
 	//8점의 좌표를 탐색

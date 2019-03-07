@@ -28,6 +28,7 @@ void UNIT::init(int nPosX, int nPosY, int nWidth, int nHeight)
 	setSearchRange(0.0f);
 	setAttackRange(0.0f);
 	setAttackSpeedps(0.0f);
+	_vvMovePoint.clear();
 }
 
 void UNIT::create(int nPosX, int nPosY, int nHp, float fSpeed, int nAttack, int nDefence, float fSearchRange, float fAttackRange, float fAttackSpeedps)
@@ -52,4 +53,9 @@ void UNIT::addFrameX(UNIT::E_STATE eState)
 	{
 		_nFrameX = getStartIndex(eState);
 	}
+}
+
+void UNIT::Move()
+{
+	//와서하자 벡터와 인덱스는 준비가 되어있다.
 }

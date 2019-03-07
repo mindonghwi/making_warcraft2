@@ -29,11 +29,13 @@ void WORKMAN::init(int nPosX, int nPosY, int nWidth, int nHeight)
 	allocateState();
 	allocateBehavier();
 	UNIT::setCurrentState(UNIT::E_STATENUM::E_IDLE);
+	UNIT::getCurrentState()->start();
 	UNIT::setCurrentBehavir(UNIT::E_BEHAVIERNUM::E_NONE);
 	UNIT::setUnit(UNIT::E_UNIT::E_WORKMAN);
 	UNIT::OBJECT::setImage(IMAGEMANAGER->findImage("peasantSprite"));
 
-
+	UNIT::setCollisionRect(UNIT::getPosX(), UNIT::getPosY(), 32, 32);
+	UNIT::setPopulation(1);
 }
 
 void WORKMAN::update()
@@ -52,7 +54,45 @@ void WORKMAN::release()
 void WORKMAN::render(HDC hdc)
 {
 	UNIT::OBJECT::getImage()->frameRenderCenter(hdc, UNIT::OBJECT::getPosX(), UNIT::OBJECT::getPosY(), _nFrameX, static_cast<int>(_eDirection));
+
 }
+
+void WORKMAN::renderSelected(HDC hdc)
+{
+	DrawEdge(hdc, UNIT::getCollisionRect(), BDR_RAISEDOUTER, BF_FLAT | BF_TOPLEFT | BF_BOTTOMRIGHT);
+}
+
+void WORKMAN::command()
+{
+	if (KEYMANAGER->isOnceKeyDown(VK_RBUTTON))
+	{
+		UNIT::setCurrentState(UNIT::E_STATENUM::E_MOVE);
+		UNIT::setCurrentBehavir(UNIT::E_BEHAVIERNUM::E_MOVE);
+		UNIT::getCurrentState()->start();
+		setMovePoints(static_cast<float>(_ptMouse.x + _pCamera->getLeft()), static_cast<float>(_ptMouse.y + _pCamera->getTop()));
+	}
+
+}
+
+void WORKMAN::setMovePoints(float fEndPosX, float fEndPosY)
+{
+	UNIT::_vvMovePoint.clear();
+	UNIT::setMoveIndex(0);
+
+	_pAstar->startFinder(UNIT::OBJECT::getPosX(), UNIT::OBJECT::getPosY(), fEndPosX, fEndPosY, ASTAR::MOVEHEIGHT::GROUND);
+	_pAstar->pathFinder();
+
+	for (int i = 0; i < _pAstar->getListSize(); i++)
+	{
+		vector<int> vPos;
+		vPos.push_back(_pAstar->getNode(i)->nIndexX * TILESIZE);
+		vPos.push_back(_pAstar->getNode(i)->nIndexY * TILESIZE);
+		UNIT::_vvMovePoint.push_back(vPos);
+	}
+
+
+}
+
 
 void WORKMAN::allocateState()
 {

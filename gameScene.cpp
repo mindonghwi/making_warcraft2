@@ -14,17 +14,23 @@ HRESULT SCENEGAME::init()
 	_pMap = new MAP();
 	_pCamera = new CAMERA();
 	_pResourceMgr = new RESOURCEMGR();
-
-	//tset
-	_pWorkMan = new WORKMAN();
-	_pWorkMan->setLinkCamera(_pCamera);
-	_pWorkMan->init(WINSIZEX/2, WINSIZEY/2, 64, 64);
+	_pPlayer = new PLAYER();
+	_pAstar = new ASTAR();
 
 
+	//player link other
+	_pPlayer->setLinkCamera(_pCamera);
+	_pPlayer->setLinkAstar(_pAstar);
+
+	//resourceMgr link other
 	_pResourceMgr->setLinkCamera(_pCamera);
 	_pResourceMgr->setLinkMap(_pMap);
+
+	//Map link other
 	_pMap->setLinkCamera(_pCamera);
 	_pMap->setLinkResourceMgr(_pResourceMgr);
+
+
 	
 	_pMap->init("map");
 	_pCamera->init(WINSIZEX/2, WINSIZEY / 2,WINSIZEX,WINSIZEY,_pMap->getMapCountX() * TILESIZE, _pMap->getMapCountY() * TILESIZE);
@@ -34,6 +40,9 @@ HRESULT SCENEGAME::init()
 
 	_pMap->drawMap(_pCamera->getBackGoroundBuffer());
 
+	_pPlayer->init();
+
+	_pAstar->init(8, _pMap);
 
 	return S_OK;
 }
@@ -47,18 +56,24 @@ void SCENEGAME::release()
 	_pCamera->release();
 	delete _pCamera;
 	_pCamera = nullptr;
+
+	_pPlayer->release();
+	delete _pPlayer;
+	_pPlayer = nullptr;
 }
 
 void SCENEGAME::update()
 {
 	_pCamera->update();
 	_pResourceMgr->update();
-	_pWorkMan->update();
+	_pPlayer->update();
 }
 
 void SCENEGAME::render()
 {
 	_pCamera->renderinit();
 
+
+	_pPlayer->render(_pCamera->getMemDC());
 	_pCamera->render(getMemDC());
 }

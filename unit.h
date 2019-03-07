@@ -68,6 +68,7 @@ public:
 		E_GALLEYS,			//작은 공격배
 		E_TRANSPORT,
 		E_BATTLESHIP,
+		E_SUBMARIN,
 		E_FLYER,
 		E_MAX
 	};
@@ -112,6 +113,15 @@ protected:
 
 	ASTAR*			_pAstar;
 
+
+	RECT			_rcCollision;
+
+	int				_nPopulation;
+
+	bool			_bIsSelected;	//선택되었는지 아닌지
+
+	vector<vector<int>>	_vvMovePoint;	//x,y좌표를 가지고 있는 리스트
+	int					_nMoveVectorIndex;//움직이는 포인트 인덱스
 public:
 	UNIT();
 	virtual ~UNIT();
@@ -126,6 +136,13 @@ public:
 	virtual void release()			abstract;
 	virtual void render(HDC hdc)	abstract;
 
+	virtual	void renderSelected(HDC hdc) abstract;
+
+	virtual void command()	abstract;
+
+	virtual void setMovePoints(float fEndPosX,float fEndPosY) abstract;
+
+	void	Move();
 
 public:
 	//setter
@@ -156,6 +173,17 @@ public:
 	inline	void	setLinkCamera(CAMERA* pCamera) { _pCamera = pCamera; }
 	inline	void	setLinkAStar(ASTAR*	pAstar) { _pAstar = pAstar; }
 
+	inline	void	setCollisionRect(int nLeft, int nRight, int nWidth, int nHeight) { _rcCollision = RectMake(nLeft, nRight, nWidth, nHeight); }
+	inline	void	setCollisionRect(RECT& rcTmp) { _rcCollision = rcTmp; }
+	inline	void	setCollisionRect(float fPosX, float fPosY, int nWidth, int nHeight) { _rcCollision = RectMakeCenter(fPosX, fPosY, nWidth, nHeight); }
+
+	//유닛이 차지하는 인구수
+	inline	void	setPopulation(int nPopulation) { _nPopulation = nPopulation; }
+
+	inline	void	setSelected(bool bIsSelected) { _bIsSelected = bIsSelected; }
+
+	inline	void	setMoveIndex(int nIndex) { _nMoveVectorIndex = nIndex; }
+
 	//getter
 	inline	int		getHp() { return _nHp; }
 	inline	int		getAttack() { return _nAttack; }
@@ -180,7 +208,15 @@ public:
 	//들고있는 자원
 	inline	UNIT::E_HARVEST	getHarvest() { return _eHarvest; }
 
+	inline	LPRECT	getCollisionRect() { return &_rcCollision; }
+	inline	LPCRECT	getConstCollisionRect() { return &_rcCollision; }
 
+	//유닛이 차지하는 인구수
+	inline	int		getPopulation() { return _nPopulation; }
+
+	inline	bool	getSelected() { return _bIsSelected; }
+
+	inline	int		getMoveIndex() { return _nMoveVectorIndex; }
 
 public:
 	//상태를 정리해보자
