@@ -79,18 +79,26 @@ void UNIT::Move()
 bool UNIT::moveTo()
 {
 	_nMoveVectorIndex++;
+
 	if (_nMoveVectorIndex >= static_cast<int>(_vvMovePoint.size()))
 	{
-		OBJECT::setPosX(_vvMovePoint[_nMoveVectorIndex-1][0] );
-		OBJECT::setPosY(_vvMovePoint[_nMoveVectorIndex-1][1] );
+		//OBJECT::setPosX(_vvMovePoint[_nMoveVectorIndex-1][0] );
+		//OBJECT::setPosY(_vvMovePoint[_nMoveVectorIndex-1][1] );
 
 		return false;
 	}
 
 	_travelRange = getDistance(OBJECT::getPosX() , OBJECT::getPosY(),_vvMovePoint[_nMoveVectorIndex][0], _vvMovePoint[_nMoveVectorIndex][1]);
+	
 
 	//각도도 구해준다
 	_fDirAngle = getAngle(OBJECT::getPosX(), OBJECT::getPosY() , _vvMovePoint[_nMoveVectorIndex][0], _vvMovePoint[_nMoveVectorIndex][1]);
+
+	float fAngle = (_fDirAngle + PI8) / (PI/4.0f);
+	//fAngle -= 1.0f;
+
+	UNIT::_eDirection = static_cast<E_DIRECTION>(static_cast<int>(fAngle));
+
 
 
 	return true;

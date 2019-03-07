@@ -66,11 +66,13 @@ void WORKMAN::command()
 {
 	if (KEYMANAGER->isOnceKeyDown(VK_RBUTTON))
 	{
+		setMovePoints(static_cast<float>(_ptMouse.x + _pCamera->getLeft()), static_cast<float>(_ptMouse.y + _pCamera->getTop()));
+		if (!UNIT::moveTo()) {
+			return;
+		}
 		UNIT::setCurrentState(UNIT::E_STATENUM::E_MOVE);
 		UNIT::setCurrentBehavir(UNIT::E_BEHAVIERNUM::E_MOVE);
 		UNIT::getCurrentState()->start();
-		setMovePoints(static_cast<float>(_ptMouse.x + _pCamera->getLeft()), static_cast<float>(_ptMouse.y + _pCamera->getTop()));
-		UNIT::moveTo();
 	}
 
 }

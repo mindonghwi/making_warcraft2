@@ -135,6 +135,8 @@ void ASTAR::startFinder(float fStartPosX, float fStartPosY, float fEndPosX, floa
 
 	//열린 좌표에 넣는데 우선순위를 주자
 	_listOpendNode.push_back(_vvTile[_nStartIndexY][_nStartIndexX]);
+
+
 }
 
 void ASTAR::pathFinder()
@@ -175,6 +177,7 @@ void ASTAR::pathFinder()
 		return;
 	}
 
+
 	TILENODE* pNode = _listOpendNode.front();
 	_listClosedyPath.push_back(pNode);
 	_listOpendNode.pop_front();
@@ -193,6 +196,29 @@ void ASTAR::pathFinder()
 		//if (_pMap->getTile(nIntervalPosX, nIntervalPosY)->getIsWall()) continue;
 		if (_eMoveHeight == MOVEHEIGHT::GROUND && _pMap->getTile(nIntervalPosX, nIntervalPosY)->getTerrian() != TILE::E_TERRIAN::GROUND
 			&& _pMap->getTile(nIntervalPosX, nIntervalPosY)->getTerrian() != TILE::E_TERRIAN::DIRT) continue;
+	
+		if (_eMoveHeight == MOVEHEIGHT::GROUND && _pMap->getTile(nIntervalPosX, nIntervalPosY)->getTerrian() == TILE::E_TERRIAN::DIRT)
+		{
+			int nCount = 0;
+			for (int j = 0; j < 4; j++)
+			{
+				int nTmpEdgePosX = nIntervalPosX + _arInterval[j][static_cast<int>(POS::POSX)];
+				int nTmpEdgePosY = nIntervalPosY + _arInterval[j][static_cast<int>(POS::POSY)];
+
+				if (_pMap->getTile(nTmpEdgePosX, nTmpEdgePosY)->getTerrian() == TILE::E_TERRIAN::WATER
+					|| _pMap->getTile(nTmpEdgePosX, nTmpEdgePosY)->getTerrian() == TILE::E_TERRIAN::ROCK)
+				{
+					nCount++;
+				}
+
+			}
+			if (nCount >= 2)
+			{
+				continue;
+			}
+		}
+
+
 		if (_eMoveHeight == MOVEHEIGHT::WATER && _pMap->getTile(nIntervalPosX, nIntervalPosY)->getTerrian() != TILE::E_TERRIAN::WATER) continue;
 		if (_eMoveHeight != MOVEHEIGHT::FLY && _pMap->getTile(nIntervalPosX, nIntervalPosY)->getObject() != TILE::E_OBJECT::E_NONE) continue;
 
@@ -202,9 +228,9 @@ void ASTAR::pathFinder()
 		
 		bool bIsSearch = false;
 		list<TILENODE*>::iterator iter = _listOpendNode.begin();
-		list<TILENODE*>::iterator end = _listOpendNode.end();
+		//list<TILENODE*>::iterator end = ;
 		//////////open에 있으면 
-		while (iter != end)
+		while (iter != _listOpendNode.end())
 		{
 			if ((*iter)->nIndexX == nIntervalPosX && (*iter)->nIndexY == nIntervalPosY)
 			{
@@ -220,9 +246,11 @@ void ASTAR::pathFinder()
 					_vvTile[nIntervalPosY][nIntervalPosX]->parrentNode = pNode;
 
 
-					_listOpendNode.erase(iter);
+					iter = _listOpendNode.erase(iter);
+					
+					///iter = _listOpendNode.begin();
 
-					iter = _listOpendNode.begin();
+
 					while ((*iter)->nPathToatalCost < _vvTile[nIntervalPosY][nIntervalPosX]->nPathToatalCost) {
 						iter++;
 					}
@@ -239,8 +267,8 @@ void ASTAR::pathFinder()
 
 		//클로즈에 있으면 넘겨야한다.
 		iter = _listClosedyPath.begin();
-		end = _listClosedyPath.end();
-		while (iter != end)
+		//end = _listClosedyPath.end();
+		while (iter != _listClosedyPath.end())
 		{
 
 			if ((*iter)->nIndexX == nIntervalPosX && (*iter)->nIndexY == nIntervalPosY) {

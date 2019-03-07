@@ -21,8 +21,12 @@ void BEHAVIER_MOVE_WALK::update(UNIT * pUnit)
 			pUnit->setCurrentState(UNIT::E_STATENUM::E_IDLE);
 			pUnit->getCurrentState()->start();
 			_fTimer = 0.0f;
+			
+			return;
 		}
 		_fTimer = 0.0f;
 	}
+
+
 	pUnit->Move();
 }

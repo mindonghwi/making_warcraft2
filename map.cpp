@@ -574,5 +574,41 @@ void MAP::readjust()
 			}
 		}
 	}
+
+
+	for (int j = 1; j < _nTileCountY-1; j++)
+	{
+		for (int i = 1; i < _nTileCountX-1; i++)
+		{
+			TILE::E_TERRIAN eTerrian = _vvMap[j][i]->getTerrian();
+			if (eTerrian == TILE::E_TERRIAN::DIRT)
+			{
+				int nWater = 0;
+				if (_vvMap[j-1][i]->getTerrian() == TILE::E_TERRIAN::WATER)
+				{
+					nWater++;
+				}
+				if (_vvMap[j + 1][i]->getTerrian() == TILE::E_TERRIAN::WATER)
+				{
+					nWater++;
+				}
+				if (_vvMap[j][i-1]->getTerrian() == TILE::E_TERRIAN::WATER)
+				{
+					nWater++;
+				}
+				if (_vvMap[j][i+1]->getTerrian() == TILE::E_TERRIAN::WATER)
+				{
+					nWater++;
+				}
+
+				if (nWater>=1 )
+				{
+					_vvMap[j][i]->setTerrian(TILE::E_TERRIAN::DIRT_WATER);
+				}
+
+			}
+		}
+	}
+
 }
 
