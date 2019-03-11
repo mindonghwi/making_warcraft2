@@ -27,6 +27,12 @@ void BUILD::create(float fPosX, float fPosY, int nWidth, int nHeight, int nHp, f
 
 void BUILD::update()
 {
+	_fTimer += TIMEMANAGER->getElapsedTime();
+	if (_eState == BUILD::E_STATE::E_CREATING)
+	{
+		creatingUpdate();
+	}
+
 
 
 	_pCamera->pushRenderObject(this);
@@ -34,15 +40,18 @@ void BUILD::update()
 
 void BUILD::release()
 {
+	setImage(nullptr);
+
 }
 
 void BUILD::render(HDC hdc)
 {
+	OBJECT::getImage()->frameRenderCenter(hdc,OBJECT::getPosX(),OBJECT::getPosY(),_nFrameX,0);
+
 }
 
 void BUILD::creatingUpdate()
 {
-	_fTimer += TIMEMANAGER->getElapsedTime();
 	
 
 	if (_fTimer >= _fOffsetFrame)
@@ -61,4 +70,8 @@ void BUILD::creatingUpdate()
 		_eState = BUILD::E_STATE::E_ISON;
 		_fTimer = 0.0f;
 	}
+
+
 }
+
+

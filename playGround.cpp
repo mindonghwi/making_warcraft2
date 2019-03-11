@@ -68,7 +68,7 @@ void playGround::loadImage()
 
 
 
-
+	IMAGEMANAGER->addFrameImage("town","resource/human/build/townhall.bmp",512,128,4,1,true,Mins::getMazenta());
 
 
 }

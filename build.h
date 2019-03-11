@@ -17,7 +17,7 @@ public:
 	};
 
 
-private:
+protected:
 	float	_fBuildingTimer;	//지어지는데 걸리는 시간
 	float	_fTimer;
 	int		_nHp;
@@ -30,7 +30,7 @@ private:
 
 public:
 	BUILD();
-	~BUILD();
+	virtual ~BUILD();
 
 	virtual void create(float fPosX, float fPosY, int nWidth, int nHeight, int nHp, float fBuildingTimer,int nFrameCount, const string& strImgKey);
 	virtual void update()			override;
@@ -40,5 +40,6 @@ public:
 	virtual	void creatingUpdate();
 
 	inline	void	setLinkCamera(CAMERA* pCamera) { _pCamera = pCamera; }
+
 
 };

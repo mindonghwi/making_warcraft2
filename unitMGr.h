@@ -5,6 +5,7 @@
 #include "camera.h"
 
 class MAP;
+class BUILDMGR;
 
 class UNITMGR
 {
@@ -40,13 +41,15 @@ private:
 	MAP*			_pMap;
 
 	int				_nCount;
+
+	BUILDMGR*		_pBuildMgr;
 public:
 	UNITMGR();
 	~UNITMGR();
 
 
 	void init();
-	bool createUnit(UNIT::E_UNIT eUnit,float fPosX,float fPosY);
+	bool createUnit(UNIT::E_UNIT eUnit, float fPosX, float fPosY);
 	void update();
 	void release();
 	void render(HDC hdc);
@@ -68,6 +71,7 @@ public:
 	inline	void	setLinkCamera(CAMERA* pCamera) { _pCamera = pCamera; }
 	inline	void	setLinkAstar(ASTAR* pAstar) { _pAstar = pAstar; }
 	inline	void	setLinkMap(MAP* pMap) { _pMap = pMap; }
+	inline	void	setLinkBuildMgr(BUILDMGR* pBuildMgr) { _pBuildMgr = pBuildMgr; }
 
 	//getter
 	inline	int		getHp(UNIT::E_UNIT eUnit) { return _arUnitHp[static_cast<int>(eUnit)]; }

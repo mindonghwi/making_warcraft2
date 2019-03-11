@@ -303,6 +303,9 @@
     <ClInclude Include="buildMgr.h">
       <Filter>PlayGround\build</Filter>
     </ClInclude>
+    <ClInclude Include="town.h">
+      <Filter>PlayGround\build</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="stdafx.cpp">
@@ -468,6 +471,9 @@
       <Filter>PlayGround\build</Filter>
     </ClCompile>
     <ClCompile Include="build.cpp">
+      <Filter>PlayGround\build</Filter>
+    </ClCompile>
+    <ClCompile Include="town.cpp">
       <Filter>PlayGround\build</Filter>
     </ClCompile>
   </ItemGroup>

@@ -21,6 +21,7 @@ HRESULT SCENEGAME::init()
 	//player link other
 	_pPlayer->setLinkCamera(_pCamera);
 	_pPlayer->setLinkAstar(_pAstar);
+	_pPlayer->setLinkMap(_pMap);
 
 	//resourceMgr link other
 	_pResourceMgr->setLinkCamera(_pCamera);
@@ -52,7 +53,6 @@ HRESULT SCENEGAME::init()
 
 	//astar link other
 	_pAstar->setLinkUnitMgr(_pPlayer);
-	_pPlayer->setLinkMap(_pMap);
 
 
 

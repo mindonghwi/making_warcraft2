@@ -3,6 +3,8 @@
 
 #include "workMan.h"
 #include "map.h"
+#include "buildMgr.h"
+
 
 UNITMGR::UNITMGR()
 {
@@ -66,7 +68,7 @@ bool UNITMGR::createUnit(UNIT::E_UNIT eUnit, float fPosX, float fPosY)
 	_listUnit.back()->create(static_cast<int>(fPosX), static_cast<int>(fPosY), _arUnitHp[static_cast<int>(eUnit)], _arUnitSpeed[static_cast<int>(eUnit)],
 		_arUnitAttack[static_cast<int>(eUnit)], _arUnitDefence[static_cast<int>(eUnit)], _arSearchRange[static_cast<int>(eUnit)], _arAttackRange[static_cast<int>(eUnit)], _arAttackSpeed[static_cast<int>(eUnit)],
 		_arUnitMinimalAttack[static_cast<int>(eUnit)]);
-
+	_listUnit.back()->setLinkBuildMgr(_pBuildMgr);
 	_nCount++;
 	return false;
 }
@@ -184,7 +186,7 @@ void UNITMGR::commandSelectUnit()
 	int nData = 0;
 	for (int i = 0; i < static_cast<int>(_vSeletedUnit.size()); i++)
 	{
-		(*(_vSeletedUnit[i]))->commandMove(&nData);
+		(*(_vSeletedUnit[i]))->command();
 		nData++;
 	}
 }

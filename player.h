@@ -4,6 +4,8 @@
 #include "unit.h"
 #include "camera.h"
 #include "unitMGr.h"
+#include "buildMgr.h"
+
 class ASTAR;
 class MAP;
 class PLAYER
@@ -30,7 +32,9 @@ private:
 
 	ASTAR*		_pAstar;
 	UNITMGR*	_pUnitMgr;
-	
+	BUILDMGR*	_pBuildMgr;
+	MAP*		_pMap;
+
 
 	//drag
 	RECT	_rcDragArea;		//drag REct
@@ -56,7 +60,7 @@ private:
 	void selectedUnit();
 	void commandSelectUnit();
 
-
+	void commandBuild();
 
 	void initDrag();
 	void dragSelect();
@@ -65,7 +69,7 @@ public:
 	//linker
 	inline	void	setLinkCamera(CAMERA* pCamera) { _pCamera = pCamera; }
 	inline	void	setLinkAstar(ASTAR* pAstar) { _pAstar = pAstar; }
-	inline	void	setLinkMap(MAP* pMap) { _pUnitMgr->setLinkMap(pMap); }
+	inline	void	setLinkMap(MAP* pMap) { _pMap = (pMap); }
 	
 	//setter
 	inline	void	setGold(int nGold) { _arResource[static_cast<int>(E_RESOURCE::E_GOLD)] = nGold; }

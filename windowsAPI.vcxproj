@@ -212,6 +212,7 @@
     <ClInclude Include="tile.h" />
     <ClInclude Include="timeManager.h" />
     <ClInclude Include="timer.h" />
+    <ClInclude Include="town.h" />
     <ClInclude Include="tree.h" />
     <ClInclude Include="triBute.h" />
     <ClInclude Include="unit.h" />
@@ -274,6 +275,7 @@
     <ClCompile Include="tile.cpp" />
     <ClCompile Include="timeManager.cpp" />
     <ClCompile Include="timer.cpp" />
+    <ClCompile Include="town.cpp" />
     <ClCompile Include="tree.cpp" />
     <ClCompile Include="unit.cpp" />
     <ClCompile Include="unitMGr.cpp" />

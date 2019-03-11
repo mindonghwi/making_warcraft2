@@ -1,10 +1,12 @@
 #pragma once
 #include "build.h"
 #include "stdafx.h"
+#include "town.h"
+
 
 class CAMERA;
 class MAP;
-
+class UNITMGR;
 
 class BUILDMGR
 {
@@ -37,10 +39,18 @@ public:
 
 private:
 	int			_arConsumptionResource[static_cast<const int>(E_BUILDS::E_MAX)][static_cast<const int>(E_RESOURCE::E_MAX)];//지어지는데 필요한 자원
+	int			_arBuildsWidth[static_cast<const int>(E_BUILDS::E_MAX)];
+	int			_arBuildsHeight[static_cast<const int>(E_BUILDS::E_MAX)];
+
 	int			_nBuildLevel;
 
 	CAMERA*		_pCamera;
 	MAP*		_pMap;
+
+
+	list<BUILD*>	_listBuild;
+
+	UNITMGR*		_pUnitMgr;
 public:
 	BUILDMGR();
 	~BUILDMGR();
@@ -48,13 +58,17 @@ public:
 	void	init();
 	void	update();
 	void	release();
-	void	buildBuilding(BUILDMGR::E_BUILDS eBuild);
+	void	buildBuilding(BUILDMGR::E_BUILDS eBuild, float fPosX,float fPosY);
+
+	bool	bIsGroundCheck(float fPosX,float fPosY);
+	
 private:
 	void	allocateBuildResource();
-
-
+	void	allocateBuildSize();
+public:
 	//linker
 	inline	void	setLinkCamera(CAMERA* pCamera) { _pCamera = pCamera; }
 	inline	void	setLinkMap(MAP* pMap) { _pMap = pMap; }
-
+	inline	void	setLinkUnitMgr(UNITMGR* pUnitMgr) { _pUnitMgr = pUnitMgr; }
+	inline	int		getConsumptionResource(E_BUILDS eBuilds,E_RESOURCE eResource){return _arConsumptionResource[static_cast<int>(eBuilds)][static_cast<int>(eResource)]; }
 };

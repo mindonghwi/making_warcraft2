@@ -1,5 +1,8 @@
 #include "stdafx.h"
 #include "unit.h"
+#include "buildMgr.h"
+
+
 UNIT::UNIT() :
 	_nHp(0),
 	_nAttack(0),
@@ -101,6 +104,14 @@ void UNIT::Move()
 	OBJECT::setPosY(OBJECT::getPosY() + Mins::presentPowerY(_fDirAngle, _fMoveSpeed));
 	UNIT::setCollisionRect(UNIT::getPosX(), UNIT::getPosY(), 32, 32);
 
+}
+
+void UNIT::build()
+{
+}
+
+void UNIT::commandBuild()
+{
 }
 
 bool UNIT::moveTo()

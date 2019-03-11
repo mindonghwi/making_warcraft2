@@ -22,7 +22,7 @@ void BEHAVIER_MOVE_WALK::update(UNIT * pUnit)
 		}
 		_fTimer = 0.0f;
 	}
-
+	
 
 	pUnit->Move();
 }
@@ -33,6 +33,15 @@ void BEHAVIER_MOVE_WALK::end(UNIT * pUnit)
 	pUnit->setCurrentState(UNIT::E_STATENUM::E_IDLE);
 	pUnit->setBehavier(UNIT::E_BEHAVIERNUM::E_NONE);
 
+
+
 	pUnit->getCurrentState()->start();
 	_fTimer = 0.0f;
+
+
+
+	if (pUnit->getUnit() == UNIT::E_UNIT::E_WORKMAN)
+	{
+		pUnit->build();
+	}
 }

@@ -13,6 +13,8 @@ STATE_IDLE::~STATE_IDLE()
 void STATE_IDLE::start()
 {
 	_pUnit->setFrameX(_pUnit->getStartIndex(UNIT::E_STATE::E_IDLE));
+
+
 }
 
 void STATE_IDLE::update()

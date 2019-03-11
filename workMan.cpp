@@ -36,10 +36,14 @@ void WORKMAN::init(int nPosX, int nPosY, int nWidth, int nHeight, int nIndexNum)
 
 	UNIT::setCollisionRect(UNIT::getPosX(), UNIT::getPosY(), 32, 32);
 	UNIT::setPopulation(1);
+
+	_eBuilds = BUILDMGR::E_BUILDS::E_MAX;
 }
 
 void WORKMAN::update()
 {
+
+
 
 
 	_pCamera->pushRenderObject(this);
@@ -107,21 +111,39 @@ void WORKMAN::command()
 		UNIT::setBehavier(UNIT::E_BEHAVIERNUM::E_MOVE);
 
 		UNIT::getCurrentState()->start();
+
+
 	}
 
-	if (KEYMANAGER->isOnceKeyDown('B'))
-	{
-		_bNormalBuildingOn = true;
+
+
+}
+
+void WORKMAN::commandBuild()
+{
+	_nEndTileIndexX = static_cast<int>(_ptMouse.x + _pCamera->getLeft());
+	_nEndTileIndexY = static_cast<int>(_ptMouse.y + _pCamera->getTop());
+
+	setMovePoints(static_cast<float>(_ptMouse.x + _pCamera->getLeft()), static_cast<float>(_ptMouse.y + _pCamera->getTop()), 0);
+	UNIT::getCurrentBehavir()->end(this);
+	if (!UNIT::moveTo()) {
+		return;
 	}
+	UNIT::setCurrentState(UNIT::E_STATENUM::E_MOVE);
+	UNIT::setCurrentBehavir(UNIT::E_BEHAVIERNUM::E_MOVE);
+	UNIT::setBehavier(UNIT::E_BEHAVIERNUM::E_MOVE);
 
-	if (_bNormalBuildingOn)
+	UNIT::getCurrentState()->start();
+
+}
+
+void WORKMAN::build()
+{
+	if (_bNormalBuildingOn && UNIT::_eBuilds != BUILDMGR::E_BUILDS::E_MAX)
 	{
-		if (KEYMANAGER->isOnceKeyDown('H'))
-		{
-			//지을 준비
-
-
-		}
+		_pBuildMgr->buildBuilding(_eBuilds, static_cast<float>((_ptMouse.x + _pCamera->getLeft())), static_cast<float>((_ptMouse.y + _pCamera->getTop())));
+		_bNormalBuildingOn = false;
+		UNIT::_eBuilds = BUILDMGR::E_BUILDS::E_MAX;
 	}
 }
 

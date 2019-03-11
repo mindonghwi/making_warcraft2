@@ -5,6 +5,10 @@
 #include "behavier.h"
 #include "camera.h"
 #include "aStar.h"
+#include "buildMgr.h"
+
+class BUILDMGR;
+
 
 class UNIT : public OBJECT {
 public:
@@ -136,6 +140,14 @@ protected:
 
 
 	E_BEHAVIERNUM		_eBehavier;
+
+
+	BUILDMGR*			_pBuildMgr;
+
+	//build
+	bool				_bNormalBuildingOn;
+	BUILDMGR::E_BUILDS	_eBuilds;
+
 public:
 	UNIT();
 	virtual ~UNIT();
@@ -160,6 +172,8 @@ public:
 
 	virtual void Move();
 
+	virtual void build();
+	virtual void commandBuild();
 	bool moveTo();
 
 	void moveToDir();
@@ -174,6 +188,10 @@ public:
 	inline	void	setAttackSpeedps(float fAmount) { _fAttackSpeedps = fAmount; }
 	inline	void	setDirAngle(float fAngle) { _fDirAngle = fAngle; }
 	inline	void	setMiniMalAttack(int fAmount) { _nMinimalAttack = fAmount; }
+	inline	void	setBuildingOn(bool bIsBuildingOn){ _bNormalBuildingOn = bIsBuildingOn;}
+	inline	void	setBuildType(BUILDMGR::E_BUILDS eBuilds){_eBuilds = eBuilds;}
+
+
 
 	//상태와 행동 패턴
 	inline	void	setCurrentState(UNIT::E_STATENUM eStateNum) { _pCurrentState = _arState[static_cast<int>(eStateNum)]; }
@@ -193,6 +211,7 @@ public:
 
 	inline	void	setLinkCamera(CAMERA* pCamera) { _pCamera = pCamera; }
 	inline	void	setLinkAStar(ASTAR*	pAstar) { _pAstar = pAstar; }
+	inline	void	setLinkBuildMgr(BUILDMGR* pBuildMgr) {_pBuildMgr = pBuildMgr; }
 
 	inline	void	setCollisionRect(int nLeft, int nRight, int nWidth, int nHeight) { _rcCollision = RectMake(nLeft, nRight, nWidth, nHeight); }
 	inline	void	setCollisionRect(RECT& rcTmp) { _rcCollision = rcTmp; }
@@ -260,6 +279,8 @@ public:
 	inline	int		getIndexNum() { return _nIndexNum; }
 	inline	UNIT::E_BEHAVIERNUM	getBehavier() { return _eBehavier; }
 
+	inline	bool	getBuildingOn() { return _bNormalBuildingOn; }
+	inline	BUILDMGR::E_BUILDS	getBuildType() { return _eBuilds ; }
 public:
 	//상태를 정리해보자
 	//정지 -> 정지
