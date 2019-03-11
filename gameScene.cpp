@@ -43,6 +43,9 @@ HRESULT SCENEGAME::init()
 
 
 	_pPlayer->init();
+	_pPlayer->setGold(5000);
+	_pPlayer->setOil(5000);
+	_pPlayer->setTree(2000);
 
 	_pAstar->init(8, _pMap);
 

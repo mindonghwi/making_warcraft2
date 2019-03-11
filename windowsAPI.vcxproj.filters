@@ -464,6 +464,12 @@
     <ClCompile Include="unitMGr.cpp">
       <Filter>PlayGround\unit</Filter>
     </ClCompile>
+    <ClCompile Include="buildMgr.cpp">
+      <Filter>PlayGround\build</Filter>
+    </ClCompile>
+    <ClCompile Include="build.cpp">
+      <Filter>PlayGround\build</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="windowsAPI.rc">

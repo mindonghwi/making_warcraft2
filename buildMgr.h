@@ -2,6 +2,10 @@
 #include "build.h"
 #include "stdafx.h"
 
+class CAMERA;
+class MAP;
+
+
 class BUILDMGR
 {
 public:
@@ -29,13 +33,28 @@ public:
 		E_MAX
 	};
 
+
+
 private:
-	int		_nConsumptionResource[static_cast<const int>(E_BUILDS::E_MAX)][static_cast<const int>(E_RESOURCE::E_MAX)];//지어지는데 필요한 자원
+	int			_arConsumptionResource[static_cast<const int>(E_BUILDS::E_MAX)][static_cast<const int>(E_RESOURCE::E_MAX)];//지어지는데 필요한 자원
+	int			_nBuildLevel;
 
-
+	CAMERA*		_pCamera;
+	MAP*		_pMap;
 public:
 	BUILDMGR();
 	~BUILDMGR();
 
+	void	init();
+	void	update();
+	void	release();
+	void	buildBuilding(BUILDMGR::E_BUILDS eBuild);
+private:
+	void	allocateBuildResource();
+
+
+	//linker
+	inline	void	setLinkCamera(CAMERA* pCamera) { _pCamera = pCamera; }
+	inline	void	setLinkMap(MAP* pMap) { _pMap = pMap; }
 
 };

@@ -229,6 +229,8 @@
     <ClCompile Include="behavier_Move_Fly.cpp" />
     <ClCompile Include="behavier_Move_Walk.cpp" />
     <ClCompile Include="behavier_None.cpp" />
+    <ClCompile Include="build.cpp" />
+    <ClCompile Include="buildMgr.cpp" />
     <ClCompile Include="button.cpp" />
     <ClCompile Include="camera.cpp" />
     <ClCompile Include="coverScene.cpp" />
