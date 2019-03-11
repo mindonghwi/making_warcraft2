@@ -4,6 +4,10 @@
 #include "tile.h"
 #include "map.h"
 
+class PLAYER;
+class UNITMGR;
+
+
 class ASTAR {
 public:
 	struct TILENODE
@@ -54,6 +58,12 @@ private:
 
 	MOVEHEIGHT		_eMoveHeight;
 
+	PLAYER*			_pPlayer;
+	UNITMGR*		_pUnitMgr;
+
+								//		위		오른쪽		아래				왼쪽
+	int				_arSnake[4][2] { { 0,-1 },	{ 1,0 },	{ 0,1 },	{ -1,0 } };
+	
 public:
 	ASTAR();
 	~ASTAR();
@@ -61,6 +71,9 @@ public:
 	//어느 타일에 있는지 주는 함수
 	void	startFinder(int nStartIndexX, int nStartIndexY, int nEndIndexX, int nEndIndexY, MOVEHEIGHT eMoveHeight);
 	void	startFinder(float fStartPosX, float fStartPosY, float fEndPosX, float fEndPosY, MOVEHEIGHT eMoveHeight);
+	void	startFinderArray(float fStartPosX, float fStartPosY, float fEndPosX, float fEndPosY, MOVEHEIGHT eMoveHeight,int* nIndex);
+
+
 	void	pathFinder();	
 
 	
@@ -72,7 +85,7 @@ public:
 	TILENODE*	getNode(int nIndex);
 	bool	bIsEmety() { return _listMaximumPath.empty(); }
 
-
+	void	setLinkUnitMgr(PLAYER* _pPlayer);
 
 private:
 	void	initMap();

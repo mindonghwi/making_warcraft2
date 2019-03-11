@@ -21,9 +21,9 @@ WORKMAN::~WORKMAN()
 {
 }
 
-void WORKMAN::init(int nPosX, int nPosY, int nWidth, int nHeight)
+void WORKMAN::init(int nPosX, int nPosY, int nWidth, int nHeight, int nIndexNum)
 {
-	UNIT::init(nPosX, nPosY, nWidth, nHeight);
+	UNIT::init(nPosX, nPosY, nWidth, nHeight,nIndexNum);
 	UNIT::OBJECT::setPosZ(200);
 	allocateAnimation();
 	allocateState();
@@ -40,11 +40,16 @@ void WORKMAN::init(int nPosX, int nPosY, int nWidth, int nHeight)
 
 void WORKMAN::update()
 {
-	UNIT::getCurrentState()->update();
-	UNIT::getCurrentBehavir()->update(this);
 
 
 	_pCamera->pushRenderObject(this);
+}
+
+void WORKMAN::updateBehavier()
+{
+	UNIT::getCurrentState()->update();
+	UNIT::getCurrentBehavir()->update(this);
+
 }
 
 void WORKMAN::release()
@@ -62,40 +67,29 @@ void WORKMAN::renderSelected(HDC hdc)
 	DrawEdge(hdc, UNIT::getCollisionRect(), BDR_RAISEDOUTER, BF_FLAT | BF_TOPLEFT | BF_BOTTOMRIGHT);
 }
 
-void WORKMAN::command()
+void WORKMAN::commandMove(int* nCount)
 {
 	if (KEYMANAGER->isOnceKeyDown(VK_RBUTTON))
 	{
-		setMovePoints(static_cast<float>(_ptMouse.x + _pCamera->getLeft()), static_cast<float>(_ptMouse.y + _pCamera->getTop()));
+
+		_nEndTileIndexX = static_cast<float>(_ptMouse.x + _pCamera->getLeft());
+		_nEndTileIndexY = static_cast<float>(_ptMouse.y + _pCamera->getTop());
+
+		setMovePoints(static_cast<float>(_ptMouse.x + _pCamera->getLeft()), static_cast<float>(_ptMouse.y + _pCamera->getTop()),nCount);
+		UNIT::getCurrentBehavir()->end(this);
 		if (!UNIT::moveTo()) {
 			return;
 		}
 		UNIT::setCurrentState(UNIT::E_STATENUM::E_MOVE);
 		UNIT::setCurrentBehavir(UNIT::E_BEHAVIERNUM::E_MOVE);
+		UNIT::setBehavier(UNIT::E_BEHAVIERNUM::E_MOVE);
+
 		UNIT::getCurrentState()->start();
 	}
 
 }
 
-void WORKMAN::setMovePoints(float fEndPosX, float fEndPosY)
-{
-	UNIT::_vvMovePoint.clear();
-	UNIT::setMoveIndex(0);
 
-	_pAstar->startFinder(UNIT::OBJECT::getPosX(), UNIT::OBJECT::getPosY(), fEndPosX, fEndPosY, ASTAR::MOVEHEIGHT::GROUND);
-	_pAstar->pathFinder();
-
-	for (int i = 0; i < _pAstar->getListSize(); i++)
-	{
-		vector<int> vPos;
-		vPos.push_back(_pAstar->getNode(i)->nIndexX * TILESIZE + 16);
-		vPos.push_back(_pAstar->getNode(i)->nIndexY * TILESIZE + 16);
-		UNIT::_vvMovePoint.push_back(vPos);
-	}
-	UNIT::setMoveIndex(0);
-
-
-}
 
 
 void WORKMAN::allocateState()

@@ -85,5 +85,5 @@ public:
 
 	void	readjust();
 
-
+	void	renderMiniMap();
 };

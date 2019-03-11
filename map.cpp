@@ -612,3 +612,8 @@ void MAP::readjust()
 
 }
 
+void MAP::renderMiniMap()
+{
+
+}
+

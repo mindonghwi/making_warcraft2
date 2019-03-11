@@ -14,3 +14,7 @@ BEHAVIER_ATTACK::~BEHAVIER_ATTACK()
 void BEHAVIER_ATTACK::update(UNIT * pUnit)
 {
 }
+
+void BEHAVIER_ATTACK::end(UNIT * pUnit)
+{
+}

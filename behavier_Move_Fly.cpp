@@ -12,3 +12,7 @@ BEHAVIER_MOVE_FLY::~BEHAVIER_MOVE_FLY()
 void BEHAVIER_MOVE_FLY::update(UNIT * pUnit)
 {
 }
+
+void BEHAVIER_MOVE_FLY::end(UNIT * pUnit)
+{
+}

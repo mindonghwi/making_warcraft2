@@ -50,7 +50,7 @@
     <UseDebugLibraries>false</UseDebugLibraries>
     <PlatformToolset>v141</PlatformToolset>
     <WholeProgramOptimization>true</WholeProgramOptimization>
-    <CharacterSet>Unicode</CharacterSet>
+    <CharacterSet>MultiByte</CharacterSet>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
   <ImportGroup Label="ExtensionSettings">
@@ -77,6 +77,8 @@
     <LinkIncremental>true</LinkIncremental>
     <OutDir>$(SolutionDir)bin\</OutDir>
     <IntDir>$(SolutionDir)bin\</IntDir>
+    <IncludePath>$(IncludePath)</IncludePath>
+    <ReferencePath>$(ReferencePath)</ReferencePath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <LinkIncremental>false</LinkIncremental>
@@ -211,6 +213,7 @@
     <ClInclude Include="tree.h" />
     <ClInclude Include="triBute.h" />
     <ClInclude Include="unit.h" />
+    <ClInclude Include="unitMGr.h" />
     <ClInclude Include="utils.h" />
     <ClInclude Include="workMan.h" />
   </ItemGroup>
@@ -269,6 +272,7 @@
     <ClCompile Include="timer.cpp" />
     <ClCompile Include="tree.cpp" />
     <ClCompile Include="unit.cpp" />
+    <ClCompile Include="unitMGr.cpp" />
     <ClCompile Include="utils.cpp" />
     <ClCompile Include="windowsAPI.cpp" />
     <ClCompile Include="workMan.cpp" />

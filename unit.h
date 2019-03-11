@@ -91,7 +91,7 @@ protected:
 	float	_fSearchRange;
 	float	_fAttackRange;		//
 	float	_fAttackSpeedps;	//초당 몇번 공격하는지
-
+	int		_nMinimalAttack;
 	//상태들이 불러온다. 상태 패턴
 	STATE*			_arState[static_cast<const int>(UNIT::E_STATENUM::E_MAX)];
 	//행동들을 불러온다. 스트래티지 패턴
@@ -127,30 +127,40 @@ protected:
 
 	float				_fDirAngle;
 	float				_travelRange;
+
+	float				_fMoveSpeed;
+
+	int					_nEndTileIndexX;
+	int					_nEndTileIndexY;
+	int					_nIndexNum;
+
+
+	E_BEHAVIERNUM		_eBehavier;
 public:
 	UNIT();
 	virtual ~UNIT();
 
 	//그냥 초기화
-	virtual void init(int nPosX, int nPosY, int nWidth, int nHeight);
+	virtual void init(int nPosX, int nPosY, int nWidth, int nHeight, int nIndexNum);
 
 	//만들때 사용
-	virtual void create(int nPosX, int nPosY, int nHp, float nSpeed, int nAttack, int nDefence, float fSearchRange, float fAttackRange, float fAttackSpeedps);
+	virtual void create(int nPosX, int nPosY, int nHp, float nSpeed, int nAttack, int nDefence, float fSearchRange, float fAttackRange, float fAttackSpeedps,int nMinimalAttack);
 
 	virtual void update()			abstract;
 	virtual void release()			abstract;
 	virtual void render(HDC hdc)	abstract;
-
+	virtual void updateBehavier()	abstract;
 	virtual	void renderSelected(HDC hdc) abstract;
 
-	virtual void command()	abstract;
+	virtual void commandMove(int* nCount)	abstract;
 
-	virtual void setMovePoints(float fEndPosX,float fEndPosY) abstract;
+	virtual void setMovePoints(float fEndPosX,float fEndPosY,int* nCount);
 
 	virtual void Move();
 
 	bool moveTo();
 
+	void moveToDir();
 public:
 	//setter
 	inline	void	setHp(int nAmount) { _nHp = nAmount; }
@@ -161,6 +171,8 @@ public:
 	inline	void	setAttackRange(float fAmount) { _fAttackRange = fAmount; }
 	inline	void	setAttackSpeedps(float fAmount) { _fAttackSpeedps = fAmount; }
 	inline	void	setDirAngle(float fAngle) { _fDirAngle = fAngle; }
+	inline	void	setMiniMalAttack(int fAmount) { _nMinimalAttack = fAmount; }
+
 	//상태와 행동 패턴
 	inline	void	setCurrentState(UNIT::E_STATENUM eStateNum) { _pCurrentState = _arState[static_cast<int>(eStateNum)]; }
 	inline	void	setCurrentBehavir(UNIT::E_BEHAVIERNUM eBehavier) { _pCurrentBeHavier = _arBeHavier[static_cast<int>(eBehavier)]; }
@@ -190,6 +202,8 @@ public:
 	inline	void	setSelected(bool bIsSelected) { _bIsSelected = bIsSelected; }
 
 	inline	void	setMoveIndex(int nIndex) { _nMoveVectorIndex = nIndex; }
+	inline	void	setBehavier(UNIT::E_BEHAVIERNUM eBehavier) { _eBehavier = eBehavier; }
+	
 
 	//getter
 	inline	int		getHp() { return _nHp; }
@@ -199,6 +213,7 @@ public:
 	inline	float	getSearchRange() { return _fSearchRange; }
 	inline	float	getAttackRange() { return _fAttackRange; }
 	inline	float	getAttackSpeedps() { return _fAttackSpeedps; }
+	inline	int		getMiniMalAttack() { return _nMinimalAttack; }
 
 	//애니메이션용
 	inline	float	getFPS(UNIT::E_STATE eState) { return _arFramePerSeconds[static_cast<int>(eState)]; }
@@ -226,6 +241,22 @@ public:
 	inline	int		getMoveIndex() { return _nMoveVectorIndex; }
 
 	inline	float	getDirAngle() {return _fDirAngle; }
+
+
+	inline	UNIT::E_DIRECTION	getDirection() { return _eDirection; }
+	inline	float	getMoveSpeed() {return _fMoveSpeed;	}
+
+	inline	bool	getIsMovePointEmpty() { return _vvMovePoint.empty(); }
+
+	inline	int		getMoveToPointX() { return _vvMovePoint[_nMoveVectorIndex][0]; }
+	inline	int		getMoveToPointY() { return _vvMovePoint[_nMoveVectorIndex][1]; }
+
+	inline	int		getMoveToPointEndX() {return _vvMovePoint.back().front(); }
+	inline	int		getMoveToPointEndY() {return _vvMovePoint.back().back(); }
+
+	inline	bool	getIsMoveAstar() { return _bIsMoving; }
+	inline	int		getIndexNum() { return _nIndexNum; }
+	inline	UNIT::E_BEHAVIERNUM	getBehavier() { return _eBehavier; }
 
 public:
 	//상태를 정리해보자

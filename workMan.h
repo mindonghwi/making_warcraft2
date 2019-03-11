@@ -18,13 +18,14 @@ public:
 	~WORKMAN();
 
 
-	virtual void init(int nPosX, int nPosY, int nWidth, int nHeight);
+	virtual void init(int nPosX, int nPosY, int nWidth, int nHeight, int nIndexNum);
 	virtual void update()			override;
+	virtual void updateBehavier()	override;
+
 	virtual void release()			override;
 	virtual void render(HDC hdc)	override;
 	virtual	void renderSelected(HDC hdc) override;
-	virtual void command()	override;
-	virtual void setMovePoints(float fEndPosX, float fEndPosY) override;
+	virtual void commandMove(int* nCount)	override;
 
 
 

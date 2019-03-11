@@ -8,4 +8,6 @@ class BEHAVIER_MOVE :public BEHAVIER
 
 public:
 	virtual	void	update(UNIT* pUnit)		abstract;
+	virtual void	end(UNIT* pUnit)		abstract;
+
 };

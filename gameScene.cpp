@@ -31,7 +31,7 @@ HRESULT SCENEGAME::init()
 	_pMap->setLinkResourceMgr(_pResourceMgr);
 
 
-	
+
 	_pMap->init("map");
 	_pCamera->init(WINSIZEX/2, WINSIZEY / 2,WINSIZEX,WINSIZEY,_pMap->getMapCountX() * TILESIZE, _pMap->getMapCountY() * TILESIZE);
 
@@ -43,6 +43,12 @@ HRESULT SCENEGAME::init()
 	_pPlayer->init();
 
 	_pAstar->init(8, _pMap);
+
+
+	//astar link other
+	_pAstar->setLinkUnitMgr(_pPlayer);
+	_pPlayer->setLinkMap(_pMap);
+
 
 	return S_OK;
 }

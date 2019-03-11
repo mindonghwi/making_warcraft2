@@ -12,3 +12,7 @@ BEHAVIER_NONE::~BEHAVIER_NONE()
 void BEHAVIER_NONE::update(UNIT * pUnit)
 {
 }
+
+void BEHAVIER_NONE::end(UNIT * pUnit)
+{
+}

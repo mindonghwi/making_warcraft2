@@ -1,6 +1,8 @@
 #include "stdafx.h"
 #include "aStar.h"
-
+#include "player.h"
+#include "unit.h"
+#include "unitMGr.h"
 
 ASTAR::TILENODE * ASTAR::getNode(int nIndex)
 {
@@ -13,11 +15,16 @@ ASTAR::TILENODE * ASTAR::getNode(int nIndex)
 	return *iter;
 }
 
+void ASTAR::setLinkUnitMgr(PLAYER * _pPlayer)
+{
+	_pUnitMgr = _pPlayer->getUnitMgr();
+}
+
 void ASTAR::initMap()
 {
 	for (int j = 0; j < _nTileSizeY; j++)
 	{
-		for (int i = 0; i <_nTileSizeX; i++)
+		for (int i = 0; i < _nTileSizeX; i++)
 		{
 			_vvTile[j][i]->nIndexX = i;
 			_vvTile[j][i]->nIndexY = j;
@@ -28,6 +35,8 @@ void ASTAR::initMap()
 		}
 	}
 }
+
+
 
 ASTAR::ASTAR()
 {
@@ -91,7 +100,7 @@ void ASTAR::startFinder(int nStartIndexX, int nStartIndexY, int nEndIndexX, int 
 
 	_listOpendNode.clear();
 	_listClosedyPath.clear();
-	_listMaximumPath.clear(); 
+	_listMaximumPath.clear();
 	initMap();
 	//시작 노드 만들기
 	//TILENODE* pNode = new TILENODE();
@@ -101,7 +110,7 @@ void ASTAR::startFinder(int nStartIndexX, int nStartIndexY, int nEndIndexX, int 
 	//pNode->nPathStartToCurrent = 0;
 	//pNode->nPathToatalCost = 0;
 	//pNode->parrentNode = nullptr;
-	
+
 	//열린 좌표에 넣는데 우선순위를 주자
 	_listOpendNode.push_back(_vvTile[_nStartIndexY][_nStartIndexX]);
 
@@ -113,7 +122,7 @@ void ASTAR::startFinder(float fStartPosX, float fStartPosY, float fEndPosX, floa
 	//부모노드는 없다
 	//시작 중심점을 잡는다.
 	//코스트를 계산한다.
-	_nStartIndexX = static_cast<int>(fStartPosX)/ TILESIZE;
+	_nStartIndexX = static_cast<int>(fStartPosX) / TILESIZE;
 	_nStartIndexY = static_cast<int>(fStartPosY) / TILESIZE;
 	_nEndIndexX = static_cast<int>(fEndPosX) / TILESIZE;
 	_nEndIndexY = static_cast<int>(fEndPosY) / TILESIZE;
@@ -133,11 +142,116 @@ void ASTAR::startFinder(float fStartPosX, float fStartPosY, float fEndPosX, floa
 	//pNode->nPathToatalCost = 0;
 	//pNode->parrentNode = nullptr;
 
+
+	//만약 그 위치에 무언가 못가게 하는 것이 있으면
+	int nCount = 0;
+	int nIndex = 0;
+	int nGo = 1;
+	int nIndexCount = 0;
+	bool bIsOnObject = true;
+	while ((_eMoveHeight == MOVEHEIGHT::GROUND && _pMap->getTile(_nEndIndexX, _nEndIndexY)->getTerrian() == TILE::E_TERRIAN::WATER)
+		|| (_eMoveHeight == MOVEHEIGHT::GROUND && _pMap->getTile(_nEndIndexX, _nEndIndexY)->getTerrian() == TILE::E_TERRIAN::DIRT_WATER)
+		|| (_eMoveHeight == MOVEHEIGHT::GROUND && _pMap->getTile(_nEndIndexX, _nEndIndexY)->getTerrian() == TILE::E_TERRIAN::ROCK)
+		|| (_eMoveHeight == MOVEHEIGHT::GROUND && _pMap->getTile(_nEndIndexX, _nEndIndexY)->getObject() != TILE::E_OBJECT::E_NONE)
+		|| bIsOnObject)
+	{
+		bIsOnObject = false;
+
+
+		RECT rcTmp;
+		for (int i = 0; i < _pUnitMgr->getUnitCount(); i++)
+		{
+			//if (_pUnitMgr->getUnit(i)->getPosX() - fStartPosX > FLT_EPSILON
+			//	|| _pUnitMgr->getUnit(i)->getPosY() - fStartPosY > FLT_EPSILON)
+			{
+				RECT rc = _pMap->getTile(_nEndIndexX, _nEndIndexY)->getRectTile();
+				RECT rc2 = * _pUnitMgr->getUnit(i)->getCollisionRect();
+				rc2.left += 10;
+				rc2.top += 10;
+				rc2.right -= 10;
+				rc2.bottom -= 10;
+
+				if (IntersectRect(&rcTmp, &rc, &rc2))
+				{
+					bIsOnObject = true;
+					break;
+				}
+				else
+				{
+				}
+			}
+		}
+
+		if (bIsOnObject)
+		{
+			_nEndIndexX += _pUnitMgr->getIntervalX(nCount);
+			_nEndIndexY += _pUnitMgr->getIntervalY(nCount);
+		}
+		nCount++;
+	}
+
 	//열린 좌표에 넣는데 우선순위를 주자
 	_listOpendNode.push_back(_vvTile[_nStartIndexY][_nStartIndexX]);
 
 
+
+
 }
+
+void ASTAR::startFinderArray(float fStartPosX, float fStartPosY, float fEndPosX, float fEndPosY, MOVEHEIGHT eMoveHeight, int* nIndex)
+{
+	_nStartIndexX = static_cast<int>(fStartPosX) / TILESIZE;
+	_nStartIndexY = static_cast<int>(fStartPosY) / TILESIZE;
+	_nEndIndexX = static_cast<int>(fEndPosX) / TILESIZE;
+	_nEndIndexY = static_cast<int>(fEndPosY) / TILESIZE;
+
+
+	_eMoveHeight = eMoveHeight;
+
+	_listOpendNode.clear();
+	_listClosedyPath.clear();
+	_listMaximumPath.clear();
+	initMap();
+	//시작 노드 만들기
+	//TILENODE* pNode = new TILENODE();
+	//pNode->nIndexX = _nStartIndexX;
+	//pNode->nIndexY = _nStartIndexY;
+	//pNode->nPathCurrentToEnd = 0;
+	//pNode->nPathStartToCurrent = 0;
+	//pNode->nPathToatalCost = 0;
+	//pNode->parrentNode = nullptr;
+
+	//열린 좌표에 넣는데 우선순위를 주자
+
+	_nEndIndexX += _pUnitMgr->getIntervalX(*nIndex);
+	_nEndIndexY += _pUnitMgr->getIntervalY(*nIndex);
+	while ((_nEndIndexX < 1 || _nEndIndexX < 1 || _nEndIndexX >= _nTileSizeX - 1 || _nEndIndexX >= _nTileSizeY - 1 ||
+		(_eMoveHeight == MOVEHEIGHT::GROUND && _pMap->getTile(_nEndIndexX, _nEndIndexY)->getTerrian() == TILE::E_TERRIAN::DIRT_WATER) ||
+		(_eMoveHeight == MOVEHEIGHT::GROUND && _pMap->getTile(_nEndIndexX, _nEndIndexY)->getTerrian() == TILE::E_TERRIAN::WATER) //||
+		//(_eMoveHeight == MOVEHEIGHT::GROUND && _pMap->getTile(_nEndIndexX, _nEndIndexY)->getObject() != TILE::E_OBJECT::E_NONE)
+		))
+	{
+		if (*nIndex >= 25)
+		{
+			break;
+		}
+		else
+		{
+			_nEndIndexX -= _pUnitMgr->getIntervalX(*nIndex);
+			_nEndIndexY -= _pUnitMgr->getIntervalY(*nIndex);
+			(*nIndex)++;
+			_nEndIndexX += _pUnitMgr->getIntervalX(*nIndex);
+			_nEndIndexY += _pUnitMgr->getIntervalY(*nIndex);
+		}
+
+	}
+
+
+	_listOpendNode.push_back(_vvTile[_nStartIndexY][_nStartIndexX]);
+
+}
+
+
 
 void ASTAR::pathFinder()
 {
@@ -196,7 +310,7 @@ void ASTAR::pathFinder()
 		//if (_pMap->getTile(nIntervalPosX, nIntervalPosY)->getIsWall()) continue;
 		if (_eMoveHeight == MOVEHEIGHT::GROUND && _pMap->getTile(nIntervalPosX, nIntervalPosY)->getTerrian() != TILE::E_TERRIAN::GROUND
 			&& _pMap->getTile(nIntervalPosX, nIntervalPosY)->getTerrian() != TILE::E_TERRIAN::DIRT) continue;
-	
+
 		if (_eMoveHeight == MOVEHEIGHT::GROUND && _pMap->getTile(nIntervalPosX, nIntervalPosY)->getTerrian() == TILE::E_TERRIAN::DIRT)
 		{
 			int nCount = 0;
@@ -222,10 +336,38 @@ void ASTAR::pathFinder()
 		if (_eMoveHeight == MOVEHEIGHT::WATER && _pMap->getTile(nIntervalPosX, nIntervalPosY)->getTerrian() != TILE::E_TERRIAN::WATER) continue;
 		if (_eMoveHeight != MOVEHEIGHT::FLY && _pMap->getTile(nIntervalPosX, nIntervalPosY)->getObject() != TILE::E_OBJECT::E_NONE) continue;
 
+		bool bIsObject = false;
+		for (int i = 0; i < _pUnitMgr->getUnitCount(); i++)
+		{
+			RECT rcTmp;
+
+			RECT rc = _pMap->getTile(_nEndIndexX, _nEndIndexY)->getRectTile();
+			RECT rc2 = * _pUnitMgr->getUnit(i)->getCollisionRect();
+			rc2.left += 5;
+			rc2.top += 5;
+			rc2.right -= 5;
+			rc2.bottom -= 5;
+
+			if (IntersectRect(&rcTmp, &rc, &rc2))
+			{
+				//if (!_pUnitMgr->getUnit(i)->getIsMoveAstar())
+				{
+					bIsObject = true;
+					break;
+				}
+			}
+		}
+
+		if (bIsObject) continue;
+
+
 		//유닛들이 통과하면 안된다.
 		//유닛이 만들어지면 플레이어의 유닛과 COM의 유닛들과 통과를 막는다.
-		
-		
+		//if (_pUnitMgr->)
+		//{
+		//
+		//}
+
 		bool bIsSearch = false;
 		list<TILENODE*>::iterator iter = _listOpendNode.begin();
 		//list<TILENODE*>::iterator end = ;
@@ -247,11 +389,8 @@ void ASTAR::pathFinder()
 
 
 					iter = _listOpendNode.erase(iter);
-					
-					///iter = _listOpendNode.begin();
 
-
-					while ((*iter)->nPathToatalCost < _vvTile[nIntervalPosY][nIntervalPosX]->nPathToatalCost) {
+					while (iter != _listOpendNode.end() && (*iter)->nPathToatalCost < _vvTile[nIntervalPosY][nIntervalPosX]->nPathToatalCost) {
 						iter++;
 					}
 					_listOpendNode.insert(iter, _vvTile[nIntervalPosY][nIntervalPosX]);
@@ -270,7 +409,6 @@ void ASTAR::pathFinder()
 		//end = _listClosedyPath.end();
 		while (iter != _listClosedyPath.end())
 		{
-
 			if ((*iter)->nIndexX == nIntervalPosX && (*iter)->nIndexY == nIntervalPosY) {
 				bIsSearch = true;
 				break;
@@ -338,7 +476,7 @@ void ASTAR::pathFinder()
 
 			pNode = pNode->parrentNode;
 		}
-		
+
 		return;
 	}
 

@@ -291,6 +291,9 @@
     <ClInclude Include="resourceMgr.h">
       <Filter>PlayGround\resource</Filter>
     </ClInclude>
+    <ClInclude Include="unitMGr.h">
+      <Filter>PlayGround\unit</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="stdafx.cpp">
@@ -448,6 +451,9 @@
     </ClCompile>
     <ClCompile Include="player.cpp">
       <Filter>PlayGround\player</Filter>
+    </ClCompile>
+    <ClCompile Include="unitMGr.cpp">
+      <Filter>PlayGround\unit</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

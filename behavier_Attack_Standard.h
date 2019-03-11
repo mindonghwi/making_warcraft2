@@ -12,4 +12,6 @@ public:
 
 
 	virtual	void	update(UNIT* pUnit)			override;
+	virtual void	end(UNIT* pUnit)		override;
+
 };

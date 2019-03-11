@@ -17,11 +17,7 @@ void BEHAVIER_MOVE_WALK::update(UNIT * pUnit)
 	if (_fTimer > pUnit->getSpeed())
 	{
 		if (!pUnit->moveTo()) {
-			pUnit->setCurrentBehavir(UNIT::E_BEHAVIERNUM::E_NONE);
-			pUnit->setCurrentState(UNIT::E_STATENUM::E_IDLE);
-			pUnit->getCurrentState()->start();
-			_fTimer = 0.0f;
-			
+			end(pUnit);
 			return;
 		}
 		_fTimer = 0.0f;
@@ -29,4 +25,14 @@ void BEHAVIER_MOVE_WALK::update(UNIT * pUnit)
 
 
 	pUnit->Move();
+}
+
+void BEHAVIER_MOVE_WALK::end(UNIT * pUnit)
+{
+	pUnit->setCurrentBehavir(UNIT::E_BEHAVIERNUM::E_NONE);
+	pUnit->setCurrentState(UNIT::E_STATENUM::E_IDLE);
+	pUnit->setBehavier(UNIT::E_BEHAVIERNUM::E_NONE);
+
+	pUnit->getCurrentState()->start();
+	_fTimer = 0.0f;
 }

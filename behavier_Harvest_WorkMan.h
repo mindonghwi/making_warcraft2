@@ -9,4 +9,6 @@ class BEHAVIER_HARVEST_WORKMAN :public BEHAVIER_HARVEST
 	~BEHAVIER_HARVEST_WORKMAN();
 
 	virtual	void	update(UNIT* pUnit)			override;
+	virtual void	end(UNIT* pUnit)		override;
+
 };
