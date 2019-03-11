@@ -164,6 +164,8 @@
     <ClInclude Include="behavier_Move_Fly.h" />
     <ClInclude Include="behavier_Move_Walk.h" />
     <ClInclude Include="behavier_None.h" />
+    <ClInclude Include="build.h" />
+    <ClInclude Include="buildMgr.h" />
     <ClInclude Include="button.h" />
     <ClInclude Include="camera.h" />
     <ClInclude Include="command.h" />

@@ -72,8 +72,8 @@ void WORKMAN::commandMove(int* nCount)
 	if (KEYMANAGER->isOnceKeyDown(VK_RBUTTON))
 	{
 
-		_nEndTileIndexX = static_cast<float>(_ptMouse.x + _pCamera->getLeft());
-		_nEndTileIndexY = static_cast<float>(_ptMouse.y + _pCamera->getTop());
+		_nEndTileIndexX = static_cast<int>(_ptMouse.x + _pCamera->getLeft());
+		_nEndTileIndexY = static_cast<int>(_ptMouse.y + _pCamera->getTop());
 
 		setMovePoints(static_cast<float>(_ptMouse.x + _pCamera->getLeft()), static_cast<float>(_ptMouse.y + _pCamera->getTop()),nCount);
 		UNIT::getCurrentBehavir()->end(this);
@@ -87,6 +87,42 @@ void WORKMAN::commandMove(int* nCount)
 		UNIT::getCurrentState()->start();
 	}
 
+}
+
+void WORKMAN::command()
+{
+	if (KEYMANAGER->isOnceKeyDown(VK_RBUTTON))
+	{
+
+		_nEndTileIndexX = static_cast<int>(_ptMouse.x + _pCamera->getLeft());
+		_nEndTileIndexY = static_cast<int>(_ptMouse.y + _pCamera->getTop());
+
+		setMovePoints(static_cast<float>(_ptMouse.x + _pCamera->getLeft()), static_cast<float>(_ptMouse.y + _pCamera->getTop()),0);
+		UNIT::getCurrentBehavir()->end(this);
+		if (!UNIT::moveTo()) {
+			return;
+		}
+		UNIT::setCurrentState(UNIT::E_STATENUM::E_MOVE);
+		UNIT::setCurrentBehavir(UNIT::E_BEHAVIERNUM::E_MOVE);
+		UNIT::setBehavier(UNIT::E_BEHAVIERNUM::E_MOVE);
+
+		UNIT::getCurrentState()->start();
+	}
+
+	if (KEYMANAGER->isOnceKeyDown('B'))
+	{
+		_bNormalBuildingOn = true;
+	}
+
+	if (_bNormalBuildingOn)
+	{
+		if (KEYMANAGER->isOnceKeyDown('H'))
+		{
+			//지을 준비
+
+
+		}
+	}
 }
 
 

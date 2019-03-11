@@ -150,7 +150,7 @@ void UNIT::moveToDir()
 {
 	UNIT::setMoveIndex(0);
 
-	setMovePoints(_nEndTileIndexX, _nEndTileIndexY,0);
+	setMovePoints((float)_nEndTileIndexX, (float)_nEndTileIndexY,0);
 
 
 

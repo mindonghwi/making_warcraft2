@@ -97,7 +97,7 @@ void UNITMGR::update()
 
 				//RECT rcTmp = RectMakeCenter(pUnit->getPosX()+Mins::presentPowerX(pUnit->getDirAngle(), pUnit->getMoveSpeed()) , pUnit->getPosY() + Mins::presentPowerY(pUnit->getDirAngle(), pUnit->getMoveSpeed()),3, 3);
 				RECT rcTmpA =  *pCollUnit->getCollisionRect();
-				RECT rcTmp = _pMap->getTile(pCollUnit->getPosX() / TILESIZE, pCollUnit->getPosY() / TILESIZE)->getRectTile();
+				RECT rcTmp = _pMap->getTile((int)pCollUnit->getPosX() / TILESIZE, (int)pCollUnit->getPosY() / TILESIZE)->getRectTile();
 				rcTmpA.left += 12;
 				rcTmpA.right -= 12;
 				rcTmpA.top+= 12;

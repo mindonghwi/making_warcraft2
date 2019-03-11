@@ -154,6 +154,8 @@ public:
 
 	virtual void commandMove(int* nCount)	abstract;
 
+	virtual void command()		abstract;
+	
 	virtual void setMovePoints(float fEndPosX,float fEndPosY,int* nCount);
 
 	virtual void Move();
