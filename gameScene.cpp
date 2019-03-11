@@ -39,6 +39,8 @@ HRESULT SCENEGAME::init()
 	_pCamera->outOfRange();
 
 	_pMap->drawMap(_pCamera->getBackGoroundBuffer());
+	_pCamera->drawMiniMap();
+
 
 	_pPlayer->init();
 
@@ -48,6 +50,7 @@ HRESULT SCENEGAME::init()
 	//astar link other
 	_pAstar->setLinkUnitMgr(_pPlayer);
 	_pPlayer->setLinkMap(_pMap);
+
 
 
 	return S_OK;
@@ -82,4 +85,5 @@ void SCENEGAME::render()
 
 	_pPlayer->render(_pCamera->getMemDC());
 	_pCamera->render(getMemDC());
+	_pCamera->renderMiniMap(getMemDC());
 }

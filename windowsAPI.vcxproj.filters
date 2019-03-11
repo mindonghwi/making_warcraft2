@@ -97,6 +97,9 @@
     <Filter Include="PlayGround\unit\behavier\harvest">
       <UniqueIdentifier>{d1394ecb-3046-424e-a27e-70d299a91a3a}</UniqueIdentifier>
     </Filter>
+    <Filter Include="PlayGround\unit\behavier\build">
+      <UniqueIdentifier>{2913cf1c-06ad-47f9-846a-f8e337762609}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="stdafx.h">

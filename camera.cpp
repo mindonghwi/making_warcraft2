@@ -26,6 +26,8 @@ void CAMERA::init(int posX, int posY, int windowWidth, int windowHeight, int map
 	_pCameraBuffer = IMAGEMANAGER->addImage("camera", _nMapWidth, _nMapHeight);
 	_pBackGroundBuffer = IMAGEMANAGER->addImage("backGroundBuffer", _nMapWidth, _nMapHeight);
 
+	_pMiniMap = IMAGEMANAGER->addImage("miniMap", 256, 256);
+
 	_listRenderObject.clear();
 
 	_posY += TILESIZE;
@@ -83,6 +85,7 @@ void CAMERA::render(HDC hdc)
 	}
 
 	_pCameraBuffer->render(hdc, 0, 0, _left, _top, _width, _height);
+
 }
 
 void CAMERA::release()
@@ -94,6 +97,8 @@ void CAMERA::renderinit()
 {
 	//PatBlt(_pCameraBuffer->getMemDC(), 0, 0, _nMapWidth, _nMapHeight, BLACKNESS);
 	BitBlt(_pCameraBuffer->getMemDC(), _left, _top, _width, _height, _pBackGroundBuffer->getMemDC(), _left, _top, SRCCOPY);
+
+
 }
 
 void CAMERA::setting(int nPosX, int nPosY)
@@ -228,4 +233,19 @@ void CAMERA::setLimitToTile(int nTileCountX, int nTileCountY)
 {
 	_nCameraLimitRight = nTileCountX * TILESIZE;
 	_nCameraLimitBottom = nTileCountY * TILESIZE;
+}
+
+void CAMERA::drawMiniMap()
+{
+	SetStretchBltMode(_pMiniMap->getMemDC(), HALFTONE);
+	StretchBlt(_pMiniMap->getMemDC(), 0, 0, 256, 256, _pBackGroundBuffer->getMemDC(), 0, 0, _nMapWidth, _nMapHeight, SRCCOPY);
+}
+
+void CAMERA::renderMiniMap(HDC hdc)
+{
+
+
+	_pMiniMap->render(hdc, 0, WINSIZEY - 256);
+	setLeftTop();
+	DrawEdge(hdc, &RectMake((_left * 256 / _nMapWidth) - 2, (_top * 256 / _nMapHeight) + WINSIZEY - 256 - 2, WINSIZEX * 256 / _nMapWidth, WINSIZEY * 256 / _nMapHeight + 4), BDR_RAISEDOUTER, BF_FLAT | BF_TOPLEFT | BF_BOTTOMRIGHT);
 }

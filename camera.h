@@ -38,6 +38,8 @@ private:
 	int		_nCameraLimitRight;
 	int		_nCameraLimitBottom;
 
+	image*	_pMiniMap;
+
 public:
 	CAMERA();
 	~CAMERA();
@@ -84,4 +86,8 @@ public:
 	HDC	getBackGoroundBuffer() { return _pBackGroundBuffer->getMemDC(); }
 
 	void	setLimitToTile(int nTileCountX,int nTileCountY);
+
+	void drawMiniMap();
+
+	void renderMiniMap(HDC hdc);
 };

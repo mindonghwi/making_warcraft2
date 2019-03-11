@@ -135,15 +135,16 @@ void UNITMGR::update()
 			iterUnitListCollision++;
 		}
 
-		if (!bIsOk)
-		{
-		}
+
 
 		pUnit->updateBehavier();
-
 		pUnit->update();
 		iterUnitList++;
 	}
+
+
+
+
 }
 
 void UNITMGR::release()
