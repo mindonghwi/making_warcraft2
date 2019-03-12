@@ -1,21 +1,22 @@
 #include "stdafx.h"
-#include "town.h"
+#include "keep.h"
 #include "buildMgr.h"
-TOWN::TOWN()
+
+KEEP::KEEP()
 {
 }
 
-TOWN::~TOWN()
+KEEP::~KEEP()
 {
 }
 
-void TOWN::create(int nLeft, int ntop, int nWidth, int nHeight, int nHp, float fBuildingTimer, int nFrameCount, const string & strImgKey)
+void KEEP::create(int nLeft, int ntop, int nWidth, int nHeight, int nHp, float fBuildingTimer, int nFrameCount, const string & strImgKey)
 {
-	BUILD::create(nLeft, ntop,nWidth,nHeight,nHp,fBuildingTimer,nFrameCount,strImgKey);
+	BUILD::create(nLeft, ntop, nWidth, nHeight, nHp, fBuildingTimer, nFrameCount, strImgKey);
 	_nUnitMask += BUILDMGR::E_UNITMASK::E_WORKMAN;
 }
 
-void TOWN::update()
+void KEEP::update()
 {
 	_fTimer += TIMEMANAGER->getElapsedTime();
 
@@ -28,14 +29,14 @@ void TOWN::update()
 	_pCamera->pushRenderObject(this);
 }
 
-void TOWN::release()
+void KEEP::release()
 {
 	setImage(nullptr);
 
 }
 
-void TOWN::render(HDC hdc)
+void KEEP::render(HDC hdc)
 {
 	OBJECT::getImage()->frameRenderCenter(hdc, OBJECT::getPosX(), OBJECT::getPosY(), _nFrameX, 0);
-}
 
+}
