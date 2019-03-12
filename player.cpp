@@ -92,7 +92,7 @@ void PLAYER::render(HDC hdc)
 
 
 	char str[128];
-	sprintf_s(str, "%d,%d,%d", (_arResource[static_cast<int>(E_RESOURCE::E_GOLD)]), (_arResource[static_cast<int>(E_RESOURCE::E_TREE)]), (_arResource[static_cast<int>(E_RESOURCE::E_OIL)]));
+	sprintf_s(str, "%d,%d,%d,%d", (_arResource[static_cast<int>(E_RESOURCE::E_GOLD)]), (_arResource[static_cast<int>(E_RESOURCE::E_TREE)]), (_arResource[static_cast<int>(E_RESOURCE::E_OIL)]),_nMaxPopulation);
 	TextOut(hdc, WINSIZEX/2, 32, str, strlen(str));
 }
 

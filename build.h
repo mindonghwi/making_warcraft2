@@ -6,6 +6,7 @@ class CAMERA;
 class UNITMGR;
 class BUILDMGR;
 class PLAYER;
+class MAP;
 class BUILD : public OBJECT
 {
 public:
@@ -36,6 +37,9 @@ protected:
 	UNITMGR*		_pUnitMgr;
 	BUILDMGR*		_pBuildBgr;
 	PLAYER*			_pPlayer;
+	MAP*			_pMap;
+
+	bool			_bIsProduce;
 
 public:
 	BUILD();
@@ -51,11 +55,13 @@ public:
 	virtual	void creatingUpdate();
 
 	virtual void createUnit();
+	virtual void commandProduce();
 
 	inline	void	setLinkCamera(CAMERA* pCamera) { _pCamera = pCamera; }
 	inline	void	setLinkUnitMgr(UNITMGR* pUnitMgr) { _pUnitMgr = pUnitMgr; }
 	inline	void	setLinkUnitMgr(BUILDMGR* pBuildBgr) { _pBuildBgr = pBuildBgr; }
 	inline	void	setLinkPlayer(PLAYER* pPlayer) { _pPlayer = pPlayer; }
+	inline	void	setLinkMap(MAP* pMap) { _pMap = pMap; }
 
 
 };

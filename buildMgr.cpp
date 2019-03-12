@@ -69,6 +69,12 @@ void BUILDMGR::buildBuilding(BUILDMGR::E_BUILDS eBuild, float fPosX, float fPosY
 				_pMap->getTile(nIndexX+i, nIndexY+j)->setObject(TILE::E_OBJECT::E_BUILDING);
 			}
 		}
+
+		_listBuild.back()->setLinkCamera(_pCamera);
+		_listBuild.back()->setLinkUnitMgr(_pUnitMgr);
+		_listBuild.back()->setLinkPlayer(_pPlayer);
+		_listBuild.back()->setLinkMap(_pMap);
+
 		_listBuild.back()->create(nLeft, nTop, _arBuildsWidth[static_cast<int>(eBuild)], _arBuildsHeight[static_cast<int>(eBuild)],100,_arBuildTime[static_cast<int>(eBuild)],4,strImgKey);
 
 		break;
@@ -82,6 +88,12 @@ void BUILDMGR::buildBuilding(BUILDMGR::E_BUILDS eBuild, float fPosX, float fPosY
 				_pMap->getTile(nIndexX + i, nIndexY + j)->setObject(TILE::E_OBJECT::E_BUILDING);
 			}
 		}
+
+		_listBuild.back()->setLinkCamera(_pCamera);
+		_listBuild.back()->setLinkUnitMgr(_pUnitMgr);
+		_listBuild.back()->setLinkPlayer(_pPlayer);
+		_listBuild.back()->setLinkMap(_pMap);
+
 		_listBuild.back()->create(nLeft, nTop, _arBuildsWidth[static_cast<int>(eBuild)], _arBuildsHeight[static_cast<int>(eBuild)], 100, _arBuildTime[static_cast<int>(eBuild)], 4, strImgKey);
 
 		break;
@@ -95,6 +107,11 @@ void BUILDMGR::buildBuilding(BUILDMGR::E_BUILDS eBuild, float fPosX, float fPosY
 				_pMap->getTile(nIndexX + i, nIndexY + j)->setObject(TILE::E_OBJECT::E_BUILDING);
 			}
 		}
+		_listBuild.back()->setLinkCamera(_pCamera);
+		_listBuild.back()->setLinkUnitMgr(_pUnitMgr);
+		_listBuild.back()->setLinkPlayer(_pPlayer);
+		_listBuild.back()->setLinkMap(_pMap);
+
 		_listBuild.back()->create(nLeft, nTop, _arBuildsWidth[static_cast<int>(eBuild)], _arBuildsHeight[static_cast<int>(eBuild)], 100, _arBuildTime[static_cast<int>(eBuild)], 4, strImgKey);
 
 		break;
@@ -108,6 +125,12 @@ void BUILDMGR::buildBuilding(BUILDMGR::E_BUILDS eBuild, float fPosX, float fPosY
 				_pMap->getTile(nIndexX + i, nIndexY + j)->setObject(TILE::E_OBJECT::E_BUILDING);
 			}
 		}
+
+		_listBuild.back()->setLinkCamera(_pCamera);
+		_listBuild.back()->setLinkUnitMgr(_pUnitMgr);
+		_listBuild.back()->setLinkPlayer(_pPlayer);
+		_listBuild.back()->setLinkMap(_pMap);
+
 		_listBuild.back()->create(nLeft, nTop, _arBuildsWidth[static_cast<int>(eBuild)], _arBuildsHeight[static_cast<int>(eBuild)], 50, _arBuildTime[static_cast<int>(eBuild)], 4, strImgKey);
 
 		break;
@@ -162,9 +185,7 @@ void BUILDMGR::buildBuilding(BUILDMGR::E_BUILDS eBuild, float fPosX, float fPosY
 	}
 
 
-	_listBuild.back()->setLinkCamera(_pCamera);
-	_listBuild.back()->setLinkUnitMgr(_pUnitMgr);
-	_listBuild.back()->setLinkPlayer(_pPlayer);
+
 }
 
 bool BUILDMGR::bIsGroundCheck(E_BUILDS eBuilds, float fPosX, float fPosY)
@@ -190,7 +211,8 @@ bool BUILDMGR::bIsGroundCheck(E_BUILDS eBuilds, float fPosX, float fPosY)
 	{
 		for (int j = 0; j < nCount; j++)
 		{
-			if (_pMap->getTile(nIndexX + i, nIndexY + j)->getObject() != TILE::E_OBJECT::E_NONE)
+			if (_pMap->getTile(nIndexX + i, nIndexY + j)->getObject() != TILE::E_OBJECT::E_NONE ||
+				_pMap->getTile(nIndexX + i, nIndexY + j)->getTerrian() != TILE::E_TERRIAN::GROUND)
 			{
 				return false;
 			}

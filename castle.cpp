@@ -16,18 +16,18 @@ void CASTLE::create(int nLeft, int ntop, int nWidth, int nHeight, int nHp, float
 	_nUnitMask += BUILDMGR::E_UNITMASK::E_WORKMAN;
 }
 
-void CASTLE::update()
-{
-	_fTimer += TIMEMANAGER->getElapsedTime();
-
-	if (_eState == BUILD::E_STATE::E_CREATING)
-	{
-		creatingUpdate();
-	}
-	createUnit();
-
-	_pCamera->pushRenderObject(this);
-}
+//void CASTLE::update()
+//{
+//	_fTimer += TIMEMANAGER->getElapsedTime();
+//
+//	if (_eState == BUILD::E_STATE::E_CREATING)
+//	{
+//		creatingUpdate();
+//	}
+//	createUnit();
+//
+//	_pCamera->pushRenderObject(this);
+//}
 
 void CASTLE::release()
 {

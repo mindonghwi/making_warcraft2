@@ -76,6 +76,7 @@ void WORKMAN::update()
 				if (_pMap->getTile((int)OBJECT::getPosX() / TILESIZE, (int)OBJECT::getPosY() / TILESIZE)->getObject() == TILE::E_OBJECT::E_NONE)
 				{
 					OBJECT::settingRect();
+					setCollisionRect(OBJECT::getPosX(), OBJECT::getPosY(), 32, 32);
 					break;
 				}
 			}

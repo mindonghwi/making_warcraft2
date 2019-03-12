@@ -17,17 +17,17 @@ void FARM::create(int nLeft, int ntop, int nWidth, int nHeight, int nHp, float f
 	
 }
 
-void FARM::update()
-{
-	_fTimer += TIMEMANAGER->getElapsedTime();
-
-	if (_eState == BUILD::E_STATE::E_CREATING)
-	{
-		creatingUpdate();
-	}
-	
-	_pCamera->pushRenderObject(this);
-}
+//void FARM::update()
+//{
+//	_fTimer += TIMEMANAGER->getElapsedTime();
+//
+//	if (_eState == BUILD::E_STATE::E_CREATING)
+//	{
+//		creatingUpdate();
+//	}
+//	
+//	_pCamera->pushRenderObject(this);
+//}
 
 void FARM::release()
 {
@@ -58,7 +58,7 @@ void FARM::creatingUpdate()
 	{
 		_eState = BUILD::E_STATE::E_ISON;
 		_fTimer = 0.0f;
-		_pPlayer->addPopulation(8);
+		_pPlayer->addMaxPopulation(8);
 	}
 
 }

@@ -16,18 +16,18 @@ void KEEP::create(int nLeft, int ntop, int nWidth, int nHeight, int nHp, float f
 	_nUnitMask += BUILDMGR::E_UNITMASK::E_WORKMAN;
 }
 
-void KEEP::update()
-{
-	_fTimer += TIMEMANAGER->getElapsedTime();
-
-	if (_eState == BUILD::E_STATE::E_CREATING)
-	{
-		creatingUpdate();
-	}
-	createUnit();
-
-	_pCamera->pushRenderObject(this);
-}
+//void KEEP::update()
+//{
+//	_fTimer += TIMEMANAGER->getElapsedTime();
+//
+//	if (_eState == BUILD::E_STATE::E_CREATING)
+//	{
+//		creatingUpdate();
+//	}
+//	createUnit();
+//
+//	_pCamera->pushRenderObject(this);
+//}
 
 void KEEP::release()
 {

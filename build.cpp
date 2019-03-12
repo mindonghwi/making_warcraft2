@@ -29,18 +29,28 @@ void BUILD::create(int nLeft, int ntop, int nWidth, int nHeight, int nHp, float 
 	_fOffsetFrame = _fBuildingTimer / static_cast<float>(_nMaxFrameX);
 	
 	_nUnitMask = 0;
+	_fRayPointX = 0.0f;
+	_fRayPointY = 0.0f;
 
+	_bIsProduce = false;
 }
 
 void BUILD::update()
 {
 	_fTimer += TIMEMANAGER->getElapsedTime();
+
 	if (_eState == BUILD::E_STATE::E_CREATING)
 	{
 		creatingUpdate();
 	}
-
-
+	else
+	{
+		commandProduce();
+		if (_fTimer >= 5.0f && _bIsProduce)
+		{
+			createUnit();
+		}
+	}
 
 	_pCamera->pushRenderObject(this);
 }
@@ -88,13 +98,24 @@ void BUILD::creatingUpdate()
 void BUILD::createUnit()
 {
 	//시간이 없으니 한번에 처리해서 뿌리자
-	if (KEYMANAGER->isOnceKeyDown('P') && _nUnitMask & static_cast<unsigned int>(BUILDMGR::E_UNITMASK::E_WORKMAN))
+	if (_nUnitMask & static_cast<unsigned int>(BUILDMGR::E_UNITMASK::E_WORKMAN))
 	{
 		//레이포인트로 쏘거나 건물주변으로 내보내거나
+		_bIsProduce = false;		
 		_pUnitMgr->createUnit(UNIT::E_UNIT::E_WORKMAN, _fRayPointX, _fRayPointY);
+		_fTimer = 0.0f;
 	}
 
 
+}
+
+void BUILD::commandProduce()
+{
+	if (KEYMANAGER->isOnceKeyDown('P') && _nUnitMask & static_cast<unsigned int>(BUILDMGR::E_UNITMASK::E_WORKMAN))
+	{
+		_bIsProduce = true;
+		_fTimer = 0.0f;
+	}
 }
 
 
