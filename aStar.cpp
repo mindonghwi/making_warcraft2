@@ -3,6 +3,8 @@
 #include "player.h"
 #include "unit.h"
 #include "unitMGr.h"
+#include "buildMgr.h"
+#include "build.h"
 
 ASTAR::TILENODE * ASTAR::getNode(int nIndex)
 {
@@ -18,6 +20,7 @@ ASTAR::TILENODE * ASTAR::getNode(int nIndex)
 void ASTAR::setLinkUnitMgr(PLAYER * _pPlayer)
 {
 	_pUnitMgr = _pPlayer->getUnitMgr();
+	_pBuildMgr = _pPlayer->getBuildMgr();
 }
 
 void ASTAR::initMap()
@@ -149,10 +152,10 @@ void ASTAR::startFinder(float fStartPosX, float fStartPosY, float fEndPosX, floa
 	int nGo = 1;
 	int nIndexCount = 0;
 	bool bIsOnObject = true;
-	while ((_eMoveHeight == MOVEHEIGHT::GROUND && _pMap->getTile(_nEndIndexX, _nEndIndexY)->getTerrian() == TILE::E_TERRIAN::WATER)
-		|| (_eMoveHeight == MOVEHEIGHT::GROUND && _pMap->getTile(_nEndIndexX, _nEndIndexY)->getTerrian() == TILE::E_TERRIAN::DIRT_WATER)
-		|| (_eMoveHeight == MOVEHEIGHT::GROUND && _pMap->getTile(_nEndIndexX, _nEndIndexY)->getTerrian() == TILE::E_TERRIAN::ROCK)
-		|| (_eMoveHeight == MOVEHEIGHT::GROUND && _pMap->getTile(_nEndIndexX, _nEndIndexY)->getObject() != TILE::E_OBJECT::E_NONE)
+	while (//(_eMoveHeight == MOVEHEIGHT::GROUND && _pMap->getTile(_nEndIndexX, _nEndIndexY)->getTerrian() == TILE::E_TERRIAN::WATER)
+		//|| (_eMoveHeight == MOVEHEIGHT::GROUND && _pMap->getTile(_nEndIndexX, _nEndIndexY)->getTerrian() == TILE::E_TERRIAN::DIRT_WATER)
+		//|| (_eMoveHeight == MOVEHEIGHT::GROUND && _pMap->getTile(_nEndIndexX, _nEndIndexY)->getTerrian() == TILE::E_TERRIAN::ROCK)
+		 (_eMoveHeight == MOVEHEIGHT::GROUND && _pMap->getTile(_nEndIndexX, _nEndIndexY)->getObject() != TILE::E_OBJECT::E_NONE)
 		|| bIsOnObject)
 	{
 		bIsOnObject = false;
@@ -180,6 +183,11 @@ void ASTAR::startFinder(float fStartPosX, float fStartPosY, float fEndPosX, floa
 				{
 				}
 			}
+		}
+
+		if (_eMoveHeight == MOVEHEIGHT::GROUND && _pMap->getTile(_nEndIndexX, _nEndIndexY)->getObject() != TILE::E_OBJECT::E_NONE)
+		{
+			bIsOnObject = true;
 		}
 
 		if (bIsOnObject)
@@ -335,13 +343,13 @@ void ASTAR::pathFinder()
 
 		if (_eMoveHeight == MOVEHEIGHT::WATER && _pMap->getTile(nIntervalPosX, nIntervalPosY)->getTerrian() != TILE::E_TERRIAN::WATER) continue;
 		if (_eMoveHeight != MOVEHEIGHT::FLY && _pMap->getTile(nIntervalPosX, nIntervalPosY)->getObject() != TILE::E_OBJECT::E_NONE) continue;
-
+		//유닛
 		bool bIsObject = false;
 		for (int i = 0; i < _pUnitMgr->getUnitCount(); i++)
 		{
 			RECT rcTmp;
 
-			RECT rc = _pMap->getTile(_nEndIndexX, _nEndIndexY)->getRectTile();
+			RECT rc = _pMap->getTile(nIntervalPosX, nIntervalPosY)->getRectTile();
 			RECT rc2 = * _pUnitMgr->getUnit(i)->getCollisionRect();
 			rc2.left += 5;
 			rc2.top += 5;
@@ -359,6 +367,31 @@ void ASTAR::pathFinder()
 		}
 
 		if (bIsObject) continue;
+
+		////건물
+		//bIsObject = false;
+		//for (int i = 0; i < _pBuildMgr->getBuildCount(); i++)
+		//{
+		//	RECT rcTmp;
+
+		//	RECT rc = _pMap->getTile(nIntervalPosX, nIntervalPosY)->getRectTile();
+		//	RECT rc2 = * _pUnitMgr->getUnit(i)->getCollisionRect();
+		//	rc2.left += 5;
+		//	rc2.top += 5;
+		//	rc2.right -= 5;
+		//	rc2.bottom -= 5;
+
+		//	if (IntersectRect(&rcTmp, &rc, &rc2))
+		//	{
+		//		//if (!_pUnitMgr->getUnit(i)->getIsMoveAstar())
+		//		{
+		//			bIsObject = true;
+		//			break;
+		//		}
+		//	}
+		//}
+		//if (bIsObject) continue;
+
 
 
 		//유닛들이 통과하면 안된다.

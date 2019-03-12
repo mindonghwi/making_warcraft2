@@ -6,7 +6,7 @@
 
 class PLAYER;
 class UNITMGR;
-
+class BUILDMGR;
 
 class ASTAR {
 public:
@@ -60,7 +60,7 @@ private:
 
 	PLAYER*			_pPlayer;
 	UNITMGR*		_pUnitMgr;
-
+	BUILDMGR*		_pBuildMgr;
 								//		위		오른쪽		아래				왼쪽
 	int				_arSnake[4][2] { { 0,-1 },	{ 1,0 },	{ 0,1 },	{ -1,0 } };
 	
