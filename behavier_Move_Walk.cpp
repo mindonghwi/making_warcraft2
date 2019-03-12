@@ -39,9 +39,4 @@ void BEHAVIER_MOVE_WALK::end(UNIT * pUnit)
 	_fTimer = 0.0f;
 
 
-
-	if (pUnit->getUnit() == UNIT::E_UNIT::E_WORKMAN)
-	{
-		pUnit->build();
-	}
 }

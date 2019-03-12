@@ -100,6 +100,12 @@
     <Filter Include="PlayGround\build">
       <UniqueIdentifier>{2913cf1c-06ad-47f9-846a-f8e337762609}</UniqueIdentifier>
     </Filter>
+    <Filter Include="PlayGround\build\cpp">
+      <UniqueIdentifier>{7ea95492-8665-49b8-b71d-51ed8fca4d96}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="PlayGround\build\header">
+      <UniqueIdentifier>{3fe7f7f8-72f6-40af-bb2d-42bc074ff438}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="stdafx.h">
@@ -303,8 +309,32 @@
     <ClInclude Include="buildMgr.h">
       <Filter>PlayGround\build</Filter>
     </ClInclude>
+    <ClInclude Include="holdCommand.h">
+      <Filter>PlayGround\player\command</Filter>
+    </ClInclude>
+    <ClInclude Include="moveCommand.h">
+      <Filter>PlayGround\player\command</Filter>
+    </ClInclude>
+    <ClInclude Include="buildCommand.h">
+      <Filter>PlayGround\player\command</Filter>
+    </ClInclude>
+    <ClInclude Include="UI.h">
+      <Filter>PlayGround</Filter>
+    </ClInclude>
     <ClInclude Include="town.h">
+      <Filter>PlayGround\build\header</Filter>
+    </ClInclude>
+    <ClInclude Include="keep.h">
+      <Filter>PlayGround\build\header</Filter>
+    </ClInclude>
+    <ClInclude Include="castle.h">
+      <Filter>PlayGround\build\header</Filter>
+    </ClInclude>
+    <ClInclude Include="buildsHeader.h">
       <Filter>PlayGround\build</Filter>
+    </ClInclude>
+    <ClInclude Include="farm.h">
+      <Filter>PlayGround\build\header</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -473,8 +503,35 @@
     <ClCompile Include="build.cpp">
       <Filter>PlayGround\build</Filter>
     </ClCompile>
+    <ClCompile Include="command.cpp">
+      <Filter>PlayGround\player\command</Filter>
+    </ClCompile>
+    <ClCompile Include="stopCommand.cpp">
+      <Filter>PlayGround\player\command</Filter>
+    </ClCompile>
+    <ClCompile Include="holdCommand.cpp">
+      <Filter>PlayGround\player\command</Filter>
+    </ClCompile>
+    <ClCompile Include="moveCommand.cpp">
+      <Filter>PlayGround\player\command</Filter>
+    </ClCompile>
+    <ClCompile Include="buildCommand.cpp">
+      <Filter>PlayGround\player\command</Filter>
+    </ClCompile>
+    <ClCompile Include="UI.cpp">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
     <ClCompile Include="town.cpp">
-      <Filter>PlayGround\build</Filter>
+      <Filter>PlayGround\build\cpp</Filter>
+    </ClCompile>
+    <ClCompile Include="keep.cpp">
+      <Filter>PlayGround\build\cpp</Filter>
+    </ClCompile>
+    <ClCompile Include="castle.cpp">
+      <Filter>PlayGround\build\cpp</Filter>
+    </ClCompile>
+    <ClCompile Include="farm.cpp">
+      <Filter>PlayGround\build\cpp</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

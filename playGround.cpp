@@ -15,7 +15,7 @@ void playGround::loadImage()
 {
 	IMAGEMANAGER->addFrameImage("wall", "resource/wall.bmp", TILESIZE * 16, TILESIZE, 16, 1, true, Mins::getMazenta());
 
-	IMAGEMANAGER->addFrameImage("mapSprites", "resource/mapSprites.bmp", 640, 160, 20, 5, true, Mins::getMazenta());
+	IMAGEMANAGER->addFrameImage("mapSprites", "resource/mapSprite.bmp", 640, 160, 20, 5, true, Mins::getMazenta());
 	
 	
 	IMAGEMANAGER->addFrameImage("ground", "resource/ground.bmp", TILESIZE, TILESIZE, 1, 1, true, Mins::getMazenta());
@@ -67,9 +67,28 @@ void playGround::loadImage()
 
 
 
+	//°Ç¹°
+	IMAGEMANAGER->addFrameImage("town",				"resource/human/build/townhall.bmp",512,128,4,1,true,Mins::getMazenta());
+	IMAGEMANAGER->addFrameImage("keep",				"resource/human/build/keep.bmp", 256, 128, 4, 1, true, Mins::getMazenta());
+	IMAGEMANAGER->addFrameImage("castle",			"resource/human/build/castle.bmp", 256, 128, 2, 1, true, Mins::getMazenta());
+	IMAGEMANAGER->addFrameImage("barracks",			"resource/human/build/barracks.bmp", 384, 96, 4, 1, true, Mins::getMazenta());
+	IMAGEMANAGER->addFrameImage("miil",				"resource/human/build/branchOffice.bmp", 384, 96, 4, 1, true, Mins::getMazenta());
+	IMAGEMANAGER->addFrameImage("church",			"resource/human/build/church.bmp", 384, 96, 4, 1, true, Mins::getMazenta());
+	IMAGEMANAGER->addFrameImage("gnomishSanctuary", "resource/human/build/goblinSanctuary.bmp", 384, 96, 4, 1, true, Mins::getMazenta());
+	IMAGEMANAGER->addFrameImage("gryphonSanctuary", "resource/human/build/gryphonSanctuary.bmp", 384, 96, 4, 1, true, Mins::getMazenta());
+	IMAGEMANAGER->addFrameImage("mageTemple",		"resource/human/build/mageTemple.bmp", 384, 96, 4, 1, true, Mins::getMazenta());
+	IMAGEMANAGER->addFrameImage("smithy",			"resource/human/build/smithy.bmp", 384, 96, 4, 1, true, Mins::getMazenta());
+	IMAGEMANAGER->addFrameImage("stall",			"resource/human/build/stall.bmp", 384, 96, 4, 1, true, Mins::getMazenta());
 
-	IMAGEMANAGER->addFrameImage("town","resource/human/build/townhall.bmp",512,128,4,1,true,Mins::getMazenta());
+	IMAGEMANAGER->addFrameImage("farm",				"resource/human/build/farm.bmp", 256, 64, 4, 1, true, Mins::getMazenta());
+	IMAGEMANAGER->addFrameImage("scoutTower",		"resource/human/build/tower01.bmp", 256, 64, 4, 1, true, Mins::getMazenta());
+	IMAGEMANAGER->addFrameImage("tower02",			"resource/human/build/tower02.bmp", 128, 64, 4, 1, true, Mins::getMazenta());
+	IMAGEMANAGER->addFrameImage("tower03",			"resource/human/build/tower03.bmp", 128, 64, 4, 1, true, Mins::getMazenta());
 
+	IMAGEMANAGER->addFrameImage("dockyard",			"resource/human/build/dockyard.bmp", 192, 96, 4, 1, true, Mins::getMazenta());
+	IMAGEMANAGER->addFrameImage("yard02",			"resource/human/build/yard02.bmp", 192, 96, 4, 1, true, Mins::getMazenta());
+	IMAGEMANAGER->addFrameImage("yard03",			"resource/human/build/yard03.bmp", 192, 96, 4, 1, true, Mins::getMazenta());
+	IMAGEMANAGER->addFrameImage("oilRefinery",		"resource/human/build/oilRefinery.bmp", 288, 96, 4, 1, true, Mins::getMazenta());
 
 }
 
