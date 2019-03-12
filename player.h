@@ -5,20 +5,15 @@
 #include "camera.h"
 #include "unitMGr.h"
 #include "buildMgr.h"
+#include "command.h"
+
 
 class ASTAR;
 class MAP;
 class PLAYER
 {
-public:
-
-
 private:
-	//선택된 애들만 가리키 벡터
-	vector<UNIT**>		_vSeletedUnit;
 
-	//플레이어가 가지는 모든 유닛
-	list<UNIT*>			_listUnit;
 
 
 	int		_arResource[static_cast<const int>(E_RESOURCE::E_MAX)];
@@ -41,6 +36,9 @@ private:
 	int		_nDragLeft;			//drag left
 	int		_nDragTop;			//drag top
 	bool	_bIsDrag;			//drag Status
+
+	bool				_bIsBuild;
+	BUILDMGR::E_BUILDS	_eBuilds;
 public:
 	PLAYER();
 	~PLAYER();
@@ -86,6 +84,8 @@ public:
 	inline	int			getPopulation() { return _nPopulation; }
 	inline	int			getMaxPopulation() { return _nMaxPopulation; }
 	inline	UNITMGR*	getUnitMgr() { return _pUnitMgr; }
+	inline	BUILDMGR*	getBuildMgr() { return _pBuildMgr; }
+
 	//adder
 	inline	void	addGold(int nGold) { _arResource[static_cast<int>(E_RESOURCE::E_GOLD)] += nGold; }
 	inline	void	addTree(int nTree) { _arResource[static_cast<int>(E_RESOURCE::E_TREE)] += nTree; }

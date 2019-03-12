@@ -25,7 +25,7 @@ void PLAYER::init()
 	_pBuildMgr->setLinkCamera(_pCamera);
 	_pBuildMgr->setLinkUnitMgr(_pUnitMgr);
 	_pBuildMgr->setLinkMap(_pMap);
-
+	_pBuildMgr->setLinkPlayer(this);
 
 	_pUnitMgr->init();
 
@@ -46,7 +46,7 @@ void PLAYER::init()
 	_ptCameraPtMouse.y = _ptMouse.y + _pCamera->getTop();
 
 
-
+	_eBuilds = BUILDMGR::E_BUILDS::E_MAX;
 
 	//initDrag
 	initDrag();
@@ -57,20 +57,17 @@ void PLAYER::update()
 	//마우스 위치 재설정
 	_ptCameraPtMouse.x = _ptMouse.x + _pCamera->getLeft();
 	_ptCameraPtMouse.y = _ptMouse.y + _pCamera->getTop();
-	list<UNIT*>::iterator	iterUnitList = _listUnit.begin();
-	list<UNIT*>::iterator	endUnitList = _listUnit.end();
 
 
-	if (KEYMANAGER->isOnceKeyDown(VK_LBUTTON))
-	{
-		commandBuild();
-	}
+
 
 	_pUnitMgr->selectedUnit();
 	dragSelect();
 
 	//여기서 무슨 커맨더를 주는지 넣어야한다.
-	_pUnitMgr->commandSelectUnit();
+	//_pUnitMgr->commandSelectUnit();
+	commandSelectUnit();
+	commandBuild();
 
 	_pUnitMgr->update();
 
@@ -88,12 +85,15 @@ void PLAYER::release()
 
 void PLAYER::render(HDC hdc)
 {
-
-
 	_pUnitMgr->render(hdc);
+	_pBuildMgr->render(hdc);
 
 	DrawEdge(hdc,&_rcDragArea, BDR_RAISEDOUTER, BF_FLAT | BF_TOPLEFT | BF_BOTTOMRIGHT);
 
+
+	char str[128];
+	sprintf_s(str, "%d,%d,%d", (_arResource[static_cast<int>(E_RESOURCE::E_GOLD)]), (_arResource[static_cast<int>(E_RESOURCE::E_TREE)]), (_arResource[static_cast<int>(E_RESOURCE::E_OIL)]));
+	TextOut(hdc, WINSIZEX/2, 32, str, strlen(str));
 }
 
 bool PLAYER::createUnit(UNIT::E_UNIT eUnit)
@@ -125,19 +125,18 @@ bool PLAYER::createUnit(UNIT::E_UNIT eUnit)
 
 void PLAYER::selectedUnit()
 {
-	for (int i = 0; i < static_cast<int>(_vSeletedUnit.size()); i++)
-	{
-		(*(_vSeletedUnit[i]))->setSelected(true);
-	}
+
 }
 
 void PLAYER::commandSelectUnit()
 {
-	//for (int i = 0; i < static_cast<int>(_vSeletedUnit.size()); i++)
-	//{
-	//	(*(_vSeletedUnit[i]))->commandMove(i);
-	//}
-
+	if (KEYMANAGER->isOnceKeyDown(VK_RBUTTON))
+	{
+		if (_eBuilds == BUILDMGR::E_BUILDS::E_MAX)
+		{
+			_pUnitMgr->moveCommand((float)_ptCameraPtMouse.x, (float)_ptCameraPtMouse.y);
+		}
+	}						   
 }
 
 void PLAYER::commandBuild()
@@ -145,54 +144,72 @@ void PLAYER::commandBuild()
 	_ptCameraPtMouse.x = _ptMouse.x + _pCamera->getLeft();
 	_ptCameraPtMouse.y = _ptMouse.y + _pCamera->getTop();
 
+	
+
+
 	//선택된 애들중 workMan이 있을때
-	//if (KEYMANAGER->isOnceKeyDown('B'))
-	//{
-	//	 _bNormalBuildingOn = true;
-	//}
-	//
-	//if (_bNormalBuildingOn)
-	//{
-	//	if (KEYMANAGER->isOnceKeyDown('H'))
-	//	{
-	//		//지을 준비
-	//		_eBuilds = BUILDMGR::E_BUILDS::E_TOWN;
-	//	}
-	//
-	//}
-
-
-	//선택된 일군이 하나이며 빌드 온 상태일때
-	if (_vSeletedUnit.size() == 1 && (*_vSeletedUnit.front())->getBuildingOn())
+	if (KEYMANAGER->isOnceKeyDown('B'))
 	{
-		//금부족
-		if (_pBuildMgr->getConsumptionResource((*_vSeletedUnit.front())->getBuildType(),E_RESOURCE::E_GOLD) > getGold())
+		if (_pUnitMgr->getSelectedUnit(0)->getUnit() == UNIT::E_UNIT::E_WORKMAN)
 		{
-			return;
+			//_pUnitMgr->getSelectedUnit(0)->setBuildingOn(true);
+			_bIsBuild = true;
 		}
-		if (_pBuildMgr->getConsumptionResource((*_vSeletedUnit.front())->getBuildType(), E_RESOURCE::E_OIL) > getOil())
-		{
-			return;
-		}
-		if (_pBuildMgr->getConsumptionResource((*_vSeletedUnit.front())->getBuildType(), E_RESOURCE::E_TREE) > getTree())
-		{
-			return;
-		}
-		//자리부족
-		if (!_pBuildMgr->bIsGroundCheck(_ptCameraPtMouse.x,_ptCameraPtMouse.y))
-		{
-			return;
-		}
-
-		_arResource[static_cast<int>(E_RESOURCE::E_GOLD)] -= _pBuildMgr->getConsumptionResource((*_vSeletedUnit.front())->getBuildType(), E_RESOURCE::E_GOLD);
-		_arResource[static_cast<int>(E_RESOURCE::E_OIL)] -= _pBuildMgr->getConsumptionResource((*_vSeletedUnit.front())->getBuildType(), E_RESOURCE::E_OIL);
-		_arResource[static_cast<int>(E_RESOURCE::E_TREE)] -= _pBuildMgr->getConsumptionResource((*_vSeletedUnit.front())->getBuildType(), E_RESOURCE::E_TREE);
-
-		(*_vSeletedUnit.front())->commandBuild();
-
-		//(*_vSeletedUnit.front())->
 	}
 
+
+	if (_pUnitMgr->getSelectedUnit(0) && _pUnitMgr->getSelectedUnit(0)->getUnit() == UNIT::E_UNIT::E_WORKMAN)
+	{
+		//if (_pUnitMgr->getSelectedUnit(0)->getBuildingOn())
+		{
+			if (KEYMANAGER->isOnceKeyDown('H'))
+			{
+				_eBuilds = BUILDMGR::E_BUILDS::E_TOWN;
+				//_pUnitMgr->getSelectedUnit(0)->setBuildType(BUILDMGR::E_BUILDS::E_TOWN);
+			}
+
+			if (KEYMANAGER->isOnceKeyDown('F'))
+			{
+				_eBuilds = BUILDMGR::E_BUILDS::E_FARM;
+
+			}
+		}
+	}
+	
+
+	if (KEYMANAGER->isOnceKeyDown(VK_RBUTTON))
+	{
+		//선택된 일군이 하나이며 빌드 온 상태일때
+		if (_pUnitMgr->getSelectedUnit(0) && _pUnitMgr->getSelectedUnit(0)->getUnit() == UNIT::E_UNIT::E_WORKMAN && _eBuilds != BUILDMGR::E_BUILDS::E_MAX)// && _pUnitMgr->getSelectedUnit(0)->getBuildingOn())
+		{
+			//금부족
+			if (_pBuildMgr->getConsumptionResource(_pUnitMgr->getSelectedUnit(0)->getBuildType(), E_RESOURCE::E_GOLD) > getGold())
+			{
+				return;
+			}
+			if (_pBuildMgr->getConsumptionResource(_pUnitMgr->getSelectedUnit(0)->getBuildType(), E_RESOURCE::E_OIL) > getOil())
+			{
+				return;
+			}
+			if (_pBuildMgr->getConsumptionResource(_pUnitMgr->getSelectedUnit(0)->getBuildType(), E_RESOURCE::E_TREE) > getTree())
+			{
+				return;
+			}
+			//자리부족
+			if (!_pBuildMgr->bIsGroundCheck(_eBuilds,(float)_ptCameraPtMouse.x, (float)_ptCameraPtMouse.y))
+			{
+				return;
+			}
+
+			_arResource[static_cast<int>(E_RESOURCE::E_GOLD)] -= _pBuildMgr->getConsumptionResource(_pUnitMgr->getSelectedUnit(0)->getBuildType(), E_RESOURCE::E_GOLD);
+			_arResource[static_cast<int>(E_RESOURCE::E_OIL)] -= _pBuildMgr->getConsumptionResource( _pUnitMgr->getSelectedUnit(0)->getBuildType(), E_RESOURCE::E_OIL);
+			_arResource[static_cast<int>(E_RESOURCE::E_TREE)] -= _pBuildMgr->getConsumptionResource(_pUnitMgr->getSelectedUnit(0)->getBuildType(), E_RESOURCE::E_TREE);
+
+			_pUnitMgr->buildCommand((float)_ptCameraPtMouse.x, (float)_ptCameraPtMouse.y, _eBuilds);
+			_eBuilds = BUILDMGR::E_BUILDS::E_MAX;
+			_bIsBuild = false;
+		}
+	}
 }
 
 void PLAYER::initDrag()
@@ -207,7 +224,8 @@ void PLAYER::initDrag()
 
 void PLAYER::dragSelect()
 {
-	if (KEYMANAGER->isKeyDown(VK_LBUTTON))
+
+	if (KEYMANAGER->isStayKeyDown(VK_LBUTTON))
 	{
 		if (!_bIsDrag)
 		{
@@ -225,6 +243,18 @@ void PLAYER::dragSelect()
 		_pUnitMgr->dragSelect(_rcDragArea);
 
 
+		if (_pUnitMgr->getUnitSelectedCount() == 0)
+		{
+			_pBuildMgr->selectedBuild(_rcDragArea);
+		}
+		else
+		{
+			if (_pUnitMgr->getSelectedUnit(0)->getUnit() != UNIT::E_UNIT::E_WORKMAN)
+			{
+				_bIsBuild = false;
+				_eBuilds = BUILDMGR::E_BUILDS::E_MAX;
+			}
+		}
 		initDrag();
 	}
 }
@@ -245,6 +275,9 @@ void PLAYER::readjustDragRect()
 		_ptCameraPtMouse.y = nTmp;
 	}
 
+
 	_rcDragArea = { _nDragLeft, _nDragTop, _ptCameraPtMouse.x,_ptCameraPtMouse.y };
+	_rcDragArea.right++;
+	_rcDragArea.bottom++;
 
 }
