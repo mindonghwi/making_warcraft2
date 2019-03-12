@@ -1,7 +1,7 @@
 #include "stdafx.h"
 #include "unit.h"
 #include "buildMgr.h"
-
+#include "unitMGr.h"
 
 UNIT::UNIT() :
 	_nHp(0),
@@ -64,7 +64,28 @@ void UNIT::addFrameX(UNIT::E_STATE eState)
 	}
 }
 
-void UNIT::setMovePoints(float fEndPosX, float fEndPosY, int * nCount)
+void UNIT::commandMove(float fEndPosX, float fEndPosY)
+{
+	//if (KEYMANAGER->isOnceKeyDown(VK_RBUTTON))
+	//{
+		_fEndX = fEndPosX;
+		_fEndY = fEndPosY;
+
+		setMovePoints(fEndPosX,fEndPosY);
+		UNIT::getCurrentBehavir()->end(this);
+		if (!UNIT::moveTo()) {
+			return;
+		}
+		UNIT::setCurrentState(UNIT::E_STATENUM::E_MOVE);
+		UNIT::setCurrentBehavir(UNIT::E_BEHAVIERNUM::E_MOVE);
+		UNIT::setBehavier(UNIT::E_BEHAVIERNUM::E_MOVE);
+
+		UNIT::getCurrentState()->start();
+	//}
+
+}
+
+void UNIT::setMovePoints(float fEndPosX, float fEndPosY)
 {
 	UNIT::setMoveIndex(0);
 
@@ -106,7 +127,7 @@ void UNIT::Move()
 
 }
 
-void UNIT::build()
+void UNIT::build(float fPosX, float fPosY, BUILDMGR::E_BUILDS eBuilds)
 {
 }
 
@@ -161,7 +182,7 @@ void UNIT::moveToDir()
 {
 	UNIT::setMoveIndex(0);
 
-	setMovePoints((float)_nEndTileIndexX, (float)_nEndTileIndexY,0);
+	setMovePoints((float)_fEndX, (float)_fEndY);
 
 
 
@@ -174,5 +195,32 @@ void UNIT::moveToDir()
 	UNIT::setBehavier(UNIT::E_BEHAVIERNUM::E_MOVE);
 
 	UNIT::getCurrentState()->start();
+}
+
+void UNIT::commandIdle()
+{
+	UNIT::getCurrentBehavir()->end(this);
+
+	UNIT::setCurrentState(UNIT::E_STATENUM::E_IDLE);
+	UNIT::setCurrentBehavir(UNIT::E_BEHAVIERNUM::E_NONE);
+	UNIT::setBehavier(UNIT::E_BEHAVIERNUM::E_NONE);
+
+	UNIT::getCurrentState()->start();
+	
+}
+
+void UNIT::addCommand(COMMAND * pCommand)
+{
+	_queWaitCommand.push(pCommand);
+}
+
+void UNIT::clearCommand()
+{
+	while (!_queWaitCommand.empty())
+	{
+		_queWaitCommand.pop();
+	}
+	commandIdle();
+
 }
 

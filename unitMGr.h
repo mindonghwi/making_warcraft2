@@ -3,9 +3,11 @@
 #include "command.h"
 #include "unit.h"
 #include "camera.h"
-
+#include "command.h"
 class MAP;
 class BUILDMGR;
+
+
 
 class UNITMGR
 {
@@ -43,6 +45,10 @@ private:
 	int				_nCount;
 
 	BUILDMGR*		_pBuildMgr;
+
+
+	map<COMMAND::E_COMMAND, queue<COMMAND*>>	_mCommandPool;
+
 public:
 	UNITMGR();
 	~UNITMGR();
@@ -65,6 +71,12 @@ public:
 
 	void clearSelectedUnit();
 	void	allocateIntervalMove();
+
+	void moveCommand(float fPosX,float fPosY);
+	void buildCommand(float fPosX, float fPosY,BUILDMGR::E_BUILDS eBuilds);
+
+	void addCommandPool(COMMAND::E_COMMAND eCommand, int nCount);
+	void returnPool(COMMAND* pCommand);
 
 public:
 	//linker
@@ -92,4 +104,7 @@ public:
 
 	UNIT*	getUnit(int nIndex);
 	inline	int		getUnitCount() { return static_cast<int>(_listUnit.size()); }
+
+	UNIT*	getSelectedUnit(int nIndex);
+	inline	int		getUnitSelectedCount() { return static_cast<int>(_vSeletedUnit.size()); }
 };

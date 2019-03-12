@@ -13,6 +13,13 @@
 #include "behavier_Harvest_WorkMan.h"
 #include "behavier_None.h"
 
+#include "command.h"
+#include "stopCommand.h"
+#include "holdCommand.h"
+#include "moveCommand.h"
+#include "buildCommand.h"
+#include "unitMGr.h"
+
 WORKMAN::WORKMAN()
 {
 }
@@ -38,12 +45,54 @@ void WORKMAN::init(int nPosX, int nPosY, int nWidth, int nHeight, int nIndexNum)
 	UNIT::setPopulation(1);
 
 	_eBuilds = BUILDMGR::E_BUILDS::E_MAX;
+	_fTimer = 0.0f;
+
+	_nCommand = 0;
+	_nCommand += static_cast<unsigned int>(COMMAND::E_COMMAND::E_STOP);
+	_nCommand += static_cast<unsigned int>(COMMAND::E_COMMAND::E_HOLD);
+	_nCommand += static_cast<unsigned int>(COMMAND::E_COMMAND::E_MOVE);
+	_nCommand += static_cast<unsigned int>(COMMAND::E_COMMAND::E_BUILD);
+
+	
 }
 
 void WORKMAN::update()
 {
+	if (_bIsBannedSelected)
+	{
+		_fTimer += TIMEMANAGER->getElapsedTime();
+		if (_fTimer >= _fBuildTime)
+		{
+			UNIT::setIsBannedSelect(false);
+		}
+		//등장위치 조정
+		if (_pMap->getTile((int)OBJECT::getPosX()/TILESIZE, (int)OBJECT::getPosY() / TILESIZE)->getObject() != TILE::E_OBJECT::E_NONE)
+		{
+			for (int i = 0; i < 25; i++)
+			{
+				OBJECT::setPosX(OBJECT::getPosX() + _pUnitMgr->getIntervalX(i) * TILESIZE);
+				OBJECT::setPosY(OBJECT::getPosY() + _pUnitMgr->getIntervalY(i) * TILESIZE);
 
+				if (_pMap->getTile((int)OBJECT::getPosX() / TILESIZE, (int)OBJECT::getPosY() / TILESIZE)->getObject() == TILE::E_OBJECT::E_NONE)
+				{
+					OBJECT::settingRect();
+					break;
+				}
+			}
+		}
 
+		return;
+	}
+
+	if (_eBehavier == UNIT::E_BEHAVIERNUM::E_NONE && !_queWaitCommand.empty())
+	{
+		COMMAND* pCommand = _queWaitCommand.front();
+		pCommand->start();
+		_queWaitCommand.pop();
+		_pUnitMgr->returnPool(pCommand);
+	}
+
+	
 
 
 	_pCamera->pushRenderObject(this);
@@ -71,60 +120,33 @@ void WORKMAN::renderSelected(HDC hdc)
 	DrawEdge(hdc, UNIT::getCollisionRect(), BDR_RAISEDOUTER, BF_FLAT | BF_TOPLEFT | BF_BOTTOMRIGHT);
 }
 
-void WORKMAN::commandMove(int* nCount)
-{
-	if (KEYMANAGER->isOnceKeyDown(VK_RBUTTON))
-	{
-
-		_nEndTileIndexX = static_cast<int>(_ptMouse.x + _pCamera->getLeft());
-		_nEndTileIndexY = static_cast<int>(_ptMouse.y + _pCamera->getTop());
-
-		setMovePoints(static_cast<float>(_ptMouse.x + _pCamera->getLeft()), static_cast<float>(_ptMouse.y + _pCamera->getTop()),nCount);
-		UNIT::getCurrentBehavir()->end(this);
-		if (!UNIT::moveTo()) {
-			return;
-		}
-		UNIT::setCurrentState(UNIT::E_STATENUM::E_MOVE);
-		UNIT::setCurrentBehavir(UNIT::E_BEHAVIERNUM::E_MOVE);
-		UNIT::setBehavier(UNIT::E_BEHAVIERNUM::E_MOVE);
-
-		UNIT::getCurrentState()->start();
-	}
-
-}
 
 void WORKMAN::command()
 {
-	if (KEYMANAGER->isOnceKeyDown(VK_RBUTTON))
-	{
+	//if (KEYMANAGER->isOnceKeyDown(VK_RBUTTON))
+	//{
+	//	_fEndX = static_cast<float>(_ptMouse.x + _pCamera->getLeft());
+	//	_fEndY = static_cast<float>(_ptMouse.y + _pCamera->getTop());
 
-		_nEndTileIndexX = static_cast<int>(_ptMouse.x + _pCamera->getLeft());
-		_nEndTileIndexY = static_cast<int>(_ptMouse.y + _pCamera->getTop());
+	//	setMovePoints(static_cast<float>(_ptMouse.x + _pCamera->getLeft()), static_cast<float>(_ptMouse.y + _pCamera->getTop()));
+	//	UNIT::getCurrentBehavir()->end(this);
+	//	if (!UNIT::moveTo()) {
+	//		return;
+	//	}
+	//	UNIT::setCurrentState(UNIT::E_STATENUM::E_MOVE);
+	//	UNIT::setCurrentBehavir(UNIT::E_BEHAVIERNUM::E_MOVE);
+	//	UNIT::setBehavier(UNIT::E_BEHAVIERNUM::E_MOVE);
 
-		setMovePoints(static_cast<float>(_ptMouse.x + _pCamera->getLeft()), static_cast<float>(_ptMouse.y + _pCamera->getTop()),0);
-		UNIT::getCurrentBehavir()->end(this);
-		if (!UNIT::moveTo()) {
-			return;
-		}
-		UNIT::setCurrentState(UNIT::E_STATENUM::E_MOVE);
-		UNIT::setCurrentBehavir(UNIT::E_BEHAVIERNUM::E_MOVE);
-		UNIT::setBehavier(UNIT::E_BEHAVIERNUM::E_MOVE);
-
-		UNIT::getCurrentState()->start();
-
-
-	}
-
-
-
+	//	UNIT::getCurrentState()->start();
+	//}
 }
 
 void WORKMAN::commandBuild()
 {
-	_nEndTileIndexX = static_cast<int>(_ptMouse.x + _pCamera->getLeft());
-	_nEndTileIndexY = static_cast<int>(_ptMouse.y + _pCamera->getTop());
+	_fEndX = static_cast<float>(_ptMouse.x + _pCamera->getLeft());
+	_fEndY = static_cast<float>(_ptMouse.y + _pCamera->getTop());
 
-	setMovePoints(static_cast<float>(_ptMouse.x + _pCamera->getLeft()), static_cast<float>(_ptMouse.y + _pCamera->getTop()), 0);
+	setMovePoints(static_cast<float>(_ptMouse.x + _pCamera->getLeft()), static_cast<float>(_ptMouse.y + _pCamera->getTop()));
 	UNIT::getCurrentBehavir()->end(this);
 	if (!UNIT::moveTo()) {
 		return;
@@ -137,14 +159,12 @@ void WORKMAN::commandBuild()
 
 }
 
-void WORKMAN::build()
+void WORKMAN::build(float fPosX, float fPosY, BUILDMGR::E_BUILDS eBuilds)
 {
-	if (_bNormalBuildingOn && UNIT::_eBuilds != BUILDMGR::E_BUILDS::E_MAX)
-	{
-		_pBuildMgr->buildBuilding(_eBuilds, static_cast<float>((_ptMouse.x + _pCamera->getLeft())), static_cast<float>((_ptMouse.y + _pCamera->getTop())));
-		_bNormalBuildingOn = false;
-		UNIT::_eBuilds = BUILDMGR::E_BUILDS::E_MAX;
-	}
+	_pBuildMgr->buildBuilding(eBuilds, fPosX, fPosY);
+	_bIsBannedSelected = true;
+	_fBuildTime = _pBuildMgr->getBuildTime(eBuilds);
+	_fTimer = 0.0f;
 }
 
 

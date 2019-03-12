@@ -6,6 +6,11 @@
 #include "buildMgr.h"
 
 
+#include "stopCommand.h"
+#include "holdCommand.h"
+#include "moveCommand.h"
+#include "buildCommand.h"
+
 UNITMGR::UNITMGR()
 {
 }
@@ -24,6 +29,11 @@ void UNITMGR::init()
 	_ptCameraPtMouse.y = _ptMouse.y + _pCamera->getTop();
 	allocateIntervalMove();
 	_nCount = 0;
+	
+	addCommandPool(COMMAND::E_COMMAND::E_BUILD, 201);
+	addCommandPool(COMMAND::E_COMMAND::E_HOLD, 201);
+	addCommandPool(COMMAND::E_COMMAND::E_STOP, 201);
+	addCommandPool(COMMAND::E_COMMAND::E_MOVE, 4000);
 
 }
 
@@ -62,6 +72,7 @@ bool UNITMGR::createUnit(UNIT::E_UNIT eUnit, float fPosX, float fPosY)
 		break;
 	}
 
+	_listUnit.back()->setLinkUnitMgr(this);
 	_listUnit.back()->setLinkCamera(_pCamera);
 	_listUnit.back()->setLinkAStar(_pAstar);
 	_listUnit.back()->init(static_cast<int>(fPosX), static_cast<int>(fPosY), 64, 64, _nCount);
@@ -69,6 +80,8 @@ bool UNITMGR::createUnit(UNIT::E_UNIT eUnit, float fPosX, float fPosY)
 		_arUnitAttack[static_cast<int>(eUnit)], _arUnitDefence[static_cast<int>(eUnit)], _arSearchRange[static_cast<int>(eUnit)], _arAttackRange[static_cast<int>(eUnit)], _arAttackSpeed[static_cast<int>(eUnit)],
 		_arUnitMinimalAttack[static_cast<int>(eUnit)]);
 	_listUnit.back()->setLinkBuildMgr(_pBuildMgr);
+	_listUnit.back()->setLinkMap(_pMap);
+
 	_nCount++;
 	return false;
 }
@@ -132,6 +145,7 @@ void UNITMGR::update()
 						break;
 					}
 				}
+
 				
 			}
 			iterUnitListCollision++;
@@ -162,6 +176,19 @@ void UNITMGR::release()
 		pUnit = nullptr;
 	}
 
+	while (!_mCommandPool.empty())
+	{
+		while (!_mCommandPool.begin()->second.empty())
+		{
+			COMMAND* pCommand = _mCommandPool.begin()->second.front();
+			_mCommandPool.begin()->second.pop();
+			delete pCommand;
+			pCommand = nullptr;
+		}
+
+		_mCommandPool.erase(_mCommandPool.begin());
+	}
+	
 }
 
 void UNITMGR::render(HDC hdc)
@@ -455,14 +482,16 @@ void UNITMGR::dragSelect(RECT rcDragRect)
 	{
 		RECT _rcTmp;
 		UNIT* pUnit = *iterUnitList;
+		if (!bIsFind)
+		{
+			clearSelectedUnit();
+			_vSeletedUnit.clear();
+			bIsFind = true;
+		}
+
 		if (IntersectRect(&_rcTmp, pUnit->getCollisionRect(), &rcDragRect))
 		{
-			if (!bIsFind)
-			{
-				clearSelectedUnit();
-				_vSeletedUnit.clear();
-				bIsFind = true;
-			}
+			_pBuildMgr->releaseSelected();
 			_vSeletedUnit.push_back(&(*iterUnitList));
 		}
 
@@ -529,6 +558,86 @@ void UNITMGR::allocateIntervalMove()
 	}
 }
 
+void UNITMGR::moveCommand(float fPosX, float fPosY)
+{
+	for (int i = 0; i < static_cast<int>(_vSeletedUnit.size()); i++)
+	{
+		COMMAND*  pCommand = _mCommandPool.find(COMMAND::E_COMMAND::E_MOVE)->second.front();
+		_mCommandPool.find(COMMAND::E_COMMAND::E_MOVE)->second.pop();
+		pCommand->init(COMMAND::E_COMMAND::E_MOVE, *(_vSeletedUnit[i]));
+		pCommand->commandUnit(fPosX, fPosY);
+		(*(_vSeletedUnit[i]))->addCommand(pCommand);
+	}
+}
+
+void UNITMGR::buildCommand(float fPosX, float fPosY,BUILDMGR::E_BUILDS eBuilds)
+{
+	COMMAND*  pCommand = _mCommandPool.find(COMMAND::E_COMMAND::E_MOVE)->second.front();
+	_mCommandPool.find(COMMAND::E_COMMAND::E_MOVE)->second.pop();
+	pCommand->init(COMMAND::E_COMMAND::E_MOVE, *(_vSeletedUnit[0]));
+	pCommand->commandUnit(fPosX, fPosY);
+	(*(_vSeletedUnit[0]))->addCommand(pCommand);
+
+	pCommand = _mCommandPool.find(COMMAND::E_COMMAND::E_BUILD)->second.front();
+	_mCommandPool.find(COMMAND::E_COMMAND::E_BUILD)->second.pop();
+	pCommand->init(COMMAND::E_COMMAND::E_BUILD, *(_vSeletedUnit[0]));
+	pCommand->commandUnit(fPosX,fPosY,eBuilds);
+	(*(_vSeletedUnit[0]))->addCommand(pCommand);
+}
+
+void UNITMGR::addCommandPool(COMMAND::E_COMMAND eCommand, int nCount)
+{
+	queue<COMMAND*> queTmp;
+
+	switch (eCommand)
+	{
+	case COMMAND::E_COMMAND::E_STOP:
+		for (int i = 0; i < nCount; i++)
+		{
+			queTmp.push(new COMMAND_STOP());
+		}
+		break;
+	case COMMAND::E_COMMAND::E_HOLD:
+		for (int i = 0; i < nCount; i++)
+		{
+			queTmp.push(new COMMAND_HOLD());	
+		}
+		break;
+	case COMMAND::E_COMMAND::E_MOVE:
+		for (int i = 0; i < nCount; i++)
+		{
+			queTmp.push(new COMMAND_MOVE());
+		}
+		break;
+	case COMMAND::E_COMMAND::E_ATTACK:
+		break;
+	case COMMAND::E_COMMAND::E_BUILD:
+		for (int i = 0; i < nCount; i++)
+		{
+			queTmp.push(new COMMAND_BUILD());
+		}
+		break;
+	case COMMAND::E_COMMAND::E_HARVEST:
+		break;
+	case COMMAND::E_COMMAND::E_HEAL:
+		break;
+	case COMMAND::E_COMMAND::E_BLIZZARD:
+		break;
+	case COMMAND::E_COMMAND::E_RANGEATTACT:
+		break;
+	default:
+		break;
+	}
+	
+
+	_mCommandPool.insert(pair<COMMAND::E_COMMAND, queue<COMMAND*>>(eCommand, queTmp));
+}
+
+void UNITMGR::returnPool(COMMAND* pCommand)
+{
+	_mCommandPool.find(pCommand->getCommand())->second.push(pCommand);
+}
+
 UNIT * UNITMGR::getUnit(int nIndex)
 {
 	list<UNIT*>::iterator	iterUnitList = _listUnit.begin();
@@ -543,5 +652,16 @@ UNIT * UNITMGR::getUnit(int nIndex)
 
 
 	return *iterUnitList;
+}
+
+UNIT * UNITMGR::getSelectedUnit(int nIndex)
+{
+	if (static_cast<int>(_vSeletedUnit.size()) <= nIndex)
+	{
+		return nullptr;
+	}
+
+
+	return *(_vSeletedUnit[nIndex]);
 }
 

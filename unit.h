@@ -7,9 +7,12 @@
 #include "aStar.h"
 #include "buildMgr.h"
 
+#include "command.h"
+
 class BUILDMGR;
-
-
+class COMMAND;
+class UNITMGR;
+class MAP;
 class UNIT : public OBJECT {
 public:
 	enum class E_STATENUM
@@ -134,8 +137,8 @@ protected:
 
 	float				_fMoveSpeed;
 
-	int					_nEndTileIndexX;
-	int					_nEndTileIndexY;
+	float					_fEndX;
+	float					_fEndY;
 	int					_nIndexNum;
 
 
@@ -147,7 +150,17 @@ protected:
 	//build
 	bool				_bNormalBuildingOn;
 	BUILDMGR::E_BUILDS	_eBuilds;
+	
+	
+	unsigned int			_nCommand;
+	queue<COMMAND*>			_queWaitCommand;
+	
+	UNITMGR*				_pUnitMgr;
 
+	bool				_bIsBannedSelected;
+
+
+	MAP*				_pMap;
 public:
 	UNIT();
 	virtual ~UNIT();
@@ -164,19 +177,24 @@ public:
 	virtual void updateBehavier()	abstract;
 	virtual	void renderSelected(HDC hdc) abstract;
 
-	virtual void commandMove(int* nCount)	abstract;
+	virtual void commandMove(float fEndPosX, float fEndPosY);
 
 	virtual void command()		abstract;
 	
-	virtual void setMovePoints(float fEndPosX,float fEndPosY,int* nCount);
+	virtual void setMovePoints(float fEndPosX,float fEndPosY);
 
 	virtual void Move();
 
-	virtual void build();
+	virtual void build(float fPosX,float fPosY,BUILDMGR::E_BUILDS eBuilds);
 	virtual void commandBuild();
 	bool moveTo();
 
 	void moveToDir();
+
+	virtual void commandIdle();
+
+	void addCommand(COMMAND* pCommand);
+	void clearCommand();
 public:
 	//setter
 	inline	void	setHp(int nAmount) { _nHp = nAmount; }
@@ -190,7 +208,7 @@ public:
 	inline	void	setMiniMalAttack(int fAmount) { _nMinimalAttack = fAmount; }
 	inline	void	setBuildingOn(bool bIsBuildingOn){ _bNormalBuildingOn = bIsBuildingOn;}
 	inline	void	setBuildType(BUILDMGR::E_BUILDS eBuilds){_eBuilds = eBuilds;}
-
+	
 
 
 	//상태와 행동 패턴
@@ -209,9 +227,13 @@ public:
 	//들고있는 자원
 	inline	void	setHarvest(UNIT::E_HARVEST eHarvest) { _eHarvest = eHarvest; }
 
+	//linker
 	inline	void	setLinkCamera(CAMERA* pCamera) { _pCamera = pCamera; }
 	inline	void	setLinkAStar(ASTAR*	pAstar) { _pAstar = pAstar; }
 	inline	void	setLinkBuildMgr(BUILDMGR* pBuildMgr) {_pBuildMgr = pBuildMgr; }
+	inline	void	setLinkUnitMgr(UNITMGR*	pUnitMgr) { _pUnitMgr = pUnitMgr; }
+	inline	void	setLinkMap(MAP* pMap) { _pMap = pMap; }
+
 
 	inline	void	setCollisionRect(int nLeft, int nRight, int nWidth, int nHeight) { _rcCollision = RectMake(nLeft, nRight, nWidth, nHeight); }
 	inline	void	setCollisionRect(RECT& rcTmp) { _rcCollision = rcTmp; }
@@ -225,6 +247,10 @@ public:
 	inline	void	setMoveIndex(int nIndex) { _nMoveVectorIndex = nIndex; }
 	inline	void	setBehavier(UNIT::E_BEHAVIERNUM eBehavier) { _eBehavier = eBehavier; }
 	
+
+	//선택 가능 여부
+	inline	void	setIsBannedSelect(bool bIsBannedSelect) { _bIsBannedSelected = bIsBannedSelect; }
+	inline	bool	getIsBannedSelect() {return _bIsBannedSelected; }
 
 	//getter
 	inline	int		getHp() { return _nHp; }

@@ -13,6 +13,8 @@ public:
 private:
 	float	_fHarvestTime;		//자원 채집하는 시간
 	int		_nHarvestCount;		//현제 가지고 있는 자원량
+	float	_fBuildTime;
+	float	_fTimer;
 
 
 public:
@@ -27,10 +29,9 @@ public:
 	virtual void release()			override;
 	virtual void render(HDC hdc)	override;
 	virtual	void renderSelected(HDC hdc) override;
-	virtual void commandMove(int* nCount)	override;
 	virtual void command()		override;
 	virtual void commandBuild() override;
-	virtual void build() override;
+	virtual void build(float fPosX, float fPosY, BUILDMGR::E_BUILDS eBuilds) override;
 
 
 private:
