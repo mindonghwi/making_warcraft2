@@ -44,7 +44,7 @@ void WORKMAN::init(int nPosX, int nPosY, int nWidth, int nHeight, int nIndexNum)
 	UNIT::setCollisionRect(UNIT::getPosX(), UNIT::getPosY(), 32, 32);
 	UNIT::setPopulation(1);
 
-	_eBuilds = BUILDMGR::E_BUILDS::E_MAX;
+	_eBuilds = E_BUILDS::E_MAX;
 	_fTimer = 0.0f;
 
 	_nCommand = 0;
@@ -160,7 +160,7 @@ void WORKMAN::commandBuild()
 
 }
 
-void WORKMAN::build(float fPosX, float fPosY, BUILDMGR::E_BUILDS eBuilds)
+void WORKMAN::build(float fPosX, float fPosY, E_BUILDS eBuilds)
 {
 	_pBuildMgr->buildBuilding(eBuilds, fPosX, fPosY);
 	_bIsBannedSelected = true;

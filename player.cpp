@@ -46,7 +46,7 @@ void PLAYER::init()
 	_ptCameraPtMouse.y = _ptMouse.y + _pCamera->getTop();
 
 
-	_eBuilds = BUILDMGR::E_BUILDS::E_MAX;
+	_eBuilds = E_BUILDS::E_MAX;
 
 	//initDrag
 	initDrag();
@@ -132,7 +132,7 @@ void PLAYER::commandSelectUnit()
 {
 	if (KEYMANAGER->isOnceKeyDown(VK_RBUTTON))
 	{
-		if (_eBuilds == BUILDMGR::E_BUILDS::E_MAX)
+		if (_eBuilds == E_BUILDS::E_MAX)
 		{
 			_pUnitMgr->moveCommand((float)_ptCameraPtMouse.x, (float)_ptCameraPtMouse.y);
 		}
@@ -164,14 +164,18 @@ void PLAYER::commandBuild()
 		{
 			if (KEYMANAGER->isOnceKeyDown('H'))
 			{
-				_eBuilds = BUILDMGR::E_BUILDS::E_TOWN;
-				//_pUnitMgr->getSelectedUnit(0)->setBuildType(BUILDMGR::E_BUILDS::E_TOWN);
+				_eBuilds = E_BUILDS::E_TOWN;
+				//_pUnitMgr->getSelectedUnit(0)->setBuildType(E_BUILDS::E_TOWN);
 			}
 
 			if (KEYMANAGER->isOnceKeyDown('F'))
 			{
-				_eBuilds = BUILDMGR::E_BUILDS::E_FARM;
+				_eBuilds = E_BUILDS::E_FARM;
+			}
 
+			if (KEYMANAGER->isOnceKeyDown('B'))
+			{
+				_eBuilds = E_BUILDS::E_BARRACKS;
 			}
 		}
 	}
@@ -180,7 +184,7 @@ void PLAYER::commandBuild()
 	if (KEYMANAGER->isOnceKeyDown(VK_RBUTTON))
 	{
 		//선택된 일군이 하나이며 빌드 온 상태일때
-		if (_pUnitMgr->getSelectedUnit(0) && _pUnitMgr->getSelectedUnit(0)->getUnit() == UNIT::E_UNIT::E_WORKMAN && _eBuilds != BUILDMGR::E_BUILDS::E_MAX)// && _pUnitMgr->getSelectedUnit(0)->getBuildingOn())
+		if (_pUnitMgr->getSelectedUnit(0) && _pUnitMgr->getSelectedUnit(0)->getUnit() == UNIT::E_UNIT::E_WORKMAN && _eBuilds != E_BUILDS::E_MAX)// && _pUnitMgr->getSelectedUnit(0)->getBuildingOn())
 		{
 			//금부족
 			if (_pBuildMgr->getConsumptionResource(_pUnitMgr->getSelectedUnit(0)->getBuildType(), E_RESOURCE::E_GOLD) > getGold())
@@ -206,7 +210,7 @@ void PLAYER::commandBuild()
 			_arResource[static_cast<int>(E_RESOURCE::E_TREE)] -= _pBuildMgr->getConsumptionResource(_pUnitMgr->getSelectedUnit(0)->getBuildType(), E_RESOURCE::E_TREE);
 
 			_pUnitMgr->buildCommand((float)_ptCameraPtMouse.x, (float)_ptCameraPtMouse.y, _eBuilds);
-			_eBuilds = BUILDMGR::E_BUILDS::E_MAX;
+			_eBuilds = E_BUILDS::E_MAX;
 			_bIsBuild = false;
 		}
 	}
@@ -252,7 +256,7 @@ void PLAYER::dragSelect()
 			if (_pUnitMgr->getSelectedUnit(0)->getUnit() != UNIT::E_UNIT::E_WORKMAN)
 			{
 				_bIsBuild = false;
-				_eBuilds = BUILDMGR::E_BUILDS::E_MAX;
+				_eBuilds = E_BUILDS::E_MAX;
 			}
 		}
 		initDrag();

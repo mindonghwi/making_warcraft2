@@ -15,6 +15,7 @@ void FARM::create(int nLeft, int ntop, int nWidth, int nHeight, int nHp, float f
 {
 	BUILD::create(nLeft, ntop, nWidth, nHeight, nHp, fBuildingTimer, nFrameCount, strImgKey);
 	
+	_eBuilds = E_BUILDS::E_FARM;
 }
 
 //void FARM::update()
@@ -40,25 +41,25 @@ void FARM::render(HDC hdc)
 	OBJECT::getImage()->frameRenderCenter(hdc, OBJECT::getPosX(), OBJECT::getPosY(), _nFrameX, 0);
 
 }
-
-void FARM::creatingUpdate()
-{
-	if (_fTimer >= _fOffsetFrame)
-	{
-		if (_nMaxFrameX - 1 > _nFrameX)
-		{
-			_nFrameX++;
-		}
-
-		_fOffsetFrame += _fOffsetFrame;
-	}
-
-
-	if (_fTimer >= _fBuildingTimer)
-	{
-		_eState = BUILD::E_STATE::E_ISON;
-		_fTimer = 0.0f;
-		_pPlayer->addMaxPopulation(8);
-	}
-
-}
+//
+//void FARM::creatingUpdate()
+//{
+//	if (_fTimer >= _fOffsetFrame)
+//	{
+//		if (_nMaxFrameX - 1 > _nFrameX)
+//		{
+//			_nFrameX++;
+//		}
+//
+//		_fOffsetFrame += _fOffsetFrame;
+//	}
+//
+//
+//	if (_fTimer >= _fBuildingTimer)
+//	{
+//		_eState = BUILD::E_STATE::E_ISON;
+//		_fTimer = 0.0f;
+//		_pPlayer->addMaxPopulation(8);
+//	}
+//
+//}

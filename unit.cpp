@@ -127,7 +127,7 @@ void UNIT::Move()
 
 }
 
-void UNIT::build(float fPosX, float fPosY, BUILDMGR::E_BUILDS eBuilds)
+void UNIT::build(float fPosX, float fPosY, E_BUILDS eBuilds)
 {
 }
 

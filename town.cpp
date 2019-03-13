@@ -37,7 +37,7 @@ void TOWN::create(int nLeft, int ntop, int nWidth, int nHeight, int nHp, float f
 		}
 	}
 
-
+	_eBuilds = E_BUILDS::E_TOWN;
 }
 
 //void TOWN::update()

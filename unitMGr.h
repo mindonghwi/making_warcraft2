@@ -73,7 +73,7 @@ public:
 	void	allocateIntervalMove();
 
 	void moveCommand(float fPosX,float fPosY);
-	void buildCommand(float fPosX, float fPosY,BUILDMGR::E_BUILDS eBuilds);
+	void buildCommand(float fPosX, float fPosY,E_BUILDS eBuilds);
 
 	void addCommandPool(COMMAND::E_COMMAND eCommand, int nCount);
 	void returnPool(COMMAND* pCommand);

@@ -149,7 +149,7 @@ protected:
 
 	//build
 	bool				_bNormalBuildingOn;
-	BUILDMGR::E_BUILDS	_eBuilds;
+	E_BUILDS	_eBuilds;
 	
 	
 	unsigned int			_nCommand;
@@ -185,7 +185,7 @@ public:
 
 	virtual void Move();
 
-	virtual void build(float fPosX,float fPosY,BUILDMGR::E_BUILDS eBuilds);
+	virtual void build(float fPosX,float fPosY,E_BUILDS eBuilds);
 	virtual void commandBuild();
 	bool moveTo();
 
@@ -207,7 +207,7 @@ public:
 	inline	void	setDirAngle(float fAngle) { _fDirAngle = fAngle; }
 	inline	void	setMiniMalAttack(int fAmount) { _nMinimalAttack = fAmount; }
 	inline	void	setBuildingOn(bool bIsBuildingOn){ _bNormalBuildingOn = bIsBuildingOn;}
-	inline	void	setBuildType(BUILDMGR::E_BUILDS eBuilds){_eBuilds = eBuilds;}
+	inline	void	setBuildType(E_BUILDS eBuilds){_eBuilds = eBuilds;}
 	
 
 
@@ -306,7 +306,7 @@ public:
 	inline	UNIT::E_BEHAVIERNUM	getBehavier() { return _eBehavier; }
 
 	inline	bool	getBuildingOn() { return _bNormalBuildingOn; }
-	inline	BUILDMGR::E_BUILDS	getBuildType() { return _eBuilds ; }
+	inline	E_BUILDS	getBuildType() { return _eBuilds ; }
 public:
 	//상태를 정리해보자
 	//정지 -> 정지

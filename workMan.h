@@ -31,7 +31,7 @@ public:
 	virtual	void renderSelected(HDC hdc) override;
 	virtual void command()		override;
 	virtual void commandBuild() override;
-	virtual void build(float fPosX, float fPosY, BUILDMGR::E_BUILDS eBuilds) override;
+	virtual void build(float fPosX, float fPosY, E_BUILDS eBuilds) override;
 
 
 private:

@@ -336,6 +336,9 @@
     <ClInclude Include="farm.h">
       <Filter>PlayGround\build\header</Filter>
     </ClInclude>
+    <ClInclude Include="barrack.h">
+      <Filter>PlayGround\build\header</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="stdafx.cpp">
@@ -531,6 +534,9 @@
       <Filter>PlayGround\build\cpp</Filter>
     </ClCompile>
     <ClCompile Include="farm.cpp">
+      <Filter>PlayGround\build\cpp</Filter>
+    </ClCompile>
+    <ClCompile Include="barrack.cpp">
       <Filter>PlayGround\build\cpp</Filter>
     </ClCompile>
   </ItemGroup>

@@ -154,6 +154,7 @@
     <ClInclude Include="action.h" />
     <ClInclude Include="animation.h" />
     <ClInclude Include="aStar.h" />
+    <ClInclude Include="barrack.h" />
     <ClInclude Include="behavier.h" />
     <ClInclude Include="behavier_Attack_Standard.h" />
     <ClInclude Include="behavier_Harvest.h" />
@@ -232,6 +233,7 @@
     <ClCompile Include="action.cpp" />
     <ClCompile Include="animation.cpp" />
     <ClCompile Include="aStar.cpp" />
+    <ClCompile Include="barrack.cpp" />
     <ClCompile Include="behavier_Attack_Standard.cpp" />
     <ClCompile Include="behavier_Harvest_Ship.cpp" />
     <ClCompile Include="behavier_Harvest_WorkMan.cpp" />

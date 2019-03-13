@@ -16,6 +16,6 @@ public:
 	//virtual void update()			override;
 	virtual void release()			override;
 	virtual void render(HDC hdc)	override;
-	virtual	void creatingUpdate()	override;
+	//virtual	void creatingUpdate()	override;
 
 };

@@ -38,7 +38,7 @@ private:
 	bool	_bIsDrag;			//drag Status
 
 	bool				_bIsBuild;
-	BUILDMGR::E_BUILDS	_eBuilds;
+	E_BUILDS	_eBuilds;
 public:
 	PLAYER();
 	~PLAYER();

@@ -570,7 +570,7 @@ void UNITMGR::moveCommand(float fPosX, float fPosY)
 	}
 }
 
-void UNITMGR::buildCommand(float fPosX, float fPosY,BUILDMGR::E_BUILDS eBuilds)
+void UNITMGR::buildCommand(float fPosX, float fPosY,E_BUILDS eBuilds)
 {
 	COMMAND*  pCommand = _mCommandPool.find(COMMAND::E_COMMAND::E_MOVE)->second.front();
 	_mCommandPool.find(COMMAND::E_COMMAND::E_MOVE)->second.pop();
