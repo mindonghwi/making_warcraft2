@@ -16,7 +16,10 @@ void BUILD::create(int nLeft, int ntop, int nWidth, int nHeight, int nHp, float 
 {
 
 	OBJECT::init(static_cast<float>(nLeft + nWidth/2), static_cast<float>(ntop + nHeight/2), nWidth, nHeight);		//위치상정
-	_nHp = nHp;											//hp
+	_fHp = 0.0f;
+	_nMaxHp = nHp;
+	_fOffsetHpTimer = fBuildingTimer/ static_cast<float>(_nMaxHp);	//hp1당 증가하는 시간 간격
+	_fHpTimer = 0.0f;
 	_fBuildingTimer = fBuildingTimer;					//건물짓는 총시간
 	_eState = BUILD::E_STATE::E_CREATING;				//건물 상태
 	_fTimer = 0.0f;
@@ -33,6 +36,7 @@ void BUILD::create(int nLeft, int ntop, int nWidth, int nHeight, int nHp, float 
 	_fRayPointY = 0.0f;
 
 	_bIsProduce = false;
+	_nCreateDamage = 0;
 }
 
 void BUILD::update()
@@ -45,7 +49,7 @@ void BUILD::update()
 	}
 	else
 	{
-		commandProduce();
+		//commandProduce();
 		if (_fTimer >= 5.0f && _bIsProduce)
 		{
 			createUnit();
@@ -71,10 +75,27 @@ void BUILD::selectRender(HDC hdc)
 {
 	DrawEdge(hdc, OBJECT::getRect(), BDR_RAISEDOUTER, BF_FLAT | BF_TOPLEFT | BF_BOTTOMRIGHT);
 
+	char str[128];
+	sprintf_s(str, "%f", _fHp);
+	TextOut(hdc, OBJECT::getLeft(), OBJECT::getTop(), str, strlen(str));
 }
 
 void BUILD::creatingUpdate()
 {
+	_fHpTimer += TIMEMANAGER->getElapsedTime();
+	if (_fHpTimer >= _fOffsetHpTimer)
+	{
+		_fHp += static_cast<float>(_nMaxHp) * _fHpTimer / _fBuildingTimer;
+		
+
+		if (_fHp > _nMaxHp)
+		{
+			_fHp = (float)_nMaxHp;
+		}
+
+		_fHpTimer = 0.0f;
+	}
+
 	if (_fTimer >= _fOffsetFrame)
 	{
 		if (_nMaxFrameX-1 > _nFrameX)
@@ -90,6 +111,8 @@ void BUILD::creatingUpdate()
 	{
 		_eState = BUILD::E_STATE::E_ISON;
 		_fTimer = 0.0f;
+		_fHp = (float)_nMaxHp;
+		_fHp -= (float)_nCreateDamage;
 	}
 
 
@@ -111,11 +134,30 @@ void BUILD::createUnit()
 
 void BUILD::commandProduce()
 {
+	if (_eState != BUILD::E_STATE::E_ISON) return;
+
 	if (KEYMANAGER->isOnceKeyDown('P') && _nUnitMask & static_cast<unsigned int>(BUILDMGR::E_UNITMASK::E_WORKMAN))
 	{
 		_bIsProduce = true;
 		_fTimer = 0.0f;
 	}
+	if (KEYMANAGER->isOnceKeyDown('A') && _nUnitMask & static_cast<unsigned int>(BUILDMGR::E_UNITMASK::E_ARCHER))
+	{
+		_bIsProduce = true;
+		_fTimer = 0.0f;
+	}
+	if (KEYMANAGER->isOnceKeyDown('B') && _nUnitMask & static_cast<unsigned int>(BUILDMGR::E_UNITMASK::E_BALLISTA))
+	{
+		_bIsProduce = true;
+		_fTimer = 0.0f;
+	}
+	if (KEYMANAGER->isOnceKeyDown('K') && _nUnitMask & static_cast<unsigned int>(BUILDMGR::E_UNITMASK::E_KNIGHT))
+	{
+		_bIsProduce = true;
+		_fTimer = 0.0f;
+	}
+
+
 }
 
 

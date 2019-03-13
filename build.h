@@ -22,7 +22,11 @@ public:
 protected:
 	float	_fBuildingTimer;	//지어지는데 걸리는 시간
 	float	_fTimer;
-	int		_nHp;
+	float	_fHp;
+	int		_nMaxHp;
+	int		_nCreateDamage;
+	float	_fHpTimer;
+	float	_fOffsetHpTimer;
 	int		_nBuildLevel;
 	int		_nFrameX;
 	int		_nMaxFrameX;
@@ -40,7 +44,7 @@ protected:
 	MAP*			_pMap;
 
 	bool			_bIsProduce;
-
+	E_BUILDS	_eBuilds;
 public:
 	BUILD();
 	virtual ~BUILD();
@@ -59,9 +63,9 @@ public:
 
 	inline	void	setLinkCamera(CAMERA* pCamera) { _pCamera = pCamera; }
 	inline	void	setLinkUnitMgr(UNITMGR* pUnitMgr) { _pUnitMgr = pUnitMgr; }
-	inline	void	setLinkUnitMgr(BUILDMGR* pBuildBgr) { _pBuildBgr = pBuildBgr; }
+	inline	void	setLinkBuildMgr(BUILDMGR* pBuildBgr) { _pBuildBgr = pBuildBgr; }
 	inline	void	setLinkPlayer(PLAYER* pPlayer) { _pPlayer = pPlayer; }
 	inline	void	setLinkMap(MAP* pMap) { _pMap = pMap; }
 
-
+	inline	E_BUILDS	getBuildsTpye() { return _eBuilds; }
 };
