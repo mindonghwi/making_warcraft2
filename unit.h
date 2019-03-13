@@ -318,7 +318,7 @@ public:
 	//전투관련
 	inline	OBJECT*	getTarget() { return _pTarget; }
 	inline	void	setTarget(OBJECT* pObject) { _pTarget = pObject; }
-
+	inline	UNITMGR*	getMyUnitMgr() {return _pUnitMgr;}
 
 public:
 	//상태를 정리해보자

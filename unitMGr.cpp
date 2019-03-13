@@ -663,6 +663,22 @@ void UNITMGR::commandAttack(OBJECT * pObject)
 	}
 }
 
+void UNITMGR::commandReAttack(UNIT* pUnit, OBJECT * pObject)
+{
+	COMMAND*  pCommand = _mCommandPool.find(COMMAND::E_COMMAND::E_MOVE)->second.front();
+	_mCommandPool.find(COMMAND::E_COMMAND::E_MOVE)->second.pop();
+	pCommand->init(COMMAND::E_COMMAND::E_MOVE, pUnit);
+	pCommand->commandUnit(pObject->getPosX(), pObject->getPosY());
+	(pUnit)->addCommand(pCommand);
+	(pUnit)->setTarget(pObject);
+
+	 pCommand = _mCommandPool.find(COMMAND::E_COMMAND::E_ATTACK)->second.front();
+	_mCommandPool.find(COMMAND::E_COMMAND::E_ATTACK)->second.pop();
+	pCommand->init(COMMAND::E_COMMAND::E_ATTACK, pUnit);
+	pCommand->commandUnit(pObject);
+	(pUnit)->addCommand(pCommand);
+}
+
 UNIT * UNITMGR::getUnit(int nIndex)
 {
 	list<UNIT*>::iterator	iterUnitList = _listUnit.begin();

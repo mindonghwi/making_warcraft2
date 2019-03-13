@@ -231,6 +231,7 @@ void UNIT::clearCommand()
 
 void UNIT::attack(OBJECT * pObject)
 {
+
 	UNIT::getCurrentBehavir()->end(this);
 
 	UNIT::setCurrentState(UNIT::E_STATENUM::E_ATTACK);

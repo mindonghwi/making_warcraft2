@@ -1,7 +1,7 @@
 #include "stdafx.h"
 #include "behavier_Attack_Standard.h"
 #include "unit.h"
-
+#include "unitMGr.h"
 
 BEHAVIER_ATTACK::BEHAVIER_ATTACK()
 {
@@ -33,14 +33,19 @@ void BEHAVIER_ATTACK::update(UNIT * pUnit)
 	
 	//서치범위에 적을 찾으면 astar 재탐색
 	//서치범위에 적이 없으면 걍 멈추기
-	if (pUnit->getSearchRange() <= getDistance(pUnit->getPosX(),pUnit->getPosY(),pUnit->getTarget()->getPosX(), pUnit->getTarget()->getPosY()))
+	
+	float fDistance = getDistance(pUnit->getPosX(), pUnit->getPosY(), pUnit->getTarget()->getPosX(), pUnit->getTarget()->getPosY());
+	if (pUnit->getSearchRange() <= fDistance)
 	{
 		end(pUnit);
 	}
-	else
+	else if(pUnit->getAttackRange() <= fDistance)
 	{
-		
 		//이동해라
+		OBJECT* pTarget = pUnit->getTarget();
+		pUnit->clearCommand();
+		pUnit->setTarget(pTarget);
+		pUnit->getMyUnitMgr()->commandReAttack(pUnit,pUnit->getTarget());
 		//pUnit->clearCommand();
 		//pUnit->commandMove(pUnit->getTarget()->getPosX(), pUnit->getTarget()->getPosY());
 	}

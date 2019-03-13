@@ -86,7 +86,7 @@ void playGround::loadImage()
 
 	
 	//°Ç¹°
-	IMAGEMANAGER->addFrameImage("town",				"resource/hpuman/build/townhall.bmp",512,128,4,1,true,Mins::getMazenta());
+	IMAGEMANAGER->addFrameImage("town",				"resource/human/build/townhall.bmp",512,128,4,1,true,Mins::getMazenta());
 	IMAGEMANAGER->addFrameImage("keep",				"resource/human/build/keep.bmp", 256, 128, 4, 1, true, Mins::getMazenta());
 	IMAGEMANAGER->addFrameImage("castle",			"resource/human/build/castle.bmp", 256, 128, 2, 1, true, Mins::getMazenta());
 	IMAGEMANAGER->addFrameImage("barracks",			"resource/human/build/barracks.bmp", 384, 96, 4, 1, true, Mins::getMazenta());

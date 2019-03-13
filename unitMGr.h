@@ -79,6 +79,7 @@ public:
 	void returnPool(COMMAND* pCommand);
 
 	void commandAttack(OBJECT* pObject);
+	void commandReAttack(UNIT* pUnit,OBJECT* pObject);
 public:
 	//linker
 	inline	void	setLinkCamera(CAMERA* pCamera) { _pCamera = pCamera; }

@@ -220,7 +220,7 @@ void PLAYER::commandAttack()
 {
 	if (KEYMANAGER->isKeyDown('A'))
 	{
-		if (KEYMANAGER->isOnceKeyDown(VK_LBUTTON))
+		if (KEYMANAGER->isOnceKeyDown(VK_RBUTTON))
 		{
 			//타겟이 잡혔다.
 				//플레이어의 유닛 메니저에서
