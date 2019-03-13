@@ -4,3 +4,4 @@
 #include "keep.h"
 #include "castle.h"
 #include "farm.h"
+#include "barrack.h"
