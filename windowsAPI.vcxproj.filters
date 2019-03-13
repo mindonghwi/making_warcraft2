@@ -339,6 +339,12 @@
     <ClInclude Include="barrack.h">
       <Filter>PlayGround\build\header</Filter>
     </ClInclude>
+    <ClInclude Include="behavier_hold.h">
+      <Filter>PlayGround\unit\behavier</Filter>
+    </ClInclude>
+    <ClInclude Include="attackCommand.h">
+      <Filter>PlayGround\player\command</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="stdafx.cpp">
@@ -538,6 +544,12 @@
     </ClCompile>
     <ClCompile Include="barrack.cpp">
       <Filter>PlayGround\build\cpp</Filter>
+    </ClCompile>
+    <ClCompile Include="behavier_hold.cpp">
+      <Filter>PlayGround\unit\behavier</Filter>
+    </ClCompile>
+    <ClCompile Include="attackCommand.cpp">
+      <Filter>PlayGround\player\command</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

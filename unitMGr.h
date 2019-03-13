@@ -78,6 +78,7 @@ public:
 	void addCommandPool(COMMAND::E_COMMAND eCommand, int nCount);
 	void returnPool(COMMAND* pCommand);
 
+	void commandAttack(OBJECT* pObject);
 public:
 	//linker
 	inline	void	setLinkCamera(CAMERA* pCamera) { _pCamera = pCamera; }

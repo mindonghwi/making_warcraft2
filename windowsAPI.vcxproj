@@ -154,12 +154,14 @@
     <ClInclude Include="action.h" />
     <ClInclude Include="animation.h" />
     <ClInclude Include="aStar.h" />
+    <ClInclude Include="attackCommand.h" />
     <ClInclude Include="barrack.h" />
     <ClInclude Include="behavier.h" />
     <ClInclude Include="behavier_Attack_Standard.h" />
     <ClInclude Include="behavier_Harvest.h" />
     <ClInclude Include="behavier_Harvest_Ship.h" />
     <ClInclude Include="behavier_Harvest_WorkMan.h" />
+    <ClInclude Include="behavier_hold.h" />
     <ClInclude Include="behavier_magic.h" />
     <ClInclude Include="behavier_Move.h" />
     <ClInclude Include="behavier_Move_Fly.h" />
@@ -233,10 +235,12 @@
     <ClCompile Include="action.cpp" />
     <ClCompile Include="animation.cpp" />
     <ClCompile Include="aStar.cpp" />
+    <ClCompile Include="attackCommand.cpp" />
     <ClCompile Include="barrack.cpp" />
     <ClCompile Include="behavier_Attack_Standard.cpp" />
     <ClCompile Include="behavier_Harvest_Ship.cpp" />
     <ClCompile Include="behavier_Harvest_WorkMan.cpp" />
+    <ClCompile Include="behavier_hold.cpp" />
     <ClCompile Include="behavier_Move_Fly.cpp" />
     <ClCompile Include="behavier_Move_Walk.cpp" />
     <ClCompile Include="behavier_None.cpp" />

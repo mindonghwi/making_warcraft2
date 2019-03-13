@@ -16,6 +16,8 @@ void BEHAVIER_MOVE_WALK::update(UNIT * pUnit)
 
 	if (_fTimer > pUnit->getSpeed())
 	{
+
+
 		if (!pUnit->moveTo()) {
 			end(pUnit);
 			return;

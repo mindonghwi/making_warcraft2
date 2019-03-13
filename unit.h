@@ -34,6 +34,7 @@ public:
 		E_MOVE,
 		E_HARVEST,
 		E_MAGIC,		//마법사-> 마법, 드워프->자폭, 기사-> 마법
+		E_HOLD,
 		E_MAX
 	};
 
@@ -90,7 +91,6 @@ public:
 	};
 
 protected:
-	int		_nHp;
 	int		_nAttack;
 	int		_nDefence;
 
@@ -161,6 +161,8 @@ protected:
 
 
 	MAP*				_pMap;
+
+	OBJECT*				_pTarget;
 public:
 	UNIT();
 	virtual ~UNIT();
@@ -195,9 +197,13 @@ public:
 
 	void addCommand(COMMAND* pCommand);
 	void clearCommand();
+
+
+	virtual void attack(OBJECT* pObject);
+	void targetDirection();
 public:
 	//setter
-	inline	void	setHp(int nAmount) { _nHp = nAmount; }
+	inline	void	setHp(int nAmount) { OBJECT::setHp(nAmount); }
 	inline	void	setAttack(int nAmount) { _nAttack = nAmount; }
 	inline	void	setDefence(int nAmount) { _nDefence = nAmount; }
 	inline	void	setSpeed(float fAmount) { _fSpeed = fAmount; }
@@ -253,7 +259,7 @@ public:
 	inline	bool	getIsBannedSelect() {return _bIsBannedSelected; }
 
 	//getter
-	inline	int		getHp() { return _nHp; }
+	inline	int		getHp() { return OBJECT::getHp(); }
 	inline	int		getAttack() { return _nAttack; }
 	inline	int		getDefence() { return _nDefence; }
 	inline	float	getSpeed() { return _fSpeed; }
@@ -261,7 +267,7 @@ public:
 	inline	float	getAttackRange() { return _fAttackRange; }
 	inline	float	getAttackSpeedps() { return _fAttackSpeedps; }
 	inline	int		getMiniMalAttack() { return _nMinimalAttack; }
-
+	
 	//애니메이션용
 	inline	float	getFPS(UNIT::E_STATE eState) { return _arFramePerSeconds[static_cast<int>(eState)]; }
 	inline	int		getStartIndex(UNIT::E_STATE eState) { return _arStateStartIndex[static_cast<int>(eState)]; }
@@ -307,6 +313,13 @@ public:
 
 	inline	bool	getBuildingOn() { return _bNormalBuildingOn; }
 	inline	E_BUILDS	getBuildType() { return _eBuilds ; }
+
+
+	//전투관련
+	inline	OBJECT*	getTarget() { return _pTarget; }
+	inline	void	setTarget(OBJECT* pObject) { _pTarget = pObject; }
+
+
 public:
 	//상태를 정리해보자
 	//정지 -> 정지

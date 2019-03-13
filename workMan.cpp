@@ -12,6 +12,7 @@
 #include "behavier_Move_Walk.h"
 #include "behavier_Harvest_WorkMan.h"
 #include "behavier_None.h"
+#include "behavier_hold.h"
 
 #include "command.h"
 #include "stopCommand.h"
@@ -216,7 +217,7 @@ void WORKMAN::allocateAnimation()
 	setFPS(UNIT::E_STATE::E_IDLE, 100.0f);
 	setFPS(UNIT::E_STATE::E_MOVE, 0.125f);
 	setFPS(UNIT::E_STATE::E_ATTACK, 0.125f);
-	setFPS(UNIT::E_STATE::E_ATTACK, 0.7f);
+	setFPS(UNIT::E_STATE::E_DEATH, 0.7f);
 
 	_eDirection = UNIT::E_DIRECTION::E_BOTTOM;
 }

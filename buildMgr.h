@@ -84,6 +84,9 @@ public:
 	inline	float	getBuildTime(E_BUILDS eBuilds) { return _arBuildTime[static_cast<int>(eBuilds)]; }
 	inline	int		getBuildCount() { return static_cast<int>(_listBuild.size()); }
 	inline	bool	getIsBuildTree(E_BUILDS eBuilds) { return _arIsBuildTree[static_cast<int>(eBuilds)]; }
+	BUILD*	getBuild(int nIndex);
+
+
 
 	void	releaseSelected();
 	void	selectedBuild(RECT rcDrag);

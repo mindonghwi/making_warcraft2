@@ -1,7 +1,6 @@
 #include "stdafx.h"
 #include "player.h"
 #include "workMan.h"
-
 PLAYER::PLAYER()
 {
 }
@@ -67,8 +66,9 @@ void PLAYER::update()
 	//여기서 무슨 커맨더를 주는지 넣어야한다.
 	//_pUnitMgr->commandSelectUnit();
 	commandSelectUnit();
+	commandAttack();
 	commandBuild();
-
+	
 	_pUnitMgr->update();
 
 
@@ -132,7 +132,7 @@ void PLAYER::commandSelectUnit()
 {
 	if (KEYMANAGER->isOnceKeyDown(VK_RBUTTON))
 	{
-		if (_eBuilds == E_BUILDS::E_MAX)
+		if (_eBuilds == E_BUILDS::E_MAX && !KEYMANAGER->isKeyDown('A'))
 		{
 			_pUnitMgr->moveCommand((float)_ptCameraPtMouse.x, (float)_ptCameraPtMouse.y);
 		}
@@ -214,6 +214,56 @@ void PLAYER::commandBuild()
 			_bIsBuild = false;
 		}
 	}
+}
+
+void PLAYER::commandAttack()
+{
+	if (KEYMANAGER->isKeyDown('A'))
+	{
+		if (KEYMANAGER->isOnceKeyDown(VK_LBUTTON))
+		{
+			//타겟이 잡혔다.
+				//플레이어의 유닛 메니저에서
+			for (int i = 0; i < _pUnitMgr->getUnitCount(); i++)
+			{
+				if (PtInRect(_pUnitMgr->getUnit(i)->getCollisionRect(),_ptCameraPtMouse))
+				{
+					//여기에 유닛 어택을 내린다
+					_pUnitMgr->commandAttack(_pUnitMgr->getUnit(i));
+					//for (int j = 0; j < _pUnitMgr->getUnitSelectedCount(); j++)
+					//{
+					//	if (i != j)
+					//	{
+					//		
+					//		_pUnitMgr->getSelectedUnit(j)->attack(_pUnitMgr->getUnit(i));
+					//	}
+					//}
+					break;
+				}
+			}
+			
+				//플레이어의 건물 매니저에서
+			for (int i = 0; i < _pBuildMgr->getBuildCount(); i++)
+			{
+				if (PtInRect(_pBuildMgr->getBuild(i)->getRect(), _ptCameraPtMouse))
+				{
+					//여기에 유닛 어택을 내린다
+
+
+					break;
+				}
+			}
+				//상대 유닛매니저에서
+
+				//상대 건물매니저에서
+
+			//타겟이 잡히지 않았다.
+
+			//유닛들은 플레이어의 유닛매니저 빌드매니저 상대의 유닛매니저 빌드매니저를 알아야한다.
+
+		}
+	}
+
 }
 
 void PLAYER::initDrag()

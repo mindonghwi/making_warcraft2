@@ -295,6 +295,21 @@ void BUILDMGR::allocateBuildHp()
 	_arHp[static_cast<int>(E_BUILDS::E_GRYPHON_AVIARY)] = 200;
 }
 
+BUILD * BUILDMGR::getBuild(int nIndex)
+{
+	if (nIndex >= getBuildCount())
+	{
+		return nullptr;
+	}
+
+	list<BUILD*>::iterator iter = _listBuild.begin();
+	for (int i = 0; i < nIndex; i++)
+	{
+		iter++;
+	}
+	return *iter;
+}
+
 void BUILDMGR::releaseSelected()
 {
 	_pSelected = nullptr;

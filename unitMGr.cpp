@@ -10,7 +10,7 @@
 #include "holdCommand.h"
 #include "moveCommand.h"
 #include "buildCommand.h"
-
+#include "attackCommand.h"
 UNITMGR::UNITMGR()
 {
 }
@@ -34,7 +34,7 @@ void UNITMGR::init()
 	addCommandPool(COMMAND::E_COMMAND::E_HOLD, 201);
 	addCommandPool(COMMAND::E_COMMAND::E_STOP, 201);
 	addCommandPool(COMMAND::E_COMMAND::E_MOVE, 4000);
-
+	addCommandPool(COMMAND::E_COMMAND::E_ATTACK, 2000);
 }
 
 bool UNITMGR::createUnit(UNIT::E_UNIT eUnit, float fPosX, float fPosY)
@@ -151,7 +151,7 @@ void UNITMGR::update()
 			iterUnitListCollision++;
 		}
 
-
+		
 
 		pUnit->updateBehavier();
 		pUnit->update();
@@ -610,6 +610,10 @@ void UNITMGR::addCommandPool(COMMAND::E_COMMAND eCommand, int nCount)
 		}
 		break;
 	case COMMAND::E_COMMAND::E_ATTACK:
+		for (int i = 0; i < nCount; i++)
+		{
+			queTmp.push(new COMMAND_ATTACK());
+		}
 		break;
 	case COMMAND::E_COMMAND::E_BUILD:
 		for (int i = 0; i < nCount; i++)
@@ -636,6 +640,27 @@ void UNITMGR::addCommandPool(COMMAND::E_COMMAND eCommand, int nCount)
 void UNITMGR::returnPool(COMMAND* pCommand)
 {
 	_mCommandPool.find(pCommand->getCommand())->second.push(pCommand);
+}
+
+void UNITMGR::commandAttack(OBJECT * pObject)
+{
+	for (int i = 0; i < static_cast<int>(_vSeletedUnit.size()); i++)
+	{
+		COMMAND*  pCommand = _mCommandPool.find(COMMAND::E_COMMAND::E_MOVE)->second.front();
+		_mCommandPool.find(COMMAND::E_COMMAND::E_MOVE)->second.pop();
+		pCommand->init(COMMAND::E_COMMAND::E_MOVE, *(_vSeletedUnit[i]));
+		pCommand->commandUnit(pObject->getPosX(), pObject->getPosY());
+		(*(_vSeletedUnit[i]))->addCommand(pCommand);
+		(*(_vSeletedUnit[i]))->setTarget(pObject);
+	}
+	for (int i = 0; i < static_cast<int>(_vSeletedUnit.size()); i++)
+	{
+		COMMAND*  pCommand = _mCommandPool.find(COMMAND::E_COMMAND::E_ATTACK)->second.front();
+		_mCommandPool.find(COMMAND::E_COMMAND::E_ATTACK)->second.pop();
+		pCommand->init(COMMAND::E_COMMAND::E_ATTACK, *(_vSeletedUnit[i]));
+		pCommand->commandUnit(pObject);
+		(*(_vSeletedUnit[i]))->addCommand(pCommand);
+	}
 }
 
 UNIT * UNITMGR::getUnit(int nIndex)

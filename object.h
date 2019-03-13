@@ -17,6 +17,7 @@ protected:
 	RECT		_rc;		//사각형
 	int			_posZ;		//zoder용
 
+	int			_nHp;
 public:
 	OBJECT();
 	virtual ~OBJECT();
@@ -44,14 +45,16 @@ public:
 	inline image* getImage() { return _pImg; }
 	inline int getPosZ() { return _posZ; }
 	inline LPRECT	getRect() { return &_rc; }
-
+	inline int	getHp() { return _nHp; }
 
 	inline void setPosX(float posX) { _posX = posX; }
 	inline void setPosY(float posY) { _posY = posY; }
 	inline void setWidth(int width) { _width = width; }
 	inline void setHeight(int height) { _height = height; }
 	inline void	setPosZ(int posZ) { _posZ = posZ; }
-
+	inline void	setHp(int nHp) {_nHp = nHp; }
 	
+
+	inline void	decreaseHp(int nHp) { _nHp -= nHp; }
 };
 

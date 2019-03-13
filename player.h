@@ -59,7 +59,7 @@ private:
 	void commandSelectUnit();
 
 	void commandBuild();
-
+	void commandAttack();
 	void initDrag();
 	void dragSelect();
 	void readjustDragRect();

@@ -111,8 +111,8 @@ void BUILD::creatingUpdate()
 	{
 		_eState = BUILD::E_STATE::E_ISON;
 		_fTimer = 0.0f;
-		_fHp = (float)_nMaxHp;
-		_fHp -= (float)_nCreateDamage;
+		OBJECT::setHp(_nMaxHp);
+		OBJECT::decreaseHp(_nCreateDamage);//생상중 대미지 발생한것을 계산해준다.
 	}
 
 

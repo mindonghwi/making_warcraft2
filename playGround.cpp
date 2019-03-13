@@ -62,13 +62,31 @@ void playGround::loadImage()
 
 
 	//À¯´Ö
+	//barrocks
 	IMAGEMANAGER->addFrameImage("peasantSprite", "resource/human/peasantSprite.bmp", 1280, 576, 20, 9, true, Mins::getMazenta());
+	IMAGEMANAGER->addFrameImage("ballistaSprite", "resource/human/ballistaSprite.bmp", 480, 768, 5, 8, true, Mins::getMazenta());
+	IMAGEMANAGER->addFrameImage("elvenArcherSprite", "resource/human/elvenArcherSprite.bmp", 672, 864, 7, 9, true, Mins::getMazenta());
+	IMAGEMANAGER->addFrameImage("knightSprite", "resource/human/knightSprite.bmp", 864, 864, 9, 9, true, Mins::getMazenta());
+	
+	//magician
+	IMAGEMANAGER->addFrameImage("magicianSprite", "resource/human/magicianSprite.bmp", 864, 864, 9, 9, true, Mins::getMazenta());
 
+	//factory
+	IMAGEMANAGER->addFrameImage("gnomishFlying", "resource/human/gnomishFlying.bmp", 192, 864, 2, 9, true, Mins::getMazenta());
+	IMAGEMANAGER->addFrameImage("dwavenDemolition", "resource/human/dwavenDemolition.bmp", 768, 864, 8, 9, true, Mins::getMazenta());
 
+	//ship
+	IMAGEMANAGER->addFrameImage("battleShipSprte", "resource/human/battleShipSprte.bmp", 288, 768, 3, 8, true, Mins::getMazenta());
+	IMAGEMANAGER->addFrameImage("elvenDestroyerSprite", "resource/human/elvenDestroyerSprite.bmp", 288, 768, 3, 8, true, Mins::getMazenta());
+	IMAGEMANAGER->addFrameImage("gnomishSubmarine", "resource/human/gnomishSubmarine.bmp", 288, 768, 3, 8, true, Mins::getMazenta());
+	IMAGEMANAGER->addFrameImage("transportSprite", "resource/human/transportSprite.bmp", 288, 768, 3, 8, true, Mins::getMazenta());
+	IMAGEMANAGER->addFrameImage("oiltankerSprite", "resource/human/oiltankerSprite.bmp", 384, 768, 4, 8, true, Mins::getMazenta());
 
+	IMAGEMANAGER->addFrameImage("gryphonRiderSprite", "resource/human/gryphonRiderSprite.bmp", 672, 864, 7, 9, true, Mins::getMazenta());
 
+	
 	//°Ç¹°
-	IMAGEMANAGER->addFrameImage("town",				"resource/human/build/townhall.bmp",512,128,4,1,true,Mins::getMazenta());
+	IMAGEMANAGER->addFrameImage("town",				"resource/hpuman/build/townhall.bmp",512,128,4,1,true,Mins::getMazenta());
 	IMAGEMANAGER->addFrameImage("keep",				"resource/human/build/keep.bmp", 256, 128, 4, 1, true, Mins::getMazenta());
 	IMAGEMANAGER->addFrameImage("castle",			"resource/human/build/castle.bmp", 256, 128, 2, 1, true, Mins::getMazenta());
 	IMAGEMANAGER->addFrameImage("barracks",			"resource/human/build/barracks.bmp", 384, 96, 4, 1, true, Mins::getMazenta());
