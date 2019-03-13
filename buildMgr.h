@@ -7,32 +7,13 @@ class CAMERA;
 class MAP;
 class UNITMGR;
 class PLAYER;
+
+
+
+
 class BUILDMGR
 {
 public:
-	enum class E_BUILDS
-	{
-		E_TOWN = 0,
-		E_KEEP,
-		E_CASTLE,
-		E_FARM,
-		E_BARRACKS,
-		E_LUMBER_MILL,
-		E_BLACK_SMITH,
-		E_SCOUT_TOWER,
-		E_GUARD_TOWER,
-		E_CANNON_TOWER,
-		E_SHIPYARD,		//조선소
-		E_FOUNDRY,		//주조소
-		E_OIL_REFINERY,
-		E_OIL_PLATFORM,
-		E_GNOMISH_INVENTOR,	//노움발명소
-		E_STABLE,
-		E_CHURCH,
-		E_MAGE_TOWER,
-		E_GRYPHON_AVIARY,
-		E_MAX
-	};
 
 	enum E_UNITMASK
 	{
@@ -57,7 +38,7 @@ private:
 	int			_arBuildsWidth[static_cast<const int>(E_BUILDS::E_MAX)];
 	int			_arBuildsHeight[static_cast<const int>(E_BUILDS::E_MAX)];
 	float		_arBuildTime[static_cast<const int>(E_BUILDS::E_MAX)];
-
+	int			_arHp[static_cast<const int>(E_BUILDS::E_MAX)];
 
 	int			_nBuildLevel;
 
@@ -72,6 +53,7 @@ private:
 	BUILD*			_pSelected;
 	PLAYER*			_pPlayer;
 
+	bool		_arIsBuildTree[static_cast<const int>(E_BUILDS::E_MAX)];
 public:
 	BUILDMGR();
 	~BUILDMGR();
@@ -79,14 +61,17 @@ public:
 	void	init();
 	void	update();
 	void	release();
-	void	buildBuilding(BUILDMGR::E_BUILDS eBuild, float fPosX,float fPosY);
+	void	buildBuilding(E_BUILDS eBuild, float fPosX,float fPosY);
 	bool	bIsGroundCheck(E_BUILDS eBuilds,float fPosX,float fPosY);
 	void	render(HDC hdc);
+	
+	
 
 private:
 	void	allocateBuildResource();
 	void	allocateBuildSize();
 	void	allocateBuildTime();
+	void	allocateBuildHp();
 public:
 	//linker
 	inline	void	setLinkCamera(CAMERA* pCamera) { _pCamera = pCamera; }
@@ -98,7 +83,7 @@ public:
 	inline	int		getConsumptionResource(E_BUILDS eBuilds,E_RESOURCE eResource){return _arConsumptionResource[static_cast<int>(eBuilds)][static_cast<int>(eResource)]; }
 	inline	float	getBuildTime(E_BUILDS eBuilds) { return _arBuildTime[static_cast<int>(eBuilds)]; }
 	inline	int		getBuildCount() { return static_cast<int>(_listBuild.size()); }
-	
+	inline	bool	getIsBuildTree(E_BUILDS eBuilds) { return _arIsBuildTree[static_cast<int>(eBuilds)]; }
 
 	void	releaseSelected();
 	void	selectedBuild(RECT rcDrag);

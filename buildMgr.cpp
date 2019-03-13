@@ -17,6 +17,13 @@ void BUILDMGR::init()
 	allocateBuildResource();
 	allocateBuildSize();
 	allocateBuildTime();
+	allocateBuildHp();
+
+	for (int i = 0; i < static_cast<int>(E_BUILDS::E_MAX); i++)
+	{
+		_arIsBuildTree[i] = false;
+	}
+
 	_listBuild.clear();
 }
 
@@ -27,13 +34,21 @@ void BUILDMGR::update()
 	while (iter != _listBuild.end())
 	{
 		BUILD*	pBuild = *iter;
+		//빌드 되어있는지 확인
+		_arIsBuildTree[static_cast<int>(pBuild->getBuildsTpye())] = true;
+
 		pBuild->update();
 
 		iter++;
 	}
 
-
+	if (_pSelected)
+	{
+		_pSelected->commandProduce();
+	}
 }
+
+
 
 void BUILDMGR::release()
 {
@@ -47,9 +62,84 @@ void BUILDMGR::release()
 	}
 }
 
-void BUILDMGR::buildBuilding(BUILDMGR::E_BUILDS eBuild, float fPosX, float fPosY)
+void BUILDMGR::buildBuilding(E_BUILDS eBuild, float fPosX, float fPosY)
 {
 	string	strImgKey = "";
+
+	switch (eBuild)
+	{
+	case E_BUILDS::E_TOWN:
+		strImgKey.append("town");
+		_listBuild.push_back(new TOWN);
+
+		break;
+	case E_BUILDS::E_KEEP:
+		strImgKey.append("keep");
+		_listBuild.push_back(new KEEP);
+
+
+		break;
+	case E_BUILDS::E_CASTLE:
+		strImgKey.append("castle");
+		_listBuild.push_back(new CASTLE);
+
+		break;
+	case E_BUILDS::E_FARM:
+		strImgKey.append("farm");
+		_listBuild.push_back(new FARM);
+
+		break;
+	case E_BUILDS::E_BARRACKS:
+		strImgKey.append("barracks");
+		_listBuild.push_back(new BARRACKS);
+
+		break;
+	case E_BUILDS::E_LUMBER_MILL:
+		strImgKey.append("miil");
+
+		break;
+	case E_BUILDS::E_BLACK_SMITH:
+		strImgKey.append("smithy");
+
+		break;
+	case E_BUILDS::E_SCOUT_TOWER:
+		strImgKey.append("scoutTower");
+		break;
+	case E_BUILDS::E_GUARD_TOWER:
+		strImgKey.append("tower02");
+		break;
+	case E_BUILDS::E_CANNON_TOWER:
+		strImgKey.append("tower03");
+		break;
+	case E_BUILDS::E_SHIPYARD:
+		strImgKey.append("dockyard");
+		break;
+	case E_BUILDS::E_FOUNDRY:
+		strImgKey.append("yard02");
+		break;
+	case E_BUILDS::E_OIL_REFINERY:
+		strImgKey.append("oilRefinery");
+		break;
+	case E_BUILDS::E_OIL_PLATFORM:
+		strImgKey.append("yard03");
+		break;
+	case E_BUILDS::E_GNOMISH_INVENTOR:
+		strImgKey.append("gnomishSanctuary");
+		break;
+	case E_BUILDS::E_STABLE:
+		strImgKey.append("stall");
+		break;
+	case E_BUILDS::E_CHURCH:
+		strImgKey.append("church");
+		break;
+	case E_BUILDS::E_MAGE_TOWER:
+		strImgKey.append("mageTemple");
+		break;
+	case E_BUILDS::E_GRYPHON_AVIARY:
+		strImgKey.append("gryphonSanctuary");
+		break;
+	}
+
 
 	int nIndexX = static_cast<int>(fPosX) / TILESIZE;
 	int nIndexY = static_cast<int>(fPosY) / TILESIZE;
@@ -57,134 +147,23 @@ void BUILDMGR::buildBuilding(BUILDMGR::E_BUILDS eBuild, float fPosX, float fPosY
 	int nLeft = _pMap->getTile(nIndexX, nIndexY)->getRectTile().left;
 	int nTop = _pMap->getTile(nIndexX, nIndexY)->getRectTile().top;
 
-	switch (eBuild)
+
+	int nFrameCount = IMAGEMANAGER->findImage(strImgKey)->GetWidth() / _arBuildsWidth[static_cast<int>(eBuild)];
+	int nTileCount = _arBuildsWidth[static_cast<int>(eBuild)] / TILESIZE;
+	for (int i = 0; i < nTileCount; i++)
 	{
-	case BUILDMGR::E_BUILDS::E_TOWN:
-		strImgKey.append("town");
-		_listBuild.push_back(new TOWN);
-		for (int i = 0; i < 4; i++)
+		for (int j = 0; j < nTileCount; j++)
 		{
-			for (int j = 0; j < 4; j++)
-			{
-				_pMap->getTile(nIndexX+i, nIndexY+j)->setObject(TILE::E_OBJECT::E_BUILDING);
-			}
+			_pMap->getTile(nIndexX + i, nIndexY + j)->setObject(TILE::E_OBJECT::E_BUILDING);
 		}
-
-		_listBuild.back()->setLinkCamera(_pCamera);
-		_listBuild.back()->setLinkUnitMgr(_pUnitMgr);
-		_listBuild.back()->setLinkPlayer(_pPlayer);
-		_listBuild.back()->setLinkMap(_pMap);
-
-		_listBuild.back()->create(nLeft, nTop, _arBuildsWidth[static_cast<int>(eBuild)], _arBuildsHeight[static_cast<int>(eBuild)],100,_arBuildTime[static_cast<int>(eBuild)],4,strImgKey);
-
-		break;
-	case BUILDMGR::E_BUILDS::E_KEEP:
-		strImgKey.append("keep");
-		_listBuild.push_back(new KEEP);
-		for (int i = 0; i < 4; i++)
-		{
-			for (int j = 0; j < 4; j++)
-			{
-				_pMap->getTile(nIndexX + i, nIndexY + j)->setObject(TILE::E_OBJECT::E_BUILDING);
-			}
-		}
-
-		_listBuild.back()->setLinkCamera(_pCamera);
-		_listBuild.back()->setLinkUnitMgr(_pUnitMgr);
-		_listBuild.back()->setLinkPlayer(_pPlayer);
-		_listBuild.back()->setLinkMap(_pMap);
-
-		_listBuild.back()->create(nLeft, nTop, _arBuildsWidth[static_cast<int>(eBuild)], _arBuildsHeight[static_cast<int>(eBuild)], 100, _arBuildTime[static_cast<int>(eBuild)], 4, strImgKey);
-
-		break;
-	case BUILDMGR::E_BUILDS::E_CASTLE:
-		strImgKey.append("castle");
-		_listBuild.push_back(new CASTLE);
-		for (int i = 0; i < 4; i++)
-		{
-			for (int j = 0; j < 4; j++)
-			{
-				_pMap->getTile(nIndexX + i, nIndexY + j)->setObject(TILE::E_OBJECT::E_BUILDING);
-			}
-		}
-		_listBuild.back()->setLinkCamera(_pCamera);
-		_listBuild.back()->setLinkUnitMgr(_pUnitMgr);
-		_listBuild.back()->setLinkPlayer(_pPlayer);
-		_listBuild.back()->setLinkMap(_pMap);
-
-		_listBuild.back()->create(nLeft, nTop, _arBuildsWidth[static_cast<int>(eBuild)], _arBuildsHeight[static_cast<int>(eBuild)], 100, _arBuildTime[static_cast<int>(eBuild)], 4, strImgKey);
-
-		break;
-	case BUILDMGR::E_BUILDS::E_FARM:
-		strImgKey.append("farm");
-		_listBuild.push_back(new FARM);
-		for (int i = 0; i < 2; i++)
-		{
-			for (int j = 0; j < 2; j++)
-			{
-				_pMap->getTile(nIndexX + i, nIndexY + j)->setObject(TILE::E_OBJECT::E_BUILDING);
-			}
-		}
-
-		_listBuild.back()->setLinkCamera(_pCamera);
-		_listBuild.back()->setLinkUnitMgr(_pUnitMgr);
-		_listBuild.back()->setLinkPlayer(_pPlayer);
-		_listBuild.back()->setLinkMap(_pMap);
-
-		_listBuild.back()->create(nLeft, nTop, _arBuildsWidth[static_cast<int>(eBuild)], _arBuildsHeight[static_cast<int>(eBuild)], 50, _arBuildTime[static_cast<int>(eBuild)], 4, strImgKey);
-
-		break;
-	case BUILDMGR::E_BUILDS::E_BARRACKS:
-		strImgKey.append("barracks");
-
-		break;
-	case BUILDMGR::E_BUILDS::E_LUMBER_MILL:
-		strImgKey.append("miil");
-
-		break;
-	case BUILDMGR::E_BUILDS::E_BLACK_SMITH:
-		strImgKey.append("smithy");
-
-		break;
-	case BUILDMGR::E_BUILDS::E_SCOUT_TOWER:
-		strImgKey.append("scoutTower");
-		break;
-	case BUILDMGR::E_BUILDS::E_GUARD_TOWER:
-		strImgKey.append("tower02");
-		break;
-	case BUILDMGR::E_BUILDS::E_CANNON_TOWER:
-		strImgKey.append("tower03");
-		break;
-	case BUILDMGR::E_BUILDS::E_SHIPYARD:
-		strImgKey.append("dockyard");
-		break;
-	case BUILDMGR::E_BUILDS::E_FOUNDRY:
-		strImgKey.append("yard02");
-		break;
-	case BUILDMGR::E_BUILDS::E_OIL_REFINERY:
-		strImgKey.append("oilRefinery");
-		break;
-	case BUILDMGR::E_BUILDS::E_OIL_PLATFORM:
-		strImgKey.append("yard03");
-		break;
-	case BUILDMGR::E_BUILDS::E_GNOMISH_INVENTOR:
-		strImgKey.append("gnomishSanctuary");
-		break;
-	case BUILDMGR::E_BUILDS::E_STABLE:
-		strImgKey.append("stall");
-		break;
-	case BUILDMGR::E_BUILDS::E_CHURCH:
-		strImgKey.append("church");
-		break;
-	case BUILDMGR::E_BUILDS::E_MAGE_TOWER:
-		strImgKey.append("mageTemple");
-		break;
-	case BUILDMGR::E_BUILDS::E_GRYPHON_AVIARY:
-		strImgKey.append("gryphonSanctuary");
-		break;
 	}
 
-
+	_listBuild.back()->setLinkCamera(_pCamera);
+	_listBuild.back()->setLinkUnitMgr(_pUnitMgr);
+	_listBuild.back()->setLinkPlayer(_pPlayer);
+	_listBuild.back()->setLinkMap(_pMap);
+	_listBuild.back()->setLinkBuildMgr(this);
+	_listBuild.back()->create(nLeft, nTop, _arBuildsWidth[static_cast<int>(eBuild)], _arBuildsHeight[static_cast<int>(eBuild)], _arHp[static_cast<int>(eBuild)], _arBuildTime[static_cast<int>(eBuild)], nFrameCount, strImgKey);
 
 }
 
@@ -290,6 +269,30 @@ void BUILDMGR::allocateBuildTime()
 	_arBuildTime[static_cast<int>(E_BUILDS::E_CHURCH)] = 40.0f;
 	_arBuildTime[static_cast<int>(E_BUILDS::E_MAGE_TOWER)] = 60.0f;
 	_arBuildTime[static_cast<int>(E_BUILDS::E_GRYPHON_AVIARY)] = 60.0f;
+}
+
+void BUILDMGR::allocateBuildHp()
+{
+	
+	_arHp[static_cast<int>(E_BUILDS::E_TOWN)] = 300;
+	_arHp[static_cast<int>(E_BUILDS::E_KEEP)] = 400;
+	_arHp[static_cast<int>(E_BUILDS::E_CASTLE)] = 500;
+	_arHp[static_cast<int>(E_BUILDS::E_FARM)] = 100;
+	_arHp[static_cast<int>(E_BUILDS::E_BARRACKS)] = 200;
+	_arHp[static_cast<int>(E_BUILDS::E_LUMBER_MILL)] = 200;
+	_arHp[static_cast<int>(E_BUILDS::E_BLACK_SMITH)] = 200;
+	_arHp[static_cast<int>(E_BUILDS::E_SCOUT_TOWER)] = 100;
+	_arHp[static_cast<int>(E_BUILDS::E_GUARD_TOWER)] = 100;
+	_arHp[static_cast<int>(E_BUILDS::E_CANNON_TOWER)] = 100;
+	_arHp[static_cast<int>(E_BUILDS::E_SHIPYARD)] = 200;
+	_arHp[static_cast<int>(E_BUILDS::E_FOUNDRY)] = 200;
+	_arHp[static_cast<int>(E_BUILDS::E_OIL_REFINERY)] = 200;
+	_arHp[static_cast<int>(E_BUILDS::E_OIL_PLATFORM)] = 200;
+	_arHp[static_cast<int>(E_BUILDS::E_GNOMISH_INVENTOR)] = 200;
+	_arHp[static_cast<int>(E_BUILDS::E_STABLE)] = 200;
+	_arHp[static_cast<int>(E_BUILDS::E_CHURCH)] = 200;
+	_arHp[static_cast<int>(E_BUILDS::E_MAGE_TOWER)] = 200;
+	_arHp[static_cast<int>(E_BUILDS::E_GRYPHON_AVIARY)] = 200;
 }
 
 void BUILDMGR::releaseSelected()

@@ -10,7 +10,7 @@ COMMAND_BUILD::~COMMAND_BUILD()
 {
 }
 
-void COMMAND_BUILD::commandUnit(float fPosX, float fPosY, BUILDMGR::E_BUILDS eBuild)
+void COMMAND_BUILD::commandUnit(float fPosX, float fPosY, E_BUILDS eBuild)
 {
 	COMMAND::commandUnit(fPosX, fPosY,eBuild);
 }

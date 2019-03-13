@@ -9,7 +9,7 @@ public:
 	COMMAND_BUILD();
 	~COMMAND_BUILD();
 
-	virtual void	commandUnit(float fPosX, float fPosY, BUILDMGR::E_BUILDS eBuild) override;	//ºôµå¿ë
+	virtual void	commandUnit(float fPosX, float fPosY, E_BUILDS eBuild) override;	//ºôµå¿ë
 	virtual void	init(E_COMMAND eCommand, UNIT* pUnit)	override;
 	virtual void	start()		override;
 
