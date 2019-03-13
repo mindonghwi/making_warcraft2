@@ -30,8 +30,8 @@ public:
 protected:
 	float				_fPosX;
 	float				_fPosY;
-	UNIT*				_pTarget;
-	BUILDMGR::E_BUILDS	_eBuild;
+	OBJECT*				_pTarget;
+	E_BUILDS	_eBuild;
 	float				_fAngle;
 	RESOURCES*			_pResources;
 	E_COMMAND			_eCommand;
@@ -43,8 +43,8 @@ public:
 	//커맨드 사용순서 1. init 2. commandUnit
 	virtual	void	commandUnit();														//스탑 홀드
 	virtual void	commandUnit(float fPosX, float fPosY);								//이동 블리자드
-	virtual void	commandUnit(float fPosX, float fPosY,BUILDMGR::E_BUILDS eBuild);	//빌드용
-	virtual void	commandUnit(UNIT* pUnit);											//힐 공격
+	virtual void	commandUnit(float fPosX, float fPosY,E_BUILDS eBuild);	//빌드용
+	virtual void	commandUnit(OBJECT* pTarget);										//힐 공격
 	virtual	void	commandUnit(float fPosX, float fPosY, float fAngle);				//이동폭발공격
 	virtual void	commandUnit(RESOURCES* pResources);									//자원채취용
 	
