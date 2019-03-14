@@ -33,6 +33,9 @@ public:
 	virtual void commandBuild() override;
 	virtual void build(float fPosX, float fPosY, E_BUILDS eBuilds) override;
 
+	virtual	void harvestResources() override;
+	virtual void commandHarvest()   override;
+	virtual void commandReturnHarvest();
 
 private:
 	void	allocateState();

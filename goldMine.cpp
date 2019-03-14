@@ -35,4 +35,6 @@ void GOLDMINE::release()
 void GOLDMINE::render(HDC hdc)
 {
 	RESOURCES::OBJECT::getImage()->renderCenter(hdc, static_cast<int>(OBJECT::getPosX()), static_cast<int>(OBJECT::getPosY()));
+	DrawEdge(hdc, OBJECT::getRect(), BDR_RAISEDOUTER, BF_FLAT | BF_TOPLEFT | BF_BOTTOMRIGHT);
+
 }

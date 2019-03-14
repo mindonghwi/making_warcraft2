@@ -191,7 +191,7 @@ void UNIT::moveToDir()
 
 
 
-	UNIT::getCurrentBehavir()->end(this);
+	//UNIT::getCurrentBehavir()->end(this);
 	if (!UNIT::moveTo()) {
 		return;
 	}
@@ -269,5 +269,39 @@ void UNIT::targetDirection()
 
 	UNIT::_eDirection = static_cast<E_DIRECTION>(static_cast<int>(fAngle));
 
+}
+
+void UNIT::harvestResources()
+{
+}
+
+void UNIT::commandHarvest()
+{
+}
+
+void UNIT::commandReturnHarvest()
+{
+}
+
+bool UNIT::IsNearResources()
+{
+	if (_eHarvest == E_HARVEST::E_GOLD)
+	{
+		OBJECT* pObject = _pResourceMgr->getfindNearGoldMine(getPosX(), getPosY());
+		if (Mins::getDoubleDis(pObject->getPosX(), pObject->getPosY(),getPosX(),getPosY()) >= TILESIZE * TILESIZE)
+		{
+			return false;
+		}
+	}
+	else if (_eHarvest == E_HARVEST::E_TREE)
+	{
+		OBJECT* pObject = _pResourceMgr->getfindNearTree(getPosX(), getPosY());
+		if (Mins::getDoubleDis(pObject->getPosX(), pObject->getPosY(), getPosX(), getPosY()) >= TILESIZE * TILESIZE)
+		{
+			return false;
+		}
+	}
+
+	return true;
 }
 

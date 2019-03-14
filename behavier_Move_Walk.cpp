@@ -1,6 +1,8 @@
 #include "stdafx.h"
 #include "behavier_Move_Walk.h"
 #include "unit.h"
+#include "unitMGr.h"
+
 BEHAVIER_MOVE_WALK::BEHAVIER_MOVE_WALK():
 	_fTimer(0.0f)
 {
@@ -31,13 +33,37 @@ void BEHAVIER_MOVE_WALK::update(UNIT * pUnit)
 
 void BEHAVIER_MOVE_WALK::end(UNIT * pUnit)
 {
-	pUnit->setCurrentBehavir(UNIT::E_BEHAVIERNUM::E_NONE);
-	pUnit->setCurrentState(UNIT::E_STATENUM::E_IDLE);
-	pUnit->setBehavier(UNIT::E_BEHAVIERNUM::E_NONE);
+	RECT rcSmall = *pUnit->getCollisionRect();
+	rcSmall.left += 5;
+	rcSmall.right -= 5;
+	rcSmall.top += 5;
+	rcSmall.bottom -= 5;
+	bool bIsCollision = false;
+	for (int i = 0; i < pUnit->getMyUnitMgr()->getUnitCount(); i++)
+	{
+		if (pUnit != pUnit->getMyUnitMgr()->getUnit(i))
+		{
+			RECT rc;
+			if (IntersectRect(&rc, pUnit->getMyUnitMgr()->getUnit(i)->getCollisionRect(),&rcSmall))
+			{
+				bIsCollision = true;
+				break;
+			}
+		}
+	}
+	
+	if (!bIsCollision)
+	{
+		pUnit->setCurrentBehavir(UNIT::E_BEHAVIERNUM::E_NONE);
+		pUnit->setCurrentState(UNIT::E_STATENUM::E_IDLE);
+		pUnit->setBehavier(UNIT::E_BEHAVIERNUM::E_NONE);
+		pUnit->getCurrentState()->start();
+	}
+	else
+	{
+		pUnit->moveToDir();
+	}
 
-
-
-	pUnit->getCurrentState()->start();
 	_fTimer = 0.0f;
 
 

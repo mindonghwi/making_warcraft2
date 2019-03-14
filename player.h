@@ -10,6 +10,8 @@
 
 class ASTAR;
 class MAP;
+class RESOURCEMGR;
+
 class PLAYER
 {
 private:
@@ -29,7 +31,7 @@ private:
 	UNITMGR*	_pUnitMgr;
 	BUILDMGR*	_pBuildMgr;
 	MAP*		_pMap;
-
+	RESOURCEMGR*	_pResourceMgr;
 
 	//drag
 	RECT	_rcDragArea;		//drag REct
@@ -39,6 +41,8 @@ private:
 
 	bool				_bIsBuild;
 	E_BUILDS	_eBuilds;
+
+
 public:
 	PLAYER();
 	~PLAYER();
@@ -60,15 +64,19 @@ private:
 
 	void commandBuild();
 	void commandAttack();
+	void commandHarvest();
 	void initDrag();
 	void dragSelect();
 	void readjustDragRect();
+
 public:
 	//linker
 	inline	void	setLinkCamera(CAMERA* pCamera) { _pCamera = pCamera; }
 	inline	void	setLinkAstar(ASTAR* pAstar) { _pAstar = pAstar; }
 	inline	void	setLinkMap(MAP* pMap) { _pMap = (pMap); }
-	
+	inline	void	setLinkResourceMgr(RESOURCEMGR* pResourceMgr) { _pResourceMgr = pResourceMgr; }
+
+
 	//setter
 	inline	void	setGold(int nGold) { _arResource[static_cast<int>(E_RESOURCE::E_GOLD)] = nGold; }
 	inline	void	setTree(int nTree) { _arResource[static_cast<int>(E_RESOURCE::E_TREE)] = nTree; }

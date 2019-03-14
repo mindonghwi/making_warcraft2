@@ -181,7 +181,17 @@ void ASTAR::startFinder(float fStartPosX, float fStartPosY, float fEndPosX, floa
 				}
 				else
 				{
+					if (!_pUnitMgr->getUnit(i)->getIsMovePointEmpty())
+					{
+						if (_nEndIndexX == _pUnitMgr->getUnit(i)->getMoveToPointEndX() && _pUnitMgr->getUnit(i)->getMoveToPointEndY() == _nEndIndexY)
+						{
+							bIsOnObject = true;
+							break;
+						}
+					}
 				}
+				
+				
 			}
 		}
 

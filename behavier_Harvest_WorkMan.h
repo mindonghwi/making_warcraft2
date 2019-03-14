@@ -5,6 +5,10 @@ class UNIT;
 
 class BEHAVIER_HARVEST_WORKMAN :public BEHAVIER_HARVEST
 {
+private:
+	float _fTimer;
+	int		_nCount;
+public:
 	BEHAVIER_HARVEST_WORKMAN();
 	~BEHAVIER_HARVEST_WORKMAN();
 

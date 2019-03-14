@@ -141,7 +141,7 @@ void BUILD::commandProduce()
 		_bIsProduce = true;
 		_fTimer = 0.0f;
 	}
-	if (KEYMANAGER->isOnceKeyDown('A') && _nUnitMask & static_cast<unsigned int>(BUILDMGR::E_UNITMASK::E_ARCHER))
+	if (KEYMANAGER->isOnceKeyDown('A') && _nUnitMask & static_cast<unsigned int>(BUILDMGR::E_UNITMASK::E_ARCHER) && (_pBuildBgr->getIsBuildTree(E_BUILDS::E_LUMBER_MILL)))
 	{
 		_bIsProduce = true;
 		_fTimer = 0.0f;
@@ -151,7 +151,7 @@ void BUILD::commandProduce()
 		_bIsProduce = true;
 		_fTimer = 0.0f;
 	}
-	if (KEYMANAGER->isOnceKeyDown('K') && _nUnitMask & static_cast<unsigned int>(BUILDMGR::E_UNITMASK::E_KNIGHT))
+	if (KEYMANAGER->isOnceKeyDown('K') && _nUnitMask & static_cast<unsigned int>(BUILDMGR::E_UNITMASK::E_KNIGHT) && (_pBuildBgr->getIsBuildTree(E_BUILDS::E_STABLE)))
 	{
 		_bIsProduce = true;
 		_fTimer = 0.0f;

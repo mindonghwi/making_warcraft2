@@ -345,6 +345,15 @@
     <ClInclude Include="attackCommand.h">
       <Filter>PlayGround\player\command</Filter>
     </ClInclude>
+    <ClInclude Include="harvestCommand.h">
+      <Filter>PlayGround\player\command</Filter>
+    </ClInclude>
+    <ClInclude Include="returnHarvestCommand.h">
+      <Filter>PlayGround\player\command</Filter>
+    </ClInclude>
+    <ClInclude Include="balckSmith.h">
+      <Filter>PlayGround\build\header</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="stdafx.cpp">
@@ -551,6 +560,12 @@
     <ClCompile Include="attackCommand.cpp">
       <Filter>PlayGround\player\command</Filter>
     </ClCompile>
+    <ClCompile Include="harvestCommand.cpp">
+      <Filter>PlayGround\player\command</Filter>
+    </ClCompile>
+    <ClCompile Include="balckSmith.cpp">
+      <Filter>PlayGround\build\cpp</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="windowsAPI.rc">
@@ -574,5 +589,6 @@
     <None Include="map01.map">
       <Filter>리소스 파일</Filter>
     </None>
+    <None Include="ClassDiagram.cd" />
   </ItemGroup>
 </Project>

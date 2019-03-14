@@ -6,9 +6,9 @@
 #include "command.h"
 class MAP;
 class BUILDMGR;
-
-
-
+class RESOURCEMGR;
+class PLAYER;
+class RESOURCES;
 class UNITMGR
 {
 private:
@@ -49,6 +49,9 @@ private:
 
 	map<COMMAND::E_COMMAND, queue<COMMAND*>>	_mCommandPool;
 
+	RESOURCEMGR*	_pResourceMgr;
+	PLAYER*			_pPlayer;
+
 public:
 	UNITMGR();
 	~UNITMGR();
@@ -80,12 +83,22 @@ public:
 
 	void commandAttack(OBJECT* pObject);
 	void commandReAttack(UNIT* pUnit,OBJECT* pObject);
+
+	void clearCommandSelectedUnit();
+
+
+	void commandHarvest(RESOURCES* pResource);
+	void commandHarvestSingle(RESOURCES* pResource, UNIT* pUnit);
+
+	void commandMoveSingle(float fPosX, float fPosY, UNIT* pUnit);
 public:
 	//linker
 	inline	void	setLinkCamera(CAMERA* pCamera) { _pCamera = pCamera; }
 	inline	void	setLinkAstar(ASTAR* pAstar) { _pAstar = pAstar; }
 	inline	void	setLinkMap(MAP* pMap) { _pMap = pMap; }
 	inline	void	setLinkBuildMgr(BUILDMGR* pBuildMgr) { _pBuildMgr = pBuildMgr; }
+	inline	void	setLinkResourceMgr(RESOURCEMGR* pResourceMgr) { _pResourceMgr = pResourceMgr; }
+	inline	void	setLinkMyPlayer(PLAYER* pPlayer) { _pPlayer = pPlayer; }
 
 	//getter
 	inline	int		getHp(UNIT::E_UNIT eUnit) { return _arUnitHp[static_cast<int>(eUnit)]; }

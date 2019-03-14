@@ -21,6 +21,13 @@
 #include "buildCommand.h"
 #include "unitMGr.h"
 
+
+#include "resourceMgr.h"
+#include "goldMine.h"
+#include "tree.h"
+#include "player.h"
+
+
 WORKMAN::WORKMAN()
 {
 }
@@ -74,7 +81,8 @@ void WORKMAN::update()
 				OBJECT::setPosX(OBJECT::getPosX() + _pUnitMgr->getIntervalX(i) * TILESIZE);
 				OBJECT::setPosY(OBJECT::getPosY() + _pUnitMgr->getIntervalY(i) * TILESIZE);
 
-				if (_pMap->getTile((int)OBJECT::getPosX() / TILESIZE, (int)OBJECT::getPosY() / TILESIZE)->getObject() == TILE::E_OBJECT::E_NONE)
+				if (_pMap->getTile((int)OBJECT::getPosX() / TILESIZE, (int)OBJECT::getPosY() / TILESIZE)->getObject() == TILE::E_OBJECT::E_NONE && 
+					(int)OBJECT::getPosX() > TILESIZE && OBJECT::getPosY()> TILESIZE && (int)OBJECT::getPosX() / TILESIZE < 127 && OBJECT::getPosY() / TILESIZE < 127)
 				{
 					OBJECT::settingRect();
 					setCollisionRect(OBJECT::getPosX(), OBJECT::getPosY(), 32, 32);
@@ -94,7 +102,7 @@ void WORKMAN::update()
 		_pUnitMgr->returnPool(pCommand);
 	}
 
-	
+
 
 
 	_pCamera->pushRenderObject(this);
@@ -105,6 +113,61 @@ void WORKMAN::updateBehavier()
 	UNIT::getCurrentState()->update();
 	UNIT::getCurrentBehavir()->update(this);
 
+
+
+	if (_nHarvestCount >= 1 && (_pCurrentBeHavier == _arBeHavier[static_cast<int>(E_BEHAVIERNUM::E_MOVE)] || 
+		_pCurrentBeHavier == _arBeHavier[static_cast<int>(E_BEHAVIERNUM::E_NONE)]))
+	{
+		RECT rcTmp = *getCollisionRect();
+		rcTmp.left -= 10;
+		rcTmp.top -= 10;
+		rcTmp.right += 10;
+		rcTmp.bottom += 10;
+
+		for (int i = 0; i < _pBuildMgr->getBuildCount(); i++)
+		{
+			if (_eHarvest == UNIT::E_HARVEST::E_GOLD)
+			{
+				if (_pBuildMgr->getBuild(i)->getBuildsTpye() == E_BUILDS::E_TOWN ||
+					_pBuildMgr->getBuild(i)->getBuildsTpye() == E_BUILDS::E_KEEP ||
+					_pBuildMgr->getBuild(i)->getBuildsTpye() == E_BUILDS::E_CASTLE)
+				{
+					RECT rc;
+					
+					if (IntersectRect(&rc,_pBuildMgr->getBuild(i)->getRect(), &rcTmp))
+					{
+						commandIdle();
+						_pUnitMgr->commandHarvestSingle(nullptr, this);
+						_pPlayer->addGold(_nHarvestCount);
+						_eHarvest = UNIT::E_HARVEST::E_NONE;
+						_nHarvestCount = 0;
+
+						break;
+					}
+
+				}
+			}
+			else if (_eHarvest == UNIT::E_HARVEST::E_TREE)
+			{
+				if (_pBuildMgr->getBuild(i)->getBuildsTpye() == E_BUILDS::E_TOWN ||
+					_pBuildMgr->getBuild(i)->getBuildsTpye() == E_BUILDS::E_KEEP ||
+					_pBuildMgr->getBuild(i)->getBuildsTpye() == E_BUILDS::E_CASTLE ||
+					_pBuildMgr->getBuild(i)->getBuildsTpye() == E_BUILDS::E_LUMBER_MILL)
+				{
+					RECT rc;
+					if (IntersectRect(&rc, _pBuildMgr->getBuild(i)->getRect(), &rcTmp))
+					{
+						commandIdle();
+						_pUnitMgr->commandHarvestSingle(nullptr, this);
+						_pPlayer->addTree(_nHarvestCount);
+						_eHarvest = UNIT::E_HARVEST::E_NONE;
+						_nHarvestCount = 0;
+						break;
+					}
+				}
+			}
+		}
+	}
 }
 
 void WORKMAN::release()
@@ -113,8 +176,24 @@ void WORKMAN::release()
 
 void WORKMAN::render(HDC hdc)
 {
-	UNIT::OBJECT::getImage()->frameRenderCenter(hdc, UNIT::OBJECT::getPosX(), UNIT::OBJECT::getPosY(), _nFrameX, static_cast<int>(_eDirection));
+	
+	
+	if (getHarvest() == UNIT::E_HARVEST::E_GOLD && _pCurrentState != _arState[static_cast<int>(E_STATENUM::E_ATTACK)])
+	{
+		UNIT::OBJECT::getImage()->frameRenderCenter(hdc, UNIT::OBJECT::getPosX(), UNIT::OBJECT::getPosY(), _nFrameX + 10, static_cast<int>(_eDirection));
 
+	}
+	else if (getHarvest() == UNIT::E_HARVEST::E_TREE && _pCurrentState != _arState[static_cast<int>(E_STATENUM::E_ATTACK)])
+	{
+		UNIT::OBJECT::getImage()->frameRenderCenter(hdc, UNIT::OBJECT::getPosX(), UNIT::OBJECT::getPosY(), _nFrameX + 15, static_cast<int>(_eDirection));
+	}
+	else
+	{
+		UNIT::OBJECT::getImage()->frameRenderCenter(hdc, UNIT::OBJECT::getPosX(), UNIT::OBJECT::getPosY(), _nFrameX, static_cast<int>(_eDirection));
+	}
+
+
+	
 }
 
 void WORKMAN::renderSelected(HDC hdc)
@@ -169,6 +248,57 @@ void WORKMAN::build(float fPosX, float fPosY, E_BUILDS eBuilds)
 	_fTimer = 0.0f;
 }
 
+void WORKMAN::harvestResources()
+{
+	_nHarvestCount += 10;
+}
+
+void WORKMAN::commandHarvest()
+{
+	POINT ptMouse = _ptMouse;
+	ptMouse.x += _pCamera->getLeft();
+	ptMouse.y += _pCamera->getTop();
+	ptMouse.x = _pTarget->getPosX();
+	ptMouse.y = _pTarget->getPosY();
+
+	E_RESOURCE eClickResource = static_cast<E_RESOURCE>(_pResourceMgr->clickedResources(ptMouse));
+
+	if (eClickResource == E_RESOURCE::E_GOLD)
+	{
+		//움직인다
+		//자원을 채취시간다
+		UNIT::setCurrentState(UNIT::E_STATENUM::E_ATTACK);
+		UNIT::setCurrentBehavir(UNIT::E_BEHAVIERNUM::E_HARVEST);
+		UNIT::setBehavier(UNIT::E_BEHAVIERNUM::E_HARVEST);
+
+		UNIT::getCurrentState()->start();
+		_eHarvest = E_HARVEST::E_GOLD;
+	}
+	else if (eClickResource == E_RESOURCE::E_TREE)
+	{
+		//움직인다
+		//자원을 채취시간다
+		UNIT::setCurrentState(UNIT::E_STATENUM::E_ATTACK);
+		UNIT::setCurrentBehavir(UNIT::E_BEHAVIERNUM::E_HARVEST);
+		UNIT::setBehavier(UNIT::E_BEHAVIERNUM::E_HARVEST);
+
+		UNIT::getCurrentState()->start();
+		_eHarvest = E_HARVEST::E_TREE;
+	}
+}
+
+void WORKMAN::commandReturnHarvest()
+{
+	if (_eHarvest == E_HARVEST::E_GOLD)
+	{
+		_pPlayer->addGold(_nHarvestCount);
+	}
+	else if (_eHarvest == E_HARVEST::E_TREE)
+	{
+		_pPlayer->addTree(_nHarvestCount);
+	}
+}
+
 
 
 
@@ -194,7 +324,7 @@ void WORKMAN::allocateBehavier()
 	UNIT::_arBeHavier[static_cast<int>(UNIT::E_BEHAVIERNUM::E_NONE)] = new BEHAVIER_NONE();
 	UNIT::_arBeHavier[static_cast<int>(UNIT::E_BEHAVIERNUM::E_ATTACK)] = new BEHAVIER_ATTACK();
 	UNIT::_arBeHavier[static_cast<int>(UNIT::E_BEHAVIERNUM::E_MOVE)] = new BEHAVIER_MOVE_WALK();
-	UNIT::_arBeHavier[static_cast<int>(UNIT::E_BEHAVIERNUM::E_HARVEST)] = new BEHAVIER_ATTACK();
+	UNIT::_arBeHavier[static_cast<int>(UNIT::E_BEHAVIERNUM::E_HARVEST)] = new BEHAVIER_HARVEST_WORKMAN();
 	UNIT::_arBeHavier[static_cast<int>(UNIT::E_BEHAVIERNUM::E_MAGIC)] = new BEHAVIER_NONE();
 }
 

@@ -18,10 +18,13 @@ void OILPATCH::init(int nLeft, int nTop)
 	OBJECT::setHeight(96);
 	OBJECT::settingRect();
 	OBJECT::setImage(IMAGEMANAGER->findImage("oil"));
+	
 }
 
 void OILPATCH::update()
 {
+
+
 	_pCamera->pushRenderObject(this);
 
 }

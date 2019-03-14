@@ -11,6 +11,8 @@
 #include "moveCommand.h"
 #include "buildCommand.h"
 #include "attackCommand.h"
+#include "harvestCommand.h"
+
 UNITMGR::UNITMGR()
 {
 }
@@ -35,6 +37,8 @@ void UNITMGR::init()
 	addCommandPool(COMMAND::E_COMMAND::E_STOP, 201);
 	addCommandPool(COMMAND::E_COMMAND::E_MOVE, 4000);
 	addCommandPool(COMMAND::E_COMMAND::E_ATTACK, 2000);
+	addCommandPool(COMMAND::E_COMMAND::E_HARVEST, 400);
+
 }
 
 bool UNITMGR::createUnit(UNIT::E_UNIT eUnit, float fPosX, float fPosY)
@@ -45,6 +49,7 @@ bool UNITMGR::createUnit(UNIT::E_UNIT eUnit, float fPosX, float fPosY)
 		_listUnit.push_back(new WORKMAN);
 		break;
 	case UNIT::E_UNIT::E_FOOTMAN:
+		
 		break;
 	case UNIT::E_UNIT::E_ARCHER:
 		break;
@@ -71,7 +76,7 @@ bool UNITMGR::createUnit(UNIT::E_UNIT eUnit, float fPosX, float fPosY)
 	case UNIT::E_UNIT::E_FLYER:
 		break;
 	}
-
+	_listUnit.back()->setLinkResourceMgr(_pResourceMgr);
 	_listUnit.back()->setLinkUnitMgr(this);
 	_listUnit.back()->setLinkCamera(_pCamera);
 	_listUnit.back()->setLinkAStar(_pAstar);
@@ -81,6 +86,7 @@ bool UNITMGR::createUnit(UNIT::E_UNIT eUnit, float fPosX, float fPosY)
 		_arUnitMinimalAttack[static_cast<int>(eUnit)]);
 	_listUnit.back()->setLinkBuildMgr(_pBuildMgr);
 	_listUnit.back()->setLinkMap(_pMap);
+	_listUnit.back()->setLinkMyPlayer(_pPlayer);
 
 	_nCount++;
 	return false;
@@ -622,6 +628,10 @@ void UNITMGR::addCommandPool(COMMAND::E_COMMAND eCommand, int nCount)
 		}
 		break;
 	case COMMAND::E_COMMAND::E_HARVEST:
+		for (int i = 0; i < nCount; i++)
+		{
+			queTmp.push(new COMMAND_HARVEST());
+		}
 		break;
 	case COMMAND::E_COMMAND::E_HEAL:
 		break;
@@ -678,6 +688,86 @@ void UNITMGR::commandReAttack(UNIT* pUnit, OBJECT * pObject)
 	pCommand->commandUnit(pObject);
 	(pUnit)->addCommand(pCommand);
 }
+
+void UNITMGR::clearCommandSelectedUnit()
+{
+	for (int i = 0; i < static_cast<int>(_vSeletedUnit.size()); i++)
+	{
+		(*(_vSeletedUnit[i]))->clearCommand();
+	}
+	
+}
+
+void UNITMGR::commandHarvest(RESOURCES* pResource)
+{
+	for (int i = 0; i < static_cast<int>(_vSeletedUnit.size()); i++)
+	{
+		COMMAND*  pCommand = _mCommandPool.find(COMMAND::E_COMMAND::E_MOVE)->second.front();
+		_mCommandPool.find(COMMAND::E_COMMAND::E_MOVE)->second.pop();
+		pCommand->init(COMMAND::E_COMMAND::E_MOVE, *(_vSeletedUnit[i]));
+		pCommand->commandUnit(pResource->getPosX(), pResource->getPosY());
+		(*(_vSeletedUnit[i]))->addCommand(pCommand);
+		//(*(_vSeletedUnit[i]))->setTarget(pResource);
+	}
+	for (int i = 0; i < static_cast<int>(_vSeletedUnit.size()); i++)
+	{
+		if ((*(_vSeletedUnit[i]))->getUnit() == UNIT::E_UNIT::E_WORKMAN && (*(_vSeletedUnit[i]))->getHarvest() == UNIT::E_HARVEST::E_NONE)
+		{
+			COMMAND*  pCommand = _mCommandPool.find(COMMAND::E_COMMAND::E_HARVEST)->second.front();
+			_mCommandPool.find(COMMAND::E_COMMAND::E_HARVEST)->second.pop();
+			pCommand->init(COMMAND::E_COMMAND::E_HARVEST, *(_vSeletedUnit[i]));
+			pCommand->commandUnit(pResource);
+			(*(_vSeletedUnit[i]))->addCommand(pCommand);
+			(*(_vSeletedUnit[i]))->setTarget(pResource);
+		}
+	}
+
+}
+
+void UNITMGR::commandHarvestSingle(RESOURCES * pResource, UNIT * pUnit)
+{
+	float fDistacne = 128.0f * TILESIZE * 1.4f;
+	fDistacne *= fDistacne;
+	int nIndex = 10000;
+
+	if (pUnit->getHarvest() == UNIT::E_HARVEST::E_GOLD)
+	{
+		pResource = _pResourceMgr->getfindNearGoldMine(pUnit->getPosX(), pUnit->getPosY());
+	}
+	else if (pUnit->getHarvest() == UNIT::E_HARVEST::E_TREE)
+	{
+		pResource = _pResourceMgr->getfindNearTree(pUnit->getPosX(), pUnit->getPosY());
+	}
+
+	if (pResource == nullptr)
+	{
+		return;
+	}
+	pUnit->clearCommand();
+
+	COMMAND*  pCommand = _mCommandPool.find(COMMAND::E_COMMAND::E_MOVE)->second.front();
+	_mCommandPool.find(COMMAND::E_COMMAND::E_MOVE)->second.pop();
+	pCommand->init(COMMAND::E_COMMAND::E_MOVE, pUnit);
+	pCommand->commandUnit(pResource->getPosX(), pResource->getPosY());
+	pUnit->addCommand(pCommand);
+	
+	pCommand = _mCommandPool.find(COMMAND::E_COMMAND::E_HARVEST)->second.front();
+	_mCommandPool.find(COMMAND::E_COMMAND::E_HARVEST)->second.pop();
+	pCommand->init(COMMAND::E_COMMAND::E_HARVEST, pUnit);
+	pCommand->commandUnit(pResource);
+	pUnit->addCommand(pCommand);
+	pUnit->setTarget(pResource);
+}
+
+void UNITMGR::commandMoveSingle(float fPosX, float fPosY, UNIT * pUnit)
+{
+	COMMAND*  pCommand = _mCommandPool.find(COMMAND::E_COMMAND::E_MOVE)->second.front();
+	_mCommandPool.find(COMMAND::E_COMMAND::E_MOVE)->second.pop();
+	pCommand->init(COMMAND::E_COMMAND::E_MOVE, pUnit);
+	pCommand->commandUnit(fPosX, fPosY);
+	(pUnit)->addCommand(pCommand);
+}
+
 
 UNIT * UNITMGR::getUnit(int nIndex)
 {

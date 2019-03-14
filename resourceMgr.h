@@ -4,6 +4,7 @@
 #include "tree.h"
 #include "oliPatch.h"
 #include "map.h"
+#include "stdafx.h"
 
 class MAP;
 
@@ -29,4 +30,15 @@ public:
 	void	addGoldMine(int nLeft, int nTop);
 	void	addTree(int nLeft, int nTop);
 	void	addOilPatch(int nLeft, int nTop);
+
+	int		clickedResources(POINT ptMouse);
+
+	GOLDMINE*	getSelectGoldMine(POINT ptMouse);
+	TREE*		getSelectTree(POINT ptMouse);
+	OILPATCH*	getSelectOilPatch(POINT ptMouse);
+	RESOURCES*	getResource(POINT ptMouse);
+
+	GOLDMINE*	getfindNearGoldMine(float fPosX,float fPosY);
+	TREE*		getfindNearTree(float fPosX, float fPosY);
+	
 };

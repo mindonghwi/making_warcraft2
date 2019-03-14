@@ -8,7 +8,8 @@
 #include "buildMgr.h"
 
 #include "command.h"
-
+class PLAYER;
+class RESOURCEMGR;
 class BUILDMGR;
 class COMMAND;
 class UNITMGR;
@@ -163,6 +164,9 @@ protected:
 	MAP*				_pMap;
 
 	OBJECT*				_pTarget;
+
+	RESOURCEMGR*	_pResourceMgr;
+	PLAYER*			_pPlayer;
 public:
 	UNIT();
 	virtual ~UNIT();
@@ -201,6 +205,12 @@ public:
 
 	virtual void attack(OBJECT* pObject);
 	void targetDirection();
+
+	virtual	void harvestResources();
+	virtual void commandHarvest();
+	virtual void commandReturnHarvest();
+
+	virtual bool IsNearResources();
 public:
 	//setter
 	inline	void	setHp(int nAmount) { OBJECT::setHp(nAmount); }
@@ -239,6 +249,8 @@ public:
 	inline	void	setLinkBuildMgr(BUILDMGR* pBuildMgr) {_pBuildMgr = pBuildMgr; }
 	inline	void	setLinkUnitMgr(UNITMGR*	pUnitMgr) { _pUnitMgr = pUnitMgr; }
 	inline	void	setLinkMap(MAP* pMap) { _pMap = pMap; }
+	inline	void	setLinkResourceMgr(RESOURCEMGR* pResourceMgr) { _pResourceMgr = pResourceMgr; }
+	inline	void	setLinkMyPlayer(PLAYER* pPlayer) { _pPlayer = pPlayer; }
 
 
 	inline	void	setCollisionRect(int nLeft, int nRight, int nWidth, int nHeight) { _rcCollision = RectMake(nLeft, nRight, nWidth, nHeight); }
@@ -319,6 +331,12 @@ public:
 	inline	OBJECT*	getTarget() { return _pTarget; }
 	inline	void	setTarget(OBJECT* pObject) { _pTarget = pObject; }
 	inline	UNITMGR*	getMyUnitMgr() {return _pUnitMgr;}
+
+	inline	BUILDMGR*	getMyBuildMgr() {return _pBuildMgr;}
+	
+
+	inline	float	getEndPosX() {return _fEndX;}
+	inline	float	getEndPosY() { return _fEndY;}
 
 public:
 	//상태를 정리해보자

@@ -100,6 +100,7 @@ void BUILDMGR::buildBuilding(E_BUILDS eBuild, float fPosX, float fPosY)
 		break;
 	case E_BUILDS::E_BLACK_SMITH:
 		strImgKey.append("smithy");
+		_listBuild.push_back(new BLACK_SMITH);
 
 		break;
 	case E_BUILDS::E_SCOUT_TOWER:
@@ -250,7 +251,7 @@ void BUILDMGR::allocateBuildSize()
 
 void BUILDMGR::allocateBuildTime()
 {
-	_arBuildTime[static_cast<int>(E_BUILDS::E_TOWN)] = 30.0f;
+	_arBuildTime[static_cast<int>(E_BUILDS::E_TOWN)] = 1.0f;
 	_arBuildTime[static_cast<int>(E_BUILDS::E_KEEP)] = 60.0f;
 	_arBuildTime[static_cast<int>(E_BUILDS::E_CASTLE)] = 100.0f;
 	_arBuildTime[static_cast<int>(E_BUILDS::E_FARM)] = 20.0f;

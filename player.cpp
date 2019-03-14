@@ -19,6 +19,8 @@ void PLAYER::init()
 	_pUnitMgr->setLinkCamera(_pCamera);
 	_pUnitMgr->setLinkBuildMgr(_pBuildMgr);
 	_pUnitMgr->setLinkMap(_pMap);
+	_pUnitMgr->setLinkResourceMgr(_pResourceMgr);
+	_pUnitMgr->setLinkMyPlayer(this);
 
 
 	_pBuildMgr->setLinkCamera(_pCamera);
@@ -65,10 +67,11 @@ void PLAYER::update()
 
 	//여기서 무슨 커맨더를 주는지 넣어야한다.
 	//_pUnitMgr->commandSelectUnit();
+	
 	commandSelectUnit();
 	commandAttack();
 	commandBuild();
-	
+	commandHarvest();
 	_pUnitMgr->update();
 
 
@@ -134,7 +137,12 @@ void PLAYER::commandSelectUnit()
 	{
 		if (_eBuilds == E_BUILDS::E_MAX && !KEYMANAGER->isKeyDown('A'))
 		{
+			if (!KEYMANAGER->isKeyDown(VK_LCONTROL))
+			{
+				_pUnitMgr->clearCommandSelectedUnit();
+			}
 			_pUnitMgr->moveCommand((float)_ptCameraPtMouse.x, (float)_ptCameraPtMouse.y);
+
 		}
 	}						   
 }
@@ -177,6 +185,11 @@ void PLAYER::commandBuild()
 			{
 				_eBuilds = E_BUILDS::E_BARRACKS;
 			}
+
+			if (KEYMANAGER->isOnceKeyDown('S'))
+			{
+				_eBuilds = E_BUILDS::E_BLACK_SMITH;
+			}
 		}
 	}
 	
@@ -208,7 +221,7 @@ void PLAYER::commandBuild()
 			_arResource[static_cast<int>(E_RESOURCE::E_GOLD)] -= _pBuildMgr->getConsumptionResource(_pUnitMgr->getSelectedUnit(0)->getBuildType(), E_RESOURCE::E_GOLD);
 			_arResource[static_cast<int>(E_RESOURCE::E_OIL)] -= _pBuildMgr->getConsumptionResource( _pUnitMgr->getSelectedUnit(0)->getBuildType(), E_RESOURCE::E_OIL);
 			_arResource[static_cast<int>(E_RESOURCE::E_TREE)] -= _pBuildMgr->getConsumptionResource(_pUnitMgr->getSelectedUnit(0)->getBuildType(), E_RESOURCE::E_TREE);
-
+			_pUnitMgr->clearCommandSelectedUnit();
 			_pUnitMgr->buildCommand((float)_ptCameraPtMouse.x, (float)_ptCameraPtMouse.y, _eBuilds);
 			_eBuilds = E_BUILDS::E_MAX;
 			_bIsBuild = false;
@@ -224,6 +237,7 @@ void PLAYER::commandAttack()
 		{
 			//타겟이 잡혔다.
 				//플레이어의 유닛 메니저에서
+			_pUnitMgr->clearCommandSelectedUnit();
 			for (int i = 0; i < _pUnitMgr->getUnitCount(); i++)
 			{
 				if (PtInRect(_pUnitMgr->getUnit(i)->getCollisionRect(),_ptCameraPtMouse))
@@ -264,6 +278,31 @@ void PLAYER::commandAttack()
 		}
 	}
 
+}
+
+void PLAYER::commandHarvest()
+{
+	if (KEYMANAGER->isOnceKeyDown(VK_RBUTTON))
+	{
+		if (_eBuilds == E_BUILDS::E_MAX && !KEYMANAGER->isKeyDown('A'))
+		{
+			
+			
+			if (_pResourceMgr->clickedResources(_ptCameraPtMouse) == static_cast<int>(E_RESOURCE::E_GOLD))
+			{
+				_pUnitMgr->clearCommandSelectedUnit();
+				_pUnitMgr->commandHarvest(_pResourceMgr->getResource(_ptCameraPtMouse));
+			}
+			else if (_pResourceMgr->clickedResources(_ptCameraPtMouse) == static_cast<int>(E_RESOURCE::E_TREE))
+			{
+				_pUnitMgr->clearCommandSelectedUnit();
+				_pUnitMgr->commandHarvest(_pResourceMgr->getResource(_ptCameraPtMouse));
+			}
+			
+
+
+		}
+	}
 }
 
 void PLAYER::initDrag()
