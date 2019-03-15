@@ -17,6 +17,7 @@ public:
 
 	enum E_UNITMASK
 	{
+		E_NONE			= 0x000,
 		E_WORKMAN		= 0x001,
 		E_FOOTMAN		= 0x002,
 		E_ARCHER		= 0x004,

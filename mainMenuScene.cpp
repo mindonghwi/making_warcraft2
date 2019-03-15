@@ -60,6 +60,11 @@ void SCENEMAINMENU::update()
 	{
 		updateSingleGameSettingLayer();
 	}
+
+	if (KEYMANAGER->isKeyDown(VK_ESCAPE))
+	{
+		SendMessage(_hWnd, WM_DESTROY, 1, 0);
+	}
 }
 
 void SCENEMAINMENU::render()

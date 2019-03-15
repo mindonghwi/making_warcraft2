@@ -13,7 +13,7 @@ void LUMBER_MILL::create(int nLeft, int ntop, int nWidth, int nHeight, int nHp, 
 {
 	BUILD::create(nLeft, ntop, nWidth, nHeight, nHp, fBuildingTimer, nFrameCount, strImgKey);
 
-	_eBuilds = E_BUILDS::E_BLACK_SMITH;
+	_eBuilds = E_BUILDS::E_LUMBER_MILL;
 }
 
 void LUMBER_MILL::release()

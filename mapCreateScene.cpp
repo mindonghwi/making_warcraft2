@@ -164,6 +164,12 @@ void SCENEMAPTOOL::update()
 
 	
 	Mins::clipCurser(_rcClient, _ptLeftTop, _ptRightBottom, _hWnd);
+
+
+	if (KEYMANAGER->isKeyDown(VK_ESCAPE))
+	{
+		SendMessage(_hWnd, WM_DESTROY, 1, 0);
+	}
 }
 
 void SCENEMAPTOOL::render()

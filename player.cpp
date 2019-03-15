@@ -166,6 +166,21 @@ void PLAYER::commandBuild()
 		}
 	}
 
+	if (KEYMANAGER->isOnceKeyDown('V'))
+	{
+		if (_pUnitMgr->getSelectedUnit(0)->getUnit() == UNIT::E_UNIT::E_WORKMAN && 	_eBuildType == E_BUILDTYPE::E_NONE)
+		{
+			//_pUnitMgr->getSelectedUnit(0)->setBuildingOn(true);
+			_eBuildType = E_BUILDTYPE::E_V;
+			return;
+		}
+	}
+
+	if (KEYMANAGER->isOnceKeyDown(VK_ESCAPE))
+	{
+		_eBuildType = E_BUILDTYPE::E_NONE;
+	}
+
 
 	if (_pUnitMgr->getSelectedUnit(0) && _pUnitMgr->getSelectedUnit(0)->getUnit() == UNIT::E_UNIT::E_WORKMAN && _eBuildType == E_BUILDTYPE::E_B)
 	{
@@ -201,9 +216,47 @@ void PLAYER::commandBuild()
 			{
 				_eBuilds = E_BUILDS::E_SCOUT_TOWER;
 			}
+
+			if (KEYMANAGER->isOnceKeyDown('F') && _pBuildMgr->getIsBuildTree(E_BUILDS::E_KEEP))
+			{
+				_eBuilds = E_BUILDS::E_GNOMISH_INVENTOR;
+			}
+
+			if (KEYMANAGER->isOnceKeyDown('K') && _pBuildMgr->getIsBuildTree(E_BUILDS::E_KEEP))
+			{
+				_eBuilds = E_BUILDS::E_STABLE;
+			}
 		}
 	}
 	
+	if (_pUnitMgr->getSelectedUnit(0) && _pUnitMgr->getSelectedUnit(0)->getUnit() == UNIT::E_UNIT::E_WORKMAN && _eBuildType == E_BUILDTYPE::E_V)
+	{
+		if (KEYMANAGER->isOnceKeyDown('S') && _pBuildMgr->getIsBuildTree(E_BUILDS::E_KEEP))
+		{
+			_eBuilds = E_BUILDS::E_SHIPYARD;
+		}
+		
+		if (KEYMANAGER->isOnceKeyDown('O') && _pBuildMgr->getIsBuildTree(E_BUILDS::E_CASTLE))
+		{
+			_eBuilds = E_BUILDS::E_OIL_PLATFORM;
+		}
+		
+		if (KEYMANAGER->isOnceKeyDown('G') && _pBuildMgr->getIsBuildTree(E_BUILDS::E_CASTLE))
+		{
+			_eBuilds = E_BUILDS::E_GRYPHON_AVIARY;
+		}
+
+		if (KEYMANAGER->isOnceKeyDown('M') && _pBuildMgr->getIsBuildTree(E_BUILDS::E_CASTLE))
+		{
+			_eBuilds = E_BUILDS::E_MAGE_TOWER;
+		}
+
+		if (KEYMANAGER->isOnceKeyDown('F') && _pBuildMgr->getIsBuildTree(E_BUILDS::E_CASTLE))
+		{
+			_eBuilds = E_BUILDS::E_FOUNDRY;
+		}
+	}
+
 
 	if (KEYMANAGER->isOnceKeyDown(VK_RBUTTON))
 	{

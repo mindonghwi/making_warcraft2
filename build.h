@@ -45,6 +45,8 @@ protected:
 
 	bool			_bIsProduce;
 	E_BUILDS	_eBuilds;
+
+	int				_eUnitType;
 public:
 	BUILD();
 	virtual ~BUILD();

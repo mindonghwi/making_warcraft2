@@ -109,6 +109,12 @@
     <Filter Include="PlayGround\UI">
       <UniqueIdentifier>{ab88879c-025f-4252-ae77-f7490a3d3e7c}</UniqueIdentifier>
     </Filter>
+    <Filter Include="PlayGround\build\header\ground">
+      <UniqueIdentifier>{60e4999f-3f81-4fa8-a218-583363ce4e5f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="PlayGround\build\header\water">
+      <UniqueIdentifier>{49a3af81-1eae-408d-bebe-4b924a9acbe2}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="stdafx.h">
@@ -321,23 +327,8 @@
     <ClInclude Include="buildCommand.h">
       <Filter>PlayGround\player\command</Filter>
     </ClInclude>
-    <ClInclude Include="town.h">
-      <Filter>PlayGround\build\header</Filter>
-    </ClInclude>
-    <ClInclude Include="keep.h">
-      <Filter>PlayGround\build\header</Filter>
-    </ClInclude>
-    <ClInclude Include="castle.h">
-      <Filter>PlayGround\build\header</Filter>
-    </ClInclude>
     <ClInclude Include="buildsHeader.h">
       <Filter>PlayGround\build</Filter>
-    </ClInclude>
-    <ClInclude Include="farm.h">
-      <Filter>PlayGround\build\header</Filter>
-    </ClInclude>
-    <ClInclude Include="barrack.h">
-      <Filter>PlayGround\build\header</Filter>
     </ClInclude>
     <ClInclude Include="behavier_hold.h">
       <Filter>PlayGround\unit\behavier</Filter>
@@ -351,20 +342,68 @@
     <ClInclude Include="returnHarvestCommand.h">
       <Filter>PlayGround\player\command</Filter>
     </ClInclude>
-    <ClInclude Include="balckSmith.h">
-      <Filter>PlayGround\build\header</Filter>
-    </ClInclude>
     <ClInclude Include="UI.h">
       <Filter>PlayGround\UI</Filter>
     </ClInclude>
     <ClInclude Include="UICARD.h">
       <Filter>PlayGround\UI</Filter>
     </ClInclude>
+    <ClInclude Include="balckSmith.h">
+      <Filter>PlayGround\build\header\ground</Filter>
+    </ClInclude>
+    <ClInclude Include="barrack.h">
+      <Filter>PlayGround\build\header\ground</Filter>
+    </ClInclude>
+    <ClInclude Include="cannonTower.h">
+      <Filter>PlayGround\build\header\ground</Filter>
+    </ClInclude>
+    <ClInclude Include="castle.h">
+      <Filter>PlayGround\build\header\ground</Filter>
+    </ClInclude>
+    <ClInclude Include="farm.h">
+      <Filter>PlayGround\build\header\ground</Filter>
+    </ClInclude>
+    <ClInclude Include="guardTower.h">
+      <Filter>PlayGround\build\header\ground</Filter>
+    </ClInclude>
+    <ClInclude Include="keep.h">
+      <Filter>PlayGround\build\header\ground</Filter>
+    </ClInclude>
     <ClInclude Include="lumbleMill.h">
-      <Filter>PlayGround\build\header</Filter>
+      <Filter>PlayGround\build\header\ground</Filter>
     </ClInclude>
     <ClInclude Include="scoutTower.h">
-      <Filter>PlayGround\build\header</Filter>
+      <Filter>PlayGround\build\header\ground</Filter>
+    </ClInclude>
+    <ClInclude Include="town.h">
+      <Filter>PlayGround\build\header\ground</Filter>
+    </ClInclude>
+    <ClInclude Include="foundry.h">
+      <Filter>PlayGround\build\header\water</Filter>
+    </ClInclude>
+    <ClInclude Include="shipYard.h">
+      <Filter>PlayGround\build\header\water</Filter>
+    </ClInclude>
+    <ClInclude Include="oilRefindery.h">
+      <Filter>PlayGround\build\header\water</Filter>
+    </ClInclude>
+    <ClInclude Include="oilPlatform.h">
+      <Filter>PlayGround\build\header\water</Filter>
+    </ClInclude>
+    <ClInclude Include="gnomishInventor.h">
+      <Filter>PlayGround\build\header\ground</Filter>
+    </ClInclude>
+    <ClInclude Include="stable.h">
+      <Filter>PlayGround\build\header\ground</Filter>
+    </ClInclude>
+    <ClInclude Include="church.h">
+      <Filter>PlayGround\build\header\ground</Filter>
+    </ClInclude>
+    <ClInclude Include="mageTower.h">
+      <Filter>PlayGround\build\header\ground</Filter>
+    </ClInclude>
+    <ClInclude Include="gryphonAviary.h">
+      <Filter>PlayGround\build\header\ground</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -585,6 +624,39 @@
       <Filter>PlayGround\build\cpp</Filter>
     </ClCompile>
     <ClCompile Include="scoutTower.cpp">
+      <Filter>PlayGround\build\cpp</Filter>
+    </ClCompile>
+    <ClCompile Include="cannonTower.cpp">
+      <Filter>PlayGround\build\cpp</Filter>
+    </ClCompile>
+    <ClCompile Include="guardTower.cpp">
+      <Filter>PlayGround\build\cpp</Filter>
+    </ClCompile>
+    <ClCompile Include="shipYard.cpp">
+      <Filter>PlayGround\build\cpp</Filter>
+    </ClCompile>
+    <ClCompile Include="foundry.cpp">
+      <Filter>PlayGround\build\cpp</Filter>
+    </ClCompile>
+    <ClCompile Include="oilRefindery.cpp">
+      <Filter>PlayGround\build\cpp</Filter>
+    </ClCompile>
+    <ClCompile Include="oilPlatform.cpp">
+      <Filter>PlayGround\build\cpp</Filter>
+    </ClCompile>
+    <ClCompile Include="gnomishInventor.cpp">
+      <Filter>PlayGround\build\cpp</Filter>
+    </ClCompile>
+    <ClCompile Include="stable.cpp">
+      <Filter>PlayGround\build\cpp</Filter>
+    </ClCompile>
+    <ClCompile Include="church.cpp">
+      <Filter>PlayGround\build\cpp</Filter>
+    </ClCompile>
+    <ClCompile Include="mageTower.cpp">
+      <Filter>PlayGround\build\cpp</Filter>
+    </ClCompile>
+    <ClCompile Include="gryphonAviary.cpp">
       <Filter>PlayGround\build\cpp</Filter>
     </ClCompile>
   </ItemGroup>

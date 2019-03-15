@@ -27,6 +27,11 @@ void SCENECOVER::update()
 	{
 		SCENEMANAGER->changeScene("menuScene");
 	}
+
+	if (KEYMANAGER->isKeyDown(VK_ESCAPE))
+	{
+		SendMessage(_hWnd, WM_DESTROY, 1, 0);
+	}
 }
 
 void SCENECOVER::render()

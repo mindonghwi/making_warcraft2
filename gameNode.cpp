@@ -78,10 +78,7 @@ void gameNode::update()
 	EFFECTMGR->update();
 
 
-	if (KEYMANAGER->isKeyDown(VK_ESCAPE))
-	{
-		SendMessage(_hWnd, WM_DESTROY, 1, 0);
-	}
+
 }
 
 void gameNode::render()

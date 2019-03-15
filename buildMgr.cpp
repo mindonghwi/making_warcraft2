@@ -117,36 +117,47 @@ void BUILDMGR::buildBuilding(E_BUILDS eBuild, float fPosX, float fPosY)
 		break;
 	case E_BUILDS::E_GUARD_TOWER:
 		strImgKey.append("tower02");
+		_listBuild.push_back(new GUARD_TOWER);
 		break;
 	case E_BUILDS::E_CANNON_TOWER:
 		strImgKey.append("tower03");
+		_listBuild.push_back(new CANNON_TOWER);
 		break;
 	case E_BUILDS::E_SHIPYARD:
 		strImgKey.append("dockyard");
+		_listBuild.push_back(new SHIP_YARD);
 		break;
 	case E_BUILDS::E_FOUNDRY:
 		strImgKey.append("yard02");
+		_listBuild.push_back(new FOUNDRY);
 		break;
 	case E_BUILDS::E_OIL_REFINERY:
 		strImgKey.append("oilRefinery");
+		_listBuild.push_back(new OIL_REFINERY);
 		break;
 	case E_BUILDS::E_OIL_PLATFORM:
 		strImgKey.append("yard03");
+		_listBuild.push_back(new OIL_PLATFORM);
 		break;
 	case E_BUILDS::E_GNOMISH_INVENTOR:
 		strImgKey.append("gnomishSanctuary");
+		_listBuild.push_back(new GNOMISH_INVENTOR);
 		break;
 	case E_BUILDS::E_STABLE:
 		strImgKey.append("stall");
+		_listBuild.push_back(new STABLE);
 		break;
 	case E_BUILDS::E_CHURCH:
 		strImgKey.append("church");
+		_listBuild.push_back(new CHURCH);
 		break;
 	case E_BUILDS::E_MAGE_TOWER:
 		strImgKey.append("mageTemple");
+		_listBuild.push_back(new MAGETOWER);
 		break;
 	case E_BUILDS::E_GRYPHON_AVIARY:
 		strImgKey.append("gryphonSanctuary");
+		_listBuild.push_back(new GRYPHON_AVIARY);
 		break;
 	}
 
@@ -196,17 +207,55 @@ bool BUILDMGR::bIsGroundCheck(E_BUILDS eBuilds, float fPosX, float fPosY)
 		nCount = 3;
 
 	}
-	for (int i = 0; i < nCount; i++)
+	
+	if (eBuilds == E_BUILDS::E_SHIPYARD || 
+		eBuilds == E_BUILDS::E_OIL_PLATFORM || 
+		eBuilds == E_BUILDS::E_FOUNDRY)
 	{
-		for (int j = 0; j < nCount; j++)
+		for (int i = 0; i < nCount; i++)
 		{
-			if (_pMap->getTile(nIndexX + i, nIndexY + j)->getObject() != TILE::E_OBJECT::E_NONE ||
-				_pMap->getTile(nIndexX + i, nIndexY + j)->getTerrian() != TILE::E_TERRIAN::GROUND)
+			for (int j = 0; j < nCount; j++)
 			{
-				return false;
+				if (_pMap->getTile(nIndexX + i, nIndexY + j)->getObject() != TILE::E_OBJECT::E_NONE ||
+					(_pMap->getTile(nIndexX + i, nIndexY + j)->getTerrian() != TILE::E_TERRIAN::DIRT_WATER && 
+					_pMap->getTile(nIndexX + i, nIndexY + j)->getTerrian() != TILE::E_TERRIAN::WATER))
+				{
+					return false;
+				}
 			}
 		}
 	}
+	else if (eBuilds == E_BUILDS::E_OIL_REFINERY)
+	{
+		for (int i = 0; i < nCount; i++)
+		{
+			for (int j = 0; j < nCount; j++)
+			{
+				if (_pMap->getTile(nIndexX + i, nIndexY + j)->getObject() != TILE::E_OBJECT::E_OILPATCH)
+				{
+					return false;
+				}
+			}
+		}
+	}
+	else
+	{
+		for (int i = 0; i < nCount; i++)
+		{
+			for (int j = 0; j < nCount; j++)
+			{
+				if (_pMap->getTile(nIndexX + i, nIndexY + j)->getObject() != TILE::E_OBJECT::E_NONE ||
+					_pMap->getTile(nIndexX + i, nIndexY + j)->getTerrian() != TILE::E_TERRIAN::GROUND)
+				{
+					return false;
+				}
+			}
+		}
+
+	}
+
+
+
 	return true;
 }
 

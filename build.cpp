@@ -124,15 +124,119 @@ void BUILD::creatingUpdate()
 void BUILD::createUnit()
 {
 	//시간이 없으니 한번에 처리해서 뿌리자
-	if (_nUnitMask & static_cast<unsigned int>(BUILDMGR::E_UNITMASK::E_WORKMAN))
+	if (_eUnitType == BUILDMGR::E_UNITMASK::E_WORKMAN && _nUnitMask & static_cast<unsigned int>(BUILDMGR::E_UNITMASK::E_WORKMAN))
 	{
 		//레이포인트로 쏘거나 건물주변으로 내보내거나
 		_bIsProduce = false;		
 		_pUnitMgr->createUnit(UNIT::E_UNIT::E_WORKMAN, _fRayPointX, _fRayPointY);
 		_fTimer = 0.0f;
+		_eUnitType = BUILDMGR::E_UNITMASK::E_NONE;
+
 	}
-
-
+	else if (_eUnitType == BUILDMGR::E_UNITMASK::E_ARCHER && _nUnitMask &  static_cast<unsigned int>(BUILDMGR::E_UNITMASK::E_ARCHER))
+	{
+		//레이포인트로 쏘거나 건물주변으로 내보내거나
+		_bIsProduce = false;
+		_pUnitMgr->createUnit(UNIT::E_UNIT::E_ARCHER, _fRayPointX, _fRayPointY);
+		_fTimer = 0.0f;
+		_eUnitType = BUILDMGR::E_UNITMASK::E_NONE;
+	}
+	else if (_eUnitType == BUILDMGR::E_UNITMASK::E_BALLISTA && _nUnitMask & static_cast<unsigned int>(BUILDMGR::E_UNITMASK::E_BALLISTA))
+	{
+		//레이포인트로 쏘거나 건물주변으로 내보내거나
+		_bIsProduce = false;
+		_pUnitMgr->createUnit(UNIT::E_UNIT::E_BALLISTA, _fRayPointX, _fRayPointY);
+		_fTimer = 0.0f;
+		_eUnitType = BUILDMGR::E_UNITMASK::E_NONE;
+	}
+	else if (_eUnitType == BUILDMGR::E_UNITMASK::E_FOOTMAN && _nUnitMask & static_cast<unsigned int>(BUILDMGR::E_UNITMASK::E_FOOTMAN))
+	{
+		//레이포인트로 쏘거나 건물주변으로 내보내거나
+		_bIsProduce = false;
+		_pUnitMgr->createUnit(UNIT::E_UNIT::E_FOOTMAN, _fRayPointX, _fRayPointY);
+		_fTimer = 0.0f;
+		_eUnitType = BUILDMGR::E_UNITMASK::E_NONE;
+	}
+	else if (_eUnitType == BUILDMGR::E_UNITMASK::E_BATTLESHIP && _nUnitMask & static_cast<unsigned int>(BUILDMGR::E_UNITMASK::E_BATTLESHIP))
+	{
+		//레이포인트로 쏘거나 건물주변으로 내보내거나
+		_bIsProduce = false;
+		_pUnitMgr->createUnit(UNIT::E_UNIT::E_BATTLESHIP, _fRayPointX, _fRayPointY);
+		_fTimer = 0.0f;
+		_eUnitType = BUILDMGR::E_UNITMASK::E_NONE;
+	}
+	else if (_eUnitType == BUILDMGR::E_UNITMASK::E_BOMBER && _nUnitMask & static_cast<unsigned int>(BUILDMGR::E_UNITMASK::E_BOMBER))
+	{
+		//레이포인트로 쏘거나 건물주변으로 내보내거나
+		_bIsProduce = false;
+		_pUnitMgr->createUnit(UNIT::E_UNIT::E_BOMBER, _fRayPointX, _fRayPointY);
+		_fTimer = 0.0f;
+		_eUnitType = BUILDMGR::E_UNITMASK::E_NONE;
+	}
+	else if (_eUnitType == BUILDMGR::E_UNITMASK::E_FLYER && _nUnitMask & static_cast<unsigned int>(BUILDMGR::E_UNITMASK::E_FLYER))
+	{
+		//레이포인트로 쏘거나 건물주변으로 내보내거나
+		_bIsProduce = false;
+		_pUnitMgr->createUnit(UNIT::E_UNIT::E_FLYER, _fRayPointX, _fRayPointY);
+		_fTimer = 0.0f;
+		_eUnitType = BUILDMGR::E_UNITMASK::E_NONE;
+	}
+	else if (_eUnitType == BUILDMGR::E_UNITMASK::E_GALLEYS && _nUnitMask & static_cast<unsigned int>(BUILDMGR::E_UNITMASK::E_GALLEYS))
+	{
+		//레이포인트로 쏘거나 건물주변으로 내보내거나
+		_bIsProduce = false;
+		_pUnitMgr->createUnit(UNIT::E_UNIT::E_GALLEYS, _fRayPointX, _fRayPointY);
+		_fTimer = 0.0f;
+		_eUnitType = BUILDMGR::E_UNITMASK::E_NONE;
+	}
+	else if (_eUnitType == BUILDMGR::E_UNITMASK::E_KNIGHT && _nUnitMask & static_cast<unsigned int>(BUILDMGR::E_UNITMASK::E_KNIGHT))
+	{
+		//레이포인트로 쏘거나 건물주변으로 내보내거나
+		_bIsProduce = false;
+		_pUnitMgr->createUnit(UNIT::E_UNIT::E_KNIGHT, _fRayPointX, _fRayPointY);
+		_fTimer = 0.0f;
+		_eUnitType = BUILDMGR::E_UNITMASK::E_NONE;
+	}
+	else if (_eUnitType == BUILDMGR::E_UNITMASK::E_MAGICIAN && _nUnitMask & static_cast<unsigned int>(BUILDMGR::E_UNITMASK::E_MAGICIAN))
+	{
+		//레이포인트로 쏘거나 건물주변으로 내보내거나
+		_bIsProduce = false;
+		_pUnitMgr->createUnit(UNIT::E_UNIT::E_MAGICIAN, _fRayPointX, _fRayPointY);
+		_fTimer = 0.0f;
+		_eUnitType = BUILDMGR::E_UNITMASK::E_NONE;
+	}
+	else if (_eUnitType == BUILDMGR::E_UNITMASK::E_OILTANKER && _nUnitMask & static_cast<unsigned int>(BUILDMGR::E_UNITMASK::E_OILTANKER))
+	{
+		//레이포인트로 쏘거나 건물주변으로 내보내거나
+		_bIsProduce = false;
+		_pUnitMgr->createUnit(UNIT::E_UNIT::E_OILTANKER, _fRayPointX, _fRayPointY);
+		_fTimer = 0.0f;
+		_eUnitType = BUILDMGR::E_UNITMASK::E_NONE;
+	}
+	else if (_eUnitType == BUILDMGR::E_UNITMASK::E_RECONNAISSANCE && _nUnitMask & static_cast<unsigned int>(BUILDMGR::E_UNITMASK::E_RECONNAISSANCE))
+	{
+		//레이포인트로 쏘거나 건물주변으로 내보내거나
+		_bIsProduce = false;
+		_pUnitMgr->createUnit(UNIT::E_UNIT::E_RECONNAISSANCE, _fRayPointX, _fRayPointY);
+		_fTimer = 0.0f;
+		_eUnitType = BUILDMGR::E_UNITMASK::E_NONE;
+	}
+	else if (_eUnitType == BUILDMGR::E_UNITMASK::E_SUBMARIN && _nUnitMask & static_cast<unsigned int>(BUILDMGR::E_UNITMASK::E_SUBMARIN))
+	{
+		//레이포인트로 쏘거나 건물주변으로 내보내거나
+		_bIsProduce = false;
+		_pUnitMgr->createUnit(UNIT::E_UNIT::E_SUBMARIN, _fRayPointX, _fRayPointY);
+		_fTimer = 0.0f;
+		_eUnitType = BUILDMGR::E_UNITMASK::E_NONE;
+	}
+	else if (_eUnitType == BUILDMGR::E_UNITMASK::E_TRANSPORT && _nUnitMask & static_cast<unsigned int>(BUILDMGR::E_UNITMASK::E_TRANSPORT))
+	{
+		//레이포인트로 쏘거나 건물주변으로 내보내거나
+		_bIsProduce = false;
+		_pUnitMgr->createUnit(UNIT::E_UNIT::E_TRANSPORT, _fRayPointX, _fRayPointY);
+		_fTimer = 0.0f;
+		_eUnitType = BUILDMGR::E_UNITMASK::E_NONE;
+	}
 }
 
 void BUILD::commandProduce()
@@ -143,16 +247,28 @@ void BUILD::commandProduce()
 	{
 		_bIsProduce = true;
 		_fTimer = 0.0f;
+		_eUnitType = BUILDMGR::E_UNITMASK::E_WORKMAN;
+	}
+	if (KEYMANAGER->isOnceKeyDown('F') && _nUnitMask & static_cast<unsigned int>(BUILDMGR::E_UNITMASK::E_FOOTMAN))
+	{
+		_bIsProduce = true;
+		_fTimer = 0.0f;
+		_eUnitType = BUILDMGR::E_UNITMASK::E_FOOTMAN;
+
 	}
 	if (KEYMANAGER->isOnceKeyDown('A') && _nUnitMask & static_cast<unsigned int>(BUILDMGR::E_UNITMASK::E_ARCHER) && (_pBuildMgr->getIsBuildTree(E_BUILDS::E_LUMBER_MILL)))
 	{
 		_bIsProduce = true;
 		_fTimer = 0.0f;
+		_eUnitType = BUILDMGR::E_UNITMASK::E_ARCHER;
+
 	}
 	if (KEYMANAGER->isOnceKeyDown('B') && _nUnitMask & static_cast<unsigned int>(BUILDMGR::E_UNITMASK::E_BALLISTA))
 	{
 		_bIsProduce = true;
 		_fTimer = 0.0f;
+		_eUnitType = BUILDMGR::E_UNITMASK::E_BALLISTA;
+
 	}
 	if (KEYMANAGER->isOnceKeyDown('K') && _nUnitMask & static_cast<unsigned int>(BUILDMGR::E_UNITMASK::E_KNIGHT) && (_pBuildMgr->getIsBuildTree(E_BUILDS::E_STABLE)))
 	{
@@ -160,7 +276,57 @@ void BUILD::commandProduce()
 		_fTimer = 0.0f;
 	}
 
+	if (KEYMANAGER->isOnceKeyDown('M') && _nUnitMask & static_cast<unsigned int>(BUILDMGR::E_UNITMASK::E_MAGICIAN))
+	{
+		_bIsProduce = true;
+		_fTimer = 0.0f;
+	}
 
+	if (KEYMANAGER->isOnceKeyDown('F') && _nUnitMask & static_cast<unsigned int>(BUILDMGR::E_UNITMASK::E_RECONNAISSANCE))
+	{
+		_bIsProduce = true;
+		_fTimer = 0.0f;
+	}
+	if (KEYMANAGER->isOnceKeyDown('D') && _nUnitMask & static_cast<unsigned int>(BUILDMGR::E_UNITMASK::E_BOMBER))
+	{
+		_bIsProduce = true;
+		_fTimer = 0.0f;
+	}
+
+	if (KEYMANAGER->isOnceKeyDown('E') && _nUnitMask & static_cast<unsigned int>(BUILDMGR::E_UNITMASK::E_GALLEYS))
+	{
+		_bIsProduce = true;
+		_fTimer = 0.0f;
+	}
+	if (KEYMANAGER->isOnceKeyDown('O') && _nUnitMask & static_cast<unsigned int>(BUILDMGR::E_UNITMASK::E_OILTANKER))
+	{
+		_bIsProduce = true;
+		_fTimer = 0.0f;
+	}
+
+	if (KEYMANAGER->isOnceKeyDown('T') && _nUnitMask & static_cast<unsigned int>(BUILDMGR::E_UNITMASK::E_TRANSPORT) && (_pBuildMgr->getIsBuildTree(E_BUILDS::E_FOUNDRY)))
+	{
+		_bIsProduce = true;
+		_fTimer = 0.0f;
+	}
+
+	if (KEYMANAGER->isOnceKeyDown('B') && _nUnitMask & static_cast<unsigned int>(BUILDMGR::E_UNITMASK::E_BATTLESHIP) && (_pBuildMgr->getIsBuildTree(E_BUILDS::E_FOUNDRY)))
+	{
+		_bIsProduce = true;
+		_fTimer = 0.0f;
+	}
+
+	if (KEYMANAGER->isOnceKeyDown('S') && _nUnitMask & static_cast<unsigned int>(BUILDMGR::E_UNITMASK::E_SUBMARIN) && (_pBuildMgr->getIsBuildTree(E_BUILDS::E_FOUNDRY)))
+	{
+		_bIsProduce = true;
+		_fTimer = 0.0f;
+	}
+
+	if (KEYMANAGER->isOnceKeyDown('G') && _nUnitMask & static_cast<unsigned int>(BUILDMGR::E_UNITMASK::E_FLYER))
+	{
+		_bIsProduce = true;
+		_fTimer = 0.0f;
+	}
 }
 
 void BUILD::upgradeBuild()
