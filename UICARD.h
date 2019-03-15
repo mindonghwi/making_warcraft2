@@ -4,7 +4,7 @@
 class UNIT;
 class BUILD;
 
-class UI
+class UICARD
 {
 private:
 	enum E_UITYPE
@@ -16,7 +16,7 @@ private:
 	};
 
 private:
-	image*	_pImageCard;
+	image * _pImageCard;
 	image*	_pObjectImage;
 	image*	_pPrograssBar;
 
@@ -24,14 +24,20 @@ private:
 
 	UNIT*	_pUnit;
 	BUILD*	_pBuild;
+
+	int		_nHp;
+	int		_nMaxHp;
+	int		_nAttack;
+	int		_nDefence;
+	
 public:
-	UI();
-	~UI();
+	UICARD();
+	~UICARD();
 
 	void create(UNIT* pUnit = nullptr, BUILD* pBuild = nullptr);
 	void update();
 	void render(HDC hdc);
 	void release();
 
-	
+
 };

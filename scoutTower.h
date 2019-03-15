@@ -2,23 +2,19 @@
 #include "stdafx.h"
 #include "build.h"
 
-class TOWN : public BUILD
+class SCOUT_TOWER : public BUILD
 {
 
 private:
 
 
 public:
-	TOWN();
-	~TOWN();
+	SCOUT_TOWER();
+	~SCOUT_TOWER();
 
 	virtual void create(int nLeft, int ntop, int nWidth, int nHeight, int nHp, float fBuildingTimer, int nFrameCount, const string& strImgKey);
-	//virtual void update()			override;
 	virtual void release()			override;
 	virtual void render(HDC hdc)	override;
-	//virtual	void creatingUpdate()	override;
-
-
 	virtual void upgradeBuild() override;
 
 };

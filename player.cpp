@@ -158,15 +158,16 @@ void PLAYER::commandBuild()
 	//선택된 애들중 workMan이 있을때
 	if (KEYMANAGER->isOnceKeyDown('B'))
 	{
-		if (_pUnitMgr->getSelectedUnit(0)->getUnit() == UNIT::E_UNIT::E_WORKMAN)
+		if (_pUnitMgr->getSelectedUnit(0)->getUnit() == UNIT::E_UNIT::E_WORKMAN && 	_eBuildType == E_BUILDTYPE::E_NONE)
 		{
 			//_pUnitMgr->getSelectedUnit(0)->setBuildingOn(true);
-			_bIsBuild = true;
+			_eBuildType = E_BUILDTYPE::E_B;
+			return;
 		}
 	}
 
 
-	if (_pUnitMgr->getSelectedUnit(0) && _pUnitMgr->getSelectedUnit(0)->getUnit() == UNIT::E_UNIT::E_WORKMAN)
+	if (_pUnitMgr->getSelectedUnit(0) && _pUnitMgr->getSelectedUnit(0)->getUnit() == UNIT::E_UNIT::E_WORKMAN && _eBuildType == E_BUILDTYPE::E_B)
 	{
 		//if (_pUnitMgr->getSelectedUnit(0)->getBuildingOn())
 		{
@@ -186,9 +187,19 @@ void PLAYER::commandBuild()
 				_eBuilds = E_BUILDS::E_BARRACKS;
 			}
 
-			if (KEYMANAGER->isOnceKeyDown('S'))
+			if (KEYMANAGER->isOnceKeyDown('S') && _pBuildMgr->getIsBuildTree(E_BUILDS::E_TOWN))
 			{
 				_eBuilds = E_BUILDS::E_BLACK_SMITH;
+			}
+
+			if (KEYMANAGER->isOnceKeyDown('L') && _pBuildMgr->getIsBuildTree(E_BUILDS::E_TOWN))
+			{
+				_eBuilds = E_BUILDS::E_LUMBER_MILL;
+			}
+
+			if (KEYMANAGER->isOnceKeyDown('T') && _pBuildMgr->getIsBuildTree(E_BUILDS::E_BARRACKS))
+			{
+				_eBuilds = E_BUILDS::E_SCOUT_TOWER;
 			}
 		}
 	}
@@ -224,7 +235,9 @@ void PLAYER::commandBuild()
 			_pUnitMgr->clearCommandSelectedUnit();
 			_pUnitMgr->buildCommand((float)_ptCameraPtMouse.x, (float)_ptCameraPtMouse.y, _eBuilds);
 			_eBuilds = E_BUILDS::E_MAX;
-			_bIsBuild = false;
+			_eBuildType = E_BUILDTYPE::E_NONE;
+
+			
 		}
 	}
 }
@@ -338,13 +351,16 @@ void PLAYER::dragSelect()
 
 		if (_pUnitMgr->getUnitSelectedCount() == 0)
 		{
+			_eBuildType = E_BUILDTYPE::E_NONE;
+			_eBuilds = E_BUILDS::E_MAX;
+
 			_pBuildMgr->selectedBuild(_rcDragArea);
 		}
 		else
 		{
 			if (_pUnitMgr->getSelectedUnit(0)->getUnit() != UNIT::E_UNIT::E_WORKMAN)
 			{
-				_bIsBuild = false;
+				_eBuildType = E_BUILDTYPE::E_NONE;
 				_eBuilds = E_BUILDS::E_MAX;
 			}
 		}

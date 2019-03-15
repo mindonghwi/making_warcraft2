@@ -90,5 +90,7 @@ public:
 
 	void	releaseSelected();
 	void	selectedBuild(RECT rcDrag);
+	void	removeBuild(BUILD* pBuild);
 
+	void	updateBuildTree(BUILD*	pBuild);
 };

@@ -768,6 +768,17 @@ void UNITMGR::commandMoveSingle(float fPosX, float fPosY, UNIT * pUnit)
 	(pUnit)->addCommand(pCommand);
 }
 
+void UNITMGR::removeSelectedUnit(UNIT * pUnit)
+{
+	for (int i = 0; i < getUnitSelectedCount(); i++)
+	{
+		if (_vSeletedUnit[i] == &pUnit) {
+			_vSeletedUnit.erase(_vSeletedUnit.begin() + i);
+			return;
+		}
+	}
+}
+
 
 UNIT * UNITMGR::getUnit(int nIndex)
 {

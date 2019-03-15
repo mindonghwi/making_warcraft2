@@ -31,7 +31,7 @@ void UNIT::init(int nPosX, int nPosY, int nWidth, int nHeight, int nIndexNum)
 	setAttackRange(0.0f);
 	setAttackSpeedps(0.0f);
 	_vvMovePoint.clear();
-
+	setMaxHp(0);
 	_nIndexNum = nIndexNum;
 }
 
@@ -50,6 +50,7 @@ void UNIT::create(int nPosX, int nPosY, int nHp, float fSpeed, int nAttack, int 
 	setAttackRange(fAttackRange);
 	setAttackSpeedps(fAttackSpeedps);
 	setMiniMalAttack(nMinimalAttacks);
+	setMaxHp(nHp);
 }
 
 
@@ -61,6 +62,16 @@ void UNIT::addFrameX(UNIT::E_STATE eState)
 	{
 		_nFrameX = getStartIndex(eState);
 	}
+}
+
+void UNIT::decreaseHp(int nHp)
+{
+	int nDecreaseHp = nHp - _nDefence;
+	if (nDecreaseHp < 1)
+	{
+		nDecreaseHp = 1;
+	}
+	OBJECT::_nHp -= nDecreaseHp;
 }
 
 void UNIT::commandMove(float fEndPosX, float fEndPosY)

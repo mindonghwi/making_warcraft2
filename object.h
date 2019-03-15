@@ -55,6 +55,6 @@ public:
 	inline void	setHp(int nHp) {_nHp = nHp; }
 	
 
-	inline void	decreaseHp(int nHp) { _nHp -= nHp; }
+	virtual void	decreaseHp(int nHp);
 };
 

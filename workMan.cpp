@@ -76,6 +76,7 @@ void WORKMAN::update()
 		//등장위치 조정
 		if (_pMap->getTile((int)OBJECT::getPosX()/TILESIZE, (int)OBJECT::getPosY() / TILESIZE)->getObject() != TILE::E_OBJECT::E_NONE)
 		{
+			//길이 없을경우가 문제
 			for (int i = 0; i < 25; i++)
 			{
 				OBJECT::setPosX(OBJECT::getPosX() + _pUnitMgr->getIntervalX(i) * TILESIZE);
@@ -246,6 +247,7 @@ void WORKMAN::build(float fPosX, float fPosY, E_BUILDS eBuilds)
 	_bIsBannedSelected = true;
 	_fBuildTime = _pBuildMgr->getBuildTime(eBuilds);
 	_fTimer = 0.0f;
+	_pUnitMgr->removeSelectedUnit(this);
 }
 
 void WORKMAN::harvestResources()

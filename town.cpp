@@ -2,6 +2,7 @@
 #include "town.h"
 #include "buildMgr.h"
 #include "unitMGr.h"
+#include "player.h"
 TOWN::TOWN()
 {
 }
@@ -69,5 +70,22 @@ void TOWN::release()
 void TOWN::render(HDC hdc)
 {
 	OBJECT::getImage()->frameRenderCenter(hdc, OBJECT::getPosX(), OBJECT::getPosY(), _nFrameX, 0);
+}
+
+void TOWN::upgradeBuild()
+{
+	if (KEYMANAGER->isOnceKeyDown('K'))
+	{
+		if (_pBuildMgr->getIsBuildTree(E_BUILDS::E_BARRACKS))
+		{
+			if (_pPlayer->getGold() <= _pBuildMgr->getConsumptionResource(E_BUILDS::E_KEEP, E_RESOURCE::E_GOLD)) return;
+			if (_pPlayer->getTree() <= _pBuildMgr->getConsumptionResource(E_BUILDS::E_KEEP, E_RESOURCE::E_TREE)) return;
+			if (_pPlayer->getOil() <= _pBuildMgr->getConsumptionResource(E_BUILDS::E_KEEP, E_RESOURCE::E_OIL)) return;
+
+			_pBuildMgr->buildBuilding(E_BUILDS::E_KEEP, OBJECT::getLeft(), OBJECT::getTop());
+
+			_pBuildMgr->removeBuild(this);
+		}
+	}
 }
 

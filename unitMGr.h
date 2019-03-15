@@ -91,6 +91,7 @@ public:
 	void commandHarvestSingle(RESOURCES* pResource, UNIT* pUnit);
 
 	void commandMoveSingle(float fPosX, float fPosY, UNIT* pUnit);
+	void removeSelectedUnit(UNIT* pUnit);
 public:
 	//linker
 	inline	void	setLinkCamera(CAMERA* pCamera) { _pCamera = pCamera; }

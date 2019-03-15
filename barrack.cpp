@@ -14,15 +14,15 @@ void BARRACKS::create(int nLeft, int ntop, int nWidth, int nHeight, int nHp, flo
 {
 	BUILD::create(nLeft, ntop, nWidth, nHeight, nHp, fBuildingTimer, nFrameCount, strImgKey);
 	_nUnitMask += BUILDMGR::E_UNITMASK::E_FOOTMAN;
-	//if (_pBuildBgr->getIsBuildTree(E_BUILDS::E_LUMBER_MILL))
+	//if (_pBuildMgr->getIsBuildTree(E_BUILDS::E_LUMBER_MILL))
 	{
 		_nUnitMask += BUILDMGR::E_UNITMASK::E_ARCHER;
 	}
-	//if (_pBuildBgr->getIsBuildTree(E_BUILDS::E_BLACK_SMITH))
+	//if (_pBuildMgr->getIsBuildTree(E_BUILDS::E_BLACK_SMITH))
 	{
 		_nUnitMask += BUILDMGR::E_UNITMASK::E_BALLISTA;
 	}
-	//if (_pBuildBgr->getIsBuildTree(E_BUILDS::E_STABLE))
+	//if (_pBuildMgr->getIsBuildTree(E_BUILDS::E_STABLE))
 	{
 		_nUnitMask += BUILDMGR::E_UNITMASK::E_KNIGHT;
 	}

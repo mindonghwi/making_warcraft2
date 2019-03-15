@@ -106,6 +106,9 @@
     <Filter Include="PlayGround\build\header">
       <UniqueIdentifier>{3fe7f7f8-72f6-40af-bb2d-42bc074ff438}</UniqueIdentifier>
     </Filter>
+    <Filter Include="PlayGround\UI">
+      <UniqueIdentifier>{ab88879c-025f-4252-ae77-f7490a3d3e7c}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="stdafx.h">
@@ -318,9 +321,6 @@
     <ClInclude Include="buildCommand.h">
       <Filter>PlayGround\player\command</Filter>
     </ClInclude>
-    <ClInclude Include="UI.h">
-      <Filter>PlayGround</Filter>
-    </ClInclude>
     <ClInclude Include="town.h">
       <Filter>PlayGround\build\header</Filter>
     </ClInclude>
@@ -352,6 +352,18 @@
       <Filter>PlayGround\player\command</Filter>
     </ClInclude>
     <ClInclude Include="balckSmith.h">
+      <Filter>PlayGround\build\header</Filter>
+    </ClInclude>
+    <ClInclude Include="UI.h">
+      <Filter>PlayGround\UI</Filter>
+    </ClInclude>
+    <ClInclude Include="UICARD.h">
+      <Filter>PlayGround\UI</Filter>
+    </ClInclude>
+    <ClInclude Include="lumbleMill.h">
+      <Filter>PlayGround\build\header</Filter>
+    </ClInclude>
+    <ClInclude Include="scoutTower.h">
       <Filter>PlayGround\build\header</Filter>
     </ClInclude>
   </ItemGroup>
@@ -536,9 +548,6 @@
     <ClCompile Include="buildCommand.cpp">
       <Filter>PlayGround\player\command</Filter>
     </ClCompile>
-    <ClCompile Include="UI.cpp">
-      <Filter>소스 파일</Filter>
-    </ClCompile>
     <ClCompile Include="town.cpp">
       <Filter>PlayGround\build\cpp</Filter>
     </ClCompile>
@@ -564,6 +573,18 @@
       <Filter>PlayGround\player\command</Filter>
     </ClCompile>
     <ClCompile Include="balckSmith.cpp">
+      <Filter>PlayGround\build\cpp</Filter>
+    </ClCompile>
+    <ClCompile Include="UI.cpp">
+      <Filter>PlayGround\UI</Filter>
+    </ClCompile>
+    <ClCompile Include="UICARD.cpp">
+      <Filter>PlayGround\UI</Filter>
+    </ClCompile>
+    <ClCompile Include="lumbleMill.cpp">
+      <Filter>PlayGround\build\cpp</Filter>
+    </ClCompile>
+    <ClCompile Include="scoutTower.cpp">
       <Filter>PlayGround\build\cpp</Filter>
     </ClCompile>
   </ItemGroup>

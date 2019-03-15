@@ -191,6 +191,7 @@
     <ClInclude Include="keep.h" />
     <ClInclude Include="keyAniManager.h" />
     <ClInclude Include="keyManager.h" />
+    <ClInclude Include="lumbleMill.h" />
     <ClInclude Include="mainMenuScene.h" />
     <ClInclude Include="map.h" />
     <ClInclude Include="mapCreateScene.h" />
@@ -207,6 +208,7 @@
     <ClInclude Include="resources.h" />
     <ClInclude Include="returnHarvestCommand.h" />
     <ClInclude Include="sceneManager.h" />
+    <ClInclude Include="scoutTower.h" />
     <ClInclude Include="scrollButton.h" />
     <ClInclude Include="singletonBase.h" />
     <ClInclude Include="soundManager.h" />
@@ -229,6 +231,7 @@
     <ClInclude Include="tree.h" />
     <ClInclude Include="triBute.h" />
     <ClInclude Include="UI.h" />
+    <ClInclude Include="UICARD.h" />
     <ClInclude Include="unit.h" />
     <ClInclude Include="unitMGr.h" />
     <ClInclude Include="utils.h" />
@@ -269,6 +272,7 @@
     <ClCompile Include="keep.cpp" />
     <ClCompile Include="keyAniManager.cpp" />
     <ClCompile Include="keyManager.cpp" />
+    <ClCompile Include="lumbleMill.cpp" />
     <ClCompile Include="mainMenuScene.cpp" />
     <ClCompile Include="map.cpp" />
     <ClCompile Include="mapCreateScene.cpp" />
@@ -282,6 +286,7 @@
     <ClCompile Include="resourceMgr.cpp" />
     <ClCompile Include="resources.cpp" />
     <ClCompile Include="sceneManager.cpp" />
+    <ClCompile Include="scoutTower.cpp" />
     <ClCompile Include="scrollButton.cpp" />
     <ClCompile Include="soundManager.cpp" />
     <ClCompile Include="state.cpp" />
@@ -305,6 +310,7 @@
     <ClCompile Include="town.cpp" />
     <ClCompile Include="tree.cpp" />
     <ClCompile Include="UI.cpp" />
+    <ClCompile Include="UICARD.cpp" />
     <ClCompile Include="unit.cpp" />
     <ClCompile Include="unitMGr.cpp" />
     <ClCompile Include="utils.cpp" />

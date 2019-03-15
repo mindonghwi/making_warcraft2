@@ -167,6 +167,7 @@ protected:
 
 	RESOURCEMGR*	_pResourceMgr;
 	PLAYER*			_pPlayer;
+	int				_nMaxHp;
 public:
 	UNIT();
 	virtual ~UNIT();
@@ -211,6 +212,9 @@ public:
 	virtual void commandReturnHarvest();
 
 	virtual bool IsNearResources();
+
+
+
 public:
 	//setter
 	inline	void	setHp(int nAmount) { OBJECT::setHp(nAmount); }
@@ -224,7 +228,7 @@ public:
 	inline	void	setMiniMalAttack(int fAmount) { _nMinimalAttack = fAmount; }
 	inline	void	setBuildingOn(bool bIsBuildingOn){ _bNormalBuildingOn = bIsBuildingOn;}
 	inline	void	setBuildType(E_BUILDS eBuilds){_eBuilds = eBuilds;}
-	
+	inline	void	setMaxHp(int nMaxHp) { _nMaxHp = nMaxHp; }
 
 
 	//상태와 행동 패턴
@@ -279,7 +283,8 @@ public:
 	inline	float	getAttackRange() { return _fAttackRange; }
 	inline	float	getAttackSpeedps() { return _fAttackSpeedps; }
 	inline	int		getMiniMalAttack() { return _nMinimalAttack; }
-	
+	inline	int		getMaxHp() { return _nMaxHp; }
+
 	//애니메이션용
 	inline	float	getFPS(UNIT::E_STATE eState) { return _arFramePerSeconds[static_cast<int>(eState)]; }
 	inline	int		getStartIndex(UNIT::E_STATE eState) { return _arStateStartIndex[static_cast<int>(eState)]; }
@@ -351,5 +356,6 @@ public:
 	//나무자원 채집중
 
 	void	addFrameX(UNIT::E_STATE eState);
+	virtual void	decreaseHp(int nHp);
 
 };

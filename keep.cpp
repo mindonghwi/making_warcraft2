@@ -1,7 +1,7 @@
 #include "stdafx.h"
 #include "keep.h"
 #include "buildMgr.h"
-
+#include "player.h"
 KEEP::KEEP()
 {
 }
@@ -62,4 +62,21 @@ void KEEP::render(HDC hdc)
 {
 	OBJECT::getImage()->frameRenderCenter(hdc, OBJECT::getPosX(), OBJECT::getPosY(), _nFrameX, 0);
 
+}
+
+void KEEP::upgradeBuild()
+{
+	if (KEYMANAGER->isOnceKeyDown('C'))
+	{
+		if (_pBuildMgr->getIsBuildTree(E_BUILDS::E_GNOMISH_INVENTOR))
+		{
+			if (_pPlayer->getGold() <= _pBuildMgr->getConsumptionResource(E_BUILDS::E_CASTLE, E_RESOURCE::E_GOLD)) return;
+			if (_pPlayer->getTree() <= _pBuildMgr->getConsumptionResource(E_BUILDS::E_CASTLE, E_RESOURCE::E_TREE)) return;
+			if (_pPlayer->getOil() <= _pBuildMgr->getConsumptionResource(E_BUILDS::E_CASTLE, E_RESOURCE::E_OIL)) return;
+
+			_pBuildMgr->buildBuilding(E_BUILDS::E_CASTLE, OBJECT::getLeft(), OBJECT::getTop());
+
+			_pBuildMgr->removeBuild(this);
+		}
+	}
 }

@@ -6,3 +6,5 @@
 #include "farm.h"
 #include "barrack.h"
 #include "balckSmith.h"
+#include "lumbleMill.h"
+#include "scoutTower.h"

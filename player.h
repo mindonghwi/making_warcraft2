@@ -14,10 +14,16 @@ class RESOURCEMGR;
 
 class PLAYER
 {
+public:
+	enum E_BUILDTYPE
+	{
+		E_NONE,
+		E_B,
+		E_V,
+		E_MAX
+	};
+
 private:
-
-
-
 	int		_arResource[static_cast<const int>(E_RESOURCE::E_MAX)];
 	int		_nPopulation;
 	int		_nMaxPopulation;
@@ -39,7 +45,7 @@ private:
 	int		_nDragTop;			//drag top
 	bool	_bIsDrag;			//drag Status
 
-	bool				_bIsBuild;
+	E_BUILDTYPE	_eBuildType;
 	E_BUILDS	_eBuilds;
 
 

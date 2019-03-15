@@ -39,7 +39,7 @@ protected:
 
 	unsigned int		_nUnitMask;
 	UNITMGR*		_pUnitMgr;
-	BUILDMGR*		_pBuildBgr;
+	BUILDMGR*		_pBuildMgr;
 	PLAYER*			_pPlayer;
 	MAP*			_pMap;
 
@@ -60,12 +60,17 @@ public:
 
 	virtual void createUnit();
 	virtual void commandProduce();
+	
+	virtual void upgradeBuild();
+	
 
 	inline	void	setLinkCamera(CAMERA* pCamera) { _pCamera = pCamera; }
 	inline	void	setLinkUnitMgr(UNITMGR* pUnitMgr) { _pUnitMgr = pUnitMgr; }
-	inline	void	setLinkBuildMgr(BUILDMGR* pBuildBgr) { _pBuildBgr = pBuildBgr; }
+	inline	void	setLinkBuildMgr(BUILDMGR* pBuildBgr) { _pBuildMgr = pBuildBgr; }
 	inline	void	setLinkPlayer(PLAYER* pPlayer) { _pPlayer = pPlayer; }
 	inline	void	setLinkMap(MAP* pMap) { _pMap = pMap; }
 
 	inline	E_BUILDS	getBuildsTpye() { return _eBuilds; }
+
+	inline int		getMaxHp() { return _nMaxHp; }
 };

@@ -2,23 +2,18 @@
 #include "stdafx.h"
 #include "build.h"
 
-class TOWN : public BUILD
+class LUMBER_MILL : public BUILD
 {
 
 private:
 
 
 public:
-	TOWN();
-	~TOWN();
+	LUMBER_MILL();
+	~LUMBER_MILL();
 
 	virtual void create(int nLeft, int ntop, int nWidth, int nHeight, int nHp, float fBuildingTimer, int nFrameCount, const string& strImgKey);
-	//virtual void update()			override;
 	virtual void release()			override;
 	virtual void render(HDC hdc)	override;
-	//virtual	void creatingUpdate()	override;
-
-
-	virtual void upgradeBuild() override;
 
 };

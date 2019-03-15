@@ -39,3 +39,8 @@ void OBJECT::settingRect()
 	_rc = RectMakeCenter(static_cast<int>(_posX), static_cast<int>(_posY), _width, _height);
 }
 
+void OBJECT::decreaseHp(int nHp)
+{
+	{ _nHp -= nHp; }
+}
+

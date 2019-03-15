@@ -29,13 +29,18 @@ void BUILDMGR::init()
 
 void BUILDMGR::update()
 {
+	for (int i = 0; i < static_cast<int>(E_BUILDS::E_MAX); i++)
+	{
+		_arIsBuildTree[i] = false;
+	}
+	
 	list<BUILD*>::iterator iter = _listBuild.begin();
 
 	while (iter != _listBuild.end())
 	{
 		BUILD*	pBuild = *iter;
 		//빌드 되어있는지 확인
-		_arIsBuildTree[static_cast<int>(pBuild->getBuildsTpye())] = true;
+		updateBuildTree(pBuild);
 
 		pBuild->update();
 
@@ -45,6 +50,7 @@ void BUILDMGR::update()
 	if (_pSelected)
 	{
 		_pSelected->commandProduce();
+		_pSelected->upgradeBuild();
 	}
 }
 
@@ -96,6 +102,7 @@ void BUILDMGR::buildBuilding(E_BUILDS eBuild, float fPosX, float fPosY)
 		break;
 	case E_BUILDS::E_LUMBER_MILL:
 		strImgKey.append("miil");
+		_listBuild.push_back(new LUMBER_MILL);
 
 		break;
 	case E_BUILDS::E_BLACK_SMITH:
@@ -105,6 +112,8 @@ void BUILDMGR::buildBuilding(E_BUILDS eBuild, float fPosX, float fPosY)
 		break;
 	case E_BUILDS::E_SCOUT_TOWER:
 		strImgKey.append("scoutTower");
+		_listBuild.push_back(new SCOUT_TOWER);
+
 		break;
 	case E_BUILDS::E_GUARD_TOWER:
 		strImgKey.append("tower02");
@@ -252,7 +261,7 @@ void BUILDMGR::allocateBuildSize()
 void BUILDMGR::allocateBuildTime()
 {
 	_arBuildTime[static_cast<int>(E_BUILDS::E_TOWN)] = 1.0f;
-	_arBuildTime[static_cast<int>(E_BUILDS::E_KEEP)] = 60.0f;
+	_arBuildTime[static_cast<int>(E_BUILDS::E_KEEP)] = 10.0f;
 	_arBuildTime[static_cast<int>(E_BUILDS::E_CASTLE)] = 100.0f;
 	_arBuildTime[static_cast<int>(E_BUILDS::E_FARM)] = 20.0f;
 	_arBuildTime[static_cast<int>(E_BUILDS::E_BARRACKS)] = 20.0f;
@@ -332,4 +341,30 @@ void BUILDMGR::selectedBuild(RECT rcDrag)
 		}
 		iter++;
 	}
+}
+
+void BUILDMGR::removeBuild(BUILD * pBuild)
+{
+	list<BUILD*>::iterator iter = _listBuild.begin();
+	releaseSelected();
+	while (iter != _listBuild.end())
+	{
+		if (*iter == pBuild)
+		{
+			iter = _listBuild.erase(iter);
+			break;
+		}
+		iter ++;
+	}
+}
+
+void BUILDMGR::updateBuildTree(BUILD*	pBuild)
+{
+
+	if (pBuild->getBuildsTpye() == E_BUILDS::E_KEEP || pBuild->getBuildsTpye() == E_BUILDS::E_TOWN)
+	{
+		_arIsBuildTree[static_cast<int>(E_BUILDS::E_TOWN)] = true;
+		_arIsBuildTree[static_cast<int>(E_BUILDS::E_KEEP)] = true;
+	}
+	_arIsBuildTree[static_cast<int>(pBuild->getBuildsTpye())] = true;
 }

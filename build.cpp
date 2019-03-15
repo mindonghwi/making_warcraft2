@@ -30,7 +30,8 @@ void BUILD::create(int nLeft, int ntop, int nWidth, int nHeight, int nHp, float 
 	setImage(IMAGEMANAGER->findImage(strImgKey));
 
 	_fOffsetFrame = _fBuildingTimer / static_cast<float>(_nMaxFrameX);
-	
+	_fOffsetFrame += _fOffsetFrame;
+
 	_nUnitMask = 0;
 	_fRayPointX = 0.0f;
 	_fRayPointY = 0.0f;
@@ -54,6 +55,7 @@ void BUILD::update()
 		{
 			createUnit();
 		}
+		
 	}
 
 	_pCamera->pushRenderObject(this);
@@ -113,6 +115,7 @@ void BUILD::creatingUpdate()
 		_fTimer = 0.0f;
 		OBJECT::setHp(_nMaxHp);
 		OBJECT::decreaseHp(_nCreateDamage);//생상중 대미지 발생한것을 계산해준다.
+		_nFrameX = _nMaxFrameX - 1;
 	}
 
 
@@ -141,7 +144,7 @@ void BUILD::commandProduce()
 		_bIsProduce = true;
 		_fTimer = 0.0f;
 	}
-	if (KEYMANAGER->isOnceKeyDown('A') && _nUnitMask & static_cast<unsigned int>(BUILDMGR::E_UNITMASK::E_ARCHER) && (_pBuildBgr->getIsBuildTree(E_BUILDS::E_LUMBER_MILL)))
+	if (KEYMANAGER->isOnceKeyDown('A') && _nUnitMask & static_cast<unsigned int>(BUILDMGR::E_UNITMASK::E_ARCHER) && (_pBuildMgr->getIsBuildTree(E_BUILDS::E_LUMBER_MILL)))
 	{
 		_bIsProduce = true;
 		_fTimer = 0.0f;
@@ -151,13 +154,17 @@ void BUILD::commandProduce()
 		_bIsProduce = true;
 		_fTimer = 0.0f;
 	}
-	if (KEYMANAGER->isOnceKeyDown('K') && _nUnitMask & static_cast<unsigned int>(BUILDMGR::E_UNITMASK::E_KNIGHT) && (_pBuildBgr->getIsBuildTree(E_BUILDS::E_STABLE)))
+	if (KEYMANAGER->isOnceKeyDown('K') && _nUnitMask & static_cast<unsigned int>(BUILDMGR::E_UNITMASK::E_KNIGHT) && (_pBuildMgr->getIsBuildTree(E_BUILDS::E_STABLE)))
 	{
 		_bIsProduce = true;
 		_fTimer = 0.0f;
 	}
 
 
+}
+
+void BUILD::upgradeBuild()
+{
 }
 
 

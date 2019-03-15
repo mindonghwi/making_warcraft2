@@ -87,7 +87,7 @@ void playGround::loadImage()
 	
 	//°Ç¹°
 	IMAGEMANAGER->addFrameImage("town",				"resource/human/build/townhall.bmp",512,128,4,1,true,Mins::getMazenta());
-	IMAGEMANAGER->addFrameImage("keep",				"resource/human/build/keep.bmp", 256, 128, 4, 1, true, Mins::getMazenta());
+	IMAGEMANAGER->addFrameImage("keep",				"resource/human/build/keep.bmp", 256, 128, 2, 1, true, Mins::getMazenta());
 	IMAGEMANAGER->addFrameImage("castle",			"resource/human/build/castle.bmp", 256, 128, 2, 1, true, Mins::getMazenta());
 	IMAGEMANAGER->addFrameImage("barracks",			"resource/human/build/barracks.bmp", 384, 96, 4, 1, true, Mins::getMazenta());
 	IMAGEMANAGER->addFrameImage("miil",				"resource/human/build/branchOffice.bmp", 384, 96, 4, 1, true, Mins::getMazenta());
@@ -107,6 +107,15 @@ void playGround::loadImage()
 	IMAGEMANAGER->addFrameImage("yard02",			"resource/human/build/yard02.bmp", 192, 96, 4, 1, true, Mins::getMazenta());
 	IMAGEMANAGER->addFrameImage("yard03",			"resource/human/build/yard03.bmp", 192, 96, 4, 1, true, Mins::getMazenta());
 	IMAGEMANAGER->addFrameImage("oilRefinery",		"resource/human/build/oilRefinery.bmp", 288, 96, 4, 1, true, Mins::getMazenta());
+
+
+	//ui
+	IMAGEMANAGER->addImage("card", "resource/icon/UI/card.bmp", 54, 53, true, Mins::getMazenta());
+	IMAGEMANAGER->addImage("UiGold", "resource/icon/UI/card.bmp", 54, 53, true, Mins::getMazenta());
+	IMAGEMANAGER->addImage("UiTree", "resource/icon/UI/card.bmp", 54, 53, true, Mins::getMazenta());
+	IMAGEMANAGER->addImage("UiOil", "resource/icon/UI/card.bmp", 54, 53, true, Mins::getMazenta());
+	IMAGEMANAGER->addImage("UiPopulation", "resource/icon/UI/card.bmp", 54, 53, true, Mins::getMazenta());
+
 
 }
 
