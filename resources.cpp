@@ -8,3 +8,9 @@ RESOURCES::RESOURCES()
 RESOURCES::~RESOURCES()
 {
 }
+
+bool RESOURCES::Isharvested()
+{
+	
+	return _nHarvestCount <= _nMaxHarvestCount;
+}

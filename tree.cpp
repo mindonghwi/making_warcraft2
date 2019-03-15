@@ -18,6 +18,9 @@ void TREE::init(int nLeft, int nTop)
 	OBJECT::setHeight(96);
 	OBJECT::settingRect();
 	OBJECT::setImage(IMAGEMANAGER->findImage("tree"));
+
+	_nHarvestCount = 0;
+	_nMaxHarvestCount = 2;
 }
 
 void TREE::update()

@@ -204,6 +204,7 @@ GOLDMINE * RESOURCEMGR::getfindNearGoldMine(float fPosX, float fPosY)
 			fDistance = fTmp;
 			nIndex = nCount;
 		}
+
 		iter++;
 		nCount++;
 	}
@@ -214,7 +215,6 @@ GOLDMINE * RESOURCEMGR::getfindNearGoldMine(float fPosX, float fPosY)
 	{
 		iter++;
 	}
-
 	return *iter;
 }
 
@@ -236,6 +236,7 @@ TREE * RESOURCEMGR::getfindNearTree(float fPosX, float fPosY)
 			fDistance = fTmp;
 			nIndex = nCount;
 		}
+		
 		iter++;
 		nCount++;
 	}
@@ -246,6 +247,5 @@ TREE * RESOURCEMGR::getfindNearTree(float fPosX, float fPosY)
 	{
 		iter++;
 	}
-
 	return *iter;
 }

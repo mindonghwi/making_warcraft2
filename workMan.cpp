@@ -95,28 +95,9 @@ void WORKMAN::update()
 		return;
 	}
 
-	if (_eBehavier == UNIT::E_BEHAVIERNUM::E_NONE && !_queWaitCommand.empty())
-	{
-		COMMAND* pCommand = _queWaitCommand.front();
-		pCommand->start();
-		_queWaitCommand.pop();
-		_pUnitMgr->returnPool(pCommand);
-	}
 
 
-
-
-	_pCamera->pushRenderObject(this);
-}
-
-void WORKMAN::updateBehavier()
-{
-	UNIT::getCurrentState()->update();
-	UNIT::getCurrentBehavir()->update(this);
-
-
-
-	if (_nHarvestCount >= 1 && (_pCurrentBeHavier == _arBeHavier[static_cast<int>(E_BEHAVIERNUM::E_MOVE)] || 
+	if (_nHarvestCount >= 1 && (_pCurrentBeHavier == _arBeHavier[static_cast<int>(E_BEHAVIERNUM::E_MOVE)] ||
 		_pCurrentBeHavier == _arBeHavier[static_cast<int>(E_BEHAVIERNUM::E_NONE)]))
 	{
 		RECT rcTmp = *getCollisionRect();
@@ -134,8 +115,8 @@ void WORKMAN::updateBehavier()
 					_pBuildMgr->getBuild(i)->getBuildsTpye() == E_BUILDS::E_CASTLE)
 				{
 					RECT rc;
-					
-					if (IntersectRect(&rc,_pBuildMgr->getBuild(i)->getRect(), &rcTmp))
+
+					if (IntersectRect(&rc, _pBuildMgr->getBuild(i)->getRect(), &rcTmp))
 					{
 						commandIdle();
 						_pUnitMgr->commandHarvestSingle(nullptr, this);
@@ -169,6 +150,37 @@ void WORKMAN::updateBehavier()
 			}
 		}
 	}
+
+
+
+
+
+
+
+
+
+	if (_eBehavier == UNIT::E_BEHAVIERNUM::E_NONE && !_queWaitCommand.empty())
+	{
+		COMMAND* pCommand = _queWaitCommand.front();
+		pCommand->start();
+		_queWaitCommand.pop();
+		_pUnitMgr->returnPool(pCommand);
+	}
+
+	
+
+
+	_pCamera->pushRenderObject(this);
+}
+
+void WORKMAN::updateBehavier()
+{
+
+
+	UNIT::getCurrentState()->update();
+	UNIT::getCurrentBehavir()->update(this);	
+
+
 }
 
 void WORKMAN::release()

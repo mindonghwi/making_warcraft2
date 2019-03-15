@@ -307,7 +307,14 @@ bool UNIT::IsNearResources()
 	else if (_eHarvest == E_HARVEST::E_TREE)
 	{
 		OBJECT* pObject = _pResourceMgr->getfindNearTree(getPosX(), getPosY());
-		if (Mins::getDoubleDis(pObject->getPosX(), pObject->getPosY(), getPosX(), getPosY()) >= TILESIZE * TILESIZE)
+		RECT rc;
+		RECT rcTmp = *_pTarget->getRect();
+		rcTmp.left -= 3;
+		rcTmp.top -= 3;
+		rcTmp.bottom += 3;
+		rcTmp.right  += 3;
+
+		if (IntersectRect(&rc, &rcTmp, getCollisionRect()))
 		{
 			return false;
 		}

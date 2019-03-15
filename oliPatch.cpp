@@ -19,6 +19,8 @@ void OILPATCH::init(int nLeft, int nTop)
 	OBJECT::settingRect();
 	OBJECT::setImage(IMAGEMANAGER->findImage("oil"));
 	
+	_nHarvestCount = 0;
+	_nMaxHarvestCount = 100;
 }
 
 void OILPATCH::update()

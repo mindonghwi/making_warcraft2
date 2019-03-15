@@ -20,6 +20,9 @@ void GOLDMINE::init(int nLeft, int nTop)
 	RESOURCES::OBJECT::setHeight(96);
 	RESOURCES::OBJECT::settingRect();
 	RESOURCES::OBJECT::setImage(IMAGEMANAGER->findImage("goldMine"));
+
+	_nHarvestCount = 0;
+	_nMaxHarvestCount = 1;
 }
 
 void GOLDMINE::update()

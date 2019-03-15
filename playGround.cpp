@@ -103,9 +103,9 @@ void playGround::loadImage()
 	IMAGEMANAGER->addFrameImage("tower02",			"resource/human/build/tower02.bmp", 128, 64, 4, 1, true, Mins::getMazenta());
 	IMAGEMANAGER->addFrameImage("tower03",			"resource/human/build/tower03.bmp", 128, 64, 4, 1, true, Mins::getMazenta());
 
-	IMAGEMANAGER->addFrameImage("dockyard",			"resource/human/build/dockyard.bmp", 192, 96, 3, 1, true, Mins::getMazenta());
-	IMAGEMANAGER->addFrameImage("yard02",			"resource/human/build/yard02.bmp", 192, 96, 3, 1, true, Mins::getMazenta());
-	IMAGEMANAGER->addFrameImage("yard03",			"resource/human/build/yard03.bmp", 192, 96, 3, 1, true, Mins::getMazenta());
+	IMAGEMANAGER->addFrameImage("dockyard",			"resource/human/build/dockyard.bmp", 192, 96, 2, 1, true, Mins::getMazenta());
+	IMAGEMANAGER->addFrameImage("yard02",			"resource/human/build/yard02.bmp", 192, 96, 2, 1, true, Mins::getMazenta());
+	IMAGEMANAGER->addFrameImage("yard03",			"resource/human/build/yard03.bmp", 192, 96, 2, 1, true, Mins::getMazenta());
 	IMAGEMANAGER->addFrameImage("oilRefinery",		"resource/human/build/oilRefinery.bmp", 288, 96, 3, 1, true, Mins::getMazenta());
 
 
