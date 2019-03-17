@@ -55,8 +55,11 @@ void BUILD::update()
 		{
 			createUnit();
 		}
-		
+		destroyBuild();
+
 	}
+
+
 
 	_pCamera->pushRenderObject(this);
 }
@@ -270,67 +273,95 @@ void BUILD::commandProduce()
 		_eUnitType = BUILDMGR::E_UNITMASK::E_BALLISTA;
 
 	}
-	if (KEYMANAGER->isOnceKeyDown('K') && _nUnitMask & static_cast<unsigned int>(BUILDMGR::E_UNITMASK::E_KNIGHT) && (_pBuildMgr->getIsBuildTree(E_BUILDS::E_STABLE)))
+	if (KEYMANAGER->isOnceKeyDown('K') && _nUnitMask & static_cast<unsigned int>(BUILDMGR::E_UNITMASK::E_KNIGHT))// && (_pBuildMgr->getIsBuildTree(E_BUILDS::E_STABLE)))
 	{
 		_bIsProduce = true;
 		_fTimer = 0.0f;
+		_eUnitType = BUILDMGR::E_UNITMASK::E_KNIGHT;
+
 	}
 
 	if (KEYMANAGER->isOnceKeyDown('M') && _nUnitMask & static_cast<unsigned int>(BUILDMGR::E_UNITMASK::E_MAGICIAN))
 	{
 		_bIsProduce = true;
 		_fTimer = 0.0f;
+		_eUnitType = BUILDMGR::E_UNITMASK::E_MAGICIAN;
+
 	}
 
 	if (KEYMANAGER->isOnceKeyDown('F') && _nUnitMask & static_cast<unsigned int>(BUILDMGR::E_UNITMASK::E_RECONNAISSANCE))
 	{
 		_bIsProduce = true;
 		_fTimer = 0.0f;
+		_eUnitType = BUILDMGR::E_UNITMASK::E_RECONNAISSANCE;
+
 	}
 	if (KEYMANAGER->isOnceKeyDown('D') && _nUnitMask & static_cast<unsigned int>(BUILDMGR::E_UNITMASK::E_BOMBER))
 	{
 		_bIsProduce = true;
 		_fTimer = 0.0f;
+		_eUnitType = BUILDMGR::E_UNITMASK::E_BOMBER;
+
 	}
 
 	if (KEYMANAGER->isOnceKeyDown('E') && _nUnitMask & static_cast<unsigned int>(BUILDMGR::E_UNITMASK::E_GALLEYS))
 	{
 		_bIsProduce = true;
 		_fTimer = 0.0f;
+		_eUnitType = BUILDMGR::E_UNITMASK::E_GALLEYS;
+
 	}
 	if (KEYMANAGER->isOnceKeyDown('O') && _nUnitMask & static_cast<unsigned int>(BUILDMGR::E_UNITMASK::E_OILTANKER))
 	{
 		_bIsProduce = true;
 		_fTimer = 0.0f;
+		_eUnitType = BUILDMGR::E_UNITMASK::E_OILTANKER;
+
 	}
 
 	if (KEYMANAGER->isOnceKeyDown('T') && _nUnitMask & static_cast<unsigned int>(BUILDMGR::E_UNITMASK::E_TRANSPORT) && (_pBuildMgr->getIsBuildTree(E_BUILDS::E_FOUNDRY)))
 	{
 		_bIsProduce = true;
 		_fTimer = 0.0f;
+		_eUnitType = BUILDMGR::E_UNITMASK::E_TRANSPORT;
+
 	}
 
 	if (KEYMANAGER->isOnceKeyDown('B') && _nUnitMask & static_cast<unsigned int>(BUILDMGR::E_UNITMASK::E_BATTLESHIP) && (_pBuildMgr->getIsBuildTree(E_BUILDS::E_FOUNDRY)))
 	{
 		_bIsProduce = true;
 		_fTimer = 0.0f;
+		_eUnitType = BUILDMGR::E_UNITMASK::E_BATTLESHIP;
+
 	}
 
 	if (KEYMANAGER->isOnceKeyDown('S') && _nUnitMask & static_cast<unsigned int>(BUILDMGR::E_UNITMASK::E_SUBMARIN) && (_pBuildMgr->getIsBuildTree(E_BUILDS::E_FOUNDRY)))
 	{
 		_bIsProduce = true;
 		_fTimer = 0.0f;
+		_eUnitType = BUILDMGR::E_UNITMASK::E_SUBMARIN;
+
 	}
 
 	if (KEYMANAGER->isOnceKeyDown('G') && _nUnitMask & static_cast<unsigned int>(BUILDMGR::E_UNITMASK::E_FLYER))
 	{
 		_bIsProduce = true;
 		_fTimer = 0.0f;
+		_eUnitType = BUILDMGR::E_UNITMASK::E_FLYER;
+
 	}
 }
 
 void BUILD::upgradeBuild()
 {
+}
+
+void BUILD::destroyBuild()
+{
+	if (_nHp <= 0)
+	{
+		_eState = E_STATE::E_DESTROY;
+	}
 }
 
 

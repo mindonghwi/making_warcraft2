@@ -186,10 +186,10 @@ public:
 
 	virtual void commandMove(float fEndPosX, float fEndPosY);
 
-	virtual void command()		abstract;
+	virtual void command();
 	
 	virtual void setMovePoints(float fEndPosX,float fEndPosY);
-
+	virtual void setMovePoints(float fEndPosX, float fEndPosY, ASTAR::MOVEHEIGHT eMoveHeight);
 	virtual void Move();
 
 	virtual void build(float fPosX,float fPosY,E_BUILDS eBuilds);

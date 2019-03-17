@@ -27,8 +27,26 @@ void BEHAVIER_MOVE_WALK::update(UNIT * pUnit)
 		_fTimer = 0.0f;
 	}
 	
-
+	
 	pUnit->Move();
+
+	if (pUnit->getTarget())
+	{
+		RECT rc;
+		RECT rcTmp = *pUnit->getRect();
+		rcTmp.left -= 5;
+		rcTmp.top -= 5;
+		rcTmp.bottom  += 5;
+		rcTmp.right  += 5;
+
+		if (IntersectRect(&rc, pUnit->getCollisionRect(), &rcTmp))
+		{
+			end(pUnit);
+			return;
+		}
+	}
+
+
 }
 
 void BEHAVIER_MOVE_WALK::end(UNIT * pUnit)

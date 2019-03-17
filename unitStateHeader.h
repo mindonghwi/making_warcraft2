@@ -1,0 +1,9 @@
+#pragma once
+#include "state.h"
+#include "state_Attack.h"
+#include "state_hold.h"
+#include "state_AttackMove.h"
+#include "state_idle.h"
+#include "state_move.h"
+#include "state_Patrol.h"
+#include "state_special.h"

@@ -158,7 +158,7 @@ void PLAYER::commandBuild()
 	//선택된 애들중 workMan이 있을때
 	if (KEYMANAGER->isOnceKeyDown('B'))
 	{
-		if (_pUnitMgr->getSelectedUnit(0)->getUnit() == UNIT::E_UNIT::E_WORKMAN && 	_eBuildType == E_BUILDTYPE::E_NONE)
+		if (_pUnitMgr->getUnitSelectedCount() > 0 && _pUnitMgr->getSelectedUnit(0)->getUnit() == UNIT::E_UNIT::E_WORKMAN && 	_eBuildType == E_BUILDTYPE::E_NONE)
 		{
 			//_pUnitMgr->getSelectedUnit(0)->setBuildingOn(true);
 			_eBuildType = E_BUILDTYPE::E_B;
@@ -168,7 +168,7 @@ void PLAYER::commandBuild()
 
 	if (KEYMANAGER->isOnceKeyDown('V'))
 	{
-		if (_pUnitMgr->getSelectedUnit(0)->getUnit() == UNIT::E_UNIT::E_WORKMAN && 	_eBuildType == E_BUILDTYPE::E_NONE)
+		if (_pUnitMgr->getUnitSelectedCount() > 0 && _pUnitMgr->getSelectedUnit(0)->getUnit() == UNIT::E_UNIT::E_WORKMAN && 	_eBuildType == E_BUILDTYPE::E_NONE)
 		{
 			//_pUnitMgr->getSelectedUnit(0)->setBuildingOn(true);
 			_eBuildType = E_BUILDTYPE::E_V;
@@ -217,7 +217,7 @@ void PLAYER::commandBuild()
 				_eBuilds = E_BUILDS::E_SCOUT_TOWER;
 			}
 
-			if (KEYMANAGER->isOnceKeyDown('F') && _pBuildMgr->getIsBuildTree(E_BUILDS::E_KEEP))
+			if (KEYMANAGER->isOnceKeyDown('G') && _pBuildMgr->getIsBuildTree(E_BUILDS::E_KEEP))
 			{
 				_eBuilds = E_BUILDS::E_GNOMISH_INVENTOR;
 			}
@@ -236,7 +236,7 @@ void PLAYER::commandBuild()
 			_eBuilds = E_BUILDS::E_SHIPYARD;
 		}
 		
-		if (KEYMANAGER->isOnceKeyDown('O') && _pBuildMgr->getIsBuildTree(E_BUILDS::E_CASTLE))
+		if (KEYMANAGER->isOnceKeyDown('O'))// && _pBuildMgr->getIsBuildTree(E_BUILDS::E_CASTLE))
 		{
 			_eBuilds = E_BUILDS::E_OIL_PLATFORM;
 		}
@@ -328,7 +328,7 @@ void PLAYER::commandAttack()
 				if (PtInRect(_pBuildMgr->getBuild(i)->getRect(), _ptCameraPtMouse))
 				{
 					//여기에 유닛 어택을 내린다
-
+					_pUnitMgr->commandAttack(_pBuildMgr->getBuild(i));
 
 					break;
 				}

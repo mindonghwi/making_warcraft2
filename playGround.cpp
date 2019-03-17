@@ -64,6 +64,7 @@ void playGround::loadImage()
 	//РЏДж
 	//barrocks
 	IMAGEMANAGER->addFrameImage("peasantSprite", "resource/human/peasantSprite.bmp", 1280, 576, 20, 9, true, Mins::getMazenta());
+	IMAGEMANAGER->addFrameImage("footManSprite", "resource/human/footManSprite.bmp", 864, 864, 9, 9, true, Mins::getMazenta());
 	IMAGEMANAGER->addFrameImage("ballistaSprite", "resource/human/ballistaSprite.bmp", 480, 768, 5, 8, true, Mins::getMazenta());
 	IMAGEMANAGER->addFrameImage("elvenArcherSprite", "resource/human/elvenArcherSprite.bmp", 672, 864, 7, 9, true, Mins::getMazenta());
 	IMAGEMANAGER->addFrameImage("knightSprite", "resource/human/knightSprite.bmp", 864, 864, 9, 9, true, Mins::getMazenta());
@@ -100,8 +101,8 @@ void playGround::loadImage()
 
 	IMAGEMANAGER->addFrameImage("farm",				"resource/human/build/farm.bmp", 256, 64, 4, 1, true, Mins::getMazenta());
 	IMAGEMANAGER->addFrameImage("scoutTower",		"resource/human/build/tower01.bmp", 256, 64, 4, 1, true, Mins::getMazenta());
-	IMAGEMANAGER->addFrameImage("tower02",			"resource/human/build/tower02.bmp", 128, 64, 4, 1, true, Mins::getMazenta());
-	IMAGEMANAGER->addFrameImage("tower03",			"resource/human/build/tower03.bmp", 128, 64, 4, 1, true, Mins::getMazenta());
+	IMAGEMANAGER->addFrameImage("tower02",			"resource/human/build/tower02.bmp", 128, 64, 2, 1, true, Mins::getMazenta());
+	IMAGEMANAGER->addFrameImage("tower03",			"resource/human/build/tower03.bmp", 128, 64, 2, 1, true, Mins::getMazenta());
 
 	IMAGEMANAGER->addFrameImage("dockyard",			"resource/human/build/dockyard.bmp", 192, 96, 2, 1, true, Mins::getMazenta());
 	IMAGEMANAGER->addFrameImage("yard02",			"resource/human/build/yard02.bmp", 192, 96, 2, 1, true, Mins::getMazenta());

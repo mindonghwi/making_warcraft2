@@ -2,7 +2,7 @@
 #include "buildMgr.h"
 #include "map.h"
 #include "buildsHeader.h"
-
+#include "build.h"
 BUILDMGR::BUILDMGR()
 {
 }
@@ -44,7 +44,14 @@ void BUILDMGR::update()
 
 		pBuild->update();
 
-		iter++;
+		if (pBuild->getState() == BUILD::E_STATE::E_DESTROY)
+		{
+			iter = _listBuild.erase(iter);
+		}
+		else
+		{
+			iter++;
+		}
 	}
 
 	if (_pSelected)
@@ -309,8 +316,8 @@ void BUILDMGR::allocateBuildSize()
 
 void BUILDMGR::allocateBuildTime()
 {
-	_arBuildTime[static_cast<int>(E_BUILDS::E_TOWN)] = 1.0f;
-	_arBuildTime[static_cast<int>(E_BUILDS::E_KEEP)] = 10.0f;
+	_arBuildTime[static_cast<int>(E_BUILDS::E_TOWN)] = 10.0f;
+	_arBuildTime[static_cast<int>(E_BUILDS::E_KEEP)] = 40.0f;
 	_arBuildTime[static_cast<int>(E_BUILDS::E_CASTLE)] = 100.0f;
 	_arBuildTime[static_cast<int>(E_BUILDS::E_FARM)] = 20.0f;
 	_arBuildTime[static_cast<int>(E_BUILDS::E_BARRACKS)] = 20.0f;
@@ -319,7 +326,7 @@ void BUILDMGR::allocateBuildTime()
 	_arBuildTime[static_cast<int>(E_BUILDS::E_SCOUT_TOWER)] = 20.0f;
 	_arBuildTime[static_cast<int>(E_BUILDS::E_GUARD_TOWER)] = 20.0f;
 	_arBuildTime[static_cast<int>(E_BUILDS::E_CANNON_TOWER)] = 20.0f;
-	_arBuildTime[static_cast<int>(E_BUILDS::E_SHIPYARD)] = 40.0f;
+	_arBuildTime[static_cast<int>(E_BUILDS::E_SHIPYARD)] = 30.0f;
 	_arBuildTime[static_cast<int>(E_BUILDS::E_FOUNDRY)] = 40.0f;
 	_arBuildTime[static_cast<int>(E_BUILDS::E_OIL_REFINERY)] = 40.0f;
 	_arBuildTime[static_cast<int>(E_BUILDS::E_OIL_PLATFORM)] = 40.0f;
@@ -328,6 +335,28 @@ void BUILDMGR::allocateBuildTime()
 	_arBuildTime[static_cast<int>(E_BUILDS::E_CHURCH)] = 40.0f;
 	_arBuildTime[static_cast<int>(E_BUILDS::E_MAGE_TOWER)] = 60.0f;
 	_arBuildTime[static_cast<int>(E_BUILDS::E_GRYPHON_AVIARY)] = 60.0f;
+
+
+
+	_arBuildTime[static_cast<int>(E_BUILDS::E_TOWN)]			=1.0f;
+	_arBuildTime[static_cast<int>(E_BUILDS::E_KEEP)]			=1.0f;
+	_arBuildTime[static_cast<int>(E_BUILDS::E_CASTLE)]			=1.0f;
+	_arBuildTime[static_cast<int>(E_BUILDS::E_FARM)]			=1.0f;
+	_arBuildTime[static_cast<int>(E_BUILDS::E_BARRACKS)]		=1.0f;
+	_arBuildTime[static_cast<int>(E_BUILDS::E_LUMBER_MILL)]		=1.0f;
+	_arBuildTime[static_cast<int>(E_BUILDS::E_BLACK_SMITH)]		=1.0f;
+	_arBuildTime[static_cast<int>(E_BUILDS::E_SCOUT_TOWER)]		=1.0f;
+	_arBuildTime[static_cast<int>(E_BUILDS::E_GUARD_TOWER)]		=1.0f;
+	_arBuildTime[static_cast<int>(E_BUILDS::E_CANNON_TOWER)]	=1.0f;
+	_arBuildTime[static_cast<int>(E_BUILDS::E_SHIPYARD)]		=1.0f;
+	_arBuildTime[static_cast<int>(E_BUILDS::E_FOUNDRY)]			=1.0f;
+	_arBuildTime[static_cast<int>(E_BUILDS::E_OIL_REFINERY)]	=1.0f;
+	_arBuildTime[static_cast<int>(E_BUILDS::E_OIL_PLATFORM)]	=1.0f;
+	_arBuildTime[static_cast<int>(E_BUILDS::E_GNOMISH_INVENTOR)]=1.0f;
+	_arBuildTime[static_cast<int>(E_BUILDS::E_STABLE)]			=1.0f;
+	_arBuildTime[static_cast<int>(E_BUILDS::E_CHURCH)]			=1.0f;
+	_arBuildTime[static_cast<int>(E_BUILDS::E_MAGE_TOWER)]		=1.0f;
+	_arBuildTime[static_cast<int>(E_BUILDS::E_GRYPHON_AVIARY)]	=1.0f;
 }
 
 void BUILDMGR::allocateBuildHp()

@@ -23,9 +23,7 @@ void BEHAVIER_HARVEST_WORKMAN::update(UNIT * pUnit)
 	{
 		pUnit->getMyUnitMgr()->commandHarvestSingle(nullptr,pUnit);
 	}
-
-
-	if (_fTimer >= 1.0f)
+	else if (_fTimer >= 1.0f)
 	{
 		pUnit->harvestResources();
 		_fTimer = 0.0f;

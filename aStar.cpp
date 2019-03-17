@@ -144,7 +144,11 @@ void ASTAR::startFinder(float fStartPosX, float fStartPosY, float fEndPosX, floa
 	//pNode->nPathStartToCurrent = 0;
 	//pNode->nPathToatalCost = 0;
 	//pNode->parrentNode = nullptr;
+	if (_eMoveHeight == MOVEHEIGHT::WATER)
+	{
+		initMap();
 
+	}
 
 	//만약 그 위치에 무언가 못가게 하는 것이 있으면
 	int nCount = 0;
@@ -155,8 +159,8 @@ void ASTAR::startFinder(float fStartPosX, float fStartPosY, float fEndPosX, floa
 	while (//(_eMoveHeight == MOVEHEIGHT::GROUND && _pMap->getTile(_nEndIndexX, _nEndIndexY)->getTerrian() == TILE::E_TERRIAN::WATER)
 		//|| (_eMoveHeight == MOVEHEIGHT::GROUND && _pMap->getTile(_nEndIndexX, _nEndIndexY)->getTerrian() == TILE::E_TERRIAN::DIRT_WATER)
 		//|| (_eMoveHeight == MOVEHEIGHT::GROUND && _pMap->getTile(_nEndIndexX, _nEndIndexY)->getTerrian() == TILE::E_TERRIAN::ROCK)
-		 (_eMoveHeight == MOVEHEIGHT::GROUND && _pMap->getTile(_nEndIndexX, _nEndIndexY)->getObject() != TILE::E_OBJECT::E_NONE)
-		|| bIsOnObject)
+		nCount< 25&&((_eMoveHeight == MOVEHEIGHT::GROUND && _pMap->getTile(_nEndIndexX, _nEndIndexY)->getObject() != TILE::E_OBJECT::E_NONE)
+		|| bIsOnObject))
 	{
 		bIsOnObject = false;
 
@@ -352,7 +356,8 @@ void ASTAR::pathFinder()
 
 
 		if (_eMoveHeight == MOVEHEIGHT::WATER && _pMap->getTile(nIntervalPosX, nIntervalPosY)->getTerrian() != TILE::E_TERRIAN::WATER) continue;
-		if (_eMoveHeight != MOVEHEIGHT::FLY && _pMap->getTile(nIntervalPosX, nIntervalPosY)->getObject() != TILE::E_OBJECT::E_NONE) continue;
+		if (_eMoveHeight == MOVEHEIGHT::GROUND && _pMap->getTile(nIntervalPosX, nIntervalPosY)->getObject() != TILE::E_OBJECT::E_NONE)continue;
+
 		//유닛
 		bool bIsObject = false;
 		for (int i = 0; i < _pUnitMgr->getUnitCount(); i++)
@@ -493,7 +498,7 @@ void ASTAR::pathFinder()
 
 	}
 
-	if (_listClosedyPath.size() > 50)
+	if (_listClosedyPath.size() > 300)
 	{
 
 		list<TILENODE*>::iterator iter = _listClosedyPath.begin();

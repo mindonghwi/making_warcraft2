@@ -95,11 +95,28 @@ void UNIT::commandMove(float fEndPosX, float fEndPosY)
 
 }
 
+void UNIT::command()
+{
+}
+
 void UNIT::setMovePoints(float fEndPosX, float fEndPosY)
 {
 	UNIT::setMoveIndex(0);
 
-	_pAstar->startFinder(UNIT::OBJECT::getPosX(), UNIT::OBJECT::getPosY(), fEndPosX, fEndPosY, ASTAR::MOVEHEIGHT::GROUND);
+	if (_eUnit == E_UNIT::E_FLYER || _eUnit == E_UNIT::E_RECONNAISSANCE)
+	{
+		_pAstar->startFinder(UNIT::OBJECT::getPosX(), UNIT::OBJECT::getPosY(), fEndPosX, fEndPosY, ASTAR::MOVEHEIGHT::FLY);
+	}
+
+	else if (_eUnit==E_UNIT::E_BATTLESHIP || _eUnit == E_UNIT::E_GALLEYS || _eUnit == E_UNIT::E_OILTANKER || _eUnit == E_UNIT::E_TRANSPORT|| _eUnit == E_UNIT::E_SUBMARIN)
+	{
+		_pAstar->startFinder(UNIT::OBJECT::getPosX(), UNIT::OBJECT::getPosY(), fEndPosX, fEndPosY, ASTAR::MOVEHEIGHT::WATER);
+	}
+	else
+	{
+		_pAstar->startFinder(UNIT::OBJECT::getPosX(), UNIT::OBJECT::getPosY(), fEndPosX, fEndPosY, ASTAR::MOVEHEIGHT::GROUND);
+	}
+
 	_pAstar->pathFinder();
 
 	UNIT::_vvMovePoint.clear();
@@ -113,6 +130,11 @@ void UNIT::setMovePoints(float fEndPosX, float fEndPosY)
 		UNIT::_vvMovePoint.push_back(vPos);
 	}
 	UNIT::setMoveIndex(0);
+
+}
+
+void UNIT::setMovePoints(float fEndPosX, float fEndPosY, ASTAR::MOVEHEIGHT eMoveHeight)
+{
 
 }
 

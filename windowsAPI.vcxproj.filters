@@ -115,6 +115,15 @@
     <Filter Include="PlayGround\build\header\water">
       <UniqueIdentifier>{49a3af81-1eae-408d-bebe-4b924a9acbe2}</UniqueIdentifier>
     </Filter>
+    <Filter Include="PlayGround\unit\barracksUnit">
+      <UniqueIdentifier>{0c0f6b1a-abd4-4431-80ff-3bc8cc390c15}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="PlayGround\unit\water">
+      <UniqueIdentifier>{9b13bed2-5402-4e05-bc06-6a234a7fd7d4}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="PlayGround\unit\2ndUnit">
+      <UniqueIdentifier>{8f97d5c7-edd3-49aa-85aa-d399c74bddd0}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="stdafx.h">
@@ -405,6 +414,51 @@
     <ClInclude Include="gryphonAviary.h">
       <Filter>PlayGround\build\header\ground</Filter>
     </ClInclude>
+    <ClInclude Include="footMan.h">
+      <Filter>PlayGround\unit\barracksUnit</Filter>
+    </ClInclude>
+    <ClInclude Include="unitStateHeader.h">
+      <Filter>PlayGround\unit</Filter>
+    </ClInclude>
+    <ClInclude Include="unitBehavierHeader.h">
+      <Filter>PlayGround\unit</Filter>
+    </ClInclude>
+    <ClInclude Include="elvenArcher.h">
+      <Filter>PlayGround\unit\barracksUnit</Filter>
+    </ClInclude>
+    <ClInclude Include="ballista.h">
+      <Filter>PlayGround\unit\barracksUnit</Filter>
+    </ClInclude>
+    <ClInclude Include="knight.h">
+      <Filter>PlayGround\unit\barracksUnit</Filter>
+    </ClInclude>
+    <ClInclude Include="oilTanker.h">
+      <Filter>PlayGround\unit\water</Filter>
+    </ClInclude>
+    <ClInclude Include="galley.h">
+      <Filter>PlayGround\unit\water</Filter>
+    </ClInclude>
+    <ClInclude Include="battleShip.h">
+      <Filter>PlayGround\unit\water</Filter>
+    </ClInclude>
+    <ClInclude Include="transport.h">
+      <Filter>PlayGround\unit\water</Filter>
+    </ClInclude>
+    <ClInclude Include="submarin.h">
+      <Filter>PlayGround\unit\water</Filter>
+    </ClInclude>
+    <ClInclude Include="reconnaissance.h">
+      <Filter>PlayGround\unit\2ndUnit</Filter>
+    </ClInclude>
+    <ClInclude Include="bomber.h">
+      <Filter>PlayGround\unit\2ndUnit</Filter>
+    </ClInclude>
+    <ClInclude Include="magician.h">
+      <Filter>PlayGround\unit\2ndUnit</Filter>
+    </ClInclude>
+    <ClInclude Include="gryphonRider.h">
+      <Filter>PlayGround\unit\2ndUnit</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="stdafx.cpp">
@@ -658,6 +712,45 @@
     </ClCompile>
     <ClCompile Include="gryphonAviary.cpp">
       <Filter>PlayGround\build\cpp</Filter>
+    </ClCompile>
+    <ClCompile Include="footMan.cpp">
+      <Filter>PlayGround\unit\barracksUnit</Filter>
+    </ClCompile>
+    <ClCompile Include="elvenArcher.cpp">
+      <Filter>PlayGround\unit\barracksUnit</Filter>
+    </ClCompile>
+    <ClCompile Include="ballista.cpp">
+      <Filter>PlayGround\unit\barracksUnit</Filter>
+    </ClCompile>
+    <ClCompile Include="knight.cpp">
+      <Filter>PlayGround\unit\barracksUnit</Filter>
+    </ClCompile>
+    <ClCompile Include="oilTanker.cpp">
+      <Filter>PlayGround\unit\water</Filter>
+    </ClCompile>
+    <ClCompile Include="galley.cpp">
+      <Filter>PlayGround\unit\water</Filter>
+    </ClCompile>
+    <ClCompile Include="battleShip.cpp">
+      <Filter>PlayGround\unit\water</Filter>
+    </ClCompile>
+    <ClCompile Include="transport.cpp">
+      <Filter>PlayGround\unit\water</Filter>
+    </ClCompile>
+    <ClCompile Include="submarin.cpp">
+      <Filter>PlayGround\unit\water</Filter>
+    </ClCompile>
+    <ClCompile Include="reconnaissance.cpp">
+      <Filter>PlayGround\unit\2ndUnit</Filter>
+    </ClCompile>
+    <ClCompile Include="bomber.cpp">
+      <Filter>PlayGround\unit\2ndUnit</Filter>
+    </ClCompile>
+    <ClCompile Include="magician.cpp">
+      <Filter>PlayGround\unit\2ndUnit</Filter>
+    </ClCompile>
+    <ClCompile Include="gryphonRider.cpp">
+      <Filter>PlayGround\unit\2ndUnit</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

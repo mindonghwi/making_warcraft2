@@ -2,6 +2,20 @@
 #include "unitMGr.h"
 
 #include "workMan.h"
+#include "footMan.h"
+#include "elvenArcher.h"
+#include "ballista.h"
+#include "knight.h"
+#include "oilTanker.h"
+#include "galley.h"
+#include "battleShip.h"
+#include "transport.h"
+#include "submarin.h"
+#include "reconnaissance.h"
+#include "bomber.h"
+#include "magician.h"
+#include "gryphonRider.h"
+
 #include "map.h"
 #include "buildMgr.h"
 
@@ -49,38 +63,61 @@ bool UNITMGR::createUnit(UNIT::E_UNIT eUnit, float fPosX, float fPosY)
 		_listUnit.push_back(new WORKMAN);
 		break;
 	case UNIT::E_UNIT::E_FOOTMAN:
-		
+		_listUnit.push_back(new FOOTMAN);
 		break;
 	case UNIT::E_UNIT::E_ARCHER:
+		_listUnit.push_back(new ELVENARCHER);
+
 		break;
 	case UNIT::E_UNIT::E_BALLISTA:
+		_listUnit.push_back(new BALLISTA);
+
 		break;
 	case UNIT::E_UNIT::E_KNIGHT:
+		_listUnit.push_back(new KNIGHT);
+
 		break;
 	case UNIT::E_UNIT::E_MAGICIAN:
+		_listUnit.push_back(new MAGICIAN);
+
 		break;
 	case UNIT::E_UNIT::E_BOMBER:
+		_listUnit.push_back(new BOMBER);
 		break;
 	case UNIT::E_UNIT::E_RECONNAISSANCE:
+		_listUnit.push_back(new RECONNAISSANCE);
+
 		break;
 	case UNIT::E_UNIT::E_OILTANKER:
+		_listUnit.push_back(new OILTANKER);
+
 		break;
 	case UNIT::E_UNIT::E_GALLEYS:
+		_listUnit.push_back(new GALLEYS);
+
 		break;
 	case UNIT::E_UNIT::E_TRANSPORT:
+		_listUnit.push_back(new TRANSPORT);
+
 		break;
 	case UNIT::E_UNIT::E_BATTLESHIP:
+		_listUnit.push_back(new BATTLESHIP);
+
 		break;
 	case UNIT::E_UNIT::E_SUBMARIN:
+		_listUnit.push_back(new SUBMARIN);
 		break;
 	case UNIT::E_UNIT::E_FLYER:
+		_listUnit.push_back(new GRYPHONRIDER);
+
 		break;
 	}
 	_listUnit.back()->setLinkResourceMgr(_pResourceMgr);
 	_listUnit.back()->setLinkUnitMgr(this);
 	_listUnit.back()->setLinkCamera(_pCamera);
 	_listUnit.back()->setLinkAStar(_pAstar);
-	_listUnit.back()->init(static_cast<int>(fPosX), static_cast<int>(fPosY), 64, 64, _nCount);
+	//64 64 원래 이거였음
+	_listUnit.back()->init(static_cast<int>(fPosX), static_cast<int>(fPosY), 32, 32, _nCount);
 	_listUnit.back()->create(static_cast<int>(fPosX), static_cast<int>(fPosY), _arUnitHp[static_cast<int>(eUnit)], _arUnitSpeed[static_cast<int>(eUnit)],
 		_arUnitAttack[static_cast<int>(eUnit)], _arUnitDefence[static_cast<int>(eUnit)], _arSearchRange[static_cast<int>(eUnit)], _arAttackRange[static_cast<int>(eUnit)], _arAttackSpeed[static_cast<int>(eUnit)],
 		_arUnitMinimalAttack[static_cast<int>(eUnit)]);

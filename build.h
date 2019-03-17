@@ -65,6 +65,7 @@ public:
 	
 	virtual void upgradeBuild();
 	
+	virtual void destroyBuild();
 
 	inline	void	setLinkCamera(CAMERA* pCamera) { _pCamera = pCamera; }
 	inline	void	setLinkUnitMgr(UNITMGR* pUnitMgr) { _pUnitMgr = pUnitMgr; }
@@ -75,4 +76,6 @@ public:
 	inline	E_BUILDS	getBuildsTpye() { return _eBuilds; }
 
 	inline int		getMaxHp() { return _nMaxHp; }
+
+	inline	E_STATE	getState() { return _eState; }
 };

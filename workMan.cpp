@@ -60,6 +60,7 @@ void WORKMAN::init(int nPosX, int nPosY, int nWidth, int nHeight, int nIndexNum)
 	_nCommand += static_cast<unsigned int>(COMMAND::E_COMMAND::E_HOLD);
 	_nCommand += static_cast<unsigned int>(COMMAND::E_COMMAND::E_MOVE);
 	_nCommand += static_cast<unsigned int>(COMMAND::E_COMMAND::E_BUILD);
+	_nCommand += static_cast<unsigned int>(COMMAND::E_COMMAND::E_ATTACK);
 
 	
 }
@@ -151,12 +152,11 @@ void WORKMAN::update()
 		}
 	}
 
-
-
-
-
-
-
+	if (_nHarvestCount < 1 && (_pCurrentBeHavier == _arBeHavier[static_cast<int>(E_BEHAVIERNUM::E_MOVE)] ||
+		_pCurrentBeHavier == _arBeHavier[static_cast<int>(E_BEHAVIERNUM::E_NONE)]))
+	{
+		_eHarvest = UNIT::E_HARVEST::E_NONE;
+	}
 
 
 	if (_eBehavier == UNIT::E_BEHAVIERNUM::E_NONE && !_queWaitCommand.empty())
@@ -189,8 +189,6 @@ void WORKMAN::release()
 
 void WORKMAN::render(HDC hdc)
 {
-	
-	
 	if (getHarvest() == UNIT::E_HARVEST::E_GOLD && _pCurrentState != _arState[static_cast<int>(E_STATENUM::E_ATTACK)])
 	{
 		UNIT::OBJECT::getImage()->frameRenderCenter(hdc, UNIT::OBJECT::getPosX(), UNIT::OBJECT::getPosY(), _nFrameX + 10, static_cast<int>(_eDirection));
@@ -204,9 +202,6 @@ void WORKMAN::render(HDC hdc)
 	{
 		UNIT::OBJECT::getImage()->frameRenderCenter(hdc, UNIT::OBJECT::getPosX(), UNIT::OBJECT::getPosY(), _nFrameX, static_cast<int>(_eDirection));
 	}
-
-
-	
 }
 
 void WORKMAN::renderSelected(HDC hdc)

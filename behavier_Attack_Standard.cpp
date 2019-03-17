@@ -34,21 +34,40 @@ void BEHAVIER_ATTACK::update(UNIT * pUnit)
 	//서치범위에 적을 찾으면 astar 재탐색
 	//서치범위에 적이 없으면 걍 멈추기
 	
-	float fDistance = getDistance(pUnit->getPosX(), pUnit->getPosY(), pUnit->getTarget()->getPosX(), pUnit->getTarget()->getPosY());
-	if (pUnit->getSearchRange() <= fDistance)
+	if (pUnit->getTarget())
 	{
-		end(pUnit);
+		RECT rc;
+		RECT rcTmp = *pUnit->getRect();
+		rcTmp.left -= 5;
+		rcTmp.top -= 5;
+		rcTmp.bottom += 5;
+		rcTmp.right += 5;
+
+		if (IntersectRect(&rc, pUnit->getCollisionRect(), &rcTmp))
+		{
+
+		}
+		else
+		{
+			float fDistance = getDistance(pUnit->getPosX(), pUnit->getPosY(), pUnit->getTarget()->getPosX(), pUnit->getTarget()->getPosY());
+			if (pUnit->getSearchRange() <= fDistance)
+			{
+				end(pUnit);
+			}
+			else if (pUnit->getAttackRange() <= fDistance)
+			{
+				//이동해라
+				OBJECT* pTarget = pUnit->getTarget();
+				pUnit->clearCommand();
+				pUnit->setTarget(pTarget);
+				pUnit->getMyUnitMgr()->commandReAttack(pUnit, pUnit->getTarget());
+				//pUnit->clearCommand();
+				//pUnit->commandMove(pUnit->getTarget()->getPosX(), pUnit->getTarget()->getPosY());
+			}
+
+		}
 	}
-	else if(pUnit->getAttackRange() <= fDistance)
-	{
-		//이동해라
-		OBJECT* pTarget = pUnit->getTarget();
-		pUnit->clearCommand();
-		pUnit->setTarget(pTarget);
-		pUnit->getMyUnitMgr()->commandReAttack(pUnit,pUnit->getTarget());
-		//pUnit->clearCommand();
-		//pUnit->commandMove(pUnit->getTarget()->getPosX(), pUnit->getTarget()->getPosY());
-	}
+
 
 }
 

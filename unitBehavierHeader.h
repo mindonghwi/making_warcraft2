@@ -1,0 +1,12 @@
+#pragma once
+#include "behavier.h"
+#include "behavier_Attack_Standard.h"
+#include "behavier_Harvest.h"
+#include "behavier_Harvest_Ship.h"
+#include "behavier_Harvest_WorkMan.h"
+#include "behavier_hold.h"
+#include "behavier_magic.h"
+#include "behavier_Move.h"
+#include "behavier_Move_Fly.h"
+#include "behavier_Move_Walk.h"
+#include "behavier_None.h"

@@ -28,8 +28,9 @@ void SHIP_YARD::create(int nLeft, int ntop, int nWidth, int nHeight, int nHp, fl
 		for (int j = -1; j < 6; j++)
 		{
 			if (_pMap->getTile(nIndexX + i, nIndexY + j)->getObject() == TILE::E_OBJECT::E_NONE &&
-				(_pMap->getTile(nIndexX + i, nIndexY + j)->getTerrian() == TILE::E_TERRIAN::WATER ||
-				_pMap->getTile(nIndexX + i, nIndexY + j)->getTerrian() == TILE::E_TERRIAN::DIRT_WATER))
+				(_pMap->getTile(nIndexX + i, nIndexY + j)->getTerrian() == TILE::E_TERRIAN::WATER
+					//|| _pMap->getTile(nIndexX + i, nIndexY + j)->getTerrian() == TILE::E_TERRIAN::DIRT_WATER
+					))
 			{
 				_fRayPointX = (float)_pMap->getTile(nIndexX + i, nIndexY + j)->getRectTile().left + 16.0f;
 				_fRayPointY = (float)_pMap->getTile(nIndexX + i, nIndexY + j)->getRectTile().top + 16.0f;

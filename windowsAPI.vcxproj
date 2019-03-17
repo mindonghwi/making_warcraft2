@@ -85,6 +85,8 @@
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <LinkIncremental>false</LinkIncremental>
+    <OutDir>$(SolutionDir)bin\</OutDir>
+    <IntDir>$(SolutionDir)bin\</IntDir>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>
@@ -156,7 +158,9 @@
     <ClInclude Include="aStar.h" />
     <ClInclude Include="attackCommand.h" />
     <ClInclude Include="balckSmith.h" />
+    <ClInclude Include="ballista.h" />
     <ClInclude Include="barrack.h" />
+    <ClInclude Include="battleShip.h" />
     <ClInclude Include="behavier.h" />
     <ClInclude Include="behavier_Attack_Standard.h" />
     <ClInclude Include="behavier_Harvest.h" />
@@ -168,6 +172,7 @@
     <ClInclude Include="behavier_Move_Fly.h" />
     <ClInclude Include="behavier_Move_Walk.h" />
     <ClInclude Include="behavier_None.h" />
+    <ClInclude Include="bomber.h" />
     <ClInclude Include="build.h" />
     <ClInclude Include="buildCommand.h" />
     <ClInclude Include="buildMgr.h" />
@@ -181,14 +186,18 @@
     <ClInclude Include="coverScene.h" />
     <ClInclude Include="effect.h" />
     <ClInclude Include="effectManager.h" />
+    <ClInclude Include="elvenArcher.h" />
     <ClInclude Include="farm.h" />
+    <ClInclude Include="footMan.h" />
     <ClInclude Include="foundry.h" />
     <ClInclude Include="FrameWork.h" />
+    <ClInclude Include="galley.h" />
     <ClInclude Include="gameNode.h" />
     <ClInclude Include="gameScene.h" />
     <ClInclude Include="gnomishInventor.h" />
     <ClInclude Include="goldMine.h" />
     <ClInclude Include="gryphonAviary.h" />
+    <ClInclude Include="gryphonRider.h" />
     <ClInclude Include="guardTower.h" />
     <ClInclude Include="harvestCommand.h" />
     <ClInclude Include="holdCommand.h" />
@@ -197,8 +206,10 @@
     <ClInclude Include="keep.h" />
     <ClInclude Include="keyAniManager.h" />
     <ClInclude Include="keyManager.h" />
+    <ClInclude Include="knight.h" />
     <ClInclude Include="lumbleMill.h" />
     <ClInclude Include="mageTower.h" />
+    <ClInclude Include="magician.h" />
     <ClInclude Include="mainMenuScene.h" />
     <ClInclude Include="map.h" />
     <ClInclude Include="mapCreateScene.h" />
@@ -207,11 +218,13 @@
     <ClInclude Include="object.h" />
     <ClInclude Include="oilPlatform.h" />
     <ClInclude Include="oilRefindery.h" />
+    <ClInclude Include="oilTanker.h" />
     <ClInclude Include="oliPatch.h" />
     <ClInclude Include="player.h" />
     <ClInclude Include="playGround.h" />
     <ClInclude Include="progressBar.h" />
     <ClInclude Include="randomFunction.h" />
+    <ClInclude Include="reconnaissance.h" />
     <ClInclude Include="Resource.h" />
     <ClInclude Include="resourceMgr.h" />
     <ClInclude Include="resources.h" />
@@ -233,18 +246,22 @@
     <ClInclude Include="state_special.h" />
     <ClInclude Include="stdafx.h" />
     <ClInclude Include="stopCommand.h" />
+    <ClInclude Include="submarin.h" />
     <ClInclude Include="targetver.h" />
     <ClInclude Include="commonMacroFunction.h" />
     <ClInclude Include="tile.h" />
     <ClInclude Include="timeManager.h" />
     <ClInclude Include="timer.h" />
     <ClInclude Include="town.h" />
+    <ClInclude Include="transport.h" />
     <ClInclude Include="tree.h" />
     <ClInclude Include="triBute.h" />
     <ClInclude Include="UI.h" />
     <ClInclude Include="UICARD.h" />
     <ClInclude Include="unit.h" />
+    <ClInclude Include="unitBehavierHeader.h" />
     <ClInclude Include="unitMGr.h" />
+    <ClInclude Include="unitStateHeader.h" />
     <ClInclude Include="utils.h" />
     <ClInclude Include="workMan.h" />
   </ItemGroup>
@@ -254,7 +271,9 @@
     <ClCompile Include="aStar.cpp" />
     <ClCompile Include="attackCommand.cpp" />
     <ClCompile Include="balckSmith.cpp" />
+    <ClCompile Include="ballista.cpp" />
     <ClCompile Include="barrack.cpp" />
+    <ClCompile Include="battleShip.cpp" />
     <ClCompile Include="behavier_Attack_Standard.cpp" />
     <ClCompile Include="behavier_Harvest_Ship.cpp" />
     <ClCompile Include="behavier_Harvest_WorkMan.cpp" />
@@ -262,6 +281,7 @@
     <ClCompile Include="behavier_Move_Fly.cpp" />
     <ClCompile Include="behavier_Move_Walk.cpp" />
     <ClCompile Include="behavier_None.cpp" />
+    <ClCompile Include="bomber.cpp" />
     <ClCompile Include="build.cpp" />
     <ClCompile Include="buildCommand.cpp" />
     <ClCompile Include="buildMgr.cpp" />
@@ -274,13 +294,17 @@
     <ClCompile Include="coverScene.cpp" />
     <ClCompile Include="effect.cpp" />
     <ClCompile Include="effectManager.cpp" />
+    <ClCompile Include="elvenArcher.cpp" />
     <ClCompile Include="farm.cpp" />
+    <ClCompile Include="footMan.cpp" />
     <ClCompile Include="foundry.cpp" />
+    <ClCompile Include="galley.cpp" />
     <ClCompile Include="gameNode.cpp" />
     <ClCompile Include="gameScene.cpp" />
     <ClCompile Include="gnomishInventor.cpp" />
     <ClCompile Include="goldMine.cpp" />
     <ClCompile Include="gryphonAviary.cpp" />
+    <ClCompile Include="gryphonRider.cpp" />
     <ClCompile Include="guardTower.cpp" />
     <ClCompile Include="harvestCommand.cpp" />
     <ClCompile Include="holdCommand.cpp" />
@@ -289,8 +313,10 @@
     <ClCompile Include="keep.cpp" />
     <ClCompile Include="keyAniManager.cpp" />
     <ClCompile Include="keyManager.cpp" />
+    <ClCompile Include="knight.cpp" />
     <ClCompile Include="lumbleMill.cpp" />
     <ClCompile Include="mageTower.cpp" />
+    <ClCompile Include="magician.cpp" />
     <ClCompile Include="mainMenuScene.cpp" />
     <ClCompile Include="map.cpp" />
     <ClCompile Include="mapCreateScene.cpp" />
@@ -299,10 +325,12 @@
     <ClCompile Include="object.cpp" />
     <ClCompile Include="oilPlatform.cpp" />
     <ClCompile Include="oilRefindery.cpp" />
+    <ClCompile Include="oilTanker.cpp" />
     <ClCompile Include="oliPatch.cpp" />
     <ClCompile Include="player.cpp" />
     <ClCompile Include="playGround.cpp" />
     <ClCompile Include="progressBar.cpp" />
+    <ClCompile Include="reconnaissance.cpp" />
     <ClCompile Include="resourceMgr.cpp" />
     <ClCompile Include="resources.cpp" />
     <ClCompile Include="sceneManager.cpp" />
@@ -326,10 +354,12 @@
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Create</PrecompiledHeader>
     </ClCompile>
     <ClCompile Include="stopCommand.cpp" />
+    <ClCompile Include="submarin.cpp" />
     <ClCompile Include="tile.cpp" />
     <ClCompile Include="timeManager.cpp" />
     <ClCompile Include="timer.cpp" />
     <ClCompile Include="town.cpp" />
+    <ClCompile Include="transport.cpp" />
     <ClCompile Include="tree.cpp" />
     <ClCompile Include="UI.cpp" />
     <ClCompile Include="UICARD.cpp" />
