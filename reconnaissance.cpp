@@ -65,6 +65,7 @@ void RECONNAISSANCE::updateBehavier()
 
 void RECONNAISSANCE::release()
 {
+	UNIT::release();
 }
 
 void RECONNAISSANCE::render(HDC hdc)

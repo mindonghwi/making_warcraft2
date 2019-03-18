@@ -64,6 +64,7 @@ void BALLISTA::updateBehavier()
 
 void BALLISTA::release()
 {
+	UNIT::release();
 }
 
 void BALLISTA::render(HDC hdc)

@@ -64,6 +64,7 @@ void TRANSPORT::updateBehavier()
 
 void TRANSPORT::release()
 {
+	UNIT::release();
 }
 
 void TRANSPORT::render(HDC hdc)

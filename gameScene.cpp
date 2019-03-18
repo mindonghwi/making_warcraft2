@@ -1,6 +1,6 @@
 #include "stdafx.h"
 #include "gameScene.h"
-
+#include "user.h"
 SCENEGAME::SCENEGAME()
 {
 }
@@ -14,7 +14,7 @@ HRESULT SCENEGAME::init()
 	_pMap = new MAP();
 	_pCamera = new CAMERA();
 	_pResourceMgr = new RESOURCEMGR();
-	_pPlayer = new PLAYER();
+	_pPlayer = new USER();
 	_pAstar = new ASTAR();
 	_pUiMgr = new UIMGR();
 	

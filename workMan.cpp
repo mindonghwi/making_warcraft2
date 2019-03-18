@@ -185,6 +185,7 @@ void WORKMAN::updateBehavier()
 
 void WORKMAN::release()
 {
+	UNIT::release();
 }
 
 void WORKMAN::render(HDC hdc)

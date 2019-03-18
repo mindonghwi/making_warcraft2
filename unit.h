@@ -179,7 +179,7 @@ public:
 	virtual void create(int nPosX, int nPosY, int nHp, float nSpeed, int nAttack, int nDefence, float fSearchRange, float fAttackRange, float fAttackSpeedps,int nMinimalAttack);
 
 	virtual void update()			abstract;
-	virtual void release()			abstract;
+	virtual void release();
 	virtual void render(HDC hdc)	abstract;
 	virtual void updateBehavier()	abstract;
 	virtual	void renderSelected(HDC hdc) abstract;

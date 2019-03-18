@@ -53,6 +53,41 @@ void UNIT::create(int nPosX, int nPosY, int nHp, float fSpeed, int nAttack, int 
 	setMaxHp(nHp);
 }
 
+void UNIT::release()
+{
+	while (!_queWaitCommand.empty())
+	{
+		COMMAND* pCommand = _queWaitCommand.front();
+		_queWaitCommand.pop();
+		_pUnitMgr->returnPool(pCommand);
+	}
+	_pCamera = nullptr;
+
+	_pAstar = nullptr;
+
+	_pUnitMgr = nullptr;
+
+
+	_pMap = nullptr;
+
+	_pTarget = nullptr;
+
+	_pResourceMgr = nullptr;
+	_pPlayer = nullptr;
+	_pBuildMgr = nullptr;
+
+	for (int i = 0; i <static_cast<int>(UNIT::E_STATENUM::E_MAX); i++)
+	{
+		delete _arState[i];
+		_arState[i] = nullptr;
+	}
+	for (int i = 0; i <static_cast<int>(UNIT::E_BEHAVIERNUM::E_MAX); i++)
+	{
+		delete _arBeHavier[i];
+		_arBeHavier[i] = nullptr;
+	}
+}
+
 
 void UNIT::addFrameX(UNIT::E_STATE eState)
 {

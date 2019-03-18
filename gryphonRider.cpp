@@ -65,6 +65,7 @@ void GRYPHONRIDER::updateBehavier()
 
 void GRYPHONRIDER::release()
 {
+	UNIT::release();
 }
 
 void GRYPHONRIDER::render(HDC hdc)

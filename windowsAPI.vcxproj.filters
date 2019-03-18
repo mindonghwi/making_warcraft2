@@ -234,9 +234,6 @@
     <ClInclude Include="unit.h">
       <Filter>PlayGround\unit</Filter>
     </ClInclude>
-    <ClInclude Include="workMan.h">
-      <Filter>PlayGround\unit\workMan</Filter>
-    </ClInclude>
     <ClInclude Include="coverScene.h">
       <Filter>scene</Filter>
     </ClInclude>
@@ -467,6 +464,9 @@
     </ClInclude>
     <ClInclude Include="com.h">
       <Filter>PlayGround\player</Filter>
+    </ClInclude>
+    <ClInclude Include="workMan.h">
+      <Filter>PlayGround\unit\workMan</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -763,6 +763,12 @@
     </ClCompile>
     <ClCompile Include="UIMGR.cpp">
       <Filter>PlayGround\UI</Filter>
+    </ClCompile>
+    <ClCompile Include="com.cpp">
+      <Filter>PlayGround\player</Filter>
+    </ClCompile>
+    <ClCompile Include="user.cpp">
+      <Filter>PlayGround\player</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

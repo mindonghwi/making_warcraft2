@@ -65,6 +65,7 @@ void KNIGHT::updateBehavier()
 
 void KNIGHT::release()
 {
+	UNIT::release();
 }
 
 void KNIGHT::render(HDC hdc)

@@ -65,6 +65,7 @@ void ELVENARCHER::updateBehavier()
 
 void ELVENARCHER::release()
 {
+	UNIT::release();
 }
 
 void ELVENARCHER::render(HDC hdc)

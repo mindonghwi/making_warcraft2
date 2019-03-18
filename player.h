@@ -23,7 +23,7 @@ public:
 		E_MAX
 	};
 
-private:
+protected:
 	int		_arResource[static_cast<const int>(E_RESOURCE::E_MAX)];
 	int		_nPopulation;
 	int		_nMaxPopulation;
@@ -53,24 +53,24 @@ public:
 	PLAYER();
 	~PLAYER();
 
-	void init(float fPosX,float fPosY);
-	void update();
-	void release();
-	void render(HDC hdc);
+	virtual void init(float fPosX,float fPosY);
+	virtual void update();
+	virtual void release();
+	virtual void render(HDC hdc);
 
 
 	bool createUnit(UNIT::E_UNIT eUnit);
 
-private:
-	void selectedUnit();
-	void commandSelectUnit();
-
-	void commandBuild();
-	void commandAttack();
-	void commandHarvest();
-	void initDrag();
-	void dragSelect();
-	void readjustDragRect();
+protected:
+	virtual void selectedUnit();
+	virtual void commandSelectUnit();
+	 
+	virtual void commandBuild();
+	virtual void commandAttack();
+	virtual void commandHarvest();
+	virtual void initDrag();
+	virtual void dragSelect();
+	virtual void readjustDragRect();
 
 public:
 	//linker

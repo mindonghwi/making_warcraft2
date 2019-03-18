@@ -65,6 +65,7 @@ void GALLEYS::updateBehavier()
 
 void GALLEYS::release()
 {
+	UNIT::release();
 }
 
 void GALLEYS::render(HDC hdc)

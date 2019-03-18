@@ -65,6 +65,7 @@ void BATTLESHIP::updateBehavier()
 
 void BATTLESHIP::release()
 {
+	UNIT::release();
 }
 
 void BATTLESHIP::render(HDC hdc)

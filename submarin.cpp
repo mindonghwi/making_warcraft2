@@ -65,6 +65,7 @@ void SUBMARIN::updateBehavier()
 
 void SUBMARIN::release()
 {
+	UNIT::release();
 }
 
 void SUBMARIN::render(HDC hdc)

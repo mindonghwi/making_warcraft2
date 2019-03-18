@@ -64,6 +64,7 @@ void OILTANKER::updateBehavier()
 
 void OILTANKER::release()
 {
+	UNIT::release();
 }
 
 void OILTANKER::render(HDC hdc)

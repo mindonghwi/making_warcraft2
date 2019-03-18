@@ -65,6 +65,7 @@ void FOOTMAN::updateBehavier()
 
 void FOOTMAN::release()
 {
+	UNIT::release();
 }
 
 void FOOTMAN::render(HDC hdc)

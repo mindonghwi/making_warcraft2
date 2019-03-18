@@ -65,6 +65,7 @@ void MAGICIAN::updateBehavier()
 
 void MAGICIAN::release()
 {
+	UNIT::release();
 }
 
 void MAGICIAN::render(HDC hdc)

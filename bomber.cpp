@@ -65,6 +65,7 @@ void BOMBER::updateBehavier()
 
 void BOMBER::release()
 {
+	UNIT::release();
 }
 
 void BOMBER::render(HDC hdc)

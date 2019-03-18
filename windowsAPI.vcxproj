@@ -293,6 +293,7 @@
     <ClCompile Include="cannonTower.cpp" />
     <ClCompile Include="castle.cpp" />
     <ClCompile Include="church.cpp" />
+    <ClCompile Include="com.cpp" />
     <ClCompile Include="command.cpp" />
     <ClCompile Include="coverScene.cpp" />
     <ClCompile Include="effect.cpp" />
@@ -369,6 +370,7 @@
     <ClCompile Include="UIMGR.cpp" />
     <ClCompile Include="unit.cpp" />
     <ClCompile Include="unitMGr.cpp" />
+    <ClCompile Include="user.cpp" />
     <ClCompile Include="utils.cpp" />
     <ClCompile Include="windowsAPI.cpp" />
     <ClCompile Include="workMan.cpp" />
