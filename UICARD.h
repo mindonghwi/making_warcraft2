@@ -29,12 +29,15 @@ private:
 	int		_nMaxHp;
 	int		_nAttack;
 	int		_nDefence;
-	
+	int		_nPrograssBarWidth;
+
+	int		_nLeft;
+	int		_nTop;
 public:
 	UICARD();
 	~UICARD();
 
-	void create(UNIT* pUnit = nullptr, BUILD* pBuild = nullptr);
+	void create(int nLeft,int nTop,UNIT* pUnit = nullptr, BUILD* pBuild = nullptr);
 	void update();
 	void render(HDC hdc);
 	void release();

@@ -92,11 +92,7 @@ void PLAYER::render(HDC hdc)
 	_pBuildMgr->render(hdc);
 
 	DrawEdge(hdc,&_rcDragArea, BDR_RAISEDOUTER, BF_FLAT | BF_TOPLEFT | BF_BOTTOMRIGHT);
-
-
-	char str[128];
-	sprintf_s(str, "%d,%d,%d,%d", (_arResource[static_cast<int>(E_RESOURCE::E_GOLD)]), (_arResource[static_cast<int>(E_RESOURCE::E_TREE)]), (_arResource[static_cast<int>(E_RESOURCE::E_OIL)]),_nMaxPopulation);
-	TextOut(hdc, WINSIZEX/2, 32, str, strlen(str));
+	
 }
 
 bool PLAYER::createUnit(UNIT::E_UNIT eUnit)

@@ -33,7 +33,7 @@ void BEHAVIER_MOVE_WALK::update(UNIT * pUnit)
 	if (pUnit->getTarget())
 	{
 		RECT rc;
-		RECT rcTmp = *pUnit->getRect();
+		RECT rcTmp = *pUnit->getTarget()->getRect();
 		rcTmp.left -= 5;
 		rcTmp.top -= 5;
 		rcTmp.bottom  += 5;
@@ -61,12 +61,16 @@ void BEHAVIER_MOVE_WALK::end(UNIT * pUnit)
 	{
 		if (pUnit != pUnit->getMyUnitMgr()->getUnit(i))
 		{
-			RECT rc;
-			if (IntersectRect(&rc, pUnit->getMyUnitMgr()->getUnit(i)->getCollisionRect(),&rcSmall))
+			if (pUnit->getMyUnitMgr()->getUnit(i)->getBehavier() != UNIT::E_BEHAVIERNUM::E_MOVE)
 			{
-				bIsCollision = true;
-				break;
+				RECT rc;
+				if (IntersectRect(&rc, pUnit->getMyUnitMgr()->getUnit(i)->getCollisionRect(), &rcSmall))
+				{
+					bIsCollision = true;
+					break;
+				}
 			}
+	
 		}
 	}
 	

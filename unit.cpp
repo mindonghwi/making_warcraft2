@@ -345,3 +345,8 @@ bool UNIT::IsNearResources()
 	return true;
 }
 
+void UNIT::updateRect()
+{
+	OBJECT::settingRect();
+}
+

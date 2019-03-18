@@ -459,6 +459,9 @@
     <ClInclude Include="gryphonRider.h">
       <Filter>PlayGround\unit\2ndUnit</Filter>
     </ClInclude>
+    <ClInclude Include="UIMGR.h">
+      <Filter>PlayGround\UI</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="stdafx.cpp">
@@ -751,6 +754,9 @@
     </ClCompile>
     <ClCompile Include="gryphonRider.cpp">
       <Filter>PlayGround\unit\2ndUnit</Filter>
+    </ClCompile>
+    <ClCompile Include="UIMGR.cpp">
+      <Filter>PlayGround\UI</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

@@ -3,7 +3,8 @@
 #include "unit.h"
 #include "unitMGr.h"
 
-BEHAVIER_ATTACK::BEHAVIER_ATTACK()
+BEHAVIER_ATTACK::BEHAVIER_ATTACK():
+	_fTimer(0.0f)
 {
 }
 
@@ -29,22 +30,39 @@ void BEHAVIER_ATTACK::update(UNIT * pUnit)
 	//pUnit->Move();
 
 	//어택범위에 적이 들어오면 적을 공격한다.
-	pUnit->getTarget()->decreaseHp(pUnit->getAttack());
 	
+
 	//서치범위에 적을 찾으면 astar 재탐색
 	//서치범위에 적이 없으면 걍 멈추기
 	
+
+
 	if (pUnit->getTarget())
 	{
+		if (pUnit == pUnit->getTarget())
+		{
+			end(pUnit);
+			return;
+		}
+
 		RECT rc;
-		RECT rcTmp = *pUnit->getRect();
+		RECT rcTmp = *pUnit->getTarget()->getRect();
 		rcTmp.left -= 5;
 		rcTmp.top -= 5;
 		rcTmp.bottom += 5;
 		rcTmp.right += 5;
 
+
 		if (IntersectRect(&rc, pUnit->getCollisionRect(), &rcTmp))
 		{
+			_fTimer += TIMEMANAGER->getElapsedTime();
+			float fTotalFps = static_cast<float>(pUnit->getEndIndex(UNIT::E_STATE::E_ATTACK) - pUnit->getStartIndex(UNIT::E_STATE::E_ATTACK));
+			fTotalFps *= pUnit->getFPS(UNIT::E_STATE::E_ATTACK);
+			if (_fTimer >= fTotalFps)
+			{
+				pUnit->getTarget()->decreaseHp(pUnit->getAttack());
+				_fTimer = 0.0f;
+			}
 
 		}
 		else
@@ -67,6 +85,24 @@ void BEHAVIER_ATTACK::update(UNIT * pUnit)
 
 		}
 	}
+	else //if(pUnit->getTarget()->getHp() <= 0)
+	{
+		end(pUnit);
+	}
+
+	//if (pUnit->getUnit() == UNIT::E_UNIT::E_ARCHER ||
+	//	pUnit->getUnit() == UNIT::E_UNIT::E_BALLISTA ||
+	//	pUnit->getUnit() == UNIT::E_UNIT::E_FLYER ||
+	//	pUnit->getUnit() == UNIT::E_UNIT::E_BATTLESHIP ||
+	//	pUnit->getUnit() == UNIT::E_UNIT::E_GALLEYS ||
+	//	pUnit->getUnit() == UNIT::E_UNIT::E_SUBMARIN)
+	//{
+
+	//}
+	//else
+	//{
+
+	//}
 
 
 }
@@ -82,4 +118,5 @@ void BEHAVIER_ATTACK::end(UNIT * pUnit)
 	pUnit->setBehavier(UNIT::E_BEHAVIERNUM::E_NONE);
 	pUnit->getCurrentState()->start();
 	pUnit->setTarget(nullptr);
+	_fTimer = 0.0f;
 }

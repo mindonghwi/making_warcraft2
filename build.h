@@ -55,7 +55,7 @@ public:
 	virtual void update()			override;
 	virtual void release()			override;
 	virtual void render(HDC hdc)	override;
-
+	virtual void cameraUpdate();
 	virtual void selectRender(HDC hdc);
 
 	virtual	void creatingUpdate();

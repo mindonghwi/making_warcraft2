@@ -16,7 +16,8 @@ HRESULT SCENEGAME::init()
 	_pResourceMgr = new RESOURCEMGR();
 	_pPlayer = new PLAYER();
 	_pAstar = new ASTAR();
-
+	_pUiMgr = new UIMGR();
+	
 
 	//player link other
 	_pPlayer->setLinkCamera(_pCamera);
@@ -31,6 +32,8 @@ HRESULT SCENEGAME::init()
 	_pMap->setLinkCamera(_pCamera);
 	_pMap->setLinkResourceMgr(_pResourceMgr);
 
+	//uiMGr link
+	_pUiMgr->setLinkPlayer(_pPlayer);
 
 
 	_pMap->init("map");
@@ -54,8 +57,9 @@ HRESULT SCENEGAME::init()
 	//astar link other
 	_pAstar->setLinkUnitMgr(_pPlayer);
 
-
-
+	_pUiMgr->init();
+	
+	
 	return S_OK;
 }
 
@@ -72,6 +76,10 @@ void SCENEGAME::release()
 	_pPlayer->release();
 	delete _pPlayer;
 	_pPlayer = nullptr;
+
+	_pUiMgr->release();
+	delete _pUiMgr;
+	_pUiMgr = nullptr;
 }
 
 void SCENEGAME::update()
@@ -79,6 +87,8 @@ void SCENEGAME::update()
 	_pCamera->update();
 	_pResourceMgr->update();
 	_pPlayer->update();
+
+	_pUiMgr->update();
 }
 
 void SCENEGAME::render()
@@ -88,5 +98,10 @@ void SCENEGAME::render()
 
 	_pPlayer->render(_pCamera->getMemDC());
 	_pCamera->render(getMemDC());
+
+	IMAGEMANAGER->findImage("edge")->render(getMemDC());
+
 	_pCamera->renderMiniMap(getMemDC());
+
+	_pUiMgr->render(getMemDC());
 }

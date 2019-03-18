@@ -213,7 +213,7 @@ public:
 
 	virtual bool IsNearResources();
 
-
+	virtual void updateRect();
 
 public:
 	//setter

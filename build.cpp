@@ -61,7 +61,6 @@ void BUILD::update()
 
 
 
-	_pCamera->pushRenderObject(this);
 }
 
 void BUILD::release()
@@ -73,6 +72,12 @@ void BUILD::release()
 void BUILD::render(HDC hdc)
 {
 	OBJECT::getImage()->frameRenderCenter(hdc,OBJECT::getPosX(),OBJECT::getPosY(),_nFrameX,0);
+
+}
+
+void BUILD::cameraUpdate()
+{
+	_pCamera->pushRenderObject(this);
 
 }
 
@@ -361,7 +366,24 @@ void BUILD::destroyBuild()
 	if (_nHp <= 0)
 	{
 		_eState = E_STATE::E_DESTROY;
+	
+		int nTileCount = _pBuildMgr->getBuildWidth(_eBuilds) / TILESIZE;
+
+		int nIndexX = static_cast<int>(getLeft()+ 16) / TILESIZE;
+		int nIndexY = static_cast<int>(getTop() + 16) / TILESIZE;
+
+
+		for (int i = 0; i < nTileCount; i++)
+		{
+			for (int j = 0; j < nTileCount; j++)
+			{
+				_pMap->getTile(nIndexX + i, nIndexY + j)->setObject(TILE::E_OBJECT::E_NONE);
+			}
+		}
+	
 	}
+
+
 }
 
 

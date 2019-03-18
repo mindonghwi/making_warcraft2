@@ -15,7 +15,7 @@ RECONNAISSANCE::~RECONNAISSANCE()
 void RECONNAISSANCE::init(int nPosX, int nPosY, int nWidth, int nHeight, int nIndexNum)
 {
 	UNIT::init(nPosX, nPosY, nWidth, nHeight, nIndexNum);
-	UNIT::OBJECT::setPosZ(200);
+	UNIT::OBJECT::setPosZ(1200);
 	allocateAnimation();
 	allocateState();
 	allocateBehavier();

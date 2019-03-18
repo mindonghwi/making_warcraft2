@@ -258,6 +258,7 @@
     <ClInclude Include="triBute.h" />
     <ClInclude Include="UI.h" />
     <ClInclude Include="UICARD.h" />
+    <ClInclude Include="UIMGR.h" />
     <ClInclude Include="unit.h" />
     <ClInclude Include="unitBehavierHeader.h" />
     <ClInclude Include="unitMGr.h" />
@@ -363,6 +364,7 @@
     <ClCompile Include="tree.cpp" />
     <ClCompile Include="UI.cpp" />
     <ClCompile Include="UICARD.cpp" />
+    <ClCompile Include="UIMGR.cpp" />
     <ClCompile Include="unit.cpp" />
     <ClCompile Include="unitMGr.cpp" />
     <ClCompile Include="utils.cpp" />

@@ -6,8 +6,7 @@
 #include "resourceMgr.h"
 
 #include "player.h"
-
-
+#include "UIMGR.h"
 class SCENEGAME : public gameNode
 {
 private:
@@ -17,6 +16,11 @@ private:
 	ASTAR*			_pAstar;
 
 	PLAYER*			_pPlayer;
+
+	UIMGR*			_pUiMgr;
+
+
+
 public:
 	SCENEGAME();
 	~SCENEGAME();

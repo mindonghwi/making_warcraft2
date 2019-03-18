@@ -89,6 +89,11 @@ void gameNode::render()
 
 LRESULT gameNode::MainProc(HWND hWnd, UINT iMessage, WPARAM wParam, LPARAM lParam)
 {
+	//_CrtSetBreakAlloc(117180);
+	//
+	//_CrtSetDbgFlag(_CRTDBG_ALLOC_MEM_DF | _CRTDBG_LEAK_CHECK_DF);
+
+
 	switch (iMessage)
 	{
 		case WM_CREATE:
@@ -119,6 +124,8 @@ LRESULT gameNode::MainProc(HWND hWnd, UINT iMessage, WPARAM wParam, LPARAM lPara
 		break;
 		
 		case WM_DESTROY:
+
+
 			PostQuitMessage(0);
 		return 0;
 	}

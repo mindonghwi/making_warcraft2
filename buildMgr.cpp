@@ -46,11 +46,20 @@ void BUILDMGR::update()
 
 		if (pBuild->getState() == BUILD::E_STATE::E_DESTROY)
 		{
+			if (_pSelected == pBuild)
+			{
+				_pSelected = nullptr;
+			}
+
 			iter = _listBuild.erase(iter);
+			pBuild->release();
+			delete pBuild;
+			pBuild = nullptr;
 		}
 		else
 		{
 			iter++;
+			pBuild->cameraUpdate();
 		}
 	}
 

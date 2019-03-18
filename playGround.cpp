@@ -112,12 +112,22 @@ void playGround::loadImage()
 
 	//ui
 	IMAGEMANAGER->addImage("card", "resource/icon/UI/card.bmp", 54, 53, true, Mins::getMazenta());
-	IMAGEMANAGER->addImage("UiGold", "resource/icon/UI/card.bmp", 54, 53, true, Mins::getMazenta());
-	IMAGEMANAGER->addImage("UiTree", "resource/icon/UI/card.bmp", 54, 53, true, Mins::getMazenta());
-	IMAGEMANAGER->addImage("UiOil", "resource/icon/UI/card.bmp", 54, 53, true, Mins::getMazenta());
-	IMAGEMANAGER->addImage("UiPopulation", "resource/icon/UI/card.bmp", 54, 53, true, Mins::getMazenta());
+	IMAGEMANAGER->addImage("UiGold", "resource/icon/UI/goldIcon.bmp", 14, 14, true, Mins::getMazenta());
+	IMAGEMANAGER->addImage("UiTree", "resource/icon/UI/treeIcon.bmp", 14, 14, true, Mins::getMazenta());
+	IMAGEMANAGER->addImage("UiOil", "resource/icon/UI/oilIcon.bmp", 14, 14, true, Mins::getMazenta());
+	IMAGEMANAGER->addImage("UiPopulation", "resource/icon/UI/populationIcon.bmp", 14, 14, true, Mins::getMazenta());
+	IMAGEMANAGER->addImage("edge", "resource/edge.bmp", WINSIZEX, WINSIZEY, true, Mins::getMazenta());
 
+	IMAGEMANAGER->addFrameImage("unitIcon", "resource/human/unitIcon.bmp", 644, 76,14,2, true, Mins::getMazenta());
+	IMAGEMANAGER->addFrameImage("buildIcon", "resource/human/buildIcon.bmp", 874, 38, 19, 1, true, Mins::getMazenta());
 
+	
+	IMAGEMANAGER->addImage("greenBar", "resource/icon/UI/greenBar.bmp", 50, 5, true, Mins::getMazenta());
+	IMAGEMANAGER->addImage("redBar", "resource/icon/UI/redBar.bmp", 50, 5, true, Mins::getMazenta());
+	IMAGEMANAGER->addImage("yellowBar", "resource/icon/UI/yellowBar.bmp", 50, 5, true, Mins::getMazenta());
+
+	
+	
 }
 
 

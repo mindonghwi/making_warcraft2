@@ -75,7 +75,7 @@ void FARM::creatingUpdate()
 		OBJECT::setHp(_nMaxHp);
 		OBJECT::decreaseHp(_nCreateDamage);//생상중 대미지 발생한것을 계산해준다.
 		_nFrameX = _nMaxFrameX - 1;
-		_pPlayer->addPopulation(8);
+		_pPlayer->addMaxPopulation(8);
 	}
 
 }

@@ -27,6 +27,8 @@
 #include "attackCommand.h"
 #include "harvestCommand.h"
 
+
+#include "player.h"
 UNITMGR::UNITMGR()
 {
 }
@@ -126,6 +128,9 @@ bool UNITMGR::createUnit(UNIT::E_UNIT eUnit, float fPosX, float fPosY)
 	_listUnit.back()->setLinkMyPlayer(_pPlayer);
 
 	_nCount++;
+
+	_pPlayer->addPopulation(_arUnitPopulation[static_cast<int>(eUnit)]);
+
 	return false;
 }
 
@@ -194,11 +199,32 @@ void UNITMGR::update()
 			iterUnitListCollision++;
 		}
 
-		
+		if (pUnit->getHp() <= 0)
+		{
+	
+			for (int i = 0; i < (int)_vSeletedUnit.size(); i++)
+			{
+				if (*(_vSeletedUnit[i]) == pUnit)
+				{
+					_vSeletedUnit.erase(_vSeletedUnit.begin() + i);
+					break;
+				}
+			}
+			iterUnitList = _listUnit.erase(iterUnitList);
 
-		pUnit->updateBehavier();
-		pUnit->update();
-		iterUnitList++;
+	
+			pUnit->release();
+			delete pUnit;
+			pUnit = nullptr;
+		}
+		else
+		{
+			pUnit->updateBehavier();
+			pUnit->update();
+			pUnit->updateRect();
+			iterUnitList++;
+		}
+
 	}
 
 
@@ -521,7 +547,8 @@ void UNITMGR::dragSelect(RECT rcDragRect)
 	endUnitList = _listUnit.end();
 
 	bool bIsFind = false;
-	while (iterUnitList != endUnitList)
+	int nCount = 0;
+	while (nCount < 9 && iterUnitList != endUnitList)
 	{
 		RECT _rcTmp;
 		UNIT* pUnit = *iterUnitList;
@@ -536,10 +563,12 @@ void UNITMGR::dragSelect(RECT rcDragRect)
 		{
 			_pBuildMgr->releaseSelected();
 			_vSeletedUnit.push_back(&(*iterUnitList));
+			nCount++;
 		}
 
 		pUnit = nullptr;
 		iterUnitList++;
+		
 	}
 
 }
