@@ -1,5 +1,6 @@
 #pragma once
 #include "stdafx.h"
+#include "button.h"
 
 class PLAYER;
 
@@ -15,6 +16,8 @@ private:
 
 
 	PLAYER*	_pPlayer;
+
+	
 public:
 	UI();
 	~UI();

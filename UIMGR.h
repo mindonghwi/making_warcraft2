@@ -24,7 +24,6 @@ public:
 	void	release();
 	void	render(HDC hdc);
 
-
 	//linker
 	inline	void	setLinkPlayer(PLAYER* pPlayer) { _pPlayer = pPlayer; }
 

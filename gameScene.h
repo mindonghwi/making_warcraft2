@@ -20,7 +20,6 @@ private:
 	UIMGR*			_pUiMgr;
 
 
-
 public:
 	SCENEGAME();
 	~SCENEGAME();

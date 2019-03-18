@@ -462,6 +462,12 @@
     <ClInclude Include="UIMGR.h">
       <Filter>PlayGround\UI</Filter>
     </ClInclude>
+    <ClInclude Include="user.h">
+      <Filter>PlayGround\player</Filter>
+    </ClInclude>
+    <ClInclude Include="com.h">
+      <Filter>PlayGround\player</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="stdafx.cpp">

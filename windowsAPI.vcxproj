@@ -182,6 +182,7 @@
     <ClInclude Include="cannonTower.h" />
     <ClInclude Include="castle.h" />
     <ClInclude Include="church.h" />
+    <ClInclude Include="com.h" />
     <ClInclude Include="command.h" />
     <ClInclude Include="coverScene.h" />
     <ClInclude Include="effect.h" />
@@ -263,6 +264,7 @@
     <ClInclude Include="unitBehavierHeader.h" />
     <ClInclude Include="unitMGr.h" />
     <ClInclude Include="unitStateHeader.h" />
+    <ClInclude Include="user.h" />
     <ClInclude Include="utils.h" />
     <ClInclude Include="workMan.h" />
   </ItemGroup>

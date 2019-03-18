@@ -53,16 +53,13 @@ public:
 	PLAYER();
 	~PLAYER();
 
-	void init();
+	void init(float fPosX,float fPosY);
 	void update();
 	void release();
 	void render(HDC hdc);
 
 
 	bool createUnit(UNIT::E_UNIT eUnit);
-
-
-	
 
 private:
 	void selectedUnit();
