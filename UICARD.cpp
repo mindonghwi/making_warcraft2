@@ -68,26 +68,37 @@ void UICARD::render(HDC hdc)
 {
 	if (_eUiType == E_UITYPE::E_UNIT)
 	{
-		char str[128];
-		sprintf_s(str, "HP: %d", _nHp);
-		TextOut(hdc, 50, 50, str, strlen(str));
-		sprintf_s(str, "attack: %d", _nAttack);
-		TextOut(hdc, 50, 70, str, strlen(str));
-		sprintf_s(str, "defence: %d", _nDefence);
-		TextOut(hdc, 50, 90, str, strlen(str));
-
 		_pImageCard->render(hdc, _nLeft, _nTop);
 		_pObjectImage->frameRender(hdc, _nLeft + 4, _nTop+4, (int)_pUnit->getUnit(), 0);
 		_pPrograssBar->render(hdc, _nLeft +2, _nTop+ _pImageCard->GetHeight() - 7, 0, 0, _nPrograssBarWidth, 5);
 	}
 	else if (_eUiType == E_UITYPE::E_BUILD)
 	{
-		char str[128];
-		sprintf_s(str, "HP: %d", _nHp);
-		TextOut(hdc, 50, 50, str, strlen(str));
+
 		_pImageCard->render(hdc, _nLeft, _nTop);
 		_pObjectImage->frameRender(hdc, _nLeft + 4, _nTop + 4, (int)_pBuild->getBuildsTpye(), 0);
 		_pPrograssBar->render(hdc, _nLeft + 2, _nTop + _pImageCard->GetHeight() - 7, 0, 0, _nPrograssBarWidth, 5);
+	}
+}
+
+void UICARD::renderStatus(HDC hdc)
+{
+	if (_eUiType == E_UITYPE::E_UNIT)
+	{
+		char str[128];
+		sprintf_s(str, "HP: %d", _nHp);
+		TextOut(hdc, WINSIZEX / 2, _nTop-10, str, strlen(str));
+		sprintf_s(str, "attack: %d", _nAttack);
+		TextOut(hdc, WINSIZEX / 2, _nTop + 10, str, strlen(str));
+		sprintf_s(str, "defence: %d", _nDefence);
+		TextOut(hdc, WINSIZEX /2, _nTop + 30, str, strlen(str));
+
+	}
+	else if (_eUiType == E_UITYPE::E_BUILD)
+	{
+		char str[128];
+		sprintf_s(str, "HP: %d", _nHp);
+		TextOut(hdc, WINSIZEX / 2, _nTop+10, str, strlen(str));
 	}
 }
 

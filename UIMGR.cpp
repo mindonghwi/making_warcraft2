@@ -70,7 +70,10 @@ void UIMGR::render(HDC hdc)
 	for (int i = 0; i <_nCount; i++)
 	{
 		_arUiCard[i]->render(hdc);
+	}
+	if (_nCount == 1)
+	{
+		_arUiCard[0]->renderStatus(hdc);
 
 	}
-
 }

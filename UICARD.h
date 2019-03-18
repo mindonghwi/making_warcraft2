@@ -40,6 +40,7 @@ public:
 	void create(int nLeft,int nTop,UNIT* pUnit = nullptr, BUILD* pBuild = nullptr);
 	void update();
 	void render(HDC hdc);
+	void renderStatus(HDC hdc);
 	void release();
 
 
