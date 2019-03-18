@@ -385,3 +385,13 @@ void UNIT::updateRect()
 	OBJECT::settingRect();
 }
 
+void UNIT::removeMapUnitData()
+{
+	_pMap->getTile(getPosX() / TILESIZE, getPosY() / TILESIZE)->setObject(TILE::E_OBJECT::E_NONE);
+}
+
+void UNIT::addMapUnitData()
+{
+	_pMap->getTile(getPosX() / TILESIZE, getPosY() / TILESIZE)->setObject(TILE::E_OBJECT::E_UNIT);
+}
+

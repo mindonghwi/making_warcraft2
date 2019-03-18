@@ -168,8 +168,11 @@ void ASTAR::startFinder(float fStartPosX, float fStartPosY, float fEndPosX, floa
 		RECT rcTmp;
 		for (int i = 0; i < _pUnitMgr->getUnitCount(); i++)
 		{
-			//if (_pUnitMgr->getUnit(i)->getPosX() - fStartPosX > FLT_EPSILON
-			//	|| _pUnitMgr->getUnit(i)->getPosY() - fStartPosY > FLT_EPSILON)
+			if (_pUnitMgr->getUnit(i)->getPosX() - fStartPosX < FLT_EPSILON
+				&& _pUnitMgr->getUnit(i)->getPosY() - fStartPosY < FLT_EPSILON)
+			{
+			}
+			else
 			{
 				RECT rc = _pMap->getTile(_nEndIndexX, _nEndIndexY)->getRectTile();
 				RECT rc2 = * _pUnitMgr->getUnit(i)->getCollisionRect();
@@ -194,10 +197,14 @@ void ASTAR::startFinder(float fStartPosX, float fStartPosY, float fEndPosX, floa
 						}
 					}
 				}
-				
-				
 			}
 		}
+
+		if (!bIsOnObject)
+		{
+			//com
+		}
+
 
 		if (_eMoveHeight == MOVEHEIGHT::GROUND && _pMap->getTile(_nEndIndexX, _nEndIndexY)->getObject() != TILE::E_OBJECT::E_NONE)
 		{

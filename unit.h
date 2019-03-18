@@ -215,6 +215,10 @@ public:
 
 	virtual void updateRect();
 
+	virtual	void removeMapUnitData();
+	virtual	void addMapUnitData();
+
+
 public:
 	//setter
 	inline	void	setHp(int nAmount) { OBJECT::setHp(nAmount); }

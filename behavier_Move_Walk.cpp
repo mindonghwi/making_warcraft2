@@ -88,5 +88,4 @@ void BEHAVIER_MOVE_WALK::end(UNIT * pUnit)
 
 	_fTimer = 0.0f;
 
-
 }
