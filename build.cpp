@@ -53,6 +53,27 @@ void BUILD::update()
 		//commandProduce();
 		if (_fTimer >= 5.0f && _bIsProduce)
 		{
+			int nIndexX = (getLeft() + 16) / TILESIZE;
+			int nIndexY = (getTop() + 16) / TILESIZE;
+			bool bIsFind = false;
+			for (int i = -1; i < 6; i++)
+			{
+				for (int j = -1; j < 6; j++)
+				{
+					if (_pMap->getTile(nIndexX + i, nIndexY + j)->getObject() == TILE::E_OBJECT::E_NONE)
+					{
+						_fRayPointX = (float)_pMap->getTile(nIndexX + i, nIndexY + j)->getRectTile().left + 16.0f;
+						_fRayPointY = (float)_pMap->getTile(nIndexX + i, nIndexY + j)->getRectTile().top + 16.0f;
+						bIsFind = true;
+						break;
+					}
+				}
+				if (bIsFind)
+				{
+					break;
+				}
+			}
+
 			createUnit();
 		}
 		destroyBuild();

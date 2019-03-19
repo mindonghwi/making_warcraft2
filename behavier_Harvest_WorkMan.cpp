@@ -78,7 +78,8 @@ void BEHAVIER_HARVEST_WORKMAN::end(UNIT * pUnit)
 	pUnit->setCurrentState(UNIT::E_STATENUM::E_IDLE);
 	pUnit->setBehavier(UNIT::E_BEHAVIERNUM::E_NONE);
 	pUnit->getCurrentState()->start();
-
+	pUnit->setTarget(nullptr);
+	pUnit->addMapUnitData();
 	
 	if (nIndex != 201)
 	{

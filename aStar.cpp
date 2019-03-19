@@ -156,10 +156,14 @@ void ASTAR::startFinder(float fStartPosX, float fStartPosY, float fEndPosX, floa
 	int nGo = 1;
 	int nIndexCount = 0;
 	bool bIsOnObject = true;
+
+	//빌드도 아니고 논도 아니면 돌려
+
 	while (//(_eMoveHeight == MOVEHEIGHT::GROUND && _pMap->getTile(_nEndIndexX, _nEndIndexY)->getTerrian() == TILE::E_TERRIAN::WATER)
 		//|| (_eMoveHeight == MOVEHEIGHT::GROUND && _pMap->getTile(_nEndIndexX, _nEndIndexY)->getTerrian() == TILE::E_TERRIAN::DIRT_WATER)
 		//|| (_eMoveHeight == MOVEHEIGHT::GROUND && _pMap->getTile(_nEndIndexX, _nEndIndexY)->getTerrian() == TILE::E_TERRIAN::ROCK)
-		nCount< 25&&((_eMoveHeight == MOVEHEIGHT::GROUND && _pMap->getTile(_nEndIndexX, _nEndIndexY)->getObject() != TILE::E_OBJECT::E_NONE)
+		nCount< 25&&((_eMoveHeight == MOVEHEIGHT::GROUND && _pMap->getTile(_nEndIndexX, _nEndIndexY)->getObject() != TILE::E_OBJECT::E_NONE)&&
+		(_eMoveHeight == MOVEHEIGHT::GROUND && _pMap->getTile(_nEndIndexX, _nEndIndexY)->getObject() != TILE::E_OBJECT::E_BUILDING)
 		|| bIsOnObject))
 	{
 		bIsOnObject = false;
@@ -203,6 +207,7 @@ void ASTAR::startFinder(float fStartPosX, float fStartPosY, float fEndPosX, floa
 		if (!bIsOnObject)
 		{
 			//com
+
 		}
 
 
@@ -366,29 +371,29 @@ void ASTAR::pathFinder()
 		if (_eMoveHeight == MOVEHEIGHT::GROUND && _pMap->getTile(nIntervalPosX, nIntervalPosY)->getObject() != TILE::E_OBJECT::E_NONE)continue;
 
 		//유닛
-		bool bIsObject = false;
-		for (int i = 0; i < _pUnitMgr->getUnitCount(); i++)
-		{
-			RECT rcTmp;
+		//bool bIsObject = false;
+		//for (int i = 0; i < _pUnitMgr->getUnitCount(); i++)
+		//{
+		//	RECT rcTmp;
 
-			RECT rc = _pMap->getTile(nIntervalPosX, nIntervalPosY)->getRectTile();
-			RECT rc2 = * _pUnitMgr->getUnit(i)->getCollisionRect();
-			rc2.left += 5;
-			rc2.top += 5;
-			rc2.right -= 5;
-			rc2.bottom -= 5;
+		//	RECT rc = _pMap->getTile(nIntervalPosX, nIntervalPosY)->getRectTile();
+		//	RECT rc2 = * _pUnitMgr->getUnit(i)->getCollisionRect();
+		//	rc2.left += 5;
+		//	rc2.top += 5;
+		//	rc2.right -= 5;
+		//	rc2.bottom -= 5;
 
-			if (IntersectRect(&rcTmp, &rc, &rc2))
-			{
-				//if (!_pUnitMgr->getUnit(i)->getIsMoveAstar())
-				{
-					bIsObject = true;
-					break;
-				}
-			}
-		}
+		//	if (IntersectRect(&rcTmp, &rc, &rc2))
+		//	{
+		//		//if (!_pUnitMgr->getUnit(i)->getIsMoveAstar())
+		//		{
+		//			bIsObject = true;
+		//			break;
+		//		}
+		//	}
+		//}
 
-		if (bIsObject) continue;
+		//if (bIsObject) continue;
 
 		////건물
 		//bIsObject = false;

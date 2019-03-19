@@ -28,6 +28,7 @@ void BEHAVIER_MOVE_WALK::update(UNIT * pUnit)
 	}
 	
 	
+
 	pUnit->Move();
 
 	if (pUnit->getTarget())
@@ -80,6 +81,7 @@ void BEHAVIER_MOVE_WALK::end(UNIT * pUnit)
 		pUnit->setCurrentState(UNIT::E_STATENUM::E_IDLE);
 		pUnit->setBehavier(UNIT::E_BEHAVIERNUM::E_NONE);
 		pUnit->getCurrentState()->start();
+		pUnit->addMapUnitData();
 	}
 	else
 	{

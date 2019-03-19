@@ -126,7 +126,7 @@ bool UNITMGR::createUnit(UNIT::E_UNIT eUnit, float fPosX, float fPosY)
 	_listUnit.back()->setLinkBuildMgr(_pBuildMgr);
 	_listUnit.back()->setLinkMap(_pMap);
 	_listUnit.back()->setLinkMyPlayer(_pPlayer);
-
+	_listUnit.back()->addMapUnitData();
 	_nCount++;
 
 	_pPlayer->addPopulation(_arUnitPopulation[static_cast<int>(eUnit)]);
@@ -147,57 +147,57 @@ void UNITMGR::update()
 	while (iterUnitList != endUnitList)
 	{
 		UNIT* pUnit = *iterUnitList;
-		list<UNIT*>::iterator	iterUnitListCollision = _listUnit.begin();
-		list<UNIT*>::iterator	endUnitListCollision = _listUnit.end();
-		RECT _rc;
-		bool bIsOk = false;
-		while (iterUnitListCollision != endUnitListCollision)
-		{
-			UNIT* pCollUnit = *iterUnitListCollision;
-
-			if (pUnit->getIndexNum() != pCollUnit->getIndexNum())
-			{
-
-				//RECT rcTmp = RectMakeCenter(pUnit->getPosX()+Mins::presentPowerX(pUnit->getDirAngle(), pUnit->getMoveSpeed()) , pUnit->getPosY() + Mins::presentPowerY(pUnit->getDirAngle(), pUnit->getMoveSpeed()),3, 3);
-				RECT rcTmpA =  *pCollUnit->getCollisionRect();
-				RECT rcTmp = _pMap->getTile((int)pCollUnit->getPosX() / TILESIZE, (int)pCollUnit->getPosY() / TILESIZE)->getRectTile();
-				rcTmpA.left += 12;
-				rcTmpA.right -= 12;
-				rcTmpA.top+= 12;
-				rcTmpA.bottom -= 12;
-
-				if (pUnit->getBehavier() == UNIT::E_BEHAVIERNUM::E_MOVE)
-				{
-					if (pCollUnit->getBehavier() != UNIT::E_BEHAVIERNUM::E_MOVE)
-					{
-						if (IntersectRect(&_rc, & _pMap->getTile(pUnit->getMoveToPointEndX(), pUnit->getMoveToPointEndY())->getRectTile(), &rcTmpA))
-						{
-							bIsOk = true;
-							pUnit->moveToDir();
-							break;
-						}
-					}
-					else if (!pCollUnit->getIsMovePointEmpty())
-					{
-						if (IntersectRect(&_rc, &_pMap->getTile(pCollUnit->getMoveToPointEndX() / TILESIZE, pCollUnit->getMoveToPointEndY() / TILESIZE)->getRectTile(), &rcTmpA))
-						{
-							bIsOk = true;
-							pUnit->moveToDir();
-							break;
-						}
-					}
-					else if (IntersectRect(&_rc, &rcTmpA, pUnit->getCollisionRect()))
-					{
-						bIsOk = true;
-						pUnit->moveToDir();
-						break;
-					}
-				}
-
-				
-			}
-			iterUnitListCollision++;
-		}
+		//list<UNIT*>::iterator	iterUnitListCollision = _listUnit.begin();
+		//list<UNIT*>::iterator	endUnitListCollision = _listUnit.end();
+		//RECT _rc;
+		//bool bIsOk = false;
+		//while (iterUnitListCollision != endUnitListCollision)
+		//{
+		//	UNIT* pCollUnit = *iterUnitListCollision;
+		//
+		//	if (pUnit->getIndexNum() != pCollUnit->getIndexNum())
+		//	{
+		//
+		//		//RECT rcTmp = RectMakeCenter(pUnit->getPosX()+Mins::presentPowerX(pUnit->getDirAngle(), pUnit->getMoveSpeed()) , pUnit->getPosY() + Mins::presentPowerY(pUnit->getDirAngle(), pUnit->getMoveSpeed()),3, 3);
+		//		RECT rcTmpA =  *pCollUnit->getCollisionRect();
+		//		RECT rcTmp = _pMap->getTile((int)pCollUnit->getPosX() / TILESIZE, (int)pCollUnit->getPosY() / TILESIZE)->getRectTile();
+		//		rcTmpA.left += 12;
+		//		rcTmpA.right -= 12;
+		//		rcTmpA.top+= 12;
+		//		rcTmpA.bottom -= 12;
+		//
+		//		if (pUnit->getBehavier() == UNIT::E_BEHAVIERNUM::E_MOVE)
+		//		{
+		//			if (pCollUnit->getBehavier() != UNIT::E_BEHAVIERNUM::E_MOVE)
+		//			{
+		//				if (IntersectRect(&_rc, & _pMap->getTile(pUnit->getMoveToPointEndX(), pUnit->getMoveToPointEndY())->getRectTile(), &rcTmpA))
+		//				{
+		//					bIsOk = true;
+		//					pUnit->moveToDir();
+		//					break;
+		//				}
+		//			}
+		//			else if (!pCollUnit->getIsMovePointEmpty())
+		//			{
+		//				if (IntersectRect(&_rc, &_pMap->getTile(pCollUnit->getMoveToPointEndX() / TILESIZE, pCollUnit->getMoveToPointEndY() / TILESIZE)->getRectTile(), &rcTmpA))
+		//				{
+		//					bIsOk = true;
+		//					pUnit->moveToDir();
+		//					break;
+		//				}
+		//			}
+		//			else if (IntersectRect(&_rc, &rcTmpA, pUnit->getCollisionRect()))
+		//			{
+		//				bIsOk = true;
+		//				pUnit->moveToDir();
+		//				break;
+		//			}
+		//		}
+		//
+		//		
+		//	}
+		//	iterUnitListCollision++;
+		//}
 
 		if (pUnit->getHp() <= 0)
 		{
@@ -210,6 +210,7 @@ void UNITMGR::update()
 					break;
 				}
 			}
+			pUnit->removeMapUnitData();
 			iterUnitList = _listUnit.erase(iterUnitList);
 
 	

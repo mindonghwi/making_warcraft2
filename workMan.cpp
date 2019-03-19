@@ -75,7 +75,8 @@ void WORKMAN::update()
 			UNIT::setIsBannedSelect(false);
 		}
 		//등장위치 조정
-		if (_pMap->getTile((int)OBJECT::getPosX()/TILESIZE, (int)OBJECT::getPosY() / TILESIZE)->getObject() != TILE::E_OBJECT::E_NONE)
+		if (_pMap->getTile((int)OBJECT::getPosX()/TILESIZE, (int)OBJECT::getPosY() / TILESIZE)->getObject() != TILE::E_OBJECT::E_NONE &&
+			_pMap->getTile((int)OBJECT::getPosX() / TILESIZE, (int)OBJECT::getPosY() / TILESIZE)->getObject() != TILE::E_OBJECT::E_UNIT)
 		{
 			//길이 없을경우가 문제
 			for (int i = 0; i < 25; i++)
@@ -88,11 +89,11 @@ void WORKMAN::update()
 				{
 					OBJECT::settingRect();
 					setCollisionRect(OBJECT::getPosX(), OBJECT::getPosY(), 32, 32);
+					addMapUnitData();
 					break;
 				}
 			}
 		}
-
 		return;
 	}
 

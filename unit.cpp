@@ -115,12 +115,12 @@ void UNIT::commandMove(float fEndPosX, float fEndPosY)
 	//{
 		_fEndX = fEndPosX;
 		_fEndY = fEndPosY;
-
 		setMovePoints(fEndPosX,fEndPosY);
 		UNIT::getCurrentBehavir()->end(this);
 		if (!UNIT::moveTo()) {
 			return;
 		}
+		removeMapUnitData();
 		UNIT::setCurrentState(UNIT::E_STATENUM::E_MOVE);
 		UNIT::setCurrentBehavir(UNIT::E_BEHAVIERNUM::E_MOVE);
 		UNIT::setBehavier(UNIT::E_BEHAVIERNUM::E_MOVE);
@@ -164,6 +164,13 @@ void UNIT::setMovePoints(float fEndPosX, float fEndPosY)
 		vPos.push_back(_pAstar->getNode(i)->nIndexY);//* TILESIZE + 16);
 		UNIT::_vvMovePoint.push_back(vPos);
 	}
+
+	if (_pAstar->getListSize() < 2)
+	{
+		UNIT::setMoveIndex(0);
+
+	}
+
 	UNIT::setMoveIndex(0);
 
 }
@@ -366,10 +373,10 @@ bool UNIT::IsNearResources()
 		OBJECT* pObject = _pResourceMgr->getfindNearTree(getPosX(), getPosY());
 		RECT rc;
 		RECT rcTmp = *_pTarget->getRect();
-		rcTmp.left -= 3;
-		rcTmp.top -= 3;
-		rcTmp.bottom += 3;
-		rcTmp.right  += 3;
+		rcTmp.left -= 8;
+		rcTmp.top -= 8;
+		rcTmp.bottom += 8;
+		rcTmp.right  += 8;
 
 		if (IntersectRect(&rc, &rcTmp, getCollisionRect()))
 		{
