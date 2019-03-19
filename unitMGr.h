@@ -92,6 +92,9 @@ public:
 
 	void commandMoveSingle(float fPosX, float fPosY, UNIT* pUnit);
 	void removeSelectedUnit(UNIT* pUnit);
+
+
+	bool getUnitCollisionBullet(float fPosX, float fPosY, int nAttack);
 public:
 	//linker
 	inline	void	setLinkCamera(CAMERA* pCamera) { _pCamera = pCamera; }

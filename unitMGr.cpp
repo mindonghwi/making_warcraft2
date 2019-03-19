@@ -846,6 +846,29 @@ void UNITMGR::removeSelectedUnit(UNIT * pUnit)
 	}
 }
 
+bool UNITMGR::getUnitCollisionBullet(float fPosX, float fPosY, int nAttack)
+{
+	list<UNIT*>::iterator	iterUnitList = _listUnit.begin();
+	list<UNIT*>::iterator	endUnitList = _listUnit.end();
+
+	bool bIsCollision = false;
+
+	RECT rcBulletTile = _pMap->getTile(static_cast<int>(fPosX / TILESIZE), static_cast<int>(fPosY / TILESIZE))->getRectTile();
+	RECT rc;
+	while (iterUnitList != endUnitList)
+	{
+		if (IntersectRect(&rc,&rcBulletTile,(*iterUnitList)->getCollisionRect()))
+		{
+			(*iterUnitList)->decreaseHp(nAttack);
+			return true;
+		}
+
+		iterUnitList++;
+	}
+
+	return false;
+}
+
 
 UNIT * UNITMGR::getUnit(int nIndex)
 {

@@ -178,6 +178,7 @@
     <ClInclude Include="buildMgr.h" />
     <ClInclude Include="buildsHeader.h" />
     <ClInclude Include="bullet.h" />
+    <ClInclude Include="bulletMgr.h" />
     <ClInclude Include="button.h" />
     <ClInclude Include="camera.h" />
     <ClInclude Include="cannonTower.h" />
@@ -290,6 +291,7 @@
     <ClCompile Include="buildCommand.cpp" />
     <ClCompile Include="buildMgr.cpp" />
     <ClCompile Include="bullet.cpp" />
+    <ClCompile Include="bulletMgr.cpp" />
     <ClCompile Include="button.cpp" />
     <ClCompile Include="camera.cpp" />
     <ClCompile Include="cannonTower.cpp" />

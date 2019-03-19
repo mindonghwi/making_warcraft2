@@ -474,6 +474,9 @@
     <ClInclude Include="bullet.h">
       <Filter>PlayGround\bullet</Filter>
     </ClInclude>
+    <ClInclude Include="bulletMgr.h">
+      <Filter>PlayGround\bullet</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="stdafx.cpp">
@@ -777,6 +780,9 @@
       <Filter>PlayGround\player</Filter>
     </ClCompile>
     <ClCompile Include="bullet.cpp">
+      <Filter>PlayGround\bullet</Filter>
+    </ClCompile>
+    <ClCompile Include="bulletMgr.cpp">
       <Filter>PlayGround\bullet</Filter>
     </ClCompile>
   </ItemGroup>

@@ -3,6 +3,7 @@
 #include "object.h"
 
 class PLAYER;
+class CAMERA;
 
 class BULLET : public OBJECT
 {
@@ -28,15 +29,28 @@ private:
 	BULLET::E_DIRECTION		_eDirection;
 	bool					_bIsDestroy;
 	float					_fTimer;
+	CAMERA*					_pCamera;
+	int						_nAttack;
+	string					_strMapKey;
 public:
 	BULLET();
 	~BULLET();
 
 	//초기화
-	void init(float fPosX,float fPosY,int nWidth,int nHeight,const string& strImgKey, float fActiveTime,float fSpeed);
+	void init(float fPosX,float fPosY,int nWidth,int nHeight,const string& strImgKey, float fActiveTime,float fSpeed,int nAttack);
+	
 	//생성
 	void create(float fPosX, float fPosY,PLAYER* pTarget,float fAngle);
+
+	void returnPool();
 	void update();
 	void release();
 	void render(HDC hdc);
+
+	//linker
+	inline	void	setLinkCamera(CAMERA*	pCamera) { _pCamera = pCamera; }
+
+	inline	bool	isDestroy() { return _bIsDestroy; }
+	void setMapKey(const string& str) { _strMapKey = str; }
+	const string&	getMapKey() { return _strMapKey; }
 };
