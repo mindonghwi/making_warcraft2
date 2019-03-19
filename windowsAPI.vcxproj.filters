@@ -124,6 +124,9 @@
     <Filter Include="PlayGround\unit\2ndUnit">
       <UniqueIdentifier>{8f97d5c7-edd3-49aa-85aa-d399c74bddd0}</UniqueIdentifier>
     </Filter>
+    <Filter Include="PlayGround\bullet">
+      <UniqueIdentifier>{7fea8ae2-39de-40b9-b32d-924cb984e5d1}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="stdafx.h">
@@ -468,6 +471,9 @@
     <ClInclude Include="workMan.h">
       <Filter>PlayGround\unit\workMan</Filter>
     </ClInclude>
+    <ClInclude Include="bullet.h">
+      <Filter>PlayGround\bullet</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="stdafx.cpp">
@@ -769,6 +775,9 @@
     </ClCompile>
     <ClCompile Include="user.cpp">
       <Filter>PlayGround\player</Filter>
+    </ClCompile>
+    <ClCompile Include="bullet.cpp">
+      <Filter>PlayGround\bullet</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

@@ -49,6 +49,7 @@ protected:
 	E_BUILDS	_eBuilds;
 
 
+	PLAYER*		_pOpponent;
 public:
 	PLAYER();
 	~PLAYER();

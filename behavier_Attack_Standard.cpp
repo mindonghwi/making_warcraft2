@@ -52,6 +52,7 @@ void BEHAVIER_ATTACK::update(UNIT * pUnit)
 		rcTmp.bottom += 5;
 		rcTmp.right += 5;
 
+		
 
 		if (IntersectRect(&rc, pUnit->getCollisionRect(), &rcTmp))
 		{
@@ -60,10 +61,15 @@ void BEHAVIER_ATTACK::update(UNIT * pUnit)
 			fTotalFps *= pUnit->getFPS(UNIT::E_STATE::E_ATTACK);
 			if (_fTimer >= fTotalFps)
 			{
-				pUnit->getTarget()->decreaseHp(pUnit->getAttack());
+				if (pUnit->getUnit() == UNIT::E_UNIT::E_FOOTMAN ||
+					pUnit->getUnit() == UNIT::E_UNIT::E_WORKMAN ||
+					pUnit->getUnit() == UNIT::E_UNIT::E_KNIGHT ||
+					pUnit->getUnit() == UNIT::E_UNIT::E_BOMBER)
+				{
+					pUnit->getTarget()->decreaseHp(pUnit->getAttack());
+				}
 				_fTimer = 0.0f;
 			}
-
 		}
 		else
 		{
@@ -71,7 +77,7 @@ void BEHAVIER_ATTACK::update(UNIT * pUnit)
 			if (pUnit->getSearchRange() <= fDistance)
 			{
 				end(pUnit);
-			}
+			}	
 			else if (pUnit->getAttackRange() <= fDistance)
 			{
 				//이동해라
