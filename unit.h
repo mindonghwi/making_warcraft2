@@ -14,6 +14,8 @@ class BUILDMGR;
 class COMMAND;
 class UNITMGR;
 class MAP;
+class BULLETMGR;
+
 class UNIT : public OBJECT {
 public:
 	enum class E_STATENUM
@@ -168,6 +170,8 @@ protected:
 	RESOURCEMGR*	_pResourceMgr;
 	PLAYER*			_pPlayer;
 	int				_nMaxHp;
+	BULLETMGR*		_pBulletMgr;
+
 public:
 	UNIT();
 	virtual ~UNIT();
@@ -219,6 +223,9 @@ public:
 	virtual	void addMapUnitData();
 
 
+	virtual	void fireBullet();
+
+
 public:
 	//setter
 	inline	void	setHp(int nAmount) { OBJECT::setHp(nAmount); }
@@ -259,6 +266,7 @@ public:
 	inline	void	setLinkMap(MAP* pMap) { _pMap = pMap; }
 	inline	void	setLinkResourceMgr(RESOURCEMGR* pResourceMgr) { _pResourceMgr = pResourceMgr; }
 	inline	void	setLinkMyPlayer(PLAYER* pPlayer) { _pPlayer = pPlayer; }
+	inline	void	setLinkBulletMgr(BULLETMGR* pBulletMgr) { _pBulletMgr = pBulletMgr; }
 
 
 	inline	void	setCollisionRect(int nLeft, int nRight, int nWidth, int nHeight) { _rcCollision = RectMake(nLeft, nRight, nWidth, nHeight); }

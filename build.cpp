@@ -51,7 +51,41 @@ void BUILD::update()
 	else
 	{
 		//commandProduce();
-		if (_fTimer >= 5.0f && _bIsProduce)
+		if (getBuildsTpye() == E_BUILDS::E_BARRACKS ||
+			getBuildsTpye() == E_BUILDS::E_TOWN ||
+			getBuildsTpye() == E_BUILDS::E_KEEP ||
+			getBuildsTpye() == E_BUILDS::E_CASTLE ||
+			getBuildsTpye() == E_BUILDS::E_GNOMISH_INVENTOR ||
+			getBuildsTpye() == E_BUILDS::E_MAGE_TOWER||
+			getBuildsTpye() == E_BUILDS::E_GRYPHON_AVIARY)
+		{
+			if (_fTimer >= 5.0f && _bIsProduce)
+			{
+				int nIndexX = (getLeft() + 16) / TILESIZE;
+				int nIndexY = (getTop() + 16) / TILESIZE;
+				bool bIsFind = false;
+				for (int i = -1; i < 6; i++)
+				{
+					for (int j = -1; j < 6; j++)
+					{
+						if (_pMap->getTile(nIndexX + i, nIndexY + j)->getObject() == TILE::E_OBJECT::E_NONE)
+						{
+							_fRayPointX = (float)_pMap->getTile(nIndexX + i, nIndexY + j)->getRectTile().left + 16.0f;
+							_fRayPointY = (float)_pMap->getTile(nIndexX + i, nIndexY + j)->getRectTile().top + 16.0f;
+							bIsFind = true;
+							break;
+						}
+					}
+					if (bIsFind)
+					{
+						break;
+					}
+				}
+
+				createUnit();
+			}
+		}
+		else
 		{
 			int nIndexX = (getLeft() + 16) / TILESIZE;
 			int nIndexY = (getTop() + 16) / TILESIZE;
@@ -60,7 +94,8 @@ void BUILD::update()
 			{
 				for (int j = -1; j < 6; j++)
 				{
-					if (_pMap->getTile(nIndexX + i, nIndexY + j)->getObject() == TILE::E_OBJECT::E_NONE)
+					if (_pMap->getTile(nIndexX + i, nIndexY + j)->getObject() == TILE::E_OBJECT::E_NONE &&
+						(_pMap->getTile(nIndexX + i, nIndexY + j)->getTerrian() == TILE::E_TERRIAN::WATER))
 					{
 						_fRayPointX = (float)_pMap->getTile(nIndexX + i, nIndexY + j)->getRectTile().left + 16.0f;
 						_fRayPointY = (float)_pMap->getTile(nIndexX + i, nIndexY + j)->getRectTile().top + 16.0f;
@@ -76,6 +111,8 @@ void BUILD::update()
 
 			createUnit();
 		}
+
+
 		destroyBuild();
 
 	}

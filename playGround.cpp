@@ -126,8 +126,10 @@ void playGround::loadImage()
 	IMAGEMANAGER->addImage("redBar", "resource/icon/UI/redBar.bmp", 50, 5, true, Mins::getMazenta());
 	IMAGEMANAGER->addImage("yellowBar", "resource/icon/UI/yellowBar.bmp", 50, 5, true, Mins::getMazenta());
 
-	
-	
+	IMAGEMANAGER->addFrameImage("arrow", "resource/bullet/arrow.bmp", 256, 32, 8, 1, true, Mins::getMazenta());
+	IMAGEMANAGER->addFrameImage("ballis", "resource/bullet/ballis.bmp", 512, 32, 8, 1, true, Mins::getMazenta());
+	IMAGEMANAGER->addFrameImage("bullet", "resource/bullet/bullet.bmp", 256, 32, 8, 1, true, Mins::getMazenta());
+
 }
 
 

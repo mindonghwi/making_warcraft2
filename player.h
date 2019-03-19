@@ -11,7 +11,7 @@
 class ASTAR;
 class MAP;
 class RESOURCEMGR;
-
+class BULLETMGR;
 class PLAYER
 {
 public:
@@ -50,6 +50,8 @@ protected:
 
 
 	PLAYER*		_pOpponent;
+
+	BULLETMGR*	_pBulletMgr;
 public:
 	PLAYER();
 	~PLAYER();
@@ -79,6 +81,7 @@ public:
 	inline	void	setLinkAstar(ASTAR* pAstar) { _pAstar = pAstar; }
 	inline	void	setLinkMap(MAP* pMap) { _pMap = (pMap); }
 	inline	void	setLinkResourceMgr(RESOURCEMGR* pResourceMgr) { _pResourceMgr = pResourceMgr; }
+	inline	void	setLinkBulletMgr(BULLETMGR* pBulletMgr) { _pBulletMgr = pBulletMgr; }
 
 
 	//setter

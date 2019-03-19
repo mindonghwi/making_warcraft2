@@ -126,6 +126,8 @@ bool UNITMGR::createUnit(UNIT::E_UNIT eUnit, float fPosX, float fPosY)
 	_listUnit.back()->setLinkBuildMgr(_pBuildMgr);
 	_listUnit.back()->setLinkMap(_pMap);
 	_listUnit.back()->setLinkMyPlayer(_pPlayer);
+	_listUnit.back()->setLinkBulletMgr(_pBulletMgr);
+
 	_listUnit.back()->addMapUnitData();
 	_nCount++;
 
@@ -407,8 +409,8 @@ void UNITMGR::allocateUnitStatus()
 	_arUnitAttack[static_cast<const int>(UNIT::E_UNIT::E_ARCHER)] = 9;
 	_arUnitProductionTime[static_cast<const int>(UNIT::E_UNIT::E_ARCHER)] = 15;
 	_arUnitSpeed[static_cast<const int>(UNIT::E_UNIT::E_ARCHER)] = 0.3f;
-	_arSearchRange[static_cast<const int>(UNIT::E_UNIT::E_ARCHER)] = 128.0f;
-	_arAttackRange[static_cast<const int>(UNIT::E_UNIT::E_ARCHER)] = 96.0f;
+	_arSearchRange[static_cast<const int>(UNIT::E_UNIT::E_ARCHER)] = 256.0f;
+	_arAttackRange[static_cast<const int>(UNIT::E_UNIT::E_ARCHER)] = 256.0f;
 	_arAttackSpeed[static_cast<const int>(UNIT::E_UNIT::E_ARCHER)] = 1.0f;
 
 
@@ -419,8 +421,8 @@ void UNITMGR::allocateUnitStatus()
 	_arUnitAttack[static_cast<const int>(UNIT::E_UNIT::E_BALLISTA)] = 80;
 	_arUnitProductionTime[static_cast<const int>(UNIT::E_UNIT::E_BALLISTA)] = 30;
 	_arUnitSpeed[static_cast<const int>(UNIT::E_UNIT::E_BALLISTA)] = 0.6f;
-	_arSearchRange[static_cast<const int>(UNIT::E_UNIT::E_BALLISTA)] = 160.0f;
-	_arAttackRange[static_cast<const int>(UNIT::E_UNIT::E_BALLISTA)] = 128.0f;
+	_arSearchRange[static_cast<const int>(UNIT::E_UNIT::E_BALLISTA)] = 256.0f;
+	_arAttackRange[static_cast<const int>(UNIT::E_UNIT::E_BALLISTA)] = 256.0f;
 	_arAttackSpeed[static_cast<const int>(UNIT::E_UNIT::E_BALLISTA)] = 2.0f;
 
 	//knight

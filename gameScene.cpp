@@ -17,7 +17,7 @@ HRESULT SCENEGAME::init()
 	_pPlayer = new USER();
 	_pAstar = new ASTAR();
 	_pUiMgr = new UIMGR();
-	
+	_pBulletMgr = new BULLETMGR();
 
 
 	//player link other
@@ -25,7 +25,7 @@ HRESULT SCENEGAME::init()
 	_pPlayer->setLinkAstar(_pAstar);
 	_pPlayer->setLinkMap(_pMap);
 	_pPlayer->setLinkResourceMgr(_pResourceMgr);
-
+	_pPlayer->setLinkBulletMgr(_pBulletMgr);
 
 
 
@@ -39,6 +39,8 @@ HRESULT SCENEGAME::init()
 
 	//uiMGr link
 	_pUiMgr->setLinkPlayer(_pPlayer);
+
+	_pBulletMgr->setLinkCamera(_pCamera);
 
 
 	_pMap->init("map");
@@ -67,7 +69,13 @@ HRESULT SCENEGAME::init()
 
 	_pUiMgr->init();
 	
-	
+	_pBulletMgr->init();
+
+	_pBulletMgr->addBullet("arrows", 1000, "arrow", 100.0f, 1.0f, _pPlayer->getUnitMgr()->getAttack(UNIT::E_UNIT::E_ARCHER));
+	_pBulletMgr->addBullet("ballises", 1000, "ballis", 100.0f, 2.0f, _pPlayer->getUnitMgr()->getAttack(UNIT::E_UNIT::E_BALLISTA));
+	_pBulletMgr->addBullet("bullet", 1000, "bullet", 100.0f, 2.0f, _pPlayer->getUnitMgr()->getAttack(UNIT::E_UNIT::E_BATTLESHIP));
+
+
 	return S_OK;
 }
 
@@ -97,13 +105,15 @@ void SCENEGAME::update()
 	_pResourceMgr->update();
 	_pPlayer->update();
 	
+
+	_pBulletMgr->update();
 	_pUiMgr->update();
 }
 
 void SCENEGAME::render()
 {
 	_pCamera->renderinit();
-	_pMap->render(_pCamera->getMemDC());
+	//_pMap->render(_pCamera->getMemDC());
 
 	_pPlayer->render(_pCamera->getMemDC());
 	_pCamera->render(getMemDC());

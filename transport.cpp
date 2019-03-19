@@ -116,14 +116,14 @@ void TRANSPORT::allocateAnimation()
 	setStartIndex(UNIT::E_STATE::E_IDLE, 0);
 	setEndIndex(UNIT::E_STATE::E_IDLE, 0);
 
-	setStartIndex(UNIT::E_STATE::E_MOVE, 1);
-	setEndIndex(UNIT::E_STATE::E_MOVE, 2);
+	setStartIndex(UNIT::E_STATE::E_MOVE, 0);
+	setEndIndex(UNIT::E_STATE::E_MOVE, 0);
 
-	setStartIndex(UNIT::E_STATE::E_ATTACK, 3);
-	setEndIndex(UNIT::E_STATE::E_ATTACK, 4);
+	setStartIndex(UNIT::E_STATE::E_ATTACK, 0);
+	setEndIndex(UNIT::E_STATE::E_ATTACK, 0);
 
-	setStartIndex(UNIT::E_STATE::E_DEATH, 0);
-	setEndIndex(UNIT::E_STATE::E_DEATH, 3);
+	setStartIndex(UNIT::E_STATE::E_DEATH, 1);
+	setEndIndex(UNIT::E_STATE::E_DEATH, 2);
 
 	setFPS(UNIT::E_STATE::E_IDLE, 100.0f);
 	setFPS(UNIT::E_STATE::E_MOVE, 0.5f);

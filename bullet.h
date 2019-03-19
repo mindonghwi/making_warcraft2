@@ -25,13 +25,14 @@ private:
 	float					_fAngle;
 	float					_fSpeed;
 	float					_fActiveTime;
-	PLAYER*					_pTarget;
+	OBJECT*					_pTarget;
 	BULLET::E_DIRECTION		_eDirection;
 	bool					_bIsDestroy;
 	float					_fTimer;
 	CAMERA*					_pCamera;
 	int						_nAttack;
 	string					_strMapKey;
+	float					_fTrableRange;
 public:
 	BULLET();
 	~BULLET();
@@ -40,7 +41,7 @@ public:
 	void init(float fPosX,float fPosY,int nWidth,int nHeight,const string& strImgKey, float fActiveTime,float fSpeed,int nAttack);
 	
 	//»ý¼º
-	void create(float fPosX, float fPosY,PLAYER* pTarget,float fAngle);
+	void create(float fPosX, float fPosY, OBJECT* pTarget,float fAngle);
 
 	void returnPool();
 	void update();

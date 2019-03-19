@@ -11,13 +11,14 @@ BULLETMGR::~BULLETMGR()
 
 void BULLETMGR::init()
 {
-	
+	_mqBulletPool.clear();
+	_listActiveBullet.clear();
 }
 
-void BULLETMGR::undate()
+void BULLETMGR::update()
 {
 	list<BULLET*>::iterator iter = _listActiveBullet.begin();
-
+	
 
 	while (iter != _listActiveBullet.end())
 	{
@@ -86,9 +87,23 @@ void BULLETMGR::addBullet(const string & strKey, int nCount, const string & strI
 	for (int i = 0; i < nCount; i++)
 	{
 		BULLET*	pBullet = new BULLET();
-		pBullet->init(-2000, -2000, TILESIZE, TILESIZE, "strImg", fActiveTime, fSpeed, nAttack);
+		pBullet->init(-2000, -2000, TILESIZE, TILESIZE, strImg, fActiveTime, fSpeed, nAttack);
 		pBullet->setMapKey(strKey);
+		pBullet->setLinkCamera(_pCamera);
 		queBullet.push(pBullet);
 	}
 	_mqBulletPool.insert(pair<string, queue<BULLET*>>(strKey, queBullet));
+}
+
+void BULLETMGR::fire(const string & strKey, float fPosX, float fPosY, OBJECT* pTarget)
+{
+	if (_mqBulletPool.find(strKey) == _mqBulletPool.end()) return;
+	if (_mqBulletPool.find(strKey)->second.empty()) return;
+
+	BULLET*	pBullet = _mqBulletPool.find(strKey)->second.front();
+	_mqBulletPool.find(strKey)->second.pop();
+	_listActiveBullet.push_back(pBullet);
+
+
+	pBullet->create(fPosX, fPosY, pTarget, getAngle(fPosX, fPosY, pTarget->getPosX(), pTarget->getPosY()));
 }

@@ -9,6 +9,7 @@ class BUILDMGR;
 class RESOURCEMGR;
 class PLAYER;
 class RESOURCES;
+class BULLETMGR;
 class UNITMGR
 {
 private:
@@ -51,6 +52,7 @@ private:
 
 	RESOURCEMGR*	_pResourceMgr;
 	PLAYER*			_pPlayer;
+	BULLETMGR*		_pBulletMgr;
 
 public:
 	UNITMGR();
@@ -103,6 +105,7 @@ public:
 	inline	void	setLinkBuildMgr(BUILDMGR* pBuildMgr) { _pBuildMgr = pBuildMgr; }
 	inline	void	setLinkResourceMgr(RESOURCEMGR* pResourceMgr) { _pResourceMgr = pResourceMgr; }
 	inline	void	setLinkMyPlayer(PLAYER* pPlayer) { _pPlayer = pPlayer; }
+	inline	void	setLinkBulletMgr(BULLETMGR* pBulletMgr) { _pBulletMgr = pBulletMgr; }
 
 	//getter
 	inline	int		getHp(UNIT::E_UNIT eUnit) { return _arUnitHp[static_cast<int>(eUnit)]; }

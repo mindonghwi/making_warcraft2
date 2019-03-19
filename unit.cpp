@@ -2,6 +2,8 @@
 #include "unit.h"
 #include "buildMgr.h"
 #include "unitMGr.h"
+#include "bulletMgr.h"
+
 
 UNIT::UNIT() :
 	_nAttack(0),
@@ -165,11 +167,7 @@ void UNIT::setMovePoints(float fEndPosX, float fEndPosY)
 		UNIT::_vvMovePoint.push_back(vPos);
 	}
 
-	if (_pAstar->getListSize() < 2)
-	{
-		UNIT::setMoveIndex(0);
 
-	}
 
 	UNIT::setMoveIndex(0);
 
@@ -400,5 +398,22 @@ void UNIT::removeMapUnitData()
 void UNIT::addMapUnitData()
 {
 	_pMap->getTile(getPosX() / TILESIZE, getPosY() / TILESIZE)->setObject(TILE::E_OBJECT::E_UNIT);
+}
+
+void UNIT::fireBullet()
+{
+	if (getUnit() == E_UNIT::E_ARCHER)
+	{
+		_pBulletMgr->fire("arrows", getPosX(), getPosY(), getTarget());
+	}
+	else if (getUnit() == E_UNIT::E_BALLISTA)
+	{
+		_pBulletMgr->fire("ballises", getPosX(), getPosY(), getTarget());
+	}
+	else if (getUnit() == E_UNIT::E_BATTLESHIP ||
+		getUnit() == E_UNIT::E_GALLEYS)
+	{
+		_pBulletMgr->fire("bullet", getPosX(), getPosY(), getTarget());
+	}
 }
 

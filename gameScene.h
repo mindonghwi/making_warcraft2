@@ -7,6 +7,8 @@
 
 #include "player.h"
 #include "UIMGR.h"
+#include "bulletMgr.h"
+
 class SCENEGAME : public gameNode
 {
 private:
@@ -18,7 +20,9 @@ private:
 	PLAYER*			_pPlayer;
 
 	UIMGR*			_pUiMgr;
-
+	
+	BULLETMGR*		_pBulletMgr;
+	
 
 public:
 	SCENEGAME();

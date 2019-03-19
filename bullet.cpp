@@ -24,9 +24,10 @@ void BULLET::init(float fPosX, float fPosY, int nWidth, int nHeight, const strin
 	_fTimer = 0.0f;
 	OBJECT::setPosZ(3000);
 	_nAttack = nAttack;
+	_fTrableRange = 0.0f;
 }
 
-void BULLET::create(float fPosX, float fPosY, PLAYER * pTarget, float fAngle)
+void BULLET::create(float fPosX, float fPosY, OBJECT * pTarget, float fAngle)
 {
 	OBJECT::setPosX(fPosX);
 	OBJECT::setPosY(fPosY);
@@ -42,8 +43,11 @@ void BULLET::create(float fPosX, float fPosY, PLAYER * pTarget, float fAngle)
 		fDirAngle = static_cast<float>(BULLET::E_DIRECTION::E_RIGHT);
 	}
 
-	_eDirection = static_cast<BULLET::E_DIRECTION>(static_cast<int>(fAngle));
+	_eDirection = static_cast<BULLET::E_DIRECTION>(static_cast<int>(fDirAngle));
 	
+
+	_fTrableRange = getDistance(OBJECT::getPosX(), OBJECT::getPosY(), _pTarget->getPosX(), _pTarget->getPosY());
+
 }
 
 void BULLET::returnPool()
@@ -64,8 +68,13 @@ void BULLET::update()
 	//충돌 서치
 	//xy좌표로 맵의 타일 중심 좌표 계산  거기 타겟 유닛이나 건물이 있는지
 
-	if (_pTarget->getUnitMgr()->getUnitCollisionBullet(OBJECT::getPosX(), OBJECT::getPosY(), _nAttack))
+	RECT rcTarget = RectMakeCenter(_pTarget->getPosX(), _pTarget->getPosY(), 32, 32);
+	RECT rcObject = RectMakeCenter(OBJECT::getPosX(), OBJECT::getPosY(), 32, 32);
+	RECT rc;
+
+	if (IntersectRect(&rc,&rcTarget,&rcObject))
 	{
+		_pTarget->decreaseHp(_nAttack);
 		_bIsDestroy = true;
 		return;
 	}
@@ -76,10 +85,12 @@ void BULLET::update()
 		return;
 	}
 
-	float fspeed = _fSpeed * TIMEMANAGER->getElapsedTime();
-	
-	OBJECT::setPosX(OBJECT::getPosX() + Mins::presentPowerX(_fAngle, fspeed));
-	OBJECT::setPosY(OBJECT::getPosY() + Mins::presentPowerY(_fAngle, fspeed));
+	float elapsedTime = TIMEMANAGER->getElapsedTime();
+
+	float fMoveSpeed = (elapsedTime / _fSpeed) * _fTrableRange;
+
+	OBJECT::setPosX(OBJECT::getPosX() + Mins::presentPowerX(_fAngle, fMoveSpeed));
+	OBJECT::setPosY(OBJECT::getPosY() + Mins::presentPowerY(_fAngle, fMoveSpeed));
 
 	_pCamera->pushRenderObject(this);
 }

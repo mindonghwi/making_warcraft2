@@ -21,7 +21,7 @@ void PLAYER::init(float fPosX, float fPosY)
 	_pUnitMgr->setLinkMap(_pMap);
 	_pUnitMgr->setLinkResourceMgr(_pResourceMgr);
 	_pUnitMgr->setLinkMyPlayer(this);
-
+	_pUnitMgr->setLinkBulletMgr(_pBulletMgr);
 
 	_pBuildMgr->setLinkCamera(_pCamera);
 	_pBuildMgr->setLinkUnitMgr(_pUnitMgr);

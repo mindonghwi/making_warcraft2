@@ -52,13 +52,14 @@ void BEHAVIER_ATTACK::update(UNIT * pUnit)
 		rcTmp.bottom += 5;
 		rcTmp.right += 5;
 
+		_fTimer += TIMEMANAGER->getElapsedTime();
+		float fTotalFps = static_cast<float>(pUnit->getEndIndex(UNIT::E_STATE::E_ATTACK) - pUnit->getStartIndex(UNIT::E_STATE::E_ATTACK));
+		fTotalFps *= pUnit->getFPS(UNIT::E_STATE::E_ATTACK);
 		
 
 		if (IntersectRect(&rc, pUnit->getCollisionRect(), &rcTmp))
 		{
-			_fTimer += TIMEMANAGER->getElapsedTime();
-			float fTotalFps = static_cast<float>(pUnit->getEndIndex(UNIT::E_STATE::E_ATTACK) - pUnit->getStartIndex(UNIT::E_STATE::E_ATTACK));
-			fTotalFps *= pUnit->getFPS(UNIT::E_STATE::E_ATTACK);
+
 			if (_fTimer >= fTotalFps)
 			{
 				if (pUnit->getUnit() == UNIT::E_UNIT::E_FOOTMAN ||
@@ -68,6 +69,7 @@ void BEHAVIER_ATTACK::update(UNIT * pUnit)
 				{
 					pUnit->getTarget()->decreaseHp(pUnit->getAttack());
 				}
+
 				_fTimer = 0.0f;
 			}
 		}
@@ -89,6 +91,11 @@ void BEHAVIER_ATTACK::update(UNIT * pUnit)
 				//pUnit->commandMove(pUnit->getTarget()->getPosX(), pUnit->getTarget()->getPosY());
 			}
 
+			if (_fTimer >= fTotalFps)
+			{
+				pUnit->fireBullet();
+				_fTimer = 0.0f;
+			}
 		}
 	}
 	else //if(pUnit->getTarget()->getHp() <= 0)
