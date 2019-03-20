@@ -11,6 +11,8 @@ private:
 	float	_fTimer;
 
 
+	vector<UNIT**>	_vTransportIn;
+
 public:
 	TRANSPORT();
 	~TRANSPORT();
