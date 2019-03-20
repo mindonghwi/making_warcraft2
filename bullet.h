@@ -21,7 +21,7 @@ public:
 		E_MAX
 	};
 
-private:
+protected:
 	float					_fAngle;
 	float					_fSpeed;
 	float					_fActiveTime;
@@ -33,23 +33,30 @@ private:
 	int						_nAttack;
 	string					_strMapKey;
 	float					_fTrableRange;
+
+
+	PLAYER*		_pUser;
+	PLAYER*		_pCom;
 public:
 	BULLET();
 	~BULLET();
 
 	//초기화
-	void init(float fPosX,float fPosY,int nWidth,int nHeight,const string& strImgKey, float fActiveTime,float fSpeed,int nAttack);
+	virtual void init(float fPosX,float fPosY,int nWidth,int nHeight,const string& strImgKey, float fActiveTime,float fSpeed,int nAttack);
 	
 	//생성
-	void create(float fPosX, float fPosY, OBJECT* pTarget,float fAngle);
+	virtual void create(float fPosX, float fPosY, OBJECT* pTarget,float fAngle);
+	virtual void create(float fPosX, float fPosY, float fAngle);
 
-	void returnPool();
-	void update();
-	void release();
-	void render(HDC hdc);
+	virtual void returnPool();
+	virtual void update();
+	virtual void release();
+	virtual void render(HDC hdc);
 
 	//linker
 	inline	void	setLinkCamera(CAMERA*	pCamera) { _pCamera = pCamera; }
+	inline	void	setLinkCom(PLAYER* pCom) { _pCom = pCom; }
+	inline	void	setLinkPlayer(PLAYER* pUser) { _pUser = pUser; }
 
 	inline	bool	isDestroy() { return _bIsDestroy; }
 	void setMapKey(const string& str) { _strMapKey = str; }

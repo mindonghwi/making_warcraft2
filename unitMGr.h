@@ -54,6 +54,8 @@ private:
 	PLAYER*			_pPlayer;
 	BULLETMGR*		_pBulletMgr;
 
+	PLAYER*		_pOpponent;
+
 public:
 	UNITMGR();
 	~UNITMGR();
@@ -129,4 +131,8 @@ public:
 
 	UNIT*	getSelectedUnit(int nIndex);
 	inline	int		getUnitSelectedCount() { return static_cast<int>(_vSeletedUnit.size()); }
+
+
+	inline	PLAYER*		getOpponent() { return _pOpponent; }
+	inline	void	setOpponent(PLAYER* pPlayer) { _pOpponent = pPlayer; }
 };

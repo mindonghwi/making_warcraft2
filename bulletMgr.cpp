@@ -1,6 +1,6 @@
 #include "stdafx.h"
 #include "bulletMgr.h"
-
+#include "gryphonBullet.h"
 BULLETMGR::BULLETMGR()
 {
 }
@@ -95,6 +95,27 @@ void BULLETMGR::addBullet(const string & strKey, int nCount, const string & strI
 	_mqBulletPool.insert(pair<string, queue<BULLET*>>(strKey, queBullet));
 }
 
+void BULLETMGR::addGryphonBullet(const string & strKey, int nCount, const string & strImg, float fActiveTime, float fSpeed, int nAttack)
+{
+	if (_mqBulletPool.find(strKey) != _mqBulletPool.end())
+	{
+		return;
+	}
+
+	queue<BULLET*>	queBullet;
+	for (int i = 0; i < nCount; i++)
+	{
+		BULLET*	pBullet = new GRYPHONBULLET();
+		pBullet->init(-2000, -2000, TILESIZE, TILESIZE, strImg, fActiveTime, fSpeed, nAttack);
+		pBullet->setMapKey(strKey);
+		pBullet->setLinkCamera(_pCamera);
+		pBullet->setLinkPlayer(_pUser);
+		pBullet->setLinkCom(_pCom);
+		queBullet.push(pBullet);
+	}
+	_mqBulletPool.insert(pair<string, queue<BULLET*>>(strKey, queBullet));
+}
+
 void BULLETMGR::fire(const string & strKey, float fPosX, float fPosY, OBJECT* pTarget)
 {
 	if (_mqBulletPool.find(strKey) == _mqBulletPool.end()) return;
@@ -106,4 +127,17 @@ void BULLETMGR::fire(const string & strKey, float fPosX, float fPosY, OBJECT* pT
 
 
 	pBullet->create(fPosX, fPosY, pTarget, getAngle(fPosX, fPosY, pTarget->getPosX(), pTarget->getPosY()));
+}
+
+void BULLETMGR::fire(const string & strKey, float fPosX, float fPosY, PLAYER * pTarget, float fTargetPosX, float fTargetPosY)
+{
+	if (_mqBulletPool.find(strKey) == _mqBulletPool.end()) return;
+	if (_mqBulletPool.find(strKey)->second.empty()) return;
+
+	BULLET*	pBullet = _mqBulletPool.find(strKey)->second.front();
+	_mqBulletPool.find(strKey)->second.pop();
+	_listActiveBullet.push_back(pBullet);
+
+
+	pBullet->create(fPosX, fPosY, getAngle(fPosX, fPosY, fTargetPosX, fTargetPosY));
 }

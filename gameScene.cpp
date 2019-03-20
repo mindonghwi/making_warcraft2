@@ -1,6 +1,8 @@
 #include "stdafx.h"
 #include "gameScene.h"
 #include "user.h"
+
+#include "com.h"
 SCENEGAME::SCENEGAME()
 {
 }
@@ -18,7 +20,7 @@ HRESULT SCENEGAME::init()
 	_pAstar = new ASTAR();
 	_pUiMgr = new UIMGR();
 	_pBulletMgr = new BULLETMGR();
-
+	_pCom = new COM();
 
 	//player link other
 	_pPlayer->setLinkCamera(_pCamera);
@@ -26,8 +28,15 @@ HRESULT SCENEGAME::init()
 	_pPlayer->setLinkMap(_pMap);
 	_pPlayer->setLinkResourceMgr(_pResourceMgr);
 	_pPlayer->setLinkBulletMgr(_pBulletMgr);
+	_pPlayer->setOpponent(_pCom);
 
-
+	//com link other
+	_pCom->setLinkCamera(_pCamera);
+	_pCom->setLinkAstar(_pAstar);
+	_pCom->setLinkMap(_pMap);
+	_pCom->setLinkResourceMgr(_pResourceMgr);
+	_pCom->setLinkBulletMgr(_pBulletMgr);
+	_pCom->setOpponent(_pPlayer);
 
 	//resourceMgr link other
 	_pResourceMgr->setLinkCamera(_pCamera);
@@ -40,8 +49,10 @@ HRESULT SCENEGAME::init()
 	//uiMGr link
 	_pUiMgr->setLinkPlayer(_pPlayer);
 
+	//bulletMgr linl
 	_pBulletMgr->setLinkCamera(_pCamera);
-
+	_pBulletMgr->setLinkPlayer(_pPlayer);
+	_pBulletMgr->setLinkCom(_pCom);
 
 	_pMap->init("map");
 	_pCamera->init(WINSIZEX/2, WINSIZEY / 2,WINSIZEX,WINSIZEY,_pMap->getMapCountX() * TILESIZE, _pMap->getMapCountY() * TILESIZE);
@@ -59,7 +70,11 @@ HRESULT SCENEGAME::init()
 	_pPlayer->setOil(5000);
 	_pPlayer->setTree(2000);
 
-
+	//_pCom init
+	_pCom->init(static_cast<float>(TILESIZE * 19 + 16), static_cast<float>(TILESIZE * 25 + 16));
+	_pCom->setGold(5000);
+	_pCom->setOil(5000);
+	_pCom->setTree(2000);
 
 	_pAstar->init(8, _pMap);
 
@@ -71,10 +86,12 @@ HRESULT SCENEGAME::init()
 	
 	_pBulletMgr->init();
 
-	_pBulletMgr->addBullet("arrows", 1000, "arrow", 100.0f, 1.0f, _pPlayer->getUnitMgr()->getAttack(UNIT::E_UNIT::E_ARCHER));
-	_pBulletMgr->addBullet("ballises", 1000, "ballis", 100.0f, 2.0f, _pPlayer->getUnitMgr()->getAttack(UNIT::E_UNIT::E_BALLISTA));
-	_pBulletMgr->addBullet("bullet", 1000, "bullet", 100.0f, 2.0f, _pPlayer->getUnitMgr()->getAttack(UNIT::E_UNIT::E_BATTLESHIP));
-
+	_pBulletMgr->addBullet("arrows", 1000, "arrow", 100.0f, 0.4f, _pPlayer->getUnitMgr()->getAttack(UNIT::E_UNIT::E_ARCHER));
+	_pBulletMgr->addBullet("ballises", 1000, "ballis", 100.0f, 1.0f, _pPlayer->getUnitMgr()->getAttack(UNIT::E_UNIT::E_BALLISTA));
+	_pBulletMgr->addBullet("bullet", 1000, "bullet", 100.0f, 0.9f, _pPlayer->getUnitMgr()->getAttack(UNIT::E_UNIT::E_BATTLESHIP));
+	_pBulletMgr->addBullet("fireBall", 1000, "fireBall", 100.0f, 0.5f, _pPlayer->getUnitMgr()->getAttack(UNIT::E_UNIT::E_MAGICIAN));
+	//_pBulletMgr->addBullet("axe", 1000, "axe", 5.0f, 0.3f, _pPlayer->getUnitMgr()->getAttack(UNIT::E_UNIT::E_FLYER));
+	_pBulletMgr->addGryphonBullet("axe", 1000, "axe", 3.0f, 120.0f, _pPlayer->getUnitMgr()->getAttack(UNIT::E_UNIT::E_FLYER));
 
 	return S_OK;
 }
@@ -105,9 +122,12 @@ void SCENEGAME::update()
 	_pResourceMgr->update();
 	_pPlayer->update();
 	
+	_pCom->update();
 
 	_pBulletMgr->update();
 	_pUiMgr->update();
+
+
 }
 
 void SCENEGAME::render()

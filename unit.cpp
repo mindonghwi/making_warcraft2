@@ -3,7 +3,7 @@
 #include "buildMgr.h"
 #include "unitMGr.h"
 #include "bulletMgr.h"
-
+#include "player.h"
 
 UNIT::UNIT() :
 	_nAttack(0),
@@ -415,5 +415,28 @@ void UNIT::fireBullet()
 	{
 		_pBulletMgr->fire("bullet", getPosX(), getPosY(), getTarget());
 	}
+	else if (getUnit() == E_UNIT::E_MAGICIAN)
+	{
+		_pBulletMgr->fire("fireBall", getPosX(), getPosY(), getTarget());
+	}
+	else if (getUnit() == E_UNIT::E_FLYER)
+	{
+		//_pBulletMgr->fire("axe", getPosX(), getPosY(), getTarget());
+		_pBulletMgr->fire("axe", getPosX(), getPosY(), _pPlayer->getOpponent(), getTarget()->getPosX(), getTarget()->getPosY());
+	}
+}
+
+void UNIT::searchOppent()
+{
+	for (int i = 0; i < _pOpponent->getUnitMgr()->getUnitCount(); i++)
+	{
+		float fDoubleSearchRange = getSearchRange() * getSearchRange();
+		if (fDoubleSearchRange >= Mins::getDoubleDis(getPosX(), getPosY(), _pOpponent->getUnitMgr()->getUnit(i)->getPosX(), _pOpponent->getUnitMgr()->getUnit(i)->getPosY()))
+		{
+			clearCommand();
+			_pUnitMgr->commandAttack(_pOpponent->getUnitMgr()->getUnit(i));
+		}
+	}
+
 }
 

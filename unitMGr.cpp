@@ -127,7 +127,7 @@ bool UNITMGR::createUnit(UNIT::E_UNIT eUnit, float fPosX, float fPosY)
 	_listUnit.back()->setLinkMap(_pMap);
 	_listUnit.back()->setLinkMyPlayer(_pPlayer);
 	_listUnit.back()->setLinkBulletMgr(_pBulletMgr);
-
+	_listUnit.back()->setOpponent(_pOpponent);
 	_listUnit.back()->addMapUnitData();
 	_nCount++;
 

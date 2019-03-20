@@ -129,7 +129,16 @@ void playGround::loadImage()
 	IMAGEMANAGER->addFrameImage("arrow", "resource/bullet/arrow.bmp", 256, 32, 8, 1, true, Mins::getMazenta());
 	IMAGEMANAGER->addFrameImage("ballis", "resource/bullet/ballis.bmp", 512, 32, 8, 1, true, Mins::getMazenta());
 	IMAGEMANAGER->addFrameImage("bullet", "resource/bullet/bullet.bmp", 256, 32, 8, 1, true, Mins::getMazenta());
+	IMAGEMANAGER->addFrameImage("fireBall", "resource/bullet/fireBall.bmp", 256, 32, 8, 1, true, Mins::getMazenta());
+	
+	//magic
+	IMAGEMANAGER->addFrameImage("ice", "resource/bullet/ice.bmp", 128, 32,4, 1, true, Mins::getMazenta());
+	IMAGEMANAGER->addFrameImage("axe", "resource/bullet/axe.bmp", 192, 32, 6, 1, true, Mins::getMazenta());
+	
+	//effect
+	IMAGEMANAGER->addFrameImage("bomb", "resource/bullet/bomb.bmp", 1024, 64, 16, 1, true, Mins::getMazenta());
 
+	
 }
 
 

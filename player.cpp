@@ -22,6 +22,8 @@ void PLAYER::init(float fPosX, float fPosY)
 	_pUnitMgr->setLinkResourceMgr(_pResourceMgr);
 	_pUnitMgr->setLinkMyPlayer(this);
 	_pUnitMgr->setLinkBulletMgr(_pBulletMgr);
+	_pUnitMgr->setOpponent(_pOpponent);
+
 
 	_pBuildMgr->setLinkCamera(_pCamera);
 	_pBuildMgr->setLinkUnitMgr(_pUnitMgr);
@@ -34,14 +36,14 @@ void PLAYER::init(float fPosX, float fPosY)
 
 
 	//_pUnitMgr->createUnit(UNIT::E_UNIT::E_WORKMAN, TILESIZE * 19 + 16, TILESIZE * 11 + 16);
-	_pUnitMgr->createUnit(UNIT::E_UNIT::E_WORKMAN, TILESIZE * 17 + 16, TILESIZE * 11 + 16);
-	
-	_pUnitMgr->createUnit(UNIT::E_UNIT::E_WORKMAN, TILESIZE * 19 + 16, TILESIZE * 10 + 16);
-	_pUnitMgr->createUnit(UNIT::E_UNIT::E_WORKMAN, TILESIZE * 17 + 16, TILESIZE * 10 + 16);
-	
-	_pUnitMgr->createUnit(UNIT::E_UNIT::E_WORKMAN, TILESIZE * 13 + 16, TILESIZE * 10 + 16);
-	_pUnitMgr->createUnit(UNIT::E_UNIT::E_WORKMAN, TILESIZE * 14 + 16, TILESIZE * 10 + 16);
-
+	//_pUnitMgr->createUnit(UNIT::E_UNIT::E_WORKMAN, TILESIZE * 17 + 16, TILESIZE * 11 + 16);
+	//
+	//_pUnitMgr->createUnit(UNIT::E_UNIT::E_WORKMAN, TILESIZE * 19 + 16, TILESIZE * 10 + 16);
+	//_pUnitMgr->createUnit(UNIT::E_UNIT::E_WORKMAN, TILESIZE * 17 + 16, TILESIZE * 10 + 16);
+	//
+	//_pUnitMgr->createUnit(UNIT::E_UNIT::E_WORKMAN, TILESIZE * 13 + 16, TILESIZE * 10 + 16);
+	//_pUnitMgr->createUnit(UNIT::E_UNIT::E_WORKMAN, TILESIZE * 14 + 16, TILESIZE * 10 + 16);
+	//
 	_pUnitMgr->createUnit(UNIT::E_UNIT::E_WORKMAN, fPosX,fPosY);
 
 	_ptCameraPtMouse.x = _ptMouse.x + _pCamera->getLeft();
@@ -139,7 +141,6 @@ void PLAYER::commandSelectUnit()
 				_pUnitMgr->clearCommandSelectedUnit();
 			}
 			_pUnitMgr->moveCommand((float)_ptCameraPtMouse.x, (float)_ptCameraPtMouse.y);
-
 		}
 	}						   
 }
@@ -315,10 +316,23 @@ void PLAYER::commandAttack()
 					//		_pUnitMgr->getSelectedUnit(j)->attack(_pUnitMgr->getUnit(i));
 					//	}
 					//}
+					
 					break;
 				}
 			}
 			
+			for (int i = 0; i < _pOpponent->getUnitMgr()->getUnitCount(); i++)
+			{
+				if (PtInRect(_pOpponent->getUnitMgr()->getUnit(i)->getCollisionRect(), _ptCameraPtMouse))
+				{
+					//여기에 유닛 어택을 내린다
+					_pUnitMgr->commandAttack(_pOpponent->getUnitMgr()->getUnit(i));
+
+					break;
+				}
+			}
+
+
 				//플레이어의 건물 매니저에서
 			for (int i = 0; i < _pBuildMgr->getBuildCount(); i++)
 			{
@@ -333,7 +347,16 @@ void PLAYER::commandAttack()
 				//상대 유닛매니저에서
 
 				//상대 건물매니저에서
+			for (int i = 0; i < _pOpponent->getBuildMgr()->getBuildCount(); i++)
+			{
+				if (PtInRect(_pOpponent->getBuildMgr()->getBuild(i)->getRect(), _ptCameraPtMouse))
+				{
+					//여기에 유닛 어택을 내린다
+					_pUnitMgr->commandAttack(_pBuildMgr->getBuild(i));
 
+					break;
+				}
+			}
 			//타겟이 잡히지 않았다.
 
 			//유닛들은 플레이어의 유닛매니저 빌드매니저 상대의 유닛매니저 빌드매니저를 알아야한다.

@@ -90,6 +90,7 @@ public:
 	inline	void	setOil(int nOil) { _arResource[static_cast<int>(E_RESOURCE::E_OIL)] = nOil; }
 	inline	void	setPopulation(int nPopulation) { _nPopulation = nPopulation; }
 	inline	void	setMaxPopulation(int nMaxPopulation) { _nMaxPopulation = nMaxPopulation; }
+	inline	void	setOpponent(PLAYER* pPlayer) { _pOpponent = pPlayer; }
 
 
 	//getter
@@ -100,6 +101,7 @@ public:
 	inline	int			getMaxPopulation() { return _nMaxPopulation; }
 	inline	UNITMGR*	getUnitMgr() { return _pUnitMgr; }
 	inline	BUILDMGR*	getBuildMgr() { return _pBuildMgr; }
+	inline	PLAYER*		getOpponent() { return _pOpponent; 	}
 
 	//adder
 	inline	void	addGold(int nGold) { _arResource[static_cast<int>(E_RESOURCE::E_GOLD)] += nGold; }

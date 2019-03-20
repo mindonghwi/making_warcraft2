@@ -172,6 +172,8 @@ protected:
 	int				_nMaxHp;
 	BULLETMGR*		_pBulletMgr;
 
+	PLAYER*		_pOpponent;
+
 public:
 	UNIT();
 	virtual ~UNIT();
@@ -225,6 +227,7 @@ public:
 
 	virtual	void fireBullet();
 
+	virtual void searchOppent();
 
 public:
 	//setter
@@ -369,5 +372,6 @@ public:
 
 	void	addFrameX(UNIT::E_STATE eState);
 	virtual void	decreaseHp(int nHp);
-
+	inline	PLAYER*		getOpponent() { return _pOpponent; }
+	inline	void	setOpponent(PLAYER* pPlayer) { _pOpponent = pPlayer; }
 };

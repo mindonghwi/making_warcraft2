@@ -200,6 +200,7 @@
     <ClInclude Include="gnomishInventor.h" />
     <ClInclude Include="goldMine.h" />
     <ClInclude Include="gryphonAviary.h" />
+    <ClInclude Include="gryphonBullet.h" />
     <ClInclude Include="gryphonRider.h" />
     <ClInclude Include="guardTower.h" />
     <ClInclude Include="harvestCommand.h" />
@@ -312,6 +313,7 @@
     <ClCompile Include="gnomishInventor.cpp" />
     <ClCompile Include="goldMine.cpp" />
     <ClCompile Include="gryphonAviary.cpp" />
+    <ClCompile Include="gryphonBullet.cpp" />
     <ClCompile Include="gryphonRider.cpp" />
     <ClCompile Include="guardTower.cpp" />
     <ClCompile Include="harvestCommand.cpp" />

@@ -50,6 +50,27 @@ void BULLET::create(float fPosX, float fPosY, OBJECT * pTarget, float fAngle)
 
 }
 
+void BULLET::create(float fPosX, float fPosY, float fAngle)
+{
+	OBJECT::setPosX(fPosX);
+	OBJECT::setPosY(fPosY);
+	_fAngle = fAngle;
+	_bIsDestroy = false;
+	_fTimer = 0.0f;
+
+	float fDirAngle = (_fAngle + PI8) / (PI / 4.0f);
+
+	if (fDirAngle >= static_cast<float>(BULLET::E_DIRECTION::E_MAX))
+	{
+		fDirAngle = static_cast<float>(BULLET::E_DIRECTION::E_RIGHT);
+	}
+
+	_eDirection = static_cast<BULLET::E_DIRECTION>(static_cast<int>(fDirAngle));
+
+
+	_fTrableRange = 0.0f;
+}
+
 void BULLET::returnPool()
 {
 	OBJECT::setPosX(-2000);

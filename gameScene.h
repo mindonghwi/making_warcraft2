@@ -23,6 +23,7 @@ private:
 	
 	BULLETMGR*		_pBulletMgr;
 	
+	PLAYER*			_pCom;
 
 public:
 	SCENEGAME();
