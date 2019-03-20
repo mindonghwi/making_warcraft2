@@ -14,6 +14,7 @@ void STATE_ATTACK::start()
 {
 	_pUnit->setFrameX(_pUnit->getStartIndex(UNIT::E_STATE::E_ATTACK));
 	_fTimer = 0.0f;
+	_pUnit->targetDirection();
 }
 
 void STATE_ATTACK::update()
