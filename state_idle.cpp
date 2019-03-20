@@ -30,5 +30,5 @@ void STATE_IDLE::update()
 
 	//일꾼일때만 아이들이 3개 이것만 조심하자
 	
-
+	_pUnit->searchOppent();
 }

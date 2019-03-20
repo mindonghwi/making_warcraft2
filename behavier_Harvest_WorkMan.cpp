@@ -80,7 +80,7 @@ void BEHAVIER_HARVEST_WORKMAN::end(UNIT * pUnit)
 	pUnit->getCurrentState()->start();
 	pUnit->setTarget(nullptr);
 	pUnit->addMapUnitData();
-	
+	pUnit->setIsHold(false);
 	if (nIndex != 201)
 	{
 		pUnit->getMyUnitMgr()->commandMoveSingle(pUnit->getMyBuildMgr()->getBuild(nIndex)->getPosX(), pUnit->getMyBuildMgr()->getBuild(nIndex)->getPosY(), pUnit);

@@ -110,6 +110,7 @@ void GALLEYS::allocateBehavier()
 	UNIT::_arBeHavier[static_cast<int>(UNIT::E_BEHAVIERNUM::E_MOVE)] = new BEHAVIER_MOVE_WALK();
 	UNIT::_arBeHavier[static_cast<int>(UNIT::E_BEHAVIERNUM::E_HARVEST)] = new BEHAVIER_NONE();
 	UNIT::_arBeHavier[static_cast<int>(UNIT::E_BEHAVIERNUM::E_MAGIC)] = new BEHAVIER_NONE();
+	UNIT::_arBeHavier[static_cast<int>(UNIT::E_BEHAVIERNUM::E_HOLD)] = new BEHAVIER_HOLD();
 
 }
 
@@ -129,7 +130,7 @@ void GALLEYS::allocateAnimation()
 
 	setFPS(UNIT::E_STATE::E_IDLE, 100.0f);
 	setFPS(UNIT::E_STATE::E_MOVE, 0.125f);
-	setFPS(UNIT::E_STATE::E_ATTACK, 0.125f);
+	setFPS(UNIT::E_STATE::E_ATTACK, 3.0f);
 	setFPS(UNIT::E_STATE::E_DEATH, 0.7f);
 
 	_eDirection = UNIT::E_DIRECTION::E_BOTTOM;

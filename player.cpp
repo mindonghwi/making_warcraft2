@@ -75,6 +75,7 @@ void PLAYER::update()
 	commandAttack();
 	commandBuild();
 	commandHarvest();
+	commandHold();
 	_pUnitMgr->update();
 
 
@@ -364,6 +365,14 @@ void PLAYER::commandAttack()
 		}
 	}
 
+}
+
+void PLAYER::commandHold()
+{
+	if (KEYMANAGER->isOnceKeyDown('H'))
+	{
+		_pUnitMgr->commandHold();
+	}
 }
 
 void PLAYER::commandHarvest()

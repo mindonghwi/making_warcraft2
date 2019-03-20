@@ -174,6 +174,7 @@ protected:
 
 	PLAYER*		_pOpponent;
 
+	bool		_bIsHold;
 public:
 	UNIT();
 	virtual ~UNIT();
@@ -229,6 +230,7 @@ public:
 
 	virtual void searchOppent();
 
+	virtual void commandHold();
 public:
 	//setter
 	inline	void	setHp(int nAmount) { OBJECT::setHp(nAmount); }
@@ -374,4 +376,13 @@ public:
 	virtual void	decreaseHp(int nHp);
 	inline	PLAYER*		getOpponent() { return _pOpponent; }
 	inline	void	setOpponent(PLAYER* pPlayer) { _pOpponent = pPlayer; }
+
+	inline	bool	isHold() { return _bIsHold; }
+	inline	void	setIsHold(bool bIsHold) { _bIsHold = bIsHold; }
+
+
+
+
+public:
+
 };

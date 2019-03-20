@@ -448,10 +448,16 @@ void BUILDMGR::removeBuild(BUILD * pBuild)
 void BUILDMGR::updateBuildTree(BUILD*	pBuild)
 {
 
-	if (pBuild->getBuildsTpye() == E_BUILDS::E_KEEP || pBuild->getBuildsTpye() == E_BUILDS::E_TOWN)
+	if (pBuild->getBuildsTpye() == E_BUILDS::E_KEEP)
 	{
 		_arIsBuildTree[static_cast<int>(E_BUILDS::E_TOWN)] = true;
 		_arIsBuildTree[static_cast<int>(E_BUILDS::E_KEEP)] = true;
 	}
+	if (pBuild->getBuildsTpye() == E_BUILDS::E_CASTLE)
+	{
+		_arIsBuildTree[static_cast<int>(E_BUILDS::E_TOWN)] = true;
+		_arIsBuildTree[static_cast<int>(E_BUILDS::E_KEEP)] = true;
+	}
+
 	_arIsBuildTree[static_cast<int>(pBuild->getBuildsTpye())] = true;
 }

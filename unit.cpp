@@ -111,6 +111,8 @@ void UNIT::decreaseHp(int nHp)
 	OBJECT::_nHp -= nDecreaseHp;
 }
 
+
+
 void UNIT::commandMove(float fEndPosX, float fEndPosY)
 {
 	//if (KEYMANAGER->isOnceKeyDown(VK_RBUTTON))
@@ -271,7 +273,7 @@ void UNIT::moveToDir()
 	UNIT::setCurrentState(UNIT::E_STATENUM::E_MOVE);
 	UNIT::setCurrentBehavir(UNIT::E_BEHAVIERNUM::E_MOVE);
 	UNIT::setBehavier(UNIT::E_BEHAVIERNUM::E_MOVE);
-
+	setIsHold(false);
 	UNIT::getCurrentState()->start();
 }
 
@@ -282,7 +284,7 @@ void UNIT::commandIdle()
 	UNIT::setCurrentState(UNIT::E_STATENUM::E_IDLE);
 	UNIT::setCurrentBehavir(UNIT::E_BEHAVIERNUM::E_NONE);
 	UNIT::setBehavier(UNIT::E_BEHAVIERNUM::E_NONE);
-
+	setIsHold(false);
 	UNIT::getCurrentState()->start();
 	
 }
@@ -320,6 +322,7 @@ void UNIT::attack(OBJECT * pObject)
 
 void UNIT::targetDirection()
 {
+
 	_fDirAngle = getAngle(OBJECT::getPosX(), OBJECT::getPosY(), _pTarget->getPosX(), _pTarget->getPosY());
 
 
@@ -428,15 +431,32 @@ void UNIT::fireBullet()
 
 void UNIT::searchOppent()
 {
+	//if (getUnit() == E_UNIT::E_WORKMAN || getUnit() == E_UNIT::E_RECONNAISSANCE || getUnit() == E_UNIT::E_OILTANKER || getUnit() == E_UNIT::E_TRANSPORT)
+	//{
+	//	return;
+	//}
 	for (int i = 0; i < _pOpponent->getUnitMgr()->getUnitCount(); i++)
 	{
 		float fDoubleSearchRange = getSearchRange() * getSearchRange();
 		if (fDoubleSearchRange >= Mins::getDoubleDis(getPosX(), getPosY(), _pOpponent->getUnitMgr()->getUnit(i)->getPosX(), _pOpponent->getUnitMgr()->getUnit(i)->getPosY()))
 		{
-			clearCommand();
-			_pUnitMgr->commandAttack(_pOpponent->getUnitMgr()->getUnit(i));
+			//clearCommand();
+			_pUnitMgr->commandAatackNonMove(this,_pOpponent->getUnitMgr()->getUnit(i));
+			break;
 		}
 	}
 
+}
+
+void UNIT::commandHold()
+{
+
+	UNIT::getCurrentBehavir()->end(this);
+
+	UNIT::setCurrentState(UNIT::E_STATENUM::E_HOLD);
+	UNIT::setCurrentBehavir(UNIT::E_BEHAVIERNUM::E_HOLD);
+	UNIT::setBehavier(UNIT::E_BEHAVIERNUM::E_HOLD);
+
+	UNIT::getCurrentState()->start();
 }
 

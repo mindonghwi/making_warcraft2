@@ -54,6 +54,10 @@ void BEHAVIER_ATTACK::update(UNIT * pUnit)
 
 		_fTimer += TIMEMANAGER->getElapsedTime();
 		float fTotalFps = static_cast<float>(pUnit->getEndIndex(UNIT::E_STATE::E_ATTACK) - pUnit->getStartIndex(UNIT::E_STATE::E_ATTACK));
+		if (fTotalFps <= 1)
+		{
+			fTotalFps = 1;
+		}
 		fTotalFps *= pUnit->getFPS(UNIT::E_STATE::E_ATTACK);
 		
 
@@ -75,13 +79,19 @@ void BEHAVIER_ATTACK::update(UNIT * pUnit)
 		}
 		else
 		{
+			
 			float fDistance = getDistance(pUnit->getPosX(), pUnit->getPosY(), pUnit->getTarget()->getPosX(), pUnit->getTarget()->getPosY());
-			if (pUnit->getSearchRange() <= fDistance)
+			if (pUnit->getSearchRange() < fDistance)
 			{
 				end(pUnit);
+				return;
 			}	
 			else if (pUnit->getAttackRange() <= fDistance)
 			{
+				if (pUnit->isHold()) {
+					end(pUnit);
+				}
+
 				//이동해라
 				OBJECT* pTarget = pUnit->getTarget();
 				pUnit->clearCommand();
@@ -131,5 +141,6 @@ void BEHAVIER_ATTACK::end(UNIT * pUnit)
 	pUnit->setBehavier(UNIT::E_BEHAVIERNUM::E_NONE);
 	pUnit->getCurrentState()->start();
 	pUnit->setTarget(nullptr);
+	pUnit->setIsHold(false);
 	_fTimer = 0.0f;
 }

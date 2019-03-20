@@ -82,6 +82,7 @@ void BEHAVIER_MOVE_WALK::end(UNIT * pUnit)
 		pUnit->setBehavier(UNIT::E_BEHAVIERNUM::E_NONE);
 		pUnit->getCurrentState()->start();
 		pUnit->addMapUnitData();
+		pUnit->setIsHold(false);
 	}
 	else
 	{

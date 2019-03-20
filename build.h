@@ -78,4 +78,8 @@ public:
 	inline int		getMaxHp() { return _nMaxHp; }
 
 	inline	E_STATE	getState() { return _eState; }
+
+
+	bool isCreateUnit(int nUnit);
+	void decreaseResource(int nUnit);
 };

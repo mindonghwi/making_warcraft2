@@ -4,6 +4,7 @@
 #include "unit.h"
 #include "unitMGr.h"
 #include "buildMgr.h"
+#include "player.h"
 BUILD::BUILD()
 {
 }
@@ -311,12 +312,23 @@ void BUILD::commandProduce()
 
 	if (KEYMANAGER->isOnceKeyDown('P') && _nUnitMask & static_cast<unsigned int>(BUILDMGR::E_UNITMASK::E_WORKMAN))
 	{
+		if (_pPlayer->getPopulation() + _pPlayer->getUnitMgr()->getUnitPopulation(UNIT::E_UNIT::E_WORKMAN) > _pPlayer->getMaxPopulation()) return;
+		if (!isCreateUnit(static_cast<int>(UNIT::E_UNIT::E_WORKMAN))) return;
+		decreaseResource(static_cast<int>(UNIT::E_UNIT::E_WORKMAN));
+
+
 		_bIsProduce = true;
 		_fTimer = 0.0f;
 		_eUnitType = BUILDMGR::E_UNITMASK::E_WORKMAN;
 	}
 	if (KEYMANAGER->isOnceKeyDown('F') && _nUnitMask & static_cast<unsigned int>(BUILDMGR::E_UNITMASK::E_FOOTMAN))
 	{
+		if (_pPlayer->getPopulation() + _pPlayer->getUnitMgr()->getUnitPopulation(UNIT::E_UNIT::E_FOOTMAN) > _pPlayer->getMaxPopulation()) return;
+		if (!isCreateUnit(static_cast<int>(UNIT::E_UNIT::E_FOOTMAN))) return;
+		decreaseResource(static_cast<int>(UNIT::E_UNIT::E_FOOTMAN));
+
+
+
 		_bIsProduce = true;
 		_fTimer = 0.0f;
 		_eUnitType = BUILDMGR::E_UNITMASK::E_FOOTMAN;
@@ -324,6 +336,11 @@ void BUILD::commandProduce()
 	}
 	if (KEYMANAGER->isOnceKeyDown('A') && _nUnitMask & static_cast<unsigned int>(BUILDMGR::E_UNITMASK::E_ARCHER) && (_pBuildMgr->getIsBuildTree(E_BUILDS::E_LUMBER_MILL)))
 	{
+		if (_pPlayer->getPopulation() + _pPlayer->getUnitMgr()->getUnitPopulation(UNIT::E_UNIT::E_ARCHER) > _pPlayer->getMaxPopulation()) return;
+
+		if (!isCreateUnit(static_cast<int>(UNIT::E_UNIT::E_ARCHER))) return;
+		decreaseResource(static_cast<int>(UNIT::E_UNIT::E_ARCHER));
+
 		_bIsProduce = true;
 		_fTimer = 0.0f;
 		_eUnitType = BUILDMGR::E_UNITMASK::E_ARCHER;
@@ -331,13 +348,23 @@ void BUILD::commandProduce()
 	}
 	if (KEYMANAGER->isOnceKeyDown('B') && _nUnitMask & static_cast<unsigned int>(BUILDMGR::E_UNITMASK::E_BALLISTA))
 	{
+		if (_pPlayer->getPopulation() + _pPlayer->getUnitMgr()->getUnitPopulation(UNIT::E_UNIT::E_BALLISTA) > _pPlayer->getMaxPopulation()) return;
+
+		if (!isCreateUnit(static_cast<int>(UNIT::E_UNIT::E_BALLISTA))) return;
+		decreaseResource(static_cast<int>(UNIT::E_UNIT::E_BALLISTA));
+
 		_bIsProduce = true;
 		_fTimer = 0.0f;
 		_eUnitType = BUILDMGR::E_UNITMASK::E_BALLISTA;
 
 	}
-	if (KEYMANAGER->isOnceKeyDown('K') && _nUnitMask & static_cast<unsigned int>(BUILDMGR::E_UNITMASK::E_KNIGHT))// && (_pBuildMgr->getIsBuildTree(E_BUILDS::E_STABLE)))
+	if (KEYMANAGER->isOnceKeyDown('K') && _nUnitMask & static_cast<unsigned int>(BUILDMGR::E_UNITMASK::E_KNIGHT) && (_pBuildMgr->getIsBuildTree(E_BUILDS::E_STABLE)))
 	{
+		if (_pPlayer->getPopulation() + _pPlayer->getUnitMgr()->getUnitPopulation(UNIT::E_UNIT::E_KNIGHT) > _pPlayer->getMaxPopulation()) return;
+
+		if (!isCreateUnit(static_cast<int>(UNIT::E_UNIT::E_KNIGHT))) return;
+		decreaseResource(static_cast<int>(UNIT::E_UNIT::E_KNIGHT));
+
 		_bIsProduce = true;
 		_fTimer = 0.0f;
 		_eUnitType = BUILDMGR::E_UNITMASK::E_KNIGHT;
@@ -346,6 +373,11 @@ void BUILD::commandProduce()
 
 	if (KEYMANAGER->isOnceKeyDown('M') && _nUnitMask & static_cast<unsigned int>(BUILDMGR::E_UNITMASK::E_MAGICIAN))
 	{
+		if (_pPlayer->getPopulation() + _pPlayer->getUnitMgr()->getUnitPopulation(UNIT::E_UNIT::E_MAGICIAN) > _pPlayer->getMaxPopulation()) return;
+
+		if (!isCreateUnit(static_cast<int>(UNIT::E_UNIT::E_MAGICIAN))) return;
+		decreaseResource(static_cast<int>(UNIT::E_UNIT::E_MAGICIAN));
+
 		_bIsProduce = true;
 		_fTimer = 0.0f;
 		_eUnitType = BUILDMGR::E_UNITMASK::E_MAGICIAN;
@@ -354,6 +386,11 @@ void BUILD::commandProduce()
 
 	if (KEYMANAGER->isOnceKeyDown('F') && _nUnitMask & static_cast<unsigned int>(BUILDMGR::E_UNITMASK::E_RECONNAISSANCE))
 	{
+		if (_pPlayer->getPopulation() + _pPlayer->getUnitMgr()->getUnitPopulation(UNIT::E_UNIT::E_RECONNAISSANCE) > _pPlayer->getMaxPopulation()) return;
+
+		if (!isCreateUnit(static_cast<int>(UNIT::E_UNIT::E_RECONNAISSANCE))) return;
+		decreaseResource(static_cast<int>(UNIT::E_UNIT::E_RECONNAISSANCE));
+
 		_bIsProduce = true;
 		_fTimer = 0.0f;
 		_eUnitType = BUILDMGR::E_UNITMASK::E_RECONNAISSANCE;
@@ -361,6 +398,11 @@ void BUILD::commandProduce()
 	}
 	if (KEYMANAGER->isOnceKeyDown('D') && _nUnitMask & static_cast<unsigned int>(BUILDMGR::E_UNITMASK::E_BOMBER))
 	{
+		if (_pPlayer->getPopulation() + _pPlayer->getUnitMgr()->getUnitPopulation(UNIT::E_UNIT::E_BOMBER) > _pPlayer->getMaxPopulation()) return;
+
+		if (!isCreateUnit(static_cast<int>(UNIT::E_UNIT::E_BOMBER))) return;
+		decreaseResource(static_cast<int>(UNIT::E_UNIT::E_BOMBER));
+
 		_bIsProduce = true;
 		_fTimer = 0.0f;
 		_eUnitType = BUILDMGR::E_UNITMASK::E_BOMBER;
@@ -369,6 +411,11 @@ void BUILD::commandProduce()
 
 	if (KEYMANAGER->isOnceKeyDown('E') && _nUnitMask & static_cast<unsigned int>(BUILDMGR::E_UNITMASK::E_GALLEYS))
 	{
+		if (_pPlayer->getPopulation() + _pPlayer->getUnitMgr()->getUnitPopulation(UNIT::E_UNIT::E_GALLEYS) > _pPlayer->getMaxPopulation()) return;
+
+		if (!isCreateUnit(static_cast<int>(UNIT::E_UNIT::E_GALLEYS))) return;
+		decreaseResource(static_cast<int>(UNIT::E_UNIT::E_GALLEYS));
+
 		_bIsProduce = true;
 		_fTimer = 0.0f;
 		_eUnitType = BUILDMGR::E_UNITMASK::E_GALLEYS;
@@ -376,6 +423,11 @@ void BUILD::commandProduce()
 	}
 	if (KEYMANAGER->isOnceKeyDown('O') && _nUnitMask & static_cast<unsigned int>(BUILDMGR::E_UNITMASK::E_OILTANKER))
 	{
+		if (_pPlayer->getPopulation() + _pPlayer->getUnitMgr()->getUnitPopulation(UNIT::E_UNIT::E_OILTANKER) > _pPlayer->getMaxPopulation()) return;
+
+		if (!isCreateUnit(static_cast<int>(UNIT::E_UNIT::E_OILTANKER))) return;
+		decreaseResource(static_cast<int>(UNIT::E_UNIT::E_OILTANKER));
+
 		_bIsProduce = true;
 		_fTimer = 0.0f;
 		_eUnitType = BUILDMGR::E_UNITMASK::E_OILTANKER;
@@ -384,6 +436,11 @@ void BUILD::commandProduce()
 
 	if (KEYMANAGER->isOnceKeyDown('T') && _nUnitMask & static_cast<unsigned int>(BUILDMGR::E_UNITMASK::E_TRANSPORT) && (_pBuildMgr->getIsBuildTree(E_BUILDS::E_FOUNDRY)))
 	{
+		if (_pPlayer->getPopulation() + _pPlayer->getUnitMgr()->getUnitPopulation(UNIT::E_UNIT::E_TRANSPORT) > _pPlayer->getMaxPopulation()) return;
+
+		if (!isCreateUnit(static_cast<int>(UNIT::E_UNIT::E_TRANSPORT))) return;
+		decreaseResource(static_cast<int>(UNIT::E_UNIT::E_TRANSPORT));
+
 		_bIsProduce = true;
 		_fTimer = 0.0f;
 		_eUnitType = BUILDMGR::E_UNITMASK::E_TRANSPORT;
@@ -392,6 +449,11 @@ void BUILD::commandProduce()
 
 	if (KEYMANAGER->isOnceKeyDown('B') && _nUnitMask & static_cast<unsigned int>(BUILDMGR::E_UNITMASK::E_BATTLESHIP) && (_pBuildMgr->getIsBuildTree(E_BUILDS::E_FOUNDRY)))
 	{
+		if (_pPlayer->getPopulation() + _pPlayer->getUnitMgr()->getUnitPopulation(UNIT::E_UNIT::E_BATTLESHIP) > _pPlayer->getMaxPopulation()) return;
+
+		if (!isCreateUnit(static_cast<int>(UNIT::E_UNIT::E_BATTLESHIP))) return;
+		decreaseResource(static_cast<int>(UNIT::E_UNIT::E_BATTLESHIP));
+
 		_bIsProduce = true;
 		_fTimer = 0.0f;
 		_eUnitType = BUILDMGR::E_UNITMASK::E_BATTLESHIP;
@@ -400,6 +462,11 @@ void BUILD::commandProduce()
 
 	if (KEYMANAGER->isOnceKeyDown('S') && _nUnitMask & static_cast<unsigned int>(BUILDMGR::E_UNITMASK::E_SUBMARIN) && (_pBuildMgr->getIsBuildTree(E_BUILDS::E_FOUNDRY)))
 	{
+		if (_pPlayer->getPopulation() + _pPlayer->getUnitMgr()->getUnitPopulation(UNIT::E_UNIT::E_SUBMARIN) > _pPlayer->getMaxPopulation()) return;
+
+		if (!isCreateUnit(static_cast<int>(UNIT::E_UNIT::E_SUBMARIN))) return;
+		decreaseResource(static_cast<int>(UNIT::E_UNIT::E_SUBMARIN));
+
 		_bIsProduce = true;
 		_fTimer = 0.0f;
 		_eUnitType = BUILDMGR::E_UNITMASK::E_SUBMARIN;
@@ -408,6 +475,11 @@ void BUILD::commandProduce()
 
 	if (KEYMANAGER->isOnceKeyDown('G') && _nUnitMask & static_cast<unsigned int>(BUILDMGR::E_UNITMASK::E_FLYER))
 	{
+		if (_pPlayer->getPopulation() + _pPlayer->getUnitMgr()->getUnitPopulation(UNIT::E_UNIT::E_FLYER) > _pPlayer->getMaxPopulation()) return;
+
+		if (!isCreateUnit(static_cast<int>(UNIT::E_UNIT::E_FLYER))) return;
+		decreaseResource(static_cast<int>(UNIT::E_UNIT::E_FLYER));
+
 		_bIsProduce = true;
 		_fTimer = 0.0f;
 		_eUnitType = BUILDMGR::E_UNITMASK::E_FLYER;
@@ -442,6 +514,22 @@ void BUILD::destroyBuild()
 	}
 
 
+}
+
+bool BUILD::isCreateUnit(int nUnit)
+{
+	if (_pPlayer->getGold() < _pPlayer->getUnitMgr()->getUnitResource(static_cast<UNIT::E_UNIT>(nUnit), E_RESOURCE::E_GOLD)) return false;
+	if (_pPlayer->getTree() < _pPlayer->getUnitMgr()->getUnitResource(static_cast<UNIT::E_UNIT>(nUnit), E_RESOURCE::E_TREE)) return false;
+	if (_pPlayer->getOil() < _pPlayer->getUnitMgr()->getUnitResource( static_cast<UNIT::E_UNIT>(nUnit), E_RESOURCE::E_OIL)) return  false;
+	
+	return true;
+}
+
+void BUILD::decreaseResource(int nUnit)
+{
+	_pPlayer->subGold(_pPlayer->getUnitMgr()->getUnitResource(static_cast<UNIT::E_UNIT>(nUnit), E_RESOURCE::E_GOLD));
+	_pPlayer->subTree(_pPlayer->getUnitMgr()->getUnitResource(static_cast<UNIT::E_UNIT>(nUnit), E_RESOURCE::E_TREE));
+	_pPlayer->subOil(_pPlayer->getUnitMgr()->getUnitResource(static_cast<UNIT::E_UNIT>(nUnit), E_RESOURCE::E_OIL));
 }
 
 

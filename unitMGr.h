@@ -87,6 +87,8 @@ public:
 
 	void commandAttack(OBJECT* pObject);
 	void commandReAttack(UNIT* pUnit,OBJECT* pObject);
+	void commandAatackNonMove(UNIT* pUnit,OBJECT* pObject);
+	void commandAttackHold(UNIT* pUnit, OBJECT* pObject);
 
 	void clearCommandSelectedUnit();
 
@@ -99,6 +101,8 @@ public:
 
 
 	bool getUnitCollisionBullet(float fPosX, float fPosY, int nAttack);
+
+	void commandHold();
 public:
 	//linker
 	inline	void	setLinkCamera(CAMERA* pCamera) { _pCamera = pCamera; }
@@ -135,4 +139,9 @@ public:
 
 	inline	PLAYER*		getOpponent() { return _pOpponent; }
 	inline	void	setOpponent(PLAYER* pPlayer) { _pOpponent = pPlayer; }
+
+
+public:
+	//com AI
+	UNIT* getUnit(UNIT::E_UNIT eUnit);
 };

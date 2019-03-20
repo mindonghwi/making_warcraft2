@@ -24,6 +24,6 @@ void COMMAND_HOLD::init(E_COMMAND eCommand, UNIT * pUnit)
 
 void COMMAND_HOLD::start()
 {
-	_pUnit->commandIdle();
+	_pUnit->commandHold();
 
 }

@@ -9,5 +9,8 @@ private:
 public:
 	COM();
 	~COM();
+	virtual void update();
 
+private:
+	
 };

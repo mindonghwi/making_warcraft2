@@ -222,8 +222,8 @@ void UNITMGR::update()
 		}
 		else
 		{
-			pUnit->updateBehavier();
 			pUnit->update();
+			pUnit->updateBehavier();
 			pUnit->updateRect();
 			iterUnitList++;
 		}
@@ -512,7 +512,7 @@ void UNITMGR::allocateUnitStatus()
 	_arUnitAttack[static_cast<const int>(UNIT::E_UNIT::E_GALLEYS)] = 35;
 	_arUnitProductionTime[static_cast<const int>(UNIT::E_UNIT::E_GALLEYS)] = 30;
 	_arUnitSpeed[static_cast<const int>(UNIT::E_UNIT::E_GALLEYS)] = 0.3f;
-	_arSearchRange[static_cast<const int>(UNIT::E_UNIT::E_GALLEYS)] = 128.0f;
+	_arSearchRange[static_cast<const int>(UNIT::E_UNIT::E_GALLEYS)] = 256.0f;
 	_arAttackRange[static_cast<const int>(UNIT::E_UNIT::E_GALLEYS)] = 256.0f;
 	_arAttackSpeed[static_cast<const int>(UNIT::E_UNIT::E_GALLEYS)] = 3.0f;
 
@@ -523,7 +523,7 @@ void UNITMGR::allocateUnitStatus()
 	_arUnitAttack[static_cast<const int>(UNIT::E_UNIT::E_BATTLESHIP)] = 130;
 	_arUnitProductionTime[static_cast<const int>(UNIT::E_UNIT::E_BATTLESHIP)] = 50;
 	_arUnitSpeed[static_cast<const int>(UNIT::E_UNIT::E_BATTLESHIP)] = 0.5f;
-	_arSearchRange[static_cast<const int>(UNIT::E_UNIT::E_BATTLESHIP)] = 128.0f;
+	_arSearchRange[static_cast<const int>(UNIT::E_UNIT::E_BATTLESHIP)] = 256.0f;
 	_arAttackRange[static_cast<const int>(UNIT::E_UNIT::E_BATTLESHIP)] = 256.0f;
 	_arAttackSpeed[static_cast<const int>(UNIT::E_UNIT::E_BATTLESHIP)] = 3.0f;
 
@@ -534,7 +534,7 @@ void UNITMGR::allocateUnitStatus()
 	_arUnitAttack[static_cast<const int>(UNIT::E_UNIT::E_SUBMARIN)] = 50;
 	_arUnitProductionTime[static_cast<const int>(UNIT::E_UNIT::E_SUBMARIN)] = 40;
 	_arUnitSpeed[static_cast<const int>(UNIT::E_UNIT::E_SUBMARIN)] = 0.4f;
-	_arSearchRange[static_cast<const int>(UNIT::E_UNIT::E_SUBMARIN)] = 128.0f;
+	_arSearchRange[static_cast<const int>(UNIT::E_UNIT::E_SUBMARIN)] = 256.0f;
 	_arAttackRange[static_cast<const int>(UNIT::E_UNIT::E_SUBMARIN)] = 256.0f;
 	_arAttackSpeed[static_cast<const int>(UNIT::E_UNIT::E_SUBMARIN)] = 2.0f;
 }
@@ -758,6 +758,30 @@ void UNITMGR::commandReAttack(UNIT* pUnit, OBJECT * pObject)
 	(pUnit)->addCommand(pCommand);
 }
 
+void UNITMGR::commandAatackNonMove(UNIT* pUnit, OBJECT * pObject)
+{
+	COMMAND* pCommand = _mCommandPool.find(COMMAND::E_COMMAND::E_ATTACK)->second.front();
+	_mCommandPool.find(COMMAND::E_COMMAND::E_ATTACK)->second.pop();
+	pCommand->init(COMMAND::E_COMMAND::E_ATTACK, pUnit);
+	pCommand->commandUnit(pObject);
+	(pUnit)->addCommand(pCommand);
+}
+
+void UNITMGR::commandAttackHold(UNIT * pUnit, OBJECT * pObject)
+{
+	COMMAND* pCommand = _mCommandPool.find(COMMAND::E_COMMAND::E_ATTACK)->second.front();
+	_mCommandPool.find(COMMAND::E_COMMAND::E_ATTACK)->second.pop();
+	pCommand->init(COMMAND::E_COMMAND::E_ATTACK, pUnit);
+	pCommand->commandUnit(pObject);
+	(pUnit)->addCommand(pCommand);
+
+	pCommand = _mCommandPool.find(COMMAND::E_COMMAND::E_HOLD)->second.front();
+	_mCommandPool.find(COMMAND::E_COMMAND::E_HOLD)->second.pop();
+	pCommand->init(COMMAND::E_COMMAND::E_HOLD, pUnit);
+	pCommand->commandUnit();
+	(pUnit)->addCommand(pCommand);
+}
+
 void UNITMGR::clearCommandSelectedUnit()
 {
 	for (int i = 0; i < static_cast<int>(_vSeletedUnit.size()); i++)
@@ -807,7 +831,7 @@ void UNITMGR::commandHarvestSingle(RESOURCES * pResource, UNIT * pUnit)
 	{
 		pResource = _pResourceMgr->getfindNearTree(pUnit->getPosX(), pUnit->getPosY());
 	}
-
+	
 	if (pResource == nullptr)
 	{
 		return;
@@ -871,6 +895,19 @@ bool UNITMGR::getUnitCollisionBullet(float fPosX, float fPosY, int nAttack)
 	return false;
 }
 
+void UNITMGR::commandHold()
+{
+	for (int i = 0; i < static_cast<int>(_vSeletedUnit.size()); i++)
+	{
+		COMMAND*  pCommand = _mCommandPool.find(COMMAND::E_COMMAND::E_HOLD)->second.front();
+		_mCommandPool.find(COMMAND::E_COMMAND::E_HOLD)->second.pop();
+		pCommand->init(COMMAND::E_COMMAND::E_HOLD, *(_vSeletedUnit[i]));
+		pCommand->commandUnit();
+		(*(_vSeletedUnit[i]))->addCommand(pCommand);
+	}
+
+}
+
 
 UNIT * UNITMGR::getUnit(int nIndex)
 {
@@ -897,5 +934,22 @@ UNIT * UNITMGR::getSelectedUnit(int nIndex)
 
 
 	return *(_vSeletedUnit[nIndex]);
+}
+
+UNIT * UNITMGR::getUnit(UNIT::E_UNIT eUnit)
+{
+	list<UNIT*>::iterator	iterUnitList = _listUnit.begin();
+	list<UNIT*>::iterator	endUnitList = _listUnit.end();
+
+	while (iterUnitList != endUnitList)
+	{
+		if ((*iterUnitList)->getUnit() == eUnit)
+		{
+			return *iterUnitList;
+		}
+		iterUnitList++;
+	}
+
+	return nullptr;
 }
 

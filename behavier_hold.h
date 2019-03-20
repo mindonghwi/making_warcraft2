@@ -5,7 +5,7 @@
 class BEHAVIER_HOLD : public BEHAVIER
 {
 private:
-
+	float _fTimer;
 
 public:
 	BEHAVIER_HOLD();
