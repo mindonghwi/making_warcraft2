@@ -1,18 +1,8 @@
 #include "stdafx.h"
 #include "workMan.h"
-#include "state_AttackMove.h"
-#include "state_hold.h"
-#include "state_idle.h"
-#include "state_move.h"
-#include "state_Patrol.h"
-#include "state_special.h"
-#include "state_Attack.h"
 
-#include "behavier_Attack_Standard.h"
-#include "behavier_Move_Walk.h"
-#include "behavier_Harvest_WorkMan.h"
-#include "behavier_None.h"
-#include "behavier_hold.h"
+#include "unitStateHeader.h"
+#include "unitBehavierHeader.h"
 
 #include "command.h"
 #include "stopCommand.h"
@@ -323,6 +313,7 @@ void WORKMAN::allocateState()
 	UNIT::_arState[static_cast<int>(UNIT::E_STATENUM::E_HOLD)] = new STATE_HOLD();
 	UNIT::_arState[static_cast<int>(UNIT::E_STATENUM::E_SPECIAL_01)] = new STATE_SPECIAL();
 
+	UNIT::_arState[static_cast<int>(UNIT::E_STATENUM::E_NONE)] = new STATE_NONE();
 
 	for (int i = 0; i < static_cast<int>(UNIT::E_STATENUM::E_MAX); i++)
 	{
@@ -338,11 +329,11 @@ void WORKMAN::allocateBehavier()
 	UNIT::_arBeHavier[static_cast<int>(UNIT::E_BEHAVIERNUM::E_HARVEST)] = new BEHAVIER_HARVEST_WORKMAN();
 	UNIT::_arBeHavier[static_cast<int>(UNIT::E_BEHAVIERNUM::E_MAGIC)] = new BEHAVIER_NONE();
 	UNIT::_arBeHavier[static_cast<int>(UNIT::E_BEHAVIERNUM::E_HOLD)] = new BEHAVIER_HOLD();
+	UNIT::_arBeHavier[static_cast<int>(UNIT::E_BEHAVIERNUM::E_TRANSPORTOUT)] = new BEHAVIER_TRANSPORTOUT();
 }
 
 void WORKMAN::allocateAnimation()
 {
-
 	//금은 +10 나무는 +15
 	setStartIndex(UNIT::E_STATE::E_IDLE, 0);
 	setEndIndex(UNIT::E_STATE::E_IDLE, 0);

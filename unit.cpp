@@ -263,7 +263,7 @@ void UNIT::moveToDir()
 	UNIT::setMoveIndex(0);
 
 	setMovePoints((float)_fEndX, (float)_fEndY);
-
+	removeMapUnitData();
 
 
 	//UNIT::getCurrentBehavir()->end(this);
@@ -458,5 +458,18 @@ void UNIT::commandHold()
 	UNIT::setBehavier(UNIT::E_BEHAVIERNUM::E_HOLD);
 
 	UNIT::getCurrentState()->start();
+}
+
+void UNIT::commandTransport()
+{
+	
+}
+
+void UNIT::commandTransportIn()
+{
+}
+
+void UNIT::commandTransportOut(int nMapIndexX, int nMapIndexY)
+{
 }
 

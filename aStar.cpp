@@ -23,6 +23,53 @@ void ASTAR::setLinkUnitMgr(PLAYER * _pPlayer)
 	_pBuildMgr = _pPlayer->getBuildMgr();
 }
 
+void ASTAR::search()
+{
+	int nAddSubChangeCount = 2;
+	int nAddSubChangeIndex = 0;
+	int nInterval = -1;
+	//x y xx yy xxx yyy xxxx yyyy
+	int nMapChangeCount = 1;
+	int nMapChangeIndex = 0;
+	
+	int nIntervalsX = 0;
+	int nIntervalsY = 0;
+	nIntervalsX = nInterval;
+
+	//찾을떄 까지 돌린다.
+	while (true)
+	{
+
+
+		nAddSubChangeIndex++;
+
+		nMapChangeIndex++;
+
+		if (nMapChangeIndex == nMapChangeCount)
+		{
+			//좌표를 더해주는게 변한다
+			int nTmp = nIntervalsX;
+			nIntervalsX = nIntervalsY;
+			nIntervalsY = nTmp;
+
+			nMapChangeIndex = 0;
+		}
+
+		if (nAddSubChangeCount == nAddSubChangeIndex)
+		{
+			nAddSubChangeCount += 2;
+			nAddSubChangeIndex = 0;
+
+			nInterval *= -1;
+
+			nMapChangeCount++;
+			
+		}
+	}
+
+
+}
+
 void ASTAR::initMap()
 {
 	for (int j = 0; j < _nTileSizeY; j++)
@@ -159,16 +206,93 @@ void ASTAR::startFinder(float fStartPosX, float fStartPosY, float fEndPosX, floa
 
 	//빌드도 아니고 논도 아니면 돌려
 
-	while (//(_eMoveHeight == MOVEHEIGHT::GROUND && _pMap->getTile(_nEndIndexX, _nEndIndexY)->getTerrian() == TILE::E_TERRIAN::WATER)
-		//|| (_eMoveHeight == MOVEHEIGHT::GROUND && _pMap->getTile(_nEndIndexX, _nEndIndexY)->getTerrian() == TILE::E_TERRIAN::DIRT_WATER)
-		//|| (_eMoveHeight == MOVEHEIGHT::GROUND && _pMap->getTile(_nEndIndexX, _nEndIndexY)->getTerrian() == TILE::E_TERRIAN::ROCK)
-		nCount< 25&&((_eMoveHeight == MOVEHEIGHT::GROUND && _pMap->getTile(_nEndIndexX, _nEndIndexY)->getObject() != TILE::E_OBJECT::E_NONE)&&
+	//while (//(_eMoveHeight == MOVEHEIGHT::GROUND && _pMap->getTile(_nEndIndexX, _nEndIndexY)->getTerrian() == TILE::E_TERRIAN::WATER)
+	//	//|| (_eMoveHeight == MOVEHEIGHT::GROUND && _pMap->getTile(_nEndIndexX, _nEndIndexY)->getTerrian() == TILE::E_TERRIAN::DIRT_WATER)
+	//	//|| (_eMoveHeight == MOVEHEIGHT::GROUND && _pMap->getTile(_nEndIndexX, _nEndIndexY)->getTerrian() == TILE::E_TERRIAN::ROCK)
+	//	nCount< 25&&((_eMoveHeight == MOVEHEIGHT::GROUND && _pMap->getTile(_nEndIndexX, _nEndIndexY)->getObject() != TILE::E_OBJECT::E_NONE)&&
+	//	(_eMoveHeight == MOVEHEIGHT::GROUND && _pMap->getTile(_nEndIndexX, _nEndIndexY)->getObject() != TILE::E_OBJECT::E_BUILDING)
+	//	|| bIsOnObject))
+	//{
+	//	bIsOnObject = false;
+	//
+	//
+	//	RECT rcTmp;
+	//	for (int i = 0; i < _pUnitMgr->getUnitCount(); i++)
+	//	{
+	//		if (_pUnitMgr->getUnit(i)->getPosX() - fStartPosX < FLT_EPSILON
+	//			&& _pUnitMgr->getUnit(i)->getPosY() - fStartPosY < FLT_EPSILON)
+	//		{
+	//		}
+	//		else
+	//		{
+	//			RECT rc = _pMap->getTile(_nEndIndexX, _nEndIndexY)->getRectTile();
+	//			RECT rc2 = * _pUnitMgr->getUnit(i)->getCollisionRect();
+	//			rc2.left += 10;
+	//			rc2.top += 10;
+	//			rc2.right -= 10;
+	//			rc2.bottom -= 10;
+	//
+	//			if (IntersectRect(&rcTmp, &rc, &rc2))
+	//			{
+	//				bIsOnObject = true;
+	//				break;
+	//			}
+	//			else
+	//			{
+	//				if (!_pUnitMgr->getUnit(i)->getIsMovePointEmpty())
+	//				{
+	//					if (_nEndIndexX == _pUnitMgr->getUnit(i)->getMoveToPointEndX() && _pUnitMgr->getUnit(i)->getMoveToPointEndY() == _nEndIndexY)
+	//					{
+	//						bIsOnObject = true;
+	//						break;
+	//					}
+	//				}
+	//			}
+	//		}
+	//	}
+	//
+	//	if (!bIsOnObject)
+	//	{
+	//		//com
+	//
+	//	}
+	//
+	//
+	//	if (_eMoveHeight == MOVEHEIGHT::GROUND && _pMap->getTile(_nEndIndexX, _nEndIndexY)->getObject() != TILE::E_OBJECT::E_NONE)
+	//	{
+	//		bIsOnObject = true;
+	//	}
+	//
+	//	if (bIsOnObject)
+	//	{
+	//		_nEndIndexX += _pUnitMgr->getIntervalX(nCount);
+	//		_nEndIndexY += _pUnitMgr->getIntervalY(nCount);
+	//	}
+	//	nCount++;
+	//}
+
+
+	int nAddSubChangeCount = 2;
+	int nAddSubChangeIndex = 0;
+	int nInterval = -1;
+	//x y xx yy xxx yyy xxxx yyyy
+	int nMapChangeCount = 1;
+	int nMapChangeIndex = 0;
+
+	int nIntervalsX = 0;
+	int nIntervalsY = 0;
+	nIntervalsX = nInterval;
+
+
+
+
+	while (((_eMoveHeight == MOVEHEIGHT::GROUND && _pMap->getTile(_nEndIndexX, _nEndIndexY)->getObject() != TILE::E_OBJECT::E_NONE)&&
 		(_eMoveHeight == MOVEHEIGHT::GROUND && _pMap->getTile(_nEndIndexX, _nEndIndexY)->getObject() != TILE::E_OBJECT::E_BUILDING)
 		|| bIsOnObject))
 	{
 		bIsOnObject = false;
-
-
+	
+	
 		RECT rcTmp;
 		for (int i = 0; i < _pUnitMgr->getUnitCount(); i++)
 		{
@@ -184,7 +308,7 @@ void ASTAR::startFinder(float fStartPosX, float fStartPosY, float fEndPosX, floa
 				rc2.top += 10;
 				rc2.right -= 10;
 				rc2.bottom -= 10;
-
+	
 				if (IntersectRect(&rcTmp, &rc, &rc2))
 				{
 					bIsOnObject = true;
@@ -203,26 +327,62 @@ void ASTAR::startFinder(float fStartPosX, float fStartPosY, float fEndPosX, floa
 				}
 			}
 		}
-
+	
 		if (!bIsOnObject)
 		{
 			//com
-
+	
 		}
-
-
+	
+	
 		if (_eMoveHeight == MOVEHEIGHT::GROUND && _pMap->getTile(_nEndIndexX, _nEndIndexY)->getObject() != TILE::E_OBJECT::E_NONE)
 		{
 			bIsOnObject = true;
 		}
-
+	
 		if (bIsOnObject)
 		{
-			_nEndIndexX += _pUnitMgr->getIntervalX(nCount);
-			_nEndIndexY += _pUnitMgr->getIntervalY(nCount);
+			_nEndIndexX += nIntervalsX;
+			_nEndIndexY += nIntervalsY;
+
+			nAddSubChangeIndex++;
+
+			nMapChangeIndex++;
+
+			if (nMapChangeIndex == nMapChangeCount)
+			{
+				//좌표를 더해주는게 변한다
+				int nTmp = nIntervalsX;
+				nIntervalsX = nIntervalsY;
+				nIntervalsY = nTmp;
+
+				nMapChangeIndex = 0;
+			}
+
+			if (nAddSubChangeCount == nAddSubChangeIndex)
+			{
+				nAddSubChangeCount += 2;
+				nAddSubChangeIndex = 0;
+
+				nInterval *= -1;
+
+				if (nIntervalsX == 0)
+				{
+					nIntervalsY *= -1;
+				}
+				else
+				{
+					nIntervalsX *= -1;
+				}
+				nMapChangeCount++;
+
+			}
+
 		}
 		nCount++;
 	}
+
+
 
 	//열린 좌표에 넣는데 우선순위를 주자
 	_listOpendNode.push_back(_vvTile[_nStartIndexY][_nStartIndexX]);

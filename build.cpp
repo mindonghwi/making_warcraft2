@@ -146,7 +146,7 @@ void BUILD::selectRender(HDC hdc)
 
 	char str[128];
 	sprintf_s(str, "%f", _fHp);
-	TextOut(hdc, OBJECT::getLeft(), OBJECT::getTop(), str, strlen(str));
+	TextOut(hdc, OBJECT::getLeft(), OBJECT::getTop(), str, (int)strlen(str));
 }
 
 void BUILD::creatingUpdate()

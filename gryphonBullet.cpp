@@ -42,7 +42,6 @@ void GRYPHONBULLET::update()
 	//xy좌표로 맵의 타일 중심 좌표 계산  거기 타겟 유닛이나 건물이 있는지
 	
 	RECT rcObject = RectMakeCenter(OBJECT::getPosX(), OBJECT::getPosY(), 32, 32);
-	RECT rc;
 
 	//if (_pUser)
 	//{

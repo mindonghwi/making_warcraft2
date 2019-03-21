@@ -33,16 +33,16 @@ void UI::render(HDC hdc)
 
 	_pGoldIcon->render(hdc, WINSIZEX / 2, 3);
 	sprintf_s(str, "%d", _pPlayer->getGold());
-	TextOut(hdc, WINSIZEX / 2 + 40, 3, str, strlen(str));
+	TextOut(hdc, WINSIZEX / 2 + 40, 3, str, (int)strlen(str));
 	_pTreeIcon->render(hdc, WINSIZEX / 2 + 100, 3);
 	sprintf_s(str, "%d", _pPlayer->getTree());
-	TextOut(hdc, WINSIZEX / 2 + 140, 3, str, strlen(str));
+	TextOut(hdc, WINSIZEX / 2 + 140, 3, str, (int)strlen(str));
 	_pOilIcon->render(hdc, WINSIZEX / 2 + 200, 3);
 	sprintf_s(str, "%d", _pPlayer->getOil());
-	TextOut(hdc, WINSIZEX / 2 + 240, 3, str, strlen(str));
+	TextOut(hdc, WINSIZEX / 2 + 240, 3, str, (int)strlen(str));
 	_pPopulationIcon->render(hdc, WINSIZEX / 2 + 300, 3);
 	sprintf_s(str, "%d / %d", _pPlayer->getPopulation(), _pPlayer->getMaxPopulation());
-	TextOut(hdc, WINSIZEX / 2 + 340, 3, str, strlen(str));
+	TextOut(hdc, WINSIZEX / 2 + 340, 3, str, (int)strlen(str));
 
 }
 

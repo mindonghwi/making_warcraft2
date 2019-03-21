@@ -27,6 +27,7 @@ public:
 		E_ATTACK_MOVE,
 		E_HOLD,
 		E_SPECIAL_01,		//스페셜의 늘어날수 있기에 방지 코드 ex) 채집도 하고 터지기도 하고 하면
+		E_NONE,
 		E_MAX
 	};
 
@@ -38,6 +39,8 @@ public:
 		E_HARVEST,
 		E_MAGIC,		//마법사-> 마법, 드워프->자폭, 기사-> 마법
 		E_HOLD,
+		E_TRANSPORTOUT,
+		E_TRANSPORTIN,
 		E_MAX
 	};
 
@@ -62,6 +65,7 @@ public:
 		E_MOVE,
 		E_ATTACK,
 		E_DEATH,
+		E_NONE,
 		E_MAX
 	};
 
@@ -231,6 +235,10 @@ public:
 	virtual void searchOppent();
 
 	virtual void commandHold();
+
+	virtual void commandTransport();		//대기하는 것
+	virtual void commandTransportIn();		//탑승
+	virtual void commandTransportOut(int nMapIndexX, int nMapIndexY);		//하역
 public:
 	//setter
 	inline	void	setHp(int nAmount) { OBJECT::setHp(nAmount); }
@@ -273,6 +281,7 @@ public:
 	inline	void	setLinkMyPlayer(PLAYER* pPlayer) { _pPlayer = pPlayer; }
 	inline	void	setLinkBulletMgr(BULLETMGR* pBulletMgr) { _pBulletMgr = pBulletMgr; }
 
+	inline	MAP*	getMap() { return _pMap; }
 
 	inline	void	setCollisionRect(int nLeft, int nRight, int nWidth, int nHeight) { _rcCollision = RectMake(nLeft, nRight, nWidth, nHeight); }
 	inline	void	setCollisionRect(RECT& rcTmp) { _rcCollision = rcTmp; }

@@ -84,6 +84,42 @@ void BALLISTA::renderSelected(HDC hdc)
 
 }
 
+void BALLISTA::commandTransport()
+{
+	UNIT::getCurrentBehavir()->end(this);
+
+	UNIT::setCurrentState(UNIT::E_STATENUM::E_IDLE);
+	UNIT::setCurrentBehavir(UNIT::E_BEHAVIERNUM::E_TRANSPORTIN);
+	UNIT::setBehavier(UNIT::E_BEHAVIERNUM::E_TRANSPORTIN);
+
+	UNIT::getCurrentState()->start();
+}
+
+void BALLISTA::commandTransportIn()
+{
+	UNIT::getCurrentBehavir()->end(this);
+
+	UNIT::setCurrentState(UNIT::E_STATENUM::E_NONE);
+	UNIT::setCurrentBehavir(UNIT::E_BEHAVIERNUM::E_NONE);
+	UNIT::setBehavier(UNIT::E_BEHAVIERNUM::E_NONE);
+
+	UNIT::getCurrentState()->start();
+}
+
+void BALLISTA::commandTransportOut(int nMapIndexX, int nMapIndexY)
+{
+	UNIT::getCurrentBehavir()->end(this);
+
+	UNIT::setCurrentState(UNIT::E_STATENUM::E_IDLE);
+	UNIT::setCurrentBehavir(UNIT::E_BEHAVIERNUM::E_NONE);
+	UNIT::setBehavier(UNIT::E_BEHAVIERNUM::E_NONE);
+
+	UNIT::getCurrentState()->start();
+	
+	setPosX((float)nMapIndexX * TILESIZE + 16.0f);
+	setPosY((float)nMapIndexY * TILESIZE + 16.0f);
+}
+
 void BALLISTA::allocateState()
 {
 	UNIT::_arState[static_cast<int>(UNIT::E_STATENUM::E_IDLE)] = new STATE_IDLE();
@@ -93,7 +129,7 @@ void BALLISTA::allocateState()
 	UNIT::_arState[static_cast<int>(UNIT::E_STATENUM::E_ATTACK_MOVE)] = new STATE_ATTACKMOVE();
 	UNIT::_arState[static_cast<int>(UNIT::E_STATENUM::E_HOLD)] = new STATE_HOLD();
 	UNIT::_arState[static_cast<int>(UNIT::E_STATENUM::E_SPECIAL_01)] = new STATE_SPECIAL();
-
+	UNIT::_arState[static_cast<int>(UNIT::E_STATENUM::E_NONE)] = new STATE_NONE();
 
 	for (int i = 0; i < static_cast<int>(UNIT::E_STATENUM::E_MAX); i++)
 	{
@@ -109,7 +145,7 @@ void BALLISTA::allocateBehavier()
 	UNIT::_arBeHavier[static_cast<int>(UNIT::E_BEHAVIERNUM::E_HARVEST)] = new BEHAVIER_NONE();
 	UNIT::_arBeHavier[static_cast<int>(UNIT::E_BEHAVIERNUM::E_MAGIC)] = new BEHAVIER_NONE();
 	UNIT::_arBeHavier[static_cast<int>(UNIT::E_BEHAVIERNUM::E_HOLD)] = new BEHAVIER_HOLD();
-
+	UNIT::_arBeHavier[static_cast<int>(UNIT::E_BEHAVIERNUM::E_TRANSPORTOUT)] = new BEHAVIER_TRANSPORTOUT();
 }
 
 void BALLISTA::allocateAnimation()

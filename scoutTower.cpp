@@ -40,7 +40,7 @@ void SCOUT_TOWER::upgradeBuild()
 			if (_pPlayer->getTree() <= _pBuildMgr->getConsumptionResource(E_BUILDS::E_GUARD_TOWER, E_RESOURCE::E_TREE)) return;
 			if (_pPlayer->getOil() <= _pBuildMgr->getConsumptionResource(E_BUILDS::E_GUARD_TOWER, E_RESOURCE::E_OIL)) return;
 
-			_pBuildMgr->buildBuilding(E_BUILDS::E_GUARD_TOWER, OBJECT::getLeft(), OBJECT::getTop());
+			_pBuildMgr->buildBuilding(E_BUILDS::E_GUARD_TOWER, (float)OBJECT::getLeft(), (float)OBJECT::getTop());
 
 			_pBuildMgr->removeBuild(this);
 		}
@@ -54,7 +54,7 @@ void SCOUT_TOWER::upgradeBuild()
 			if (_pPlayer->getTree() <= _pBuildMgr->getConsumptionResource(E_BUILDS::E_CANNON_TOWER, E_RESOURCE::E_TREE)) return;
 			if (_pPlayer->getOil() <= _pBuildMgr->getConsumptionResource(E_BUILDS::E_CANNON_TOWER, E_RESOURCE::E_OIL)) return;
 
-			_pBuildMgr->buildBuilding(E_BUILDS::E_CANNON_TOWER, OBJECT::getLeft(), OBJECT::getTop());
+			_pBuildMgr->buildBuilding(E_BUILDS::E_CANNON_TOWER, (float)OBJECT::getLeft(), (float)OBJECT::getTop());
 
 			_pBuildMgr->removeBuild(this);
 		}

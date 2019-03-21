@@ -133,7 +133,7 @@ void SCENEGAME::update()
 void SCENEGAME::render()
 {
 	_pCamera->renderinit();
-	//_pMap->render(_pCamera->getMemDC());
+	_pMap->render(_pCamera->getMemDC());
 
 	_pPlayer->render(_pCamera->getMemDC());
 	_pCamera->render(getMemDC());

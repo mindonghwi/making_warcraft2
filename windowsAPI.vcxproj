@@ -172,6 +172,8 @@
     <ClInclude Include="behavier_Move_Fly.h" />
     <ClInclude Include="behavier_Move_Walk.h" />
     <ClInclude Include="behavier_None.h" />
+    <ClInclude Include="behavier_transportIn.h" />
+    <ClInclude Include="behavier_transportOut.h" />
     <ClInclude Include="bomber.h" />
     <ClInclude Include="build.h" />
     <ClInclude Include="buildCommand.h" />
@@ -246,6 +248,7 @@
     <ClInclude Include="state_hold.h" />
     <ClInclude Include="state_idle.h" />
     <ClInclude Include="state_move.h" />
+    <ClInclude Include="state_none.h" />
     <ClInclude Include="state_Patrol.h" />
     <ClInclude Include="state_special.h" />
     <ClInclude Include="stdafx.h" />
@@ -287,6 +290,8 @@
     <ClCompile Include="behavier_Move_Fly.cpp" />
     <ClCompile Include="behavier_Move_Walk.cpp" />
     <ClCompile Include="behavier_None.cpp" />
+    <ClCompile Include="behavier_transportIn.cpp" />
+    <ClCompile Include="behavier_transportOut.cpp" />
     <ClCompile Include="bomber.cpp" />
     <ClCompile Include="build.cpp" />
     <ClCompile Include="buildCommand.cpp" />
@@ -355,6 +360,7 @@
     <ClCompile Include="state_hold.cpp" />
     <ClCompile Include="state_idle.cpp" />
     <ClCompile Include="state_move.cpp" />
+    <ClCompile Include="state_none.cpp" />
     <ClCompile Include="state_Patrol.cpp" />
     <ClCompile Include="state_special.cpp" />
     <ClCompile Include="stdafx.cpp">

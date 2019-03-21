@@ -232,8 +232,11 @@ bool BUILDMGR::bIsGroundCheck(E_BUILDS eBuilds, float fPosX, float fPosY)
 		{
 			for (int j = 0; j < nCount; j++)
 			{
-				if (_pMap->getTile(nIndexX + i, nIndexY + j)->getObject() != TILE::E_OBJECT::E_NONE ||
-					(_pMap->getTile(nIndexX + i, nIndexY + j)->getTerrian() != TILE::E_TERRIAN::DIRT_WATER && 
+				if (_pMap->getTile(nIndexX + i, nIndexY + j)->getObject() != TILE::E_OBJECT::E_NONE && _pMap->getTile(nIndexX + i, nIndexY + j)->getObject() != TILE::E_OBJECT::E_UNIT)
+				{
+					return false;
+				}
+				if ((_pMap->getTile(nIndexX + i, nIndexY + j)->getTerrian() != TILE::E_TERRIAN::DIRT_WATER && 
 					_pMap->getTile(nIndexX + i, nIndexY + j)->getTerrian() != TILE::E_TERRIAN::WATER))
 				{
 					return false;
@@ -260,8 +263,12 @@ bool BUILDMGR::bIsGroundCheck(E_BUILDS eBuilds, float fPosX, float fPosY)
 		{
 			for (int j = 0; j < nCount; j++)
 			{
-				if (_pMap->getTile(nIndexX + i, nIndexY + j)->getObject() != TILE::E_OBJECT::E_NONE ||
-					_pMap->getTile(nIndexX + i, nIndexY + j)->getTerrian() != TILE::E_TERRIAN::GROUND)
+				if (_pMap->getTile(nIndexX + i, nIndexY + j)->getObject() != TILE::E_OBJECT::E_NONE && _pMap->getTile(nIndexX + i, nIndexY + j)->getObject() != TILE::E_OBJECT::E_UNIT)
+				{
+					return false;
+				}
+
+				if (_pMap->getTile(nIndexX + i, nIndexY + j)->getTerrian() != TILE::E_TERRIAN::GROUND)
 				{
 					return false;
 				}

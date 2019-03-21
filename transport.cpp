@@ -52,7 +52,6 @@ void TRANSPORT::update()
 
 
 
-
 	_pCamera->pushRenderObject(this);
 }
 

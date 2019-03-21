@@ -87,18 +87,18 @@ void UICARD::renderStatus(HDC hdc)
 	{
 		char str[128];
 		sprintf_s(str, "HP: %d", _nHp);
-		TextOut(hdc, WINSIZEX / 2, _nTop-10, str, strlen(str));
+		TextOut(hdc, WINSIZEX / 2, _nTop-10, str, (int)strlen(str));
 		sprintf_s(str, "attack: %d", _nAttack);
-		TextOut(hdc, WINSIZEX / 2, _nTop + 10, str, strlen(str));
+		TextOut(hdc, WINSIZEX / 2, _nTop + 10, str, (int)strlen(str));
 		sprintf_s(str, "defence: %d", _nDefence);
-		TextOut(hdc, WINSIZEX /2, _nTop + 30, str, strlen(str));
+		TextOut(hdc, WINSIZEX /2, _nTop + 30, str, (int)strlen(str));
 
 	}
 	else if (_eUiType == E_UITYPE::E_BUILD)
 	{
 		char str[128];
 		sprintf_s(str, "HP: %d", _nHp);
-		TextOut(hdc, WINSIZEX / 2, _nTop+10, str, strlen(str));
+		TextOut(hdc, WINSIZEX / 2, _nTop+10, str, (int)strlen(str));
 	}
 }
 

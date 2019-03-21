@@ -25,6 +25,9 @@ public:
 	virtual	void renderSelected(HDC hdc) override;
 
 
+	virtual void commandTransport();		//대기하는 것
+	virtual void commandTransportIn();		//탑승
+	virtual void commandTransportOut(int nMapIndexX, int nMapIndexY);		//하역
 private:
 	void	allocateState();
 	void	allocateBehavier();

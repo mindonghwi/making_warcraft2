@@ -480,6 +480,15 @@
     <ClInclude Include="gryphonBullet.h">
       <Filter>PlayGround\bullet</Filter>
     </ClInclude>
+    <ClInclude Include="state_none.h">
+      <Filter>PlayGround\unit\state\stateHeader</Filter>
+    </ClInclude>
+    <ClInclude Include="behavier_transportOut.h">
+      <Filter>PlayGround\unit\behavier</Filter>
+    </ClInclude>
+    <ClInclude Include="behavier_transportIn.h">
+      <Filter>PlayGround\unit\behavier</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="stdafx.cpp">
@@ -790,6 +799,15 @@
     </ClCompile>
     <ClCompile Include="gryphonBullet.cpp">
       <Filter>PlayGround\bullet</Filter>
+    </ClCompile>
+    <ClCompile Include="state_none.cpp">
+      <Filter>PlayGround\unit\state\stateCpp</Filter>
+    </ClCompile>
+    <ClCompile Include="behavier_transportOut.cpp">
+      <Filter>PlayGround\unit\behavier</Filter>
+    </ClCompile>
+    <ClCompile Include="behavier_transportIn.cpp">
+      <Filter>PlayGround\unit\behavier</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
