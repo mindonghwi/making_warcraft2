@@ -83,8 +83,6 @@ void WORKMAN::update()
 		//			break;
 		//		}
 		//	}
-
-
 		//}
 		return;
 	}
