@@ -87,7 +87,6 @@ public:
 
 	void	setLinkUnitMgr(PLAYER* _pPlayer);
 
-	void	search();
 
 private:
 	void	initMap();

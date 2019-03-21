@@ -19,6 +19,7 @@ void BEHAVIER_HOLD::update(UNIT * pUnit)
 		float fDoubleSearchRange = pUnit->getAttackRange() * pUnit->getAttackRange();
 		if (fDoubleSearchRange >= Mins::getDoubleDis(pUnit->getPosX(), pUnit->getPosY(), pUnit->getOpponent()->getUnitMgr()->getUnit(i)->getPosX(), pUnit->getOpponent()->getUnitMgr()->getUnit(i)->getPosY()))
 		{
+			pUnit->clearCommand();
 			pUnit->getMyUnitMgr()->commandAttackHold(pUnit, pUnit->getOpponent()->getUnitMgr()->getUnit(i));
 			bIsHold = true;
 			pUnit->setIsHold(true);
@@ -29,7 +30,6 @@ void BEHAVIER_HOLD::update(UNIT * pUnit)
 	if (!bIsHold)
 	{
 		pUnit->commandHold();
-		
 	}
 }
 

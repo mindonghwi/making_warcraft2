@@ -103,6 +103,8 @@ public:
 	bool getUnitCollisionBullet(float fPosX, float fPosY, int nAttack);
 
 	void commandHold();
+
+	void removeSelected(UNIT* pUnit);
 public:
 	//linker
 	inline	void	setLinkCamera(CAMERA* pCamera) { _pCamera = pCamera; }

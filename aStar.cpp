@@ -23,52 +23,7 @@ void ASTAR::setLinkUnitMgr(PLAYER * _pPlayer)
 	_pBuildMgr = _pPlayer->getBuildMgr();
 }
 
-void ASTAR::search()
-{
-	int nAddSubChangeCount = 2;
-	int nAddSubChangeIndex = 0;
-	int nInterval = -1;
-	//x y xx yy xxx yyy xxxx yyyy
-	int nMapChangeCount = 1;
-	int nMapChangeIndex = 0;
-	
-	int nIntervalsX = 0;
-	int nIntervalsY = 0;
-	nIntervalsX = nInterval;
 
-	//찾을떄 까지 돌린다.
-	while (true)
-	{
-
-
-		nAddSubChangeIndex++;
-
-		nMapChangeIndex++;
-
-		if (nMapChangeIndex == nMapChangeCount)
-		{
-			//좌표를 더해주는게 변한다
-			int nTmp = nIntervalsX;
-			nIntervalsX = nIntervalsY;
-			nIntervalsY = nTmp;
-
-			nMapChangeIndex = 0;
-		}
-
-		if (nAddSubChangeCount == nAddSubChangeIndex)
-		{
-			nAddSubChangeCount += 2;
-			nAddSubChangeIndex = 0;
-
-			nInterval *= -1;
-
-			nMapChangeCount++;
-			
-		}
-	}
-
-
-}
 
 void ASTAR::initMap()
 {

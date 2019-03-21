@@ -264,7 +264,7 @@ void UNIT::moveToDir()
 
 	setMovePoints((float)_fEndX, (float)_fEndY);
 	removeMapUnitData();
-
+	clearCommand();
 
 	//UNIT::getCurrentBehavir()->end(this);
 	if (!UNIT::moveTo()) {
@@ -298,7 +298,9 @@ void UNIT::clearCommand()
 {
 	while (!_queWaitCommand.empty())
 	{
+		COMMAND* pCommand = _queWaitCommand.front();
 		_queWaitCommand.pop();
+		_pUnitMgr->returnPool(pCommand);
 	}
 	commandIdle();
 
@@ -395,12 +397,18 @@ void UNIT::updateRect()
 
 void UNIT::removeMapUnitData()
 {
-	_pMap->getTile(getPosX() / TILESIZE, getPosY() / TILESIZE)->setObject(TILE::E_OBJECT::E_NONE);
+	if (_pMap->getTile(getPosX() / TILESIZE, getPosY() / TILESIZE)->getObject() == TILE::E_OBJECT::E_UNIT)
+	{
+		_pMap->getTile(getPosX() / TILESIZE, getPosY() / TILESIZE)->setObject(TILE::E_OBJECT::E_NONE);
+	}
 }
 
 void UNIT::addMapUnitData()
 {
-	_pMap->getTile(getPosX() / TILESIZE, getPosY() / TILESIZE)->setObject(TILE::E_OBJECT::E_UNIT);
+	if (_pMap->getTile(getPosX() / TILESIZE, getPosY() / TILESIZE)->getObject() == TILE::E_OBJECT::E_NONE)
+	{
+		_pMap->getTile(getPosX() / TILESIZE, getPosY() / TILESIZE)->setObject(TILE::E_OBJECT::E_UNIT);
+	}
 }
 
 void UNIT::fireBullet()

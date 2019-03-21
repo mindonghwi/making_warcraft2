@@ -65,25 +65,27 @@ void WORKMAN::update()
 			UNIT::setIsBannedSelect(false);
 		}
 		//등장위치 조정
-		if (_pMap->getTile((int)OBJECT::getPosX()/TILESIZE, (int)OBJECT::getPosY() / TILESIZE)->getObject() != TILE::E_OBJECT::E_NONE &&
-			_pMap->getTile((int)OBJECT::getPosX() / TILESIZE, (int)OBJECT::getPosY() / TILESIZE)->getObject() != TILE::E_OBJECT::E_UNIT)
-		{
-			//길이 없을경우가 문제
-			for (int i = 0; i < 25; i++)
-			{
-				OBJECT::setPosX(OBJECT::getPosX() + _pUnitMgr->getIntervalX(i) * TILESIZE);
-				OBJECT::setPosY(OBJECT::getPosY() + _pUnitMgr->getIntervalY(i) * TILESIZE);
+		//if (_pMap->getTile((int)OBJECT::getPosX()/TILESIZE, (int)OBJECT::getPosY() / TILESIZE)->getObject() != TILE::E_OBJECT::E_NONE &&
+		//	_pMap->getTile((int)OBJECT::getPosX() / TILESIZE, (int)OBJECT::getPosY() / TILESIZE)->getObject() != TILE::E_OBJECT::E_UNIT)
+		//{
+		//	//길이 없을경우가 문제
+		//	for (int i = 0; i < 25; i++)
+		//	{
+		//		OBJECT::setPosX(OBJECT::getPosX() + _pUnitMgr->getIntervalX(i) * TILESIZE);
+		//		OBJECT::setPosY(OBJECT::getPosY() + _pUnitMgr->getIntervalY(i) * TILESIZE);
 
-				if (_pMap->getTile((int)OBJECT::getPosX() / TILESIZE, (int)OBJECT::getPosY() / TILESIZE)->getObject() == TILE::E_OBJECT::E_NONE && 
-					(int)OBJECT::getPosX() > TILESIZE && OBJECT::getPosY()> TILESIZE && (int)OBJECT::getPosX() / TILESIZE < 127 && OBJECT::getPosY() / TILESIZE < 127)
-				{
-					OBJECT::settingRect();
-					setCollisionRect(OBJECT::getPosX(), OBJECT::getPosY(), 32, 32);
-					addMapUnitData();
-					break;
-				}
-			}
-		}
+		//		if (_pMap->getTile((int)OBJECT::getPosX() / TILESIZE, (int)OBJECT::getPosY() / TILESIZE)->getObject() == TILE::E_OBJECT::E_NONE && 
+		//			(int)OBJECT::getPosX() > TILESIZE && OBJECT::getPosY()> TILESIZE && (int)OBJECT::getPosX() / TILESIZE < 127 && OBJECT::getPosY() / TILESIZE < 127)
+		//		{
+		//			OBJECT::settingRect();
+		//			setCollisionRect(OBJECT::getPosX(), OBJECT::getPosY(), 32, 32);
+		//			//addMapUnitData();
+		//			break;
+		//		}
+		//	}
+
+
+		//}
 		return;
 	}
 
@@ -242,11 +244,13 @@ void WORKMAN::commandBuild()
 
 void WORKMAN::build(float fPosX, float fPosY, E_BUILDS eBuilds)
 {
+	_pUnitMgr->removeSelected(this);
+
 	_pBuildMgr->buildBuilding(eBuilds, fPosX, fPosY);
 	_bIsBannedSelected = true;
 	_fBuildTime = _pBuildMgr->getBuildTime(eBuilds);
 	_fTimer = 0.0f;
-	_pUnitMgr->removeSelectedUnit(this);
+	//_pUnitMgr->removeSelectedUnit(this);
 }
 
 void WORKMAN::harvestResources()

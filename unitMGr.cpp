@@ -201,6 +201,7 @@ void UNITMGR::update()
 		//	iterUnitListCollision++;
 		//}
 
+
 		if (pUnit->getHp() <= 0)
 		{
 	
@@ -387,7 +388,7 @@ void UNITMGR::allocateUnitStatus()
 	_arUnitProductionTime[static_cast<const int>(UNIT::E_UNIT::E_WORKMAN)] = 10;
 	_arUnitSpeed[static_cast<const int>(UNIT::E_UNIT::E_WORKMAN)]			=0.3f;
 	_arSearchRange[static_cast<const int>(UNIT::E_UNIT::E_WORKMAN)]			=128.0f;
-	_arAttackRange[static_cast<const int>(UNIT::E_UNIT::E_WORKMAN)]			=48.0f;
+	_arAttackRange[static_cast<const int>(UNIT::E_UNIT::E_WORKMAN)]			= 56.0f;
 	_arAttackSpeed[static_cast<const int>(UNIT::E_UNIT::E_WORKMAN)]			= 1.0f;
 
 
@@ -399,7 +400,7 @@ void UNITMGR::allocateUnitStatus()
 	_arUnitProductionTime[static_cast<const int>(UNIT::E_UNIT::E_FOOTMAN)] = 15;
 	_arUnitSpeed[static_cast<const int>(UNIT::E_UNIT::E_FOOTMAN)] = 0.3f;
 	_arSearchRange[static_cast<const int>(UNIT::E_UNIT::E_FOOTMAN)] = 128.0f;
-	_arAttackRange[static_cast<const int>(UNIT::E_UNIT::E_FOOTMAN)] = 48.0f;
+	_arAttackRange[static_cast<const int>(UNIT::E_UNIT::E_FOOTMAN)] = 56.0f;
 	_arAttackSpeed[static_cast<const int>(UNIT::E_UNIT::E_FOOTMAN)] = 1.0f;
 
 	//archer
@@ -905,6 +906,19 @@ void UNITMGR::commandHold()
 		pCommand->commandUnit();
 		(*(_vSeletedUnit[i]))->addCommand(pCommand);
 	}
+
+}
+
+void UNITMGR::removeSelected(UNIT * pUnit)
+{
+	for (int i = 0; i < getUnitSelectedCount(); i++)
+	{
+		if (*(_vSeletedUnit[i]) == pUnit) {
+			_vSeletedUnit.erase(_vSeletedUnit.begin() + i);
+			break;
+		}
+	}
+
 
 }
 
