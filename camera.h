@@ -48,6 +48,7 @@ public:
 	void update();
 
 	void render(HDC hdc);
+	void renderFin(HDC hdc);
 	void release();
 	void renderinit();
 	void	setting(int nPosX,int nPosY);										//중점 좌표를 잡는다

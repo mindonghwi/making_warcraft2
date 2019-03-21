@@ -3,6 +3,7 @@
 #include "map.h"
 #include "buildsHeader.h"
 #include "build.h"
+#include "player.h"
 BUILDMGR::BUILDMGR()
 {
 }
@@ -46,6 +47,11 @@ void BUILDMGR::update()
 
 		if (pBuild->getState() == BUILD::E_STATE::E_DESTROY)
 		{
+			if (pBuild->getBuildsTpye() == E_BUILDS::E_FARM)
+			{
+				_pPlayer->subMaxPopulation(8);
+			}
+
 			if (_pSelected == pBuild)
 			{
 				_pSelected = nullptr;
@@ -272,6 +278,30 @@ bool BUILDMGR::bIsGroundCheck(E_BUILDS eBuilds, float fPosX, float fPosY)
 				{
 					return false;
 				}
+
+				if (nIndexX + i == 1)
+				{
+					return false;
+
+				}
+				if (nIndexX + i == 126)
+				{
+					return false;
+
+
+				}
+				if (nIndexY + j == 1)
+				{
+					return false;
+
+				}
+				if (nIndexY + j == 126)
+				{
+					return false;
+
+
+				}
+
 			}
 		}
 

@@ -204,7 +204,8 @@ void UNITMGR::update()
 
 		if (pUnit->getHp() <= 0)
 		{
-	
+			_pPlayer->subPopulation(_arUnitPopulation[static_cast<int>(pUnit->getUnit())]);
+
 			for (int i = 0; i < (int)_vSeletedUnit.size(); i++)
 			{
 				if (*(_vSeletedUnit[i]) == pUnit)
@@ -216,6 +217,7 @@ void UNITMGR::update()
 			pUnit->removeMapUnitData();
 			iterUnitList = _listUnit.erase(iterUnitList);
 
+			
 	
 			pUnit->release();
 			delete pUnit;
@@ -966,4 +968,20 @@ UNIT * UNITMGR::getUnit(UNIT::E_UNIT eUnit)
 
 	return nullptr;
 }
+
+void UNITMGR::commandBuildAi(float fPosX, float fPosY, E_BUILDS eBuilds, UNIT* pUnit)
+{
+	COMMAND*  pCommand = _mCommandPool.find(COMMAND::E_COMMAND::E_MOVE)->second.front();
+	_mCommandPool.find(COMMAND::E_COMMAND::E_MOVE)->second.pop();
+	pCommand->init(COMMAND::E_COMMAND::E_MOVE, pUnit);
+	pCommand->commandUnit(fPosX, fPosY);
+	pUnit->addCommand(pCommand);
+
+	pCommand = _mCommandPool.find(COMMAND::E_COMMAND::E_BUILD)->second.front();
+	_mCommandPool.find(COMMAND::E_COMMAND::E_BUILD)->second.pop();
+	pCommand->init(COMMAND::E_COMMAND::E_BUILD, pUnit);
+	pCommand->commandUnit(fPosX, fPosY, eBuilds);
+	pUnit->addCommand(pCommand);
+}
+
 

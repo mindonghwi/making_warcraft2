@@ -243,11 +243,11 @@ void ASTAR::startFinder(float fStartPosX, float fStartPosY, float fEndPosX, floa
 
 	while (((_eMoveHeight == MOVEHEIGHT::GROUND && _pMap->getTile(_nEndIndexX, _nEndIndexY)->getObject() != TILE::E_OBJECT::E_NONE)&&
 		(_eMoveHeight == MOVEHEIGHT::GROUND && _pMap->getTile(_nEndIndexX, _nEndIndexY)->getObject() != TILE::E_OBJECT::E_BUILDING)
-		|| bIsOnObject))
+		|| bIsOnObject) )//&& _nEndIndexX == 0 && _nEndIndexX == TILECOUNTX-1 && _nEndIndexY == 0 && _nEndIndexY == TILECOUNTY - 1)
 	{
 		bIsOnObject = false;
 	
-	
+
 		RECT rcTmp;
 		for (int i = 0; i < _pUnitMgr->getUnitCount(); i++)
 		{

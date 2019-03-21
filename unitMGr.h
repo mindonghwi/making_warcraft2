@@ -146,4 +146,5 @@ public:
 public:
 	//com AI
 	UNIT* getUnit(UNIT::E_UNIT eUnit);
+	void	commandBuildAi(float fPosX, float fPosY, E_BUILDS eBuilds,UNIT* pUnit);
 };

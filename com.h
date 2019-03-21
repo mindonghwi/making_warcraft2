@@ -4,7 +4,7 @@
 class COM : public PLAYER
 {
 private:
-
+	bool	_bIsTown;
 
 public:
 	COM();
@@ -12,5 +12,5 @@ public:
 	virtual void update();
 
 private:
-	
+	void commandTownBuild();
 };

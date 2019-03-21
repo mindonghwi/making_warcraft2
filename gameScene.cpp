@@ -65,13 +65,13 @@ HRESULT SCENEGAME::init()
 
 
 	//player init
-	_pPlayer->init(static_cast<float>(TILESIZE * 19 + 16), static_cast<float>(TILESIZE * 11 + 16));
+	_pPlayer->init(static_cast<float>(TILESIZE * 5 + 16), static_cast<float>(TILESIZE * 12 + 16));
 	_pPlayer->setGold(5000);
 	_pPlayer->setOil(5000);
 	_pPlayer->setTree(2000);
 
 	//_pCom init
-	_pCom->init(static_cast<float>(TILESIZE * 19 + 16), static_cast<float>(TILESIZE * 25 + 16));
+	_pCom->init(static_cast<float>(TILESIZE * 50 + 16), static_cast<float>(TILESIZE * 25 + 16));
 	_pCom->setGold(5000);
 	_pCom->setOil(5000);
 	_pCom->setTree(2000);
@@ -133,11 +133,13 @@ void SCENEGAME::update()
 void SCENEGAME::render()
 {
 	_pCamera->renderinit();
-	_pMap->render(_pCamera->getMemDC());
+	//_pMap->render(_pCamera->getMemDC());
 
-	_pPlayer->render(_pCamera->getMemDC());
+
 	_pCamera->render(getMemDC());
+	_pPlayer->render(_pCamera->getMemDC());
 
+	_pCamera->renderFin(getMemDC());
 	IMAGEMANAGER->findImage("edge")->render(getMemDC());
 
 	_pCamera->renderMiniMap(getMemDC());

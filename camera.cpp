@@ -84,8 +84,12 @@ void CAMERA::render(HDC hdc)
 		iter++;
 	}
 
-	_pCameraBuffer->render(hdc, 0, 0, _left, _top, _width, _height);
 
+}
+
+void CAMERA::renderFin(HDC hdc)
+{
+	_pCameraBuffer->render(hdc, 0, 0, _left, _top, _width, _height);
 }
 
 void CAMERA::release()

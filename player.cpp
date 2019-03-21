@@ -97,6 +97,70 @@ void PLAYER::render(HDC hdc)
 
 	DrawEdge(hdc,&_rcDragArea, BDR_RAISEDOUTER, BF_FLAT | BF_TOPLEFT | BF_BOTTOMRIGHT);
 	
+
+
+	if (_eBuilds != E_BUILDS::E_MAX)
+	{
+		int nTileCount = _pBuildMgr->getBuildWidth(_eBuilds) / TILESIZE;
+		for (int i = 0; i < nTileCount; i++)
+		{
+			for (int j = 0; j < nTileCount; j++)
+			{
+				if (_ptCameraPtMouse.x / TILESIZE + i == 1)
+				{
+					IMAGEMANAGER->render("redTile", hdc, _pMap->getTile(_ptCameraPtMouse.x / TILESIZE + i, _ptCameraPtMouse.y / TILESIZE + j)->getRectTile().left, _pMap->getTile(_ptCameraPtMouse.x / TILESIZE + i, _ptCameraPtMouse.y / TILESIZE + j)->getRectTile().top);
+				}
+				else if (_ptCameraPtMouse.x / TILESIZE + i == TILECOUNTX-2)
+				{
+					IMAGEMANAGER->render("redTile", hdc, _pMap->getTile(_ptCameraPtMouse.x / TILESIZE + i, _ptCameraPtMouse.y / TILESIZE + j)->getRectTile().left, _pMap->getTile(_ptCameraPtMouse.x / TILESIZE + i, _ptCameraPtMouse.y / TILESIZE + j)->getRectTile().top);
+				}
+				else if (_ptCameraPtMouse.y / TILESIZE + j == 1)
+				{
+					IMAGEMANAGER->render("redTile", hdc, _pMap->getTile(_ptCameraPtMouse.x / TILESIZE + i, _ptCameraPtMouse.y / TILESIZE + j)->getRectTile().left, _pMap->getTile(_ptCameraPtMouse.x / TILESIZE + i, _ptCameraPtMouse.y / TILESIZE + j)->getRectTile().top);
+				}
+				else if (_ptCameraPtMouse.y / TILESIZE + j == TILECOUNTY - 2)
+				{
+					IMAGEMANAGER->render("redTile", hdc, _pMap->getTile(_ptCameraPtMouse.x / TILESIZE + i, _ptCameraPtMouse.y / TILESIZE + j)->getRectTile().left, _pMap->getTile(_ptCameraPtMouse.x / TILESIZE + i, _ptCameraPtMouse.y / TILESIZE + j)->getRectTile().top);
+				}
+				else if (_eBuilds == E_BUILDS::E_SHIPYARD || _eBuilds == E_BUILDS::E_OIL_PLATFORM || _eBuilds == E_BUILDS::E_FOUNDRY)
+				{
+					if (_pMap->getTile(_ptCameraPtMouse.x / TILESIZE + i, _ptCameraPtMouse.y / TILESIZE + j)->getTerrian() == TILE::E_TERRIAN::DIRT_WATER ||
+						_pMap->getTile(_ptCameraPtMouse.x / TILESIZE + i, _ptCameraPtMouse.y / TILESIZE + j)->getTerrian() == TILE::E_TERRIAN::WATER)
+					{
+						IMAGEMANAGER->render("greenTile", hdc, _pMap->getTile(_ptCameraPtMouse.x / TILESIZE + i, _ptCameraPtMouse.y / TILESIZE + j)->getRectTile().left, _pMap->getTile(_ptCameraPtMouse.x / TILESIZE + i, _ptCameraPtMouse.y / TILESIZE + j)->getRectTile().top);
+					}
+					else
+					{
+						IMAGEMANAGER->render("redTile", hdc, _pMap->getTile(_ptCameraPtMouse.x / TILESIZE + i, _ptCameraPtMouse.y / TILESIZE + j)->getRectTile().left, _pMap->getTile(_ptCameraPtMouse.x / TILESIZE + i, _ptCameraPtMouse.y / TILESIZE + j)->getRectTile().top);
+					}
+				}
+				else if (_eBuilds== E_BUILDS::E_OIL_REFINERY)
+				{
+					if (_pMap->getTile(_ptCameraPtMouse.x / TILESIZE + i, _ptCameraPtMouse.y / TILESIZE + j)->getObject() == TILE::E_OBJECT::E_OILPATCH)
+					{
+						IMAGEMANAGER->render("greenTile", hdc, _pMap->getTile(_ptCameraPtMouse.x / TILESIZE + i, _ptCameraPtMouse.y / TILESIZE + j)->getRectTile().left, _pMap->getTile(_ptCameraPtMouse.x / TILESIZE + i, _ptCameraPtMouse.y / TILESIZE + j)->getRectTile().top);
+					}
+					else
+					{
+						IMAGEMANAGER->render("redTile", hdc, _pMap->getTile(_ptCameraPtMouse.x / TILESIZE + i, _ptCameraPtMouse.y / TILESIZE + j)->getRectTile().left, _pMap->getTile(_ptCameraPtMouse.x / TILESIZE + i, _ptCameraPtMouse.y / TILESIZE + j)->getRectTile().top);
+					}
+				}
+				else
+				{
+					if (_pMap->getTile(_ptCameraPtMouse.x / TILESIZE + i, _ptCameraPtMouse.y / TILESIZE + j)->getTerrian() == TILE::E_TERRIAN::GROUND)
+					{
+						IMAGEMANAGER->render("greenTile", hdc, _pMap->getTile(_ptCameraPtMouse.x / TILESIZE + i, _ptCameraPtMouse.y / TILESIZE + j)->getRectTile().left, _pMap->getTile(_ptCameraPtMouse.x / TILESIZE + i, _ptCameraPtMouse.y / TILESIZE + j)->getRectTile().top);
+					}
+					else
+					{
+						IMAGEMANAGER->render("redTile", hdc, _pMap->getTile(_ptCameraPtMouse.x / TILESIZE + i, _ptCameraPtMouse.y / TILESIZE + j)->getRectTile().left, _pMap->getTile(_ptCameraPtMouse.x / TILESIZE + i, _ptCameraPtMouse.y / TILESIZE + j)->getRectTile().top);
+					}
+				}
+			}
+		}
+
+	}
+
 }
 
 bool PLAYER::createUnit(UNIT::E_UNIT eUnit)
@@ -173,6 +237,7 @@ void PLAYER::commandBuild()
 			_eBuildType = E_BUILDTYPE::E_V;
 			return;
 		}
+
 	}
 
 	if (KEYMANAGER->isOnceKeyDown(VK_ESCAPE))
@@ -234,8 +299,8 @@ void PLAYER::commandBuild()
 		{
 			_eBuilds = E_BUILDS::E_SHIPYARD;
 		}
-		
-		if (KEYMANAGER->isOnceKeyDown('O'))// && _pBuildMgr->getIsBuildTree(E_BUILDS::E_CASTLE))
+
+		if (KEYMANAGER->isOnceKeyDown('P'))// && _pBuildMgr->getIsBuildTree(E_BUILDS::E_CASTLE))
 		{
 			_eBuilds = E_BUILDS::E_OIL_PLATFORM;
 		}
@@ -253,6 +318,13 @@ void PLAYER::commandBuild()
 		if (KEYMANAGER->isOnceKeyDown('F') && _pBuildMgr->getIsBuildTree(E_BUILDS::E_CASTLE))
 		{
 			_eBuilds = E_BUILDS::E_FOUNDRY;
+		}
+	}
+	if (_pUnitMgr->getSelectedUnit(0) && _pUnitMgr->getSelectedUnit(0)->getUnit() == UNIT::E_UNIT::E_OILTANKER)
+	{
+		if (KEYMANAGER->isOnceKeyDown('O'))	
+		{
+			_eBuilds = E_BUILDS::E_OIL_REFINERY;
 		}
 	}
 
@@ -288,8 +360,35 @@ void PLAYER::commandBuild()
 			_pUnitMgr->buildCommand((float)_ptCameraPtMouse.x, (float)_ptCameraPtMouse.y, _eBuilds);
 			_eBuilds = E_BUILDS::E_MAX;
 			_eBuildType = E_BUILDTYPE::E_NONE;
+		}
+		else if (_pUnitMgr->getSelectedUnit(0) && _pUnitMgr->getSelectedUnit(0)->getUnit() == UNIT::E_UNIT::E_OILTANKER && _eBuilds != E_BUILDS::E_MAX)
+		{
+			//금부족
+			if (_pBuildMgr->getConsumptionResource(_pUnitMgr->getSelectedUnit(0)->getBuildType(), E_RESOURCE::E_GOLD) > getGold())
+			{
+				return;
+			}
+			if (_pBuildMgr->getConsumptionResource(_pUnitMgr->getSelectedUnit(0)->getBuildType(), E_RESOURCE::E_OIL) > getOil())
+			{
+				return;
+			}
+			if (_pBuildMgr->getConsumptionResource(_pUnitMgr->getSelectedUnit(0)->getBuildType(), E_RESOURCE::E_TREE) > getTree())
+			{
+				return;
+			}
+			//자리부족
+			if (!_pBuildMgr->bIsGroundCheck(_eBuilds, (float)_ptCameraPtMouse.x, (float)_ptCameraPtMouse.y))
+			{
+				return;
+			}
 
-			
+			_arResource[static_cast<int>(E_RESOURCE::E_GOLD)] -= _pBuildMgr->getConsumptionResource(_pUnitMgr->getSelectedUnit(0)->getBuildType(), E_RESOURCE::E_GOLD);
+			_arResource[static_cast<int>(E_RESOURCE::E_OIL)] -= _pBuildMgr->getConsumptionResource(_pUnitMgr->getSelectedUnit(0)->getBuildType(), E_RESOURCE::E_OIL);
+			_arResource[static_cast<int>(E_RESOURCE::E_TREE)] -= _pBuildMgr->getConsumptionResource(_pUnitMgr->getSelectedUnit(0)->getBuildType(), E_RESOURCE::E_TREE);
+			_pUnitMgr->clearCommandSelectedUnit();
+			_pUnitMgr->buildCommand((float)_ptCameraPtMouse.x, (float)_ptCameraPtMouse.y, _eBuilds);
+			_eBuilds = E_BUILDS::E_MAX;
+			_eBuildType = E_BUILDTYPE::E_NONE;
 		}
 	}
 }
@@ -472,3 +571,4 @@ void PLAYER::readjustDragRect()
 	_rcDragArea.bottom++;
 
 }
+

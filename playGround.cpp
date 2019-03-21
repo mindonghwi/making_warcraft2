@@ -138,7 +138,9 @@ void playGround::loadImage()
 	//effect
 	IMAGEMANAGER->addFrameImage("bomb", "resource/bullet/bomb.bmp", 1024, 64, 16, 1, true, Mins::getMazenta());
 
-	
+	IMAGEMANAGER->addImage("greenTile", "resource/greenTile.bmp", 32, 32, true, Mins::getMazenta());
+	IMAGEMANAGER->addImage("redTile", "resource/redTile.bmp", 32, 32, true, Mins::getMazenta());
+
 }
 
 

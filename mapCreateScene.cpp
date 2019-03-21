@@ -179,6 +179,7 @@ void SCENEMAPTOOL::render()
 
 	_pCamera->render(getMemDC());
 
+	_pCamera->renderFin(getMemDC());
 
 	_pGround->render(getMemDC(), _rcGround.left, _rcGround.top);
 	_pDirt->render(getMemDC(), _rcDirt.left, _rcDirt.top);

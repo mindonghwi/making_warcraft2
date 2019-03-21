@@ -52,6 +52,9 @@ protected:
 	PLAYER*		_pOpponent;
 
 	BULLETMGR*	_pBulletMgr;
+
+
+	bool		_bIsDragBuildGuideRect;
 public:
 	PLAYER();
 	~PLAYER();
@@ -75,7 +78,6 @@ protected:
 	virtual void initDrag();
 	virtual void dragSelect();
 	virtual void readjustDragRect();
-	
 public:
 	//linker
 	inline	void	setLinkCamera(CAMERA* pCamera) { _pCamera = pCamera; }
@@ -115,5 +117,7 @@ public:
 	inline	void	subGold(int nGold) { _arResource[static_cast<int>(E_RESOURCE::E_GOLD)] -= nGold; }
 	inline	void	subTree(int nTree) { _arResource[static_cast<int>(E_RESOURCE::E_TREE)] -= nTree; }
 	inline	void	subOil(int nOil) { _arResource[static_cast<int>(E_RESOURCE::E_OIL)] -= nOil; }
+	inline	void	subPopulation(int nPopulation) { _nPopulation -= nPopulation; }
+	inline	void	subMaxPopulation(int nMaxPopulation) { _nMaxPopulation -= nMaxPopulation; }
 
 };

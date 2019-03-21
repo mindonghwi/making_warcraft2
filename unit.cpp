@@ -169,7 +169,33 @@ void UNIT::setMovePoints(float fEndPosX, float fEndPosY)
 		UNIT::_vvMovePoint.push_back(vPos);
 	}
 
+	if ((int)UNIT::_vvMovePoint.size() == 1)
+	{
+		bool bIsPrison = false;
+		for (int i = -1; i < 2; i++)
+		{
+			for (int j = 0; j < 2; j++)
+			{
+				if (_pMap->getTile(_vvMovePoint[0][0]+i, _vvMovePoint[0][1]+j)->getObject() == TILE::E_OBJECT::E_NONE)
+				{
+					bIsPrison = true;
 
+					break;
+				}
+			}
+			if (bIsPrison)
+			{
+				break;
+			}
+		}
+
+		if (!bIsPrison) {
+			vector<int> vPos;
+			vPos.push_back(_pAstar->getNode(0)->nIndexX + 1);
+			vPos.push_back(_pAstar->getNode(0)->nIndexY + 1);
+			UNIT::_vvMovePoint.push_back(vPos);
+		}
+	}
 
 	UNIT::setMoveIndex(0);
 
@@ -264,7 +290,7 @@ void UNIT::moveToDir()
 
 	setMovePoints((float)_fEndX, (float)_fEndY);
 	removeMapUnitData();
-	clearCommand();
+
 
 	//UNIT::getCurrentBehavir()->end(this);
 	if (!UNIT::moveTo()) {
@@ -342,7 +368,7 @@ void UNIT::targetDirection()
 
 	if (fAngle >= static_cast<float>(E_DIRECTION::E_DEATH))
 	{
-		fAngle = 7;
+		fAngle = static_cast<float>(E_DIRECTION::E_RIGHT);
 	}
 
 	UNIT::_eDirection = static_cast<E_DIRECTION>(static_cast<int>(fAngle));

@@ -84,6 +84,18 @@ void OILTANKER::renderSelected(HDC hdc)
 
 }
 
+void OILTANKER::build(float fPosX, float fPosY, E_BUILDS eBuilds)
+{
+	_pUnitMgr->removeSelected(this);
+
+	_pBuildMgr->buildBuilding(eBuilds, fPosX, fPosY);
+	_bIsBannedSelected = true;
+	_fBuildTime = _pBuildMgr->getBuildTime(eBuilds);
+	_fTimer = 0.0f;
+
+	_nHp = 0;
+}
+
 void OILTANKER::allocateState()
 {
 	UNIT::_arState[static_cast<int>(UNIT::E_STATENUM::E_IDLE)] = new STATE_IDLE();
@@ -97,7 +109,10 @@ void OILTANKER::allocateState()
 
 	for (int i = 0; i < static_cast<int>(UNIT::E_STATENUM::E_MAX); i++)
 	{
-		UNIT::_arState[i]->setUnit(this);
+		if (UNIT::_arState[i])
+		{
+			UNIT::_arState[i]->setUnit(this);
+		}
 	}
 }
 

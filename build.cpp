@@ -114,6 +114,15 @@ void BUILD::update()
 		}
 
 
+		if (getBuildsTpye() == E_BUILDS::E_OIL_REFINERY)
+		{
+			if (_fTimer >= 10.0f)
+			{
+				_pPlayer->addOil(100);
+				_fTimer = 0.0f;
+			}
+		}
+
 		destroyBuild();
 
 	}
@@ -309,7 +318,7 @@ void BUILD::createUnit()
 void BUILD::commandProduce()
 {
 	if (_eState != BUILD::E_STATE::E_ISON) return;
-
+	if (_bIsProduce) return;
 	if (KEYMANAGER->isOnceKeyDown('P') && _nUnitMask & static_cast<unsigned int>(BUILDMGR::E_UNITMASK::E_WORKMAN))
 	{
 		if (_pPlayer->getPopulation() + _pPlayer->getUnitMgr()->getUnitPopulation(UNIT::E_UNIT::E_WORKMAN) > _pPlayer->getMaxPopulation()) return;

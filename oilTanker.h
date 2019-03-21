@@ -9,7 +9,7 @@ class OILTANKER : public UNIT
 {
 private:
 	float	_fTimer;
-
+	float	_fBuildTime;
 
 public:
 	OILTANKER();
@@ -23,6 +23,7 @@ public:
 	virtual void release()			override;
 	virtual void render(HDC hdc)	override;
 	virtual	void renderSelected(HDC hdc) override;
+	virtual void build(float fPosX, float fPosY, E_BUILDS eBuilds) override;
 
 
 private:
