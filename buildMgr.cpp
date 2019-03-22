@@ -298,8 +298,6 @@ bool BUILDMGR::bIsGroundCheck(E_BUILDS eBuilds, float fPosX, float fPosY)
 				if (nIndexY + j == 126)
 				{
 					return false;
-
-
 				}
 
 			}
@@ -442,6 +440,27 @@ BUILD * BUILDMGR::getBuild(int nIndex)
 		iter++;
 	}
 	return *iter;
+}
+
+BUILD * BUILDMGR::getBuild(int nNum, E_BUILDS eBuilds)
+{
+	int nCount = 0;
+	list<BUILD*>::iterator iter = _listBuild.begin();
+	while (iter != _listBuild.end())
+	{
+		if ((*iter)->getBuildsTpye() == eBuilds)
+		{
+			if (nCount == nNum)
+			{
+				return *iter;
+			}
+			nCount++;
+		}
+
+		iter++;
+	}
+
+	return nullptr;
 }
 
 void BUILDMGR::releaseSelected()

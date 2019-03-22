@@ -90,6 +90,7 @@ public:
 
 	BUILD*	getBuild(int nIndex);
 
+	BUILD*	getBuild(int nNum,E_BUILDS eBuilds);
 
 
 	void	releaseSelected();
@@ -97,4 +98,8 @@ public:
 	void	removeBuild(BUILD* pBuild);
 
 	void	updateBuildTree(BUILD*	pBuild);
+
+
+public:
+
 };

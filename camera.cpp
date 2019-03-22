@@ -83,8 +83,6 @@ void CAMERA::render(HDC hdc)
 		}
 		iter++;
 	}
-
-
 }
 
 void CAMERA::renderFin(HDC hdc)
@@ -243,12 +241,11 @@ void CAMERA::drawMiniMap()
 {
 	SetStretchBltMode(_pMiniMap->getMemDC(), HALFTONE);
 	StretchBlt(_pMiniMap->getMemDC(), 0, 0, 256, 256, _pBackGroundBuffer->getMemDC(), 0, 0, _nMapWidth, _nMapHeight, SRCCOPY);
+
 }
 
 void CAMERA::renderMiniMap(HDC hdc)
 {
-
-
 	_pMiniMap->render(hdc, 0, WINSIZEY - 256);
 	setLeftTop();
 	DrawEdge(hdc, &RectMake((_left * 256 / _nMapWidth) - 2, (_top * 256 / _nMapHeight) + WINSIZEY - 256 - 2, WINSIZEX * 256 / _nMapWidth, WINSIZEY * 256 / _nMapHeight + 4), BDR_RAISEDOUTER, BF_FLAT | BF_TOPLEFT | BF_BOTTOMRIGHT);

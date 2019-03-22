@@ -124,8 +124,10 @@ void PLAYER::render(HDC hdc)
 				}
 				else if (_eBuilds == E_BUILDS::E_SHIPYARD || _eBuilds == E_BUILDS::E_OIL_PLATFORM || _eBuilds == E_BUILDS::E_FOUNDRY)
 				{
-					if (_pMap->getTile(_ptCameraPtMouse.x / TILESIZE + i, _ptCameraPtMouse.y / TILESIZE + j)->getTerrian() == TILE::E_TERRIAN::DIRT_WATER ||
-						_pMap->getTile(_ptCameraPtMouse.x / TILESIZE + i, _ptCameraPtMouse.y / TILESIZE + j)->getTerrian() == TILE::E_TERRIAN::WATER)
+					if ((_pMap->getTile(_ptCameraPtMouse.x / TILESIZE + i, _ptCameraPtMouse.y / TILESIZE + j)->getTerrian() == TILE::E_TERRIAN::DIRT_WATER ||
+						_pMap->getTile(_ptCameraPtMouse.x / TILESIZE + i, _ptCameraPtMouse.y / TILESIZE + j)->getTerrian() == TILE::E_TERRIAN::WATER) &&
+						(_pMap->getTile(_ptCameraPtMouse.x / TILESIZE + i, _ptCameraPtMouse.y / TILESIZE + j)->getObject() == TILE::E_OBJECT::E_NONE || 
+							_pMap->getTile(_ptCameraPtMouse.x / TILESIZE + i, _ptCameraPtMouse.y / TILESIZE + j)->getObject() == TILE::E_OBJECT::E_UNIT))
 					{
 						IMAGEMANAGER->render("greenTile", hdc, _pMap->getTile(_ptCameraPtMouse.x / TILESIZE + i, _ptCameraPtMouse.y / TILESIZE + j)->getRectTile().left, _pMap->getTile(_ptCameraPtMouse.x / TILESIZE + i, _ptCameraPtMouse.y / TILESIZE + j)->getRectTile().top);
 					}
@@ -147,7 +149,9 @@ void PLAYER::render(HDC hdc)
 				}
 				else
 				{
-					if (_pMap->getTile(_ptCameraPtMouse.x / TILESIZE + i, _ptCameraPtMouse.y / TILESIZE + j)->getTerrian() == TILE::E_TERRIAN::GROUND)
+					if ((_pMap->getTile(_ptCameraPtMouse.x / TILESIZE + i, _ptCameraPtMouse.y / TILESIZE + j)->getTerrian() == TILE::E_TERRIAN::GROUND) &&
+						(_pMap->getTile(_ptCameraPtMouse.x / TILESIZE + i, _ptCameraPtMouse.y / TILESIZE + j)->getObject() == TILE::E_OBJECT::E_NONE ||
+							_pMap->getTile(_ptCameraPtMouse.x / TILESIZE + i, _ptCameraPtMouse.y / TILESIZE + j)->getObject() == TILE::E_OBJECT::E_UNIT))
 					{
 						IMAGEMANAGER->render("greenTile", hdc, _pMap->getTile(_ptCameraPtMouse.x / TILESIZE + i, _ptCameraPtMouse.y / TILESIZE + j)->getRectTile().left, _pMap->getTile(_ptCameraPtMouse.x / TILESIZE + i, _ptCameraPtMouse.y / TILESIZE + j)->getRectTile().top);
 					}
@@ -207,6 +211,7 @@ void PLAYER::commandSelectUnit()
 			}
 			_pUnitMgr->moveCommand((float)_ptCameraPtMouse.x, (float)_ptCameraPtMouse.y);
 		}
+
 	}						   
 }
 
@@ -243,6 +248,8 @@ void PLAYER::commandBuild()
 	if (KEYMANAGER->isOnceKeyDown(VK_ESCAPE))
 	{
 		_eBuildType = E_BUILDTYPE::E_NONE;
+		_eBuilds = E_BUILDS::E_MAX;
+
 	}
 
 
@@ -401,6 +408,7 @@ void PLAYER::commandAttack()
 		{
 			//타겟이 잡혔다.
 				//플레이어의 유닛 메니저에서
+			bool bIsTargetIng = false;
 			_pUnitMgr->clearCommandSelectedUnit();
 			for (int i = 0; i < _pUnitMgr->getUnitCount(); i++)
 			{
@@ -416,7 +424,7 @@ void PLAYER::commandAttack()
 					//		_pUnitMgr->getSelectedUnit(j)->attack(_pUnitMgr->getUnit(i));
 					//	}
 					//}
-					
+					bIsTargetIng = true;
 					break;
 				}
 			}
@@ -427,7 +435,7 @@ void PLAYER::commandAttack()
 				{
 					//여기에 유닛 어택을 내린다
 					_pUnitMgr->commandAttack(_pOpponent->getUnitMgr()->getUnit(i));
-
+					bIsTargetIng = true;
 					break;
 				}
 			}
@@ -440,7 +448,7 @@ void PLAYER::commandAttack()
 				{
 					//여기에 유닛 어택을 내린다
 					_pUnitMgr->commandAttack(_pBuildMgr->getBuild(i));
-
+					bIsTargetIng = true;
 					break;
 				}
 			}
@@ -453,14 +461,18 @@ void PLAYER::commandAttack()
 				{
 					//여기에 유닛 어택을 내린다
 					_pUnitMgr->commandAttack(_pBuildMgr->getBuild(i));
-
+					bIsTargetIng = true;
 					break;
 				}
 			}
 			//타겟이 잡히지 않았다.
 
 			//유닛들은 플레이어의 유닛매니저 빌드매니저 상대의 유닛매니저 빌드매니저를 알아야한다.
-
+			if (!bIsTargetIng)
+			{
+				_pUnitMgr->commandMoveAttack((float)_ptCameraPtMouse.x, (float)_ptCameraPtMouse.y);
+			}
+			
 		}
 	}
 
