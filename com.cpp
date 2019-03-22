@@ -20,16 +20,39 @@ void COM::update()
 	//마을회관에서는 일군이 7~ 10마리까지 뽑느다.
 	_fTimer += TIMEMANAGER->getElapsedTime();
 
-	if (_fTimer>= 2.0f)
+	if (_fTimer >= 2.0f)
 	{
-		commandTownBuild();
+		commandTownBuild();		
 	}
 	
 	if (_fTimer >= 10.0f && _fTimer <= 11.0f)
 	{
-		searchFindGround(4, E_BUILDS::E_FARM);
-		commandCreateWorkMan();
+		if (_nFarmCount < 4)
+		{
+			searchFindGround(4, E_BUILDS::E_FARM);
+		}
+		if (_nWorkManCount < 10)
+		{
+			commandCreateWorkMan();
+			_nWorkManCount++;
+		}
 		_fTimer = 0.0f;
+	}
+
+	if (_fTimer <= 5.0f)
+	{
+		if (_nFarmCount >= 1)
+		{
+			if (getGold() <= getTree() * 2)
+			{
+				_pUnitMgr->commandHarvestAi(E_RESOURCE::E_GOLD);
+			}
+			else
+			{
+				_pUnitMgr->commandHarvestAi(E_RESOURCE::E_TREE);
+			}
+
+		}
 	}
 	
 	_pUnitMgr->update();
@@ -150,7 +173,11 @@ void COM::searchFindGround(int nPathIndex, E_BUILDS eBuilds)
 
 	if (_pBuildMgr->bIsGroundCheck(eBuilds, static_cast<float>(nPosX * TILESIZE + 16), static_cast<float>(nPosY * TILESIZE + 16)))
 	{
-		_pUnitMgr->commandBuildAi(static_cast<float>(nPosX * TILESIZE + 16), static_cast<float>(nPosY * TILESIZE + 16), eBuilds, _pUnitMgr->getUnit(UNIT::E_UNIT::E_WORKMAN));
+		if (_pUnitMgr->searchIdleUnit(UNIT::E_UNIT::E_WORKMAN))
+		{
+			_pUnitMgr->commandBuildAi(static_cast<float>(nPosX * TILESIZE + 16), static_cast<float>(nPosY * TILESIZE + 16), eBuilds, _pUnitMgr->searchIdleUnit(UNIT::E_UNIT::E_WORKMAN));
+			_nFarmCount++;
+		}
 	}
 
 }

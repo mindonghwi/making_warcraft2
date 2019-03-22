@@ -10,6 +10,8 @@ private:
 	float	_fTimer;
 
 	vector<vector<int>>		_vvMapNode;
+	int		_nFarmCount;
+	int		_nWorkManCount;
 public:
 	COM();
 	~COM();

@@ -988,6 +988,8 @@ UNIT * UNITMGR::getUnit(UNIT::E_UNIT eUnit)
 
 void UNITMGR::commandBuildAi(float fPosX, float fPosY, E_BUILDS eBuilds, UNIT* pUnit)
 {
+	
+
 	COMMAND*  pCommand = _mCommandPool.find(COMMAND::E_COMMAND::E_MOVE)->second.front();
 	_mCommandPool.find(COMMAND::E_COMMAND::E_MOVE)->second.pop();
 	pCommand->init(COMMAND::E_COMMAND::E_MOVE, pUnit);
@@ -999,6 +1001,84 @@ void UNITMGR::commandBuildAi(float fPosX, float fPosY, E_BUILDS eBuilds, UNIT* p
 	pCommand->init(COMMAND::E_COMMAND::E_BUILD, pUnit);
 	pCommand->commandUnit(fPosX, fPosY, eBuilds);
 	pUnit->addCommand(pCommand);
+}
+
+UNIT * UNITMGR::searchIdleUnit(UNIT::E_UNIT eUnit)
+{
+	list<UNIT*>::iterator iter = _listUnit.begin();
+
+	while (iter != _listUnit.end())
+	{
+		if ((*iter)->getUnit() == eUnit && (*iter)->getBehavier() == UNIT::E_BEHAVIERNUM::E_NONE)
+		{
+			if (eUnit == UNIT::E_UNIT::E_WORKMAN )
+			{
+				if (!(*iter)->getIsBannedSelect())
+				{
+					return *iter;
+				}
+			}
+			else
+			{
+				return *iter;
+			}
+		}
+
+		iter++;
+	}
+
+	return nullptr;
+}
+
+void UNITMGR::commandAttackAi(float fPosX, float fPosY)
+{
+	list<UNIT*>::iterator iter = _listUnit.begin();
+
+	while (iter != _listUnit.end())
+	{
+		if ((*iter)->getUnit() != UNIT::E_UNIT::E_WORKMAN)
+		{
+			(*iter)->getMyUnitMgr()->commandMoveAttack(fPosX, fPosY);
+		}
+
+		iter++;
+	}
+}
+
+void UNITMGR::commandHarvestAi(E_RESOURCE eResource)
+{
+	UNIT* pUnit = searchIdleUnit(UNIT::E_UNIT::E_WORKMAN);
+	
+	if (pUnit && pUnit->getCommandQueEmpty())
+	{
+		RESOURCES* pResource = nullptr;
+		if (eResource == E_RESOURCE::E_GOLD)
+		{
+			pResource = _pResourceMgr->getfindNearGoldMine(pUnit->getPosX(), pUnit->getPosY());
+		}
+		else if (eResource == E_RESOURCE::E_TREE)
+		{
+			pResource = _pResourceMgr->getfindNearTree(pUnit->getPosX(), pUnit->getPosY());
+		}
+
+		if (pResource == nullptr)
+		{
+			return;
+		}
+
+		COMMAND*  pCommand = _mCommandPool.find(COMMAND::E_COMMAND::E_MOVE)->second.front();
+		_mCommandPool.find(COMMAND::E_COMMAND::E_MOVE)->second.pop();
+		pCommand->init(COMMAND::E_COMMAND::E_MOVE, pUnit);
+		pCommand->commandUnit(pResource->getPosX(), pResource->getPosY());
+		pUnit->addCommand(pCommand);
+
+		pCommand = _mCommandPool.find(COMMAND::E_COMMAND::E_HARVEST)->second.front();
+		_mCommandPool.find(COMMAND::E_COMMAND::E_HARVEST)->second.pop();
+		pCommand->init(COMMAND::E_COMMAND::E_HARVEST, pUnit);
+		pCommand->commandUnit(pResource);
+		pUnit->addCommand(pCommand);
+		pUnit->setTarget(pResource);
+	}
 }
 
 

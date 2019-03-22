@@ -85,6 +85,7 @@ void BEHAVIER_HARVEST_WORKMAN::end(UNIT * pUnit)
 		pUnit->getMyUnitMgr()->commandMoveSingle(pUnit->getMyBuildMgr()->getBuild(nIndex)->getPosX(), pUnit->getMyBuildMgr()->getBuild(nIndex)->getPosY(), pUnit);
 	}
 
+
 	_fTimer = 0.0f;
 	_nCount = 0;
 }

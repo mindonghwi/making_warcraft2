@@ -57,7 +57,17 @@ void CAMERA::update()
 	}
 
 
-	
+	if (KEYMANAGER->isKeyDown(VK_LBUTTON))
+	{
+		if (PtInRect(&_rcMiniMap,_ptMouse))
+		{
+			int nOffsetX = _ptMouse.x - 0;
+			int nOffsetY = _ptMouse.y - (WINSIZEY - 256);
+
+			setting(nOffsetX * _nMapWidth / 256, nOffsetY * _nMapHeight / 256);
+			outOfRange();
+		}
+	}
 
 
 	_rcCameraLimit = RectMake( _left,_top, _width, _height);
@@ -241,6 +251,7 @@ void CAMERA::drawMiniMap()
 {
 	SetStretchBltMode(_pMiniMap->getMemDC(), HALFTONE);
 	StretchBlt(_pMiniMap->getMemDC(), 0, 0, 256, 256, _pBackGroundBuffer->getMemDC(), 0, 0, _nMapWidth, _nMapHeight, SRCCOPY);
+	_rcMiniMap = RectMake(0, WINSIZEY - 256, 256, 256);
 
 }
 

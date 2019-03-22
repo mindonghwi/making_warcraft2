@@ -148,4 +148,8 @@ public:
 	//com AI
 	UNIT* getUnit(UNIT::E_UNIT eUnit);
 	void	commandBuildAi(float fPosX, float fPosY, E_BUILDS eBuilds,UNIT* pUnit);
+	UNIT*	searchIdleUnit(UNIT::E_UNIT eUnit);
+	void	commandAttackAi(float fPosX, float fPosY);
+
+	void	commandHarvestAi(E_RESOURCE eResource);
 };

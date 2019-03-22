@@ -76,10 +76,10 @@ void PLAYER::update()
 	commandBuild();
 	commandHarvest();
 	commandHold();
+
+	
+
 	_pUnitMgr->update();
-
-
-
 	_pBuildMgr->update();
 }
 
@@ -360,9 +360,6 @@ void PLAYER::commandBuild()
 				return;
 			}
 
-			_arResource[static_cast<int>(E_RESOURCE::E_GOLD)] -= _pBuildMgr->getConsumptionResource(_pUnitMgr->getSelectedUnit(0)->getBuildType(), E_RESOURCE::E_GOLD);
-			_arResource[static_cast<int>(E_RESOURCE::E_OIL)] -= _pBuildMgr->getConsumptionResource( _pUnitMgr->getSelectedUnit(0)->getBuildType(), E_RESOURCE::E_OIL);
-			_arResource[static_cast<int>(E_RESOURCE::E_TREE)] -= _pBuildMgr->getConsumptionResource(_pUnitMgr->getSelectedUnit(0)->getBuildType(), E_RESOURCE::E_TREE);
 			_pUnitMgr->clearCommandSelectedUnit();
 			_pUnitMgr->buildCommand((float)_ptCameraPtMouse.x, (float)_ptCameraPtMouse.y, _eBuilds);
 			_eBuilds = E_BUILDS::E_MAX;

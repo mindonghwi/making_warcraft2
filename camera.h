@@ -40,6 +40,7 @@ private:
 
 	image*	_pMiniMap;
 
+	RECT	_rcMiniMap;
 public:
 	CAMERA();
 	~CAMERA();

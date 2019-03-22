@@ -396,4 +396,5 @@ public:
 
 public:
 
+	inline	bool	getCommandQueEmpty() { return _queWaitCommand.empty(); }
 };

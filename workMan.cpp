@@ -242,6 +242,17 @@ void WORKMAN::commandBuild()
 
 void WORKMAN::build(float fPosX, float fPosY, E_BUILDS eBuilds)
 {
+	int nDis = 32 * 32;
+	if (nDis <= Mins::getDoubleDis(getPosX(),getPosY(),fPosX,fPosY))
+	{
+		return;
+	}
+
+	_pPlayer->subGold(_pBuildMgr->getConsumptionResource(eBuilds, E_RESOURCE::E_GOLD));
+	_pPlayer->subTree(_pBuildMgr->getConsumptionResource(eBuilds, E_RESOURCE::E_TREE));
+	_pPlayer->subOil(_pBuildMgr->getConsumptionResource(eBuilds, E_RESOURCE::E_OIL));
+
+
 	_pUnitMgr->removeSelected(this);
 
 	_pBuildMgr->buildBuilding(eBuilds, fPosX, fPosY);

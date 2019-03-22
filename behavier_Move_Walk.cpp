@@ -88,7 +88,7 @@ void BEHAVIER_MOVE_WALK::end(UNIT * pUnit)
 	{
 		if (pUnit != pUnit->getMyUnitMgr()->getUnit(i))
 		{
-			if (pUnit->getMyUnitMgr()->getUnit(i)->getBehavier() != UNIT::E_BEHAVIERNUM::E_MOVE)
+			if (pUnit->getMyUnitMgr()->getUnit(i)->getBehavier() != UNIT::E_BEHAVIERNUM::E_MOVE && pUnit->getMyUnitMgr()->getUnit(i)->getBehavier() != UNIT::E_BEHAVIERNUM::E_HARVEST)
 			{
 				RECT rc;
 				if (IntersectRect(&rc, pUnit->getMyUnitMgr()->getUnit(i)->getCollisionRect(), &rcSmall))
