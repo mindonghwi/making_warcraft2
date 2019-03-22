@@ -82,4 +82,8 @@ public:
 
 	bool isCreateUnit(int nUnit);
 	void decreaseResource(int nUnit);
+
+
+	void	commandCreateUnit(int nUnitMask);
+
 };

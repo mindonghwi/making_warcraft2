@@ -109,10 +109,11 @@ void BUILD::update()
 					break;
 				}
 			}
-
-			createUnit();
+			if (_fTimer >= 5.0f && _bIsProduce)
+			{
+				createUnit();
+			}
 		}
-
 
 		if (getBuildsTpye() == E_BUILDS::E_OIL_REFINERY)
 		{
@@ -539,6 +540,22 @@ void BUILD::decreaseResource(int nUnit)
 	_pPlayer->subGold(_pPlayer->getUnitMgr()->getUnitResource(static_cast<UNIT::E_UNIT>(nUnit), E_RESOURCE::E_GOLD));
 	_pPlayer->subTree(_pPlayer->getUnitMgr()->getUnitResource(static_cast<UNIT::E_UNIT>(nUnit), E_RESOURCE::E_TREE));
 	_pPlayer->subOil(_pPlayer->getUnitMgr()->getUnitResource(static_cast<UNIT::E_UNIT>(nUnit), E_RESOURCE::E_OIL));
+}
+
+void BUILD::commandCreateUnit(int nUnitMask)
+{
+	int nData = (int)nUnitMask / 2;
+	if (_nUnitMask & nUnitMask)
+	{
+		if (_pPlayer->getPopulation() + _pPlayer->getUnitMgr()->getUnitPopulation(static_cast<UNIT::E_UNIT>(nData)) > _pPlayer->getMaxPopulation()) return;
+
+		if (!isCreateUnit(nData)) return;
+		decreaseResource(nData);
+
+		_bIsProduce = true;
+		_fTimer = 0.0f;
+		_eUnitType = static_cast<BUILDMGR::E_UNITMASK>(nUnitMask);
+	}
 }
 
 
