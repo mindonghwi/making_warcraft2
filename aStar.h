@@ -41,8 +41,8 @@ private:
 	list<TILENODE*>				_listMaximumPath;	//마지막 경로들이 담길 리스트
 	vector<vector<TILENODE*>>	_vvTile;			//찾아볼 타일 배열
 	
-	//						  상		  하			좌		우		좌상      우상     좌하    우하
-	int	_arInterval[8][2]{ { 0,-1 },{ 0,1 },{ -1,0 },{ 1,0 },{ -1,-1 },{ 1,-1 },{ -1,1 },{ 1,1 } };
+	//						  좌		  우			상		히		좌상      우상     좌하    우하
+	int	_arInterval[8][2]{ { -1,0 },{ 1,0 },{ 0,-1 },{ 0,1 },{ -1,-1 },{ 1,-1 },{ -1,1 },{ 1,1 } };
 	int	_arHuristic[8]{		  10,	  10,	   10,		10,		14,		  14,		14,		14 };
 
 	int				_nTileSizeX;

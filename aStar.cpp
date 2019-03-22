@@ -483,7 +483,7 @@ void ASTAR::pathFinder()
 
 
 		if (_eMoveHeight == MOVEHEIGHT::WATER && _pMap->getTile(nIntervalPosX, nIntervalPosY)->getTerrian() != TILE::E_TERRIAN::WATER) continue;
-		if (_eMoveHeight == MOVEHEIGHT::GROUND && _pMap->getTile(nIntervalPosX, nIntervalPosY)->getObject() != TILE::E_OBJECT::E_NONE)continue;
+		if (_eMoveHeight == MOVEHEIGHT::GROUND && _pMap->getTile(nIntervalPosX, nIntervalPosY)->getObject() != TILE::E_OBJECT::E_NONE && _pMap->getTile(nIntervalPosX, nIntervalPosY)->getObject() != TILE::E_OBJECT::E_UNIT)continue;
 
 		//유닛
 		//bool bIsObject = false;
@@ -643,7 +643,6 @@ void ASTAR::pathFinder()
 			}
 			iter++;
 		}
-
 
 		//가장 가까운 노드에서 길을 만든다
 		while (pNode != nullptr) {
