@@ -86,6 +86,7 @@ public:
 	void returnPool(COMMAND* pCommand);
 
 	void commandAttack(OBJECT* pObject);
+	void commandMoveAttack(float fPosX, float fPosY);
 	void commandReAttack(UNIT* pUnit,OBJECT* pObject);
 	void commandAatackNonMove(UNIT* pUnit,OBJECT* pObject);
 	void commandAttackHold(UNIT* pUnit, OBJECT* pObject);

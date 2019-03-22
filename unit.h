@@ -179,6 +179,7 @@ protected:
 	PLAYER*		_pOpponent;
 
 	bool		_bIsHold;
+	bool		_bIsMoveAttack;
 public:
 	UNIT();
 	virtual ~UNIT();
@@ -390,7 +391,8 @@ public:
 	inline	void	setIsHold(bool bIsHold) { _bIsHold = bIsHold; }
 
 
-
+	inline	void	setMoveAttack(bool bIsMoveAttack) { _bIsMoveAttack = bIsMoveAttack; }
+	inline	bool	getMoveAttack() { return _bIsMoveAttack; }
 
 public:
 

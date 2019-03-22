@@ -13,6 +13,7 @@ STATE_ATTACK::~STATE_ATTACK()
 void STATE_ATTACK::start()
 {
 	_pUnit->setFrameX(_pUnit->getStartIndex(UNIT::E_STATE::E_ATTACK));
+
 	_fTimer = 0.0f;
 	if (_pUnit->getTarget() == nullptr)
 	{

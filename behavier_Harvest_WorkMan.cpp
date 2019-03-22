@@ -18,7 +18,6 @@ void BEHAVIER_HARVEST_WORKMAN::update(UNIT * pUnit)
 {
 	//자원 채취중 자원 들양이 다차면 엔드
 	_fTimer += TIMEMANAGER->getElapsedTime();
-
 	if (pUnit->IsNearResources())
 	{
 		pUnit->getMyUnitMgr()->commandHarvestSingle(nullptr,pUnit);

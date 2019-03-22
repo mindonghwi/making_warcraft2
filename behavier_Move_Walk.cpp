@@ -2,7 +2,7 @@
 #include "behavier_Move_Walk.h"
 #include "unit.h"
 #include "unitMGr.h"
-
+#include "player.h"
 BEHAVIER_MOVE_WALK::BEHAVIER_MOVE_WALK():
 	_fTimer(0.0f)
 {
@@ -47,6 +47,32 @@ void BEHAVIER_MOVE_WALK::update(UNIT * pUnit)
 		}
 	}
 
+	if (pUnit->getMoveAttack())
+	{
+		for (int i = 0; i < pUnit->getOpponent()->getUnitMgr()->getUnitCount(); i++)
+		{
+			float fDoubleSearchRange = pUnit->getSearchRange() * pUnit->getSearchRange();
+			if (fDoubleSearchRange >= Mins::getDoubleDis(pUnit->getPosX(), pUnit->getPosY(), pUnit->getOpponent()->getUnitMgr()->getUnit(i)->getPosX(), pUnit->getOpponent()->getUnitMgr()->getUnit(i)->getPosY()))
+			{
+				pUnit->clearCommand();
+				pUnit->getMyUnitMgr()->commandAttack(pUnit->getOpponent()->getUnitMgr()->getUnit(i));
+				pUnit->setMoveAttack(false);
+				return;
+			}
+		}
+
+		for (int i = 0; i < pUnit->getOpponent()->getBuildMgr()->getBuildCount(); i++)
+		{
+			float fDoubleSearchRange = pUnit->getSearchRange() * pUnit->getSearchRange();
+			if (fDoubleSearchRange >= Mins::getDoubleDis(pUnit->getPosX(), pUnit->getPosY(), pUnit->getOpponent()->getBuildMgr()->getBuild(i)->getPosX(), pUnit->getOpponent()->getBuildMgr()->getBuild(i)->getPosY()))
+			{
+				pUnit->clearCommand();
+				pUnit->getMyUnitMgr()->commandAttack(pUnit->getOpponent()->getBuildMgr()->getBuild(i));
+				pUnit->setMoveAttack(false);
+				return;
+			}
+		}
+	}
 
 }
 

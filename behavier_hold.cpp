@@ -14,6 +14,7 @@ BEHAVIER_HOLD::~BEHAVIER_HOLD()
 void BEHAVIER_HOLD::update(UNIT * pUnit)
 {
 	bool bIsHold = false;
+	pUnit->setMoveAttack(false);
 	for (int i = 0; i < pUnit->getOpponent()->getUnitMgr()->getUnitCount(); i++)
 	{
 		float fDoubleSearchRange = pUnit->getAttackRange() * pUnit->getAttackRange();

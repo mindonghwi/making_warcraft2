@@ -568,8 +568,11 @@ void UNITMGR::dragSelect(RECT rcDragRect)
 		if (IntersectRect(&_rcTmp, pUnit->getCollisionRect(), &rcDragRect))
 		{
 			_pBuildMgr->releaseSelected();
-			_vSeletedUnit.push_back(&(*iterUnitList));
-			nCount++;
+			if (!(*iterUnitList)->getIsBannedSelect())
+			{
+				_vSeletedUnit.push_back(&(*iterUnitList));
+				nCount++;
+			}
 		}
 
 		pUnit = nullptr;
@@ -743,6 +746,20 @@ void UNITMGR::commandAttack(OBJECT * pObject)
 		pCommand->commandUnit(pObject);
 		(*(_vSeletedUnit[i]))->addCommand(pCommand);
 	}
+}
+
+void UNITMGR::commandMoveAttack(float fPosX, float fPosY)
+{
+	for (int i = 0; i < static_cast<int>(_vSeletedUnit.size()); i++)
+	{
+		COMMAND*  pCommand = _mCommandPool.find(COMMAND::E_COMMAND::E_MOVE)->second.front();
+		_mCommandPool.find(COMMAND::E_COMMAND::E_MOVE)->second.pop();
+		pCommand->init(COMMAND::E_COMMAND::E_MOVE, *(_vSeletedUnit[i]));
+		pCommand->commandUnit(fPosX, fPosY);
+		(*(_vSeletedUnit[i]))->addCommand(pCommand);
+		(*(_vSeletedUnit[i]))->setMoveAttack(true);
+	}
+
 }
 
 void UNITMGR::commandReAttack(UNIT* pUnit, OBJECT * pObject)
