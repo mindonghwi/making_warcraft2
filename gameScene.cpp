@@ -65,13 +65,15 @@ HRESULT SCENEGAME::init()
 
 
 	//player init
-	_pPlayer->init(static_cast<float>(TILESIZE * 5 + 16), static_cast<float>(TILESIZE * 12 + 16));
+	_pPlayer->init(static_cast<float>(TILESIZE * 90 + 16), static_cast<float>(TILESIZE * 100+ 16));
 	_pPlayer->setGold(5000);
 	_pPlayer->setOil(5000);
 	_pPlayer->setTree(2000);
 
 	//_pCom init
 	_pCom->init(static_cast<float>(TILESIZE * 108 + 16), static_cast<float>(TILESIZE * 113 + 16));
+	//_pCom->init(static_cast<float>(TILESIZE * 12+ 16), static_cast<float>(TILESIZE * 30 + 16));
+
 	_pCom->setGold(5000);
 	_pCom->setOil(5000);
 	_pCom->setTree(2000);
@@ -122,8 +124,15 @@ void SCENEGAME::update()
 	_pResourceMgr->update();
 	_pPlayer->update();
 	
+	if (_pPlayer->death()) {
+		return;
+	}
+
 	_pCom->update();
 
+	if (_pCom->death()) {
+		return;
+	}
 	_pBulletMgr->update();
 	_pUiMgr->update();
 
@@ -133,7 +142,12 @@ void SCENEGAME::update()
 void SCENEGAME::render()
 {
 	_pCamera->renderinit();
-	//_pMap->render(_pCamera->getMemDC());
+
+	if (KEYMANAGER->isKeyDown(VK_F12))
+	{
+		_pMap->render(_pCamera->getMemDC());
+
+	}
 	
 
 	_pCamera->render(getMemDC());

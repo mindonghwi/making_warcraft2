@@ -225,8 +225,8 @@ void UNITMGR::update()
 		}
 		else
 		{
-			pUnit->update();
 			pUnit->updateBehavier();
+			pUnit->update();
 			pUnit->updateRect();
 			iterUnitList++;
 		}
@@ -377,6 +377,15 @@ void UNITMGR::allocateUnitResource()
 	_arUnitResource[static_cast<int>(UNIT::E_UNIT::E_SUBMARIN)][static_cast<int>(E_RESOURCE::E_GOLD)] = 800;
 	_arUnitResource[static_cast<int>(UNIT::E_UNIT::E_SUBMARIN)][static_cast<int>(E_RESOURCE::E_TREE)] = 150;
 	_arUnitResource[static_cast<int>(UNIT::E_UNIT::E_SUBMARIN)][static_cast<int>(E_RESOURCE::E_OIL)] = 800;
+
+
+	//for (int i = 0; i < static_cast<int>(UNIT::E_UNIT::E_MAX); i++)
+	//{
+	//	for (int j = 0; j < static_cast<int>(E_RESOURCE::E_MAX); j++)
+	//	{
+	//		_arUnitResource[i][j] = 1;
+	//	}
+	//}
 }
 
 void UNITMGR::allocateUnitStatus()
@@ -941,6 +950,26 @@ void UNITMGR::removeSelected(UNIT * pUnit)
 
 }
 
+void UNITMGR::clearMoveAttack()
+{
+	for (int i = 0; i < getUnitSelectedCount(); i++)
+	{
+		(*(_vSeletedUnit[i]))->setMoveAttack(false);
+		
+	}
+
+}
+
+UNIT * UNITMGR::getSelectedUnitFirst()
+{
+	if (getUnitSelectedCount() == 0)
+	{
+		return nullptr;
+	}
+
+	return *(_vSeletedUnit[0]);
+}
+
 
 UNIT * UNITMGR::getUnit(int nIndex)
 {
@@ -988,7 +1017,12 @@ UNIT * UNITMGR::getUnit(UNIT::E_UNIT eUnit)
 
 void UNITMGR::commandBuildAi(float fPosX, float fPosY, E_BUILDS eBuilds, UNIT* pUnit)
 {
-	
+	if (pUnit == nullptr)
+	{
+		return;
+	}
+
+	pUnit->clearCommand();
 
 	COMMAND*  pCommand = _mCommandPool.find(COMMAND::E_COMMAND::E_MOVE)->second.front();
 	_mCommandPool.find(COMMAND::E_COMMAND::E_MOVE)->second.pop();
@@ -1030,6 +1064,32 @@ UNIT * UNITMGR::searchIdleUnit(UNIT::E_UNIT eUnit)
 	return nullptr;
 }
 
+UNIT * UNITMGR::searchRestUnit(UNIT::E_UNIT eUnit)
+{
+	list<UNIT*>::iterator iter = _listUnit.begin();
+
+	while (iter != _listUnit.end())
+	{
+		if ((*iter)->getUnit() == eUnit && (*iter)->getBehavier() == UNIT::E_BEHAVIERNUM::E_NONE)
+		{
+			if (eUnit == UNIT::E_UNIT::E_WORKMAN)
+			{
+				if (!(*iter)->getIsBannedSelect() && (*iter)->getCommandQueEmpty())
+				{
+					return *iter;
+				}
+			}
+			else
+			{
+				return *iter;
+			}
+		}
+
+		iter++;
+	}
+	return nullptr;
+}
+
 void UNITMGR::commandAttackAi(float fPosX, float fPosY)
 {
 	list<UNIT*>::iterator iter = _listUnit.begin();
@@ -1038,16 +1098,26 @@ void UNITMGR::commandAttackAi(float fPosX, float fPosY)
 	{
 		if ((*iter)->getUnit() != UNIT::E_UNIT::E_WORKMAN)
 		{
-			(*iter)->getMyUnitMgr()->commandMoveAttack(fPosX, fPosY);
+			(*iter)->getMyUnitMgr()->commandMoveAttackAi(fPosX, fPosY, (*iter));
 		}
 
 		iter++;
 	}
 }
 
+void UNITMGR::commandMoveAttackAi(float fPosX, float fPosY, UNIT* pUnit)
+{
+	COMMAND*  pCommand = _mCommandPool.find(COMMAND::E_COMMAND::E_MOVE)->second.front();
+	_mCommandPool.find(COMMAND::E_COMMAND::E_MOVE)->second.pop();
+	pCommand->init(COMMAND::E_COMMAND::E_MOVE, pUnit);
+	pCommand->commandUnit(fPosX, fPosY);
+	pUnit->addCommand(pCommand);
+	pUnit->setMoveAttack(true);
+}
+
 void UNITMGR::commandHarvestAi(E_RESOURCE eResource)
 {
-	UNIT* pUnit = searchIdleUnit(UNIT::E_UNIT::E_WORKMAN);
+	UNIT* pUnit = searchRestUnit(UNIT::E_UNIT::E_WORKMAN);
 	
 	if (pUnit && pUnit->getCommandQueEmpty())
 	{

@@ -544,7 +544,10 @@ void BUILD::decreaseResource(int nUnit)
 
 void BUILD::commandCreateUnit(int nUnitMask)
 {
-	int nData = (int)nUnitMask / 2;
+
+
+	int nData = (int)log2((double)nUnitMask);
+
 	if (_nUnitMask & nUnitMask)
 	{
 		if (_pPlayer->getPopulation() + _pPlayer->getUnitMgr()->getUnitPopulation(static_cast<UNIT::E_UNIT>(nData)) > _pPlayer->getMaxPopulation()) return;

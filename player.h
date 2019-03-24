@@ -66,6 +66,7 @@ public:
 
 
 	bool createUnit(UNIT::E_UNIT eUnit);
+	virtual bool death();
 
 protected:
 	virtual void selectedUnit();
@@ -78,6 +79,7 @@ protected:
 	virtual void initDrag();
 	virtual void dragSelect();
 	virtual void readjustDragRect();
+
 public:
 	//linker
 	inline	void	setLinkCamera(CAMERA* pCamera) { _pCamera = pCamera; }
@@ -119,5 +121,7 @@ public:
 	inline	void	subOil(int nOil) { _arResource[static_cast<int>(E_RESOURCE::E_OIL)] -= nOil; }
 	inline	void	subPopulation(int nPopulation) { _nPopulation -= nPopulation; }
 	inline	void	subMaxPopulation(int nMaxPopulation) { _nMaxPopulation -= nMaxPopulation; }
+
+
 
 };

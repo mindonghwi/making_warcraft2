@@ -294,7 +294,15 @@ void ASTAR::startFinder(float fStartPosX, float fStartPosY, float fEndPosX, floa
 		{
 			bIsOnObject = true;
 		}
-	
+		if (_eMoveHeight == MOVEHEIGHT::GROUND && _pMap->getTile(_nEndIndexX, _nEndIndexY)->getTerrian() == TILE::E_TERRIAN::DIRT_WATER)
+		{
+			bIsOnObject = true;
+		}
+		if (_eMoveHeight == MOVEHEIGHT::GROUND && _pMap->getTile(_nEndIndexX, _nEndIndexY)->getTerrian() == TILE::E_TERRIAN::WATER)
+		{
+			bIsOnObject = true;
+		}
+
 		if (bIsOnObject)
 		{
 			_nEndIndexX += nIntervalsX;

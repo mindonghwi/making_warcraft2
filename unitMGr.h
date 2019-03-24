@@ -106,6 +106,10 @@ public:
 	void commandHold();
 
 	void removeSelected(UNIT* pUnit);
+	void clearMoveAttack();
+
+	UNIT*	getSelectedUnitFirst();
+
 public:
 	//linker
 	inline	void	setLinkCamera(CAMERA* pCamera) { _pCamera = pCamera; }
@@ -149,7 +153,10 @@ public:
 	UNIT* getUnit(UNIT::E_UNIT eUnit);
 	void	commandBuildAi(float fPosX, float fPosY, E_BUILDS eBuilds,UNIT* pUnit);
 	UNIT*	searchIdleUnit(UNIT::E_UNIT eUnit);
+	UNIT*	searchRestUnit(UNIT::E_UNIT eUnit);
+
 	void	commandAttackAi(float fPosX, float fPosY);
+	void	commandMoveAttackAi(float fPosX, float fPosY,UNIT* pUnit);
 
 	void	commandHarvestAi(E_RESOURCE eResource);
 };

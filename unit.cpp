@@ -64,19 +64,17 @@ void UNIT::release()
 		_pUnitMgr->returnPool(pCommand);
 	}
 	_pCamera = nullptr;
-
 	_pAstar = nullptr;
-
 	_pUnitMgr = nullptr;
-
-
 	_pMap = nullptr;
-
 	_pTarget = nullptr;
-
 	_pResourceMgr = nullptr;
 	_pPlayer = nullptr;
 	_pBuildMgr = nullptr;
+
+	OBJECT::setPosX(0.0f);
+	OBJECT::setPosY(0.0f);
+	OBJECT::setImage(nullptr);
 
 	for (int i = 0; i <static_cast<int>(UNIT::E_STATENUM::E_MAX); i++)
 	{
@@ -120,6 +118,7 @@ void UNIT::commandMove(float fEndPosX, float fEndPosY)
 		_fEndX = fEndPosX;
 		_fEndY = fEndPosY;
 		setMovePoints(fEndPosX,fEndPosY);
+
 		UNIT::getCurrentBehavir()->end(this);
 		if (!UNIT::moveTo()) {
 			return;
@@ -350,7 +349,10 @@ void UNIT::attack(OBJECT * pObject)
 
 void UNIT::targetDirection()
 {
-
+	if (_pTarget == nullptr)
+	{
+		return;
+	}
 	_fDirAngle = getAngle(OBJECT::getPosX(), OBJECT::getPosY(), _pTarget->getPosX(), _pTarget->getPosY());
 
 

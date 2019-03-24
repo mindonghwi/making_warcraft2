@@ -117,7 +117,7 @@ void CAMERA::setting(int nPosX, int nPosY)
 {
 	_posX = static_cast<float>(nPosX);
 	_posY = static_cast<float>(nPosY);
-	//outOfRange();
+	outOfRange();
 	setLeftTop();
 }
 

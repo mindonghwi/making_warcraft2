@@ -329,6 +329,8 @@ void BUILDMGR::allocateBuildResource()
 	}
 
 	_arConsumptionResource[static_cast<int>(E_BUILDS::E_TOWN)][static_cast<int>(E_RESOURCE::E_GOLD)] = 500;
+	_arConsumptionResource[static_cast<int>(E_BUILDS::E_TOWN)][static_cast<int>(E_RESOURCE::E_GOLD)] = 1;
+
 }
 
 void BUILDMGR::allocateBuildSize()
@@ -385,7 +387,7 @@ void BUILDMGR::allocateBuildTime()
 	_arBuildTime[static_cast<int>(E_BUILDS::E_TOWN)]			=1.0f;
 	_arBuildTime[static_cast<int>(E_BUILDS::E_KEEP)]			=1.0f;
 	_arBuildTime[static_cast<int>(E_BUILDS::E_CASTLE)]			=1.0f;
-	//_arBuildTime[static_cast<int>(E_BUILDS::E_FARM)]			=1.0f;
+	_arBuildTime[static_cast<int>(E_BUILDS::E_FARM)]			=1.0f;
 	_arBuildTime[static_cast<int>(E_BUILDS::E_BARRACKS)]		=1.0f;
 	_arBuildTime[static_cast<int>(E_BUILDS::E_LUMBER_MILL)]		=1.0f;
 	_arBuildTime[static_cast<int>(E_BUILDS::E_BLACK_SMITH)]		=1.0f;

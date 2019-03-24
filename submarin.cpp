@@ -97,9 +97,13 @@ void SUBMARIN::allocateState()
 	UNIT::_arState[static_cast<int>(UNIT::E_STATENUM::E_SPECIAL_01)] = new STATE_SPECIAL();
 
 
+
 	for (int i = 0; i < static_cast<int>(UNIT::E_STATENUM::E_MAX); i++)
 	{
-		UNIT::_arState[i]->setUnit(this);
+		if (UNIT::_arState[i])
+		{
+			UNIT::_arState[i]->setUnit(this);
+		}
 	}
 }
 

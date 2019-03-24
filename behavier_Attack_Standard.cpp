@@ -44,6 +44,13 @@ void BEHAVIER_ATTACK::update(UNIT * pUnit)
 			end(pUnit);
 			return;
 		}
+		if (pUnit->getTarget()->getHp() <= 0)
+		{
+			pUnit->setTarget(nullptr);
+			return;
+		}
+
+
 
 		RECT rc;
 		RECT rcTmp = *pUnit->getTarget()->getRect();
@@ -71,7 +78,9 @@ void BEHAVIER_ATTACK::update(UNIT * pUnit)
 					pUnit->getUnit() == UNIT::E_UNIT::E_KNIGHT ||
 					pUnit->getUnit() == UNIT::E_UNIT::E_BOMBER)
 				{
+					
 					pUnit->getTarget()->decreaseHp(pUnit->getAttack());
+					
 				}
 
 				_fTimer = 0.0f;

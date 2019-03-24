@@ -1,10 +1,14 @@
 #include "stdafx.h"
 #include "com.h"
 
-COM::COM()
+COM::COM():
+	_arBuildsCount{},
+	_arUnitCount{},
+	_nPhaseCount(0)
 {
 	_bIsTown = false;
 	_fTimer = 0;
+	_nCount = 0;
 }
 
 COM::~COM()
@@ -20,53 +24,41 @@ void COM::update()
 	//마을회관에서는 일군이 7~ 10마리까지 뽑느다.
 	_fTimer += TIMEMANAGER->getElapsedTime();
 
-	if (_fTimer >= 2.0f)
-	{
-		commandTownBuild();		
-	}
-	
-	if (_fTimer >= 10.0f && _fTimer <= 11.0f)
-	{
-		if (_nFarmCount < 4)
-		{
-			searchFindGround(4, E_BUILDS::E_FARM);
-		}
-		if (_nWorkManCount < 10)
-		{
-			commandCreateWorkMan();
-			_nWorkManCount++;
-		}
-		_fTimer = 0.0f;
-	}
-
-	if (_fTimer <= 5.0f)
-	{
-		if (_nFarmCount >= 1)
-		{
-			if (getGold() <= getTree() * 2)
-			{
-				_pUnitMgr->commandHarvestAi(E_RESOURCE::E_GOLD);
-			}
-			else
-			{
-				_pUnitMgr->commandHarvestAi(E_RESOURCE::E_TREE);
-			}
-
-		}
-	}
-	
+//	phaseOne();
+//	pahseTwo();
+//	phaseThree();
+//	if (_fTimer <= 5.0f)
+//	{
+//		if (_arBuildsCount[static_cast<int>(E_BUILDS::E_FARM)] >= 1)
+//		{
+//			if (_nCount % 4 == 0)
+//			{
+//				_pUnitMgr->commandHarvestAi(E_RESOURCE::E_GOLD);
+//
+//
+//			}
+//			else
+//			{
+//				_pUnitMgr->commandHarvestAi(E_RESOURCE::E_TREE);
+//
+//			}
+//
+//			_nCount++;
+//		}
+//	}
 	_pUnitMgr->update();
 	_pBuildMgr->update();
+
 
 }
 
 void COM::render(HDC hdc)
 {
-	for (int i = 0; i < (int)_vvMapNode.size(); i++)
-	{
-		RECT rc = _pMap->getTile(_vvMapNode[i][0], _vvMapNode[i][1])->getRectTile();
-		Rectangle(hdc, rc);
-	}
+//	for (int i = 0; i < (int)_vvMapNode.size(); i++)
+//	{
+//		RECT rc = _pMap->getTile(_vvMapNode[i][0], _vvMapNode[i][1])->getRectTile();
+//		Rectangle(hdc, rc);
+//	}
 }
 
 void COM::commandTownBuild()
@@ -78,6 +70,10 @@ void COM::commandTownBuild()
 	_pUnitMgr->commandBuildAi(_pUnitMgr->getUnit(UNIT::E_UNIT::E_WORKMAN)->getPosX(), _pUnitMgr->getUnit(UNIT::E_UNIT::E_WORKMAN)->getPosY(), E_BUILDS::E_TOWN, _pUnitMgr->getUnit(UNIT::E_UNIT::E_WORKMAN));
 	
 
+	if (!_pOpponent->getUnitMgr()->getUnit(0))
+	{
+		return;
+	}
 	_pAstar->startFinder(_pUnitMgr->getUnit(UNIT::E_UNIT::E_WORKMAN)->getPosX(), _pUnitMgr->getUnit(UNIT::E_UNIT::E_WORKMAN)->getPosY(),
 		_pOpponent->getUnitMgr()->getUnit(0)->getPosX(), _pOpponent->getUnitMgr()->getUnit(0)->getPosY(), ASTAR::MOVEHEIGHT::GROUND);
 	_pAstar->pathFinder();
@@ -89,7 +85,8 @@ void COM::commandTownBuild()
 		_vvMapNode.push_back(vPos);
 	}
 
-
+	_arBuildsCount[static_cast<int>(E_BUILDS::E_TOWN)]++;
+	_arUnitCount[static_cast<int>(UNIT::E_UNIT::E_WORKMAN)]++;
 	_bIsTown = true;
 }
 
@@ -104,8 +101,24 @@ void COM::commandBarrackBuild(int nIndexX, int nIndexY)
 
 void COM::commandCreateWorkMan()
 {
+	if (_pBuildMgr->getBuild(0, E_BUILDS::E_TOWN) == nullptr)
+	{
+		return;
+	}
 	_pBuildMgr->getBuild(0, E_BUILDS::E_TOWN)->commandCreateUnit(BUILDMGR::E_UNITMASK::E_WORKMAN);
+	_arUnitCount[static_cast<int>(UNIT::E_UNIT::E_WORKMAN)]++;
+}
 
+void COM::commandCreateUnit(BUILDMGR::E_UNITMASK eUnitMask)
+{
+	if (_pBuildMgr->getBuild(0, E_BUILDS::E_BARRACKS) == nullptr)
+	{
+		return;
+	}
+	_pBuildMgr->getBuild(0, E_BUILDS::E_BARRACKS)->commandCreateUnit(eUnitMask);
+	int nDst = (int)log2((double)eUnitMask);
+	
+	_arUnitCount[nDst]++;
 }
 
 void COM::searchFindGround(int nPathIndex, E_BUILDS eBuilds)
@@ -176,11 +189,119 @@ void COM::searchFindGround(int nPathIndex, E_BUILDS eBuilds)
 		if (_pUnitMgr->searchIdleUnit(UNIT::E_UNIT::E_WORKMAN))
 		{
 			_pUnitMgr->commandBuildAi(static_cast<float>(nPosX * TILESIZE + 16), static_cast<float>(nPosY * TILESIZE + 16), eBuilds, _pUnitMgr->searchIdleUnit(UNIT::E_UNIT::E_WORKMAN));
-			_nFarmCount++;
+			
+			_arBuildsCount[static_cast<int>(eBuilds)]++;
+		}
+		else
+		{
+			//놀고있는 애는 없다 그럼 일하고 있는 애를 대려와야한다.
+			_pUnitMgr->commandBuildAi(static_cast<float>(nPosX * TILESIZE + 16), static_cast<float>(nPosY * TILESIZE + 16), eBuilds, _pUnitMgr->getUnit(UNIT::E_UNIT::E_WORKMAN));
+			_arBuildsCount[static_cast<int>(eBuilds)]++;
 		}
 	}
 
 }
 
-//타운은 무조건 금광 주변으로 짓는다.
-//
+void COM::phaseOne()
+{
+	if (_arBuildsCount[static_cast<int>(E_BUILDS::E_FARM)] == 4 && _arBuildsCount[static_cast<int>(E_BUILDS::E_BARRACKS)] == 1
+		&& _arBuildsCount[static_cast<int>(E_BUILDS::E_LUMBER_MILL)] == 1)
+	{
+		_bIsPhaseTwo = true;
+		return;
+	}
+	_bIsPhaseTwo = false;
+
+	if (_fTimer >= 2.0f)
+	{
+		commandTownBuild();
+	}
+
+	if (_fTimer >= 10.0f && _fTimer <= 11.0f)
+	{
+		if (_arBuildsCount[static_cast<int>(E_BUILDS::E_FARM)] < 4)
+		{
+			searchFindGround(4, E_BUILDS::E_FARM);
+		}
+		if (_nWorkManCount < 10)
+		{
+			commandCreateWorkMan();
+			_nWorkManCount++;
+		}
+		_fTimer = 0.0f;
+	}
+
+
+
+	if (_arUnitCount[static_cast<int>(UNIT::E_UNIT::E_WORKMAN)] >= 10 && _arBuildsCount[static_cast<int>(E_BUILDS::E_FARM)] == 4 && _arBuildsCount[static_cast<int>(E_BUILDS::E_BARRACKS)] == 1
+		&& _arBuildsCount[static_cast<int>(E_BUILDS::E_LUMBER_MILL)] == 0)
+	{
+		searchFindGround(10, E_BUILDS::E_LUMBER_MILL);
+	}
+
+	if (_nWorkManCount >= 10 && _arBuildsCount[static_cast<int>(E_BUILDS::E_FARM)] == 4 && _arBuildsCount[static_cast<int>(E_BUILDS::E_BARRACKS)] == 0)
+	{
+		searchFindGround(15, E_BUILDS::E_BARRACKS);
+	}
+
+}
+
+void COM::pahseTwo()
+{
+	if (!_bIsPhaseTwo) return;
+	
+	if (_arUnitCount[static_cast<int>(UNIT::E_UNIT::E_FOOTMAN)] == 4 && _arUnitCount[static_cast<int>(UNIT::E_UNIT::E_ARCHER)] == 3)
+	{
+		_bIsPhaseThree = true;
+		return;
+	}
+	_bIsPhaseThree = false;
+	if (_fTimer >= 10.0f)
+	{
+		if (_arUnitCount[static_cast<int>(UNIT::E_UNIT::E_FOOTMAN)] < 4)
+		{
+			commandCreateUnit(BUILDMGR::E_UNITMASK::E_FOOTMAN);
+		}
+		else
+		{
+			commandCreateUnit(BUILDMGR::E_UNITMASK::E_ARCHER);
+		}
+
+		_fTimer = 0.0f;
+	}
+
+
+	
+}
+
+void COM::phaseThree()
+{
+	if (!_bIsPhaseThree) return;
+
+	commandCreateWorkMan();
+	
+	if (_fTimer >= 20.0f)
+	{
+		if (_pOpponent->getBuildMgr()->getBuildCount() > 0)
+		{
+			_pUnitMgr->commandAttackAi(_pOpponent->getBuildMgr()->getBuild(0)->getPosX(), _pOpponent->getBuildMgr()->getBuild(0)->getPosY());
+		}
+		else if(_pOpponent->getUnitMgr()->getUnitCount() > 0)
+		{
+			_pUnitMgr->commandAttackAi(_pOpponent->getUnitMgr()->getUnit(0)->getPosX(), _pOpponent->getUnitMgr()->getUnit(0)->getPosY());
+		}
+		_fTimer = 0.0f;
+
+		_arUnitCount[static_cast<int>(UNIT::E_UNIT::E_FOOTMAN)] = 0;
+		_arUnitCount[static_cast<int>(UNIT::E_UNIT::E_ARCHER)] = 0;
+		_nPhaseCount++;
+	}
+
+	if (_nPhaseCount > 5)
+	{
+		_bIsPhaseThree = false;
+		_bIsPhaseTwo = true;
+		_nPhaseCount = 0;
+		searchFindGround(15, E_BUILDS::E_BARRACKS);
+	}
+}

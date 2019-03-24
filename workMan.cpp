@@ -90,7 +90,8 @@ void WORKMAN::update()
 
 
 	if (_nHarvestCount >= 1 && (_pCurrentBeHavier == _arBeHavier[static_cast<int>(E_BEHAVIERNUM::E_MOVE)] ||
-		_pCurrentBeHavier == _arBeHavier[static_cast<int>(E_BEHAVIERNUM::E_NONE)]))
+		_pCurrentBeHavier == _arBeHavier[static_cast<int>(E_BEHAVIERNUM::E_NONE)]) &&
+		_queWaitCommand.size() == 0)
 	{
 		RECT rcTmp = *getCollisionRect();
 		rcTmp.left -= 10;
@@ -259,7 +260,6 @@ void WORKMAN::build(float fPosX, float fPosY, E_BUILDS eBuilds)
 	_bIsBannedSelected = true;
 	_fBuildTime = _pBuildMgr->getBuildTime(eBuilds);
 	_fTimer = 0.0f;
-	//_pUnitMgr->removeSelectedUnit(this);
 }
 
 void WORKMAN::harvestResources()

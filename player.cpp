@@ -45,6 +45,18 @@ void PLAYER::init(float fPosX, float fPosY)
 	//_pUnitMgr->createUnit(UNIT::E_UNIT::E_WORKMAN, TILESIZE * 14 + 16, TILESIZE * 10 + 16);
 	//
 	_pUnitMgr->createUnit(UNIT::E_UNIT::E_WORKMAN, fPosX,fPosY);
+	
+	_pUnitMgr->createUnit(UNIT::E_UNIT::E_ARCHER, fPosX+32, fPosY);
+	_pUnitMgr->createUnit(UNIT::E_UNIT::E_ARCHER, fPosX, fPosY + 32);
+	_pUnitMgr->createUnit(UNIT::E_UNIT::E_ARCHER, fPosX + 32, fPosY + 32);
+	_pUnitMgr->createUnit(UNIT::E_UNIT::E_ARCHER, fPosX + 32 + 32, fPosY);
+	_pUnitMgr->createUnit(UNIT::E_UNIT::E_ARCHER, fPosX, fPosY + 32 + 32);
+	_pUnitMgr->createUnit(UNIT::E_UNIT::E_FOOTMAN, fPosX + 32 + 32, fPosY + 32 + 32);
+	_pUnitMgr->createUnit(UNIT::E_UNIT::E_FOOTMAN, fPosX + 32 + 32, fPosY + 32 + 32);
+	_pUnitMgr->createUnit(UNIT::E_UNIT::E_FOOTMAN, fPosX + 32 + 32, fPosY + 32 + 32);
+
+	//_pBuildMgr->buildBuilding(E_BUILDS::E_BARRACKS, fPosX + 32 + 32 + 32 + 32, fPosY);
+
 
 	_ptCameraPtMouse.x = _ptMouse.x + _pCamera->getLeft();
 	_ptCameraPtMouse.y = _ptMouse.y + _pCamera->getTop();
@@ -58,11 +70,10 @@ void PLAYER::init(float fPosX, float fPosY)
 
 void PLAYER::update()
 {
+
 	//마우스 위치 재설정
 	_ptCameraPtMouse.x = _ptMouse.x + _pCamera->getLeft();
 	_ptCameraPtMouse.y = _ptMouse.y + _pCamera->getTop();
-
-
 
 
 	_pUnitMgr->selectedUnit();
@@ -81,6 +92,13 @@ void PLAYER::update()
 
 	_pUnitMgr->update();
 	_pBuildMgr->update();
+
+
+	if (KEYMANAGER->isKeyDown(VK_SPACE))
+	{
+		_pCamera->setting(_pUnitMgr->getSelectedUnitFirst()->getPosX(), _pUnitMgr->getSelectedUnitFirst()->getPosY());
+	}
+
 }
 
 void PLAYER::release()
@@ -208,7 +226,9 @@ void PLAYER::commandSelectUnit()
 			if (!KEYMANAGER->isKeyDown(VK_LCONTROL))
 			{
 				_pUnitMgr->clearCommandSelectedUnit();
+				_pUnitMgr->clearMoveAttack();
 			}
+			
 			_pUnitMgr->moveCommand((float)_ptCameraPtMouse.x, (float)_ptCameraPtMouse.y);
 		}
 
@@ -457,7 +477,7 @@ void PLAYER::commandAttack()
 				if (PtInRect(_pOpponent->getBuildMgr()->getBuild(i)->getRect(), _ptCameraPtMouse))
 				{
 					//여기에 유닛 어택을 내린다
-					_pUnitMgr->commandAttack(_pBuildMgr->getBuild(i));
+					_pUnitMgr->commandAttack(_pOpponent->getBuildMgr()->getBuild(i));
 					bIsTargetIng = true;
 					break;
 				}
@@ -520,6 +540,8 @@ void PLAYER::initDrag()
 
 void PLAYER::dragSelect()
 {
+	
+
 
 	if (KEYMANAGER->isStayKeyDown(VK_LBUTTON))
 	{
@@ -535,7 +557,17 @@ void PLAYER::dragSelect()
 
 	if (KEYMANAGER->isOnceKeyUp(VK_LBUTTON))
 	{
+		
+
 		readjustDragRect();
+
+		if (_ptMouse.y >= WINSIZEY - 256 &&
+			_ptMouse.x <= 256)
+		{
+			initDrag();
+			return;
+		}
+
 		_pUnitMgr->dragSelect(_rcDragArea);
 
 
@@ -579,5 +611,15 @@ void PLAYER::readjustDragRect()
 	_rcDragArea.right++;
 	_rcDragArea.bottom++;
 
+}
+
+bool PLAYER::death()
+{
+	if (_pUnitMgr->getUnitCount() == 0 && _pBuildMgr->getBuildCount() == 0)
+	{
+		SCENEMANAGER->changeScene("coverScene");
+		return true;
+	}
+	return false;
 }
 
