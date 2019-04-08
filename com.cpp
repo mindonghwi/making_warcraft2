@@ -22,33 +22,35 @@ void COM::update()
 	//일군중 한명에게 농장을 지으라고 한다.
 	//남은 일군한테 금채취를 시킨다
 	//마을회관에서는 일군이 7~ 10마리까지 뽑느다.
-	_fTimer += TIMEMANAGER->getElapsedTime();
-
-//	phaseOne();
-//	pahseTwo();
-//	phaseThree();
-//	if (_fTimer <= 5.0f)
-//	{
-//		if (_arBuildsCount[static_cast<int>(E_BUILDS::E_FARM)] >= 1)
-//		{
-//			if (_nCount % 4 == 0)
-//			{
-//				_pUnitMgr->commandHarvestAi(E_RESOURCE::E_GOLD);
-//
-//
-//			}
-//			else
-//			{
-//				_pUnitMgr->commandHarvestAi(E_RESOURCE::E_TREE);
-//
-//			}
-//
-//			_nCount++;
-//		}
-//	}
-	_pUnitMgr->update();
-	_pBuildMgr->update();
-
+	//_fTimer += TIMEMANAGER->getElapsedTime();
+	//
+	//phaseOne();
+	//pahseTwo();
+	//phaseThree();
+	//
+	//if (_fTimer <= 5.0f)
+	//{
+	//	if (_arBuildsCount[static_cast<int>(E_BUILDS::E_FARM)] >= 1)
+	//	{
+	//		if (_nCount % 4 == 0)
+	//		{
+	//			_pUnitMgr->commandHarvestAi(E_RESOURCE::E_GOLD);
+	//
+	//
+	//		}
+	//		else
+	//		{
+	//			_pUnitMgr->commandHarvestAi(E_RESOURCE::E_TREE);
+	//
+	//		}
+	//
+	//		_nCount++;
+	//	}
+	//}
+	//
+	//_pUnitMgr->update();
+	//_pBuildMgr->update();
+	//
 
 }
 

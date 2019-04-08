@@ -46,14 +46,14 @@ void PLAYER::init(float fPosX, float fPosY)
 	//
 	_pUnitMgr->createUnit(UNIT::E_UNIT::E_WORKMAN, fPosX,fPosY);
 	
-	_pUnitMgr->createUnit(UNIT::E_UNIT::E_ARCHER, fPosX+32, fPosY);
-	_pUnitMgr->createUnit(UNIT::E_UNIT::E_ARCHER, fPosX, fPosY + 32);
-	_pUnitMgr->createUnit(UNIT::E_UNIT::E_ARCHER, fPosX + 32, fPosY + 32);
-	_pUnitMgr->createUnit(UNIT::E_UNIT::E_ARCHER, fPosX + 32 + 32, fPosY);
-	_pUnitMgr->createUnit(UNIT::E_UNIT::E_ARCHER, fPosX, fPosY + 32 + 32);
-	_pUnitMgr->createUnit(UNIT::E_UNIT::E_FOOTMAN, fPosX + 32 + 32, fPosY + 32 + 32);
-	_pUnitMgr->createUnit(UNIT::E_UNIT::E_FOOTMAN, fPosX + 32 + 32, fPosY + 32 + 32);
-	_pUnitMgr->createUnit(UNIT::E_UNIT::E_FOOTMAN, fPosX + 32 + 32, fPosY + 32 + 32);
+	//_pUnitMgr->createUnit(UNIT::E_UNIT::E_ARCHER, fPosX+32, fPosY);
+	//_pUnitMgr->createUnit(UNIT::E_UNIT::E_ARCHER, fPosX, fPosY + 32);
+	//_pUnitMgr->createUnit(UNIT::E_UNIT::E_ARCHER, fPosX + 32, fPosY + 32);
+	//_pUnitMgr->createUnit(UNIT::E_UNIT::E_ARCHER, fPosX + 32 + 32, fPosY);
+	//_pUnitMgr->createUnit(UNIT::E_UNIT::E_ARCHER, fPosX, fPosY + 32 + 32);
+	//_pUnitMgr->createUnit(UNIT::E_UNIT::E_FOOTMAN, fPosX + 32 + 32, fPosY + 32 + 32);
+	//_pUnitMgr->createUnit(UNIT::E_UNIT::E_FOOTMAN, fPosX + 32 + 32, fPosY + 32 + 32);
+	//_pUnitMgr->createUnit(UNIT::E_UNIT::E_FOOTMAN, fPosX + 32 + 32, fPosY + 32 + 32);
 
 	//_pBuildMgr->buildBuilding(E_BUILDS::E_BARRACKS, fPosX + 32 + 32 + 32 + 32, fPosY);
 

@@ -342,8 +342,6 @@ void UNIT::attack(OBJECT * pObject)
 
 	UNIT::getCurrentState()->start();
 
-
-
 	_pTarget = pObject;
 }
 

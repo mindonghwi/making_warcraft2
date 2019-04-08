@@ -243,7 +243,7 @@ void WORKMAN::commandBuild()
 
 void WORKMAN::build(float fPosX, float fPosY, E_BUILDS eBuilds)
 {
-	int nDis = 32 * 32;
+	int nDis = 48 * 48;
 	if (nDis <= Mins::getDoubleDis(getPosX(),getPosY(),fPosX,fPosY))
 	{
 		return;

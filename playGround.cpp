@@ -15,7 +15,7 @@ void playGround::loadImage()
 {
 	IMAGEMANAGER->addFrameImage("wall", "resource/wall.bmp", TILESIZE * 16, TILESIZE, 16, 1, true, Mins::getMazenta());
 
-	IMAGEMANAGER->addFrameImage("mapSprites", "resource/mapSprites.bmp", 640, 160, 20, 5, true, Mins::getMazenta());
+	IMAGEMANAGER->addFrameImage("mapSprites", "resource/mapSprite.bmp", 640, 160, 20, 5, true, Mins::getMazenta());
 	
 	
 	IMAGEMANAGER->addFrameImage("ground", "resource/ground.bmp", TILESIZE, TILESIZE, 1, 1, true, Mins::getMazenta());

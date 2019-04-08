@@ -350,9 +350,6 @@ void ASTAR::startFinder(float fStartPosX, float fStartPosY, float fEndPosX, floa
 	//열린 좌표에 넣는데 우선순위를 주자
 	_listOpendNode.push_back(_vvTile[_nStartIndexY][_nStartIndexX]);
 
-
-
-
 }
 
 void ASTAR::startFinderArray(float fStartPosX, float fStartPosY, float fEndPosX, float fEndPosY, MOVEHEIGHT eMoveHeight, int* nIndex)
@@ -493,65 +490,10 @@ void ASTAR::pathFinder()
 		if (_eMoveHeight == MOVEHEIGHT::WATER && _pMap->getTile(nIntervalPosX, nIntervalPosY)->getTerrian() != TILE::E_TERRIAN::WATER) continue;
 		if (_eMoveHeight == MOVEHEIGHT::GROUND && _pMap->getTile(nIntervalPosX, nIntervalPosY)->getObject() != TILE::E_OBJECT::E_NONE && _pMap->getTile(nIntervalPosX, nIntervalPosY)->getObject() != TILE::E_OBJECT::E_UNIT)continue;
 
-		//유닛
-		//bool bIsObject = false;
-		//for (int i = 0; i < _pUnitMgr->getUnitCount(); i++)
-		//{
-		//	RECT rcTmp;
 
-		//	RECT rc = _pMap->getTile(nIntervalPosX, nIntervalPosY)->getRectTile();
-		//	RECT rc2 = * _pUnitMgr->getUnit(i)->getCollisionRect();
-		//	rc2.left += 5;
-		//	rc2.top += 5;
-		//	rc2.right -= 5;
-		//	rc2.bottom -= 5;
-
-		//	if (IntersectRect(&rcTmp, &rc, &rc2))
-		//	{
-		//		//if (!_pUnitMgr->getUnit(i)->getIsMoveAstar())
-		//		{
-		//			bIsObject = true;
-		//			break;
-		//		}
-		//	}
-		//}
-
-		//if (bIsObject) continue;
-
-		////건물
-		//bIsObject = false;
-		//for (int i = 0; i < _pBuildMgr->getBuildCount(); i++)
-		//{
-		//	RECT rcTmp;
-
-		//	RECT rc = _pMap->getTile(nIntervalPosX, nIntervalPosY)->getRectTile();
-		//	RECT rc2 = * _pUnitMgr->getUnit(i)->getCollisionRect();
-		//	rc2.left += 5;
-		//	rc2.top += 5;
-		//	rc2.right -= 5;
-		//	rc2.bottom -= 5;
-
-		//	if (IntersectRect(&rcTmp, &rc, &rc2))
-		//	{
-		//		//if (!_pUnitMgr->getUnit(i)->getIsMoveAstar())
-		//		{
-		//			bIsObject = true;
-		//			break;
-		//		}
-		//	}
-		//}
-		//if (bIsObject) continue;
-
-
-
-		//유닛들이 통과하면 안된다.
-		//유닛이 만들어지면 플레이어의 유닛과 COM의 유닛들과 통과를 막는다.
-		//if (_pUnitMgr->)
-		//{
-		//
-		//}
 
 		bool bIsSearch = false;
+		bool bIsChange = false;
 		list<TILENODE*>::iterator iter = _listOpendNode.begin();
 		//list<TILENODE*>::iterator end = ;
 		//////////open에 있으면 
@@ -566,17 +508,17 @@ void ASTAR::pathFinder()
 					_vvTile[nIntervalPosY][nIntervalPosX]->nIndexY = nIntervalPosY;
 					_vvTile[nIntervalPosY][nIntervalPosX]->nPathStartToCurrent = pNode->nPathStartToCurrent + _arHuristic[i];
 					_vvTile[nIntervalPosY][nIntervalPosX]->nPathCurrentToEnd = abs(nIntervalPosX - _nEndIndexX) + abs(nIntervalPosY - _nEndIndexY);
-					_vvTile[nIntervalPosY][nIntervalPosX]->nPathCurrentToEnd *= _arHuristic[i];
+					//_vvTile[nIntervalPosY][nIntervalPosX]->nPathCurrentToEnd *= _arHuristic[i];
 					_vvTile[nIntervalPosY][nIntervalPosX]->nPathToatalCost = _vvTile[nIntervalPosY][nIntervalPosX]->nPathStartToCurrent + _vvTile[nIntervalPosY][nIntervalPosX]->nPathCurrentToEnd;
 					_vvTile[nIntervalPosY][nIntervalPosX]->parrentNode = pNode;
 
 
 					iter = _listOpendNode.erase(iter);
 
-					while (iter != _listOpendNode.end() && (*iter)->nPathToatalCost < _vvTile[nIntervalPosY][nIntervalPosX]->nPathToatalCost) {
-						iter++;
-					}
-					_listOpendNode.insert(iter, _vvTile[nIntervalPosY][nIntervalPosX]);
+
+					bIsChange = true;
+
+			
 				}
 
 				bIsSearch = true;
@@ -584,6 +526,16 @@ void ASTAR::pathFinder()
 			}
 			iter++;
 		}
+
+		if (bIsChange)
+		{
+			iter = _listOpendNode.begin();
+			while (iter != _listOpendNode.end() && (*iter)->nPathToatalCost < _vvTile[nIntervalPosY][nIntervalPosX]->nPathToatalCost) {
+				iter++;
+			}
+			_listOpendNode.insert(iter, _vvTile[nIntervalPosY][nIntervalPosX]);
+		}
+
 		if (bIsSearch) continue;
 		bIsSearch = false;
 
@@ -604,7 +556,7 @@ void ASTAR::pathFinder()
 		_vvTile[nIntervalPosY][nIntervalPosX]->nIndexY = nIntervalPosY;
 		_vvTile[nIntervalPosY][nIntervalPosX]->nPathStartToCurrent = pNode->nPathStartToCurrent + _arHuristic[i];
 		_vvTile[nIntervalPosY][nIntervalPosX]->nPathCurrentToEnd = abs(nIntervalPosX - _nEndIndexX) + abs(nIntervalPosY - _nEndIndexY);
-		_vvTile[nIntervalPosY][nIntervalPosX]->nPathCurrentToEnd *= _arHuristic[i];
+		//_vvTile[nIntervalPosY][nIntervalPosX]->nPathCurrentToEnd *= _arHuristic[i];
 		_vvTile[nIntervalPosY][nIntervalPosX]->nPathToatalCost = _vvTile[nIntervalPosY][nIntervalPosX]->nPathStartToCurrent + _vvTile[nIntervalPosY][nIntervalPosX]->nPathCurrentToEnd;
 		_vvTile[nIntervalPosY][nIntervalPosX]->parrentNode = pNode;
 
@@ -632,6 +584,9 @@ void ASTAR::pathFinder()
 		}
 
 	}
+
+	
+
 
 	if (_listClosedyPath.size() > 300)
 	{
