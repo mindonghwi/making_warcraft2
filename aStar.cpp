@@ -509,6 +509,8 @@ void ASTAR::pathFinder()
 					_vvTile[nIntervalPosY][nIntervalPosX]->nPathStartToCurrent = pNode->nPathStartToCurrent + _arHuristic[i];
 					_vvTile[nIntervalPosY][nIntervalPosX]->nPathCurrentToEnd = abs(nIntervalPosX - _nEndIndexX) + abs(nIntervalPosY - _nEndIndexY);
 					//_vvTile[nIntervalPosY][nIntervalPosX]->nPathCurrentToEnd *= _arHuristic[i];
+					_vvTile[nIntervalPosY][nIntervalPosX]->nPathCurrentToEnd *= 10;
+
 					_vvTile[nIntervalPosY][nIntervalPosX]->nPathToatalCost = _vvTile[nIntervalPosY][nIntervalPosX]->nPathStartToCurrent + _vvTile[nIntervalPosY][nIntervalPosX]->nPathCurrentToEnd;
 					_vvTile[nIntervalPosY][nIntervalPosX]->parrentNode = pNode;
 
@@ -557,6 +559,8 @@ void ASTAR::pathFinder()
 		_vvTile[nIntervalPosY][nIntervalPosX]->nPathStartToCurrent = pNode->nPathStartToCurrent + _arHuristic[i];
 		_vvTile[nIntervalPosY][nIntervalPosX]->nPathCurrentToEnd = abs(nIntervalPosX - _nEndIndexX) + abs(nIntervalPosY - _nEndIndexY);
 		//_vvTile[nIntervalPosY][nIntervalPosX]->nPathCurrentToEnd *= _arHuristic[i];
+		_vvTile[nIntervalPosY][nIntervalPosX]->nPathCurrentToEnd *= 10;
+
 		_vvTile[nIntervalPosY][nIntervalPosX]->nPathToatalCost = _vvTile[nIntervalPosY][nIntervalPosX]->nPathStartToCurrent + _vvTile[nIntervalPosY][nIntervalPosX]->nPathCurrentToEnd;
 		_vvTile[nIntervalPosY][nIntervalPosX]->parrentNode = pNode;
 
